@@ -79,9 +79,7 @@
 	 */
 
 	var Observer = dom.Observer = new Interface({
-		notify: function() {
-
-		}
+		notify: function() {}
 	});
 	
 	
@@ -95,10 +93,16 @@
 
 		observers: {},
 
-		subscribe: function(observer, type) {
+		subscribe: function(type, observer) {
+			
 			var observers = this.observers[type];
-			observers = (observers) ? observers.push(observer) : [observer];
+			if (!observers) {
+				observers = [observer];
+			} else {
+				observers.push(observer);
+			}
 			this.observers[type] = observers;
+			
 		},
 
 		unsubscribe: function(observer) {
@@ -128,12 +132,32 @@
 		
 		captureEvent: function(type, scope) {
 			
-			var scope = (scope || document),
-				captured = this.captured[type];
+			var scope = (scope || document);
+			var captured = this.captured[type];
+			var bind = false;
 			
-			captured = (captured) ? captured.push(scope) : [scope];
+			if (!captured) {
+				captured = [scope];
+				bind = true;
+			} else {
+				for (var i = captured.length - 1; i >= 0; i--){
+					if (captured[i] === scope) {
+						continue;
+					}
+					captured.push(scope);
+					bind = true;
+				};
+			}
 			
-			scope.addEventListener(type, this.dispatch.bind(this), true);
+			if (bind) {
+				scope.addEventListener(type, this.dispatch.bind(this), true);
+			}
+			
+			this.captured[type] = captured;
+			
+		},
+		
+		releaseEvent: function(type, scope) {
 			
 		}
 
@@ -156,7 +180,7 @@
 		_init: function(prefix) {
 			
 			EventDispatcher.captureEvent('click', document);
-			EventDispatcher.subscribe(this, 'click');
+			EventDispatcher.subscribe('click', this);
 			
 			this.prefix = prefix || '';
 			this.relations = {};
@@ -198,7 +222,7 @@
 		_init: function() {
 			
 			EventDispatcher.captureEvent('mousemove', document);
-			EventDispatcher.subscribe(this, 'mousemove');
+			EventDispatcher.subscribe('mousemove', this);
 			
 			this.relations = [];
 			
@@ -232,7 +256,7 @@
 		_init: function(prefix) {
 			
 			EventDispatcher.captureEvent('hashchange', window);
-			EventDispatcher.subscribe(this, 'hashchange');
+			EventDispatcher.subscribe('hashchange', this);
 			
 			this.prefix = /^\#\w*/gi;
 			this.relations = {};
