@@ -155,6 +155,9 @@
 
 		_init: function(prefix) {
 			
+			EventDispatcher.captureEvent('click', document);
+			EventDispatcher.subscribe(this, 'click');
+			
 			this.prefix = prefix || '';
 			this.relations = {};
 			
@@ -193,7 +196,12 @@
 		_implements: Observer,
 		
 		_init: function() {
-			this.relations = [];	
+			
+			EventDispatcher.captureEvent('mousemove', document);
+			EventDispatcher.subscribe(this, 'mousemove');
+			
+			this.relations = [];
+			
 		},
 		
 		notify: function(e) {
@@ -222,6 +230,9 @@
 		_implements: Observer,
 		
 		_init: function(prefix) {
+			
+			EventDispatcher.captureEvent('hashchange', window);
+			EventDispatcher.subscribe(this, 'hashchange');
 			
 			this.prefix = /^\#\w*/gi;
 			this.relations = {};
