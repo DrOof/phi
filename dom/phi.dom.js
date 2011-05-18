@@ -44,7 +44,7 @@
 	
 	var dom = phi.dom = function(selector) {
 		return jQuery(selector);
-	}
+	};
 	
 	
 	
