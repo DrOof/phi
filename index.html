@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<!-- title -->
+		<title>Phi</title>
+	
+		<!-- ext -->
+		<script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
+	
+		<!-- core -->
+		<script type="text/javascript" src="core/phi.core.js"></script>
+		
+		<!-- dom -->
+		<script type="text/javascript" src="dom/phi.dom.js"></script>
+		
+	</head>
+	<body>
+		
+		<a href="#hello" rel="hello-world">Hello</a>
+		
+		<script>
+		
+			var hash = new phi.dom.HashObserver();
+			hash.add('hello', function(e) {
+				alert('Hash changed');
+			});
+			
+			var link = new phi.dom.RelationObserver(/hello/);
+			link.add('world', function(e) {
+				alert('Clicked');
+			});
+			
+		</script>
+		
+	</body>
+</html>
