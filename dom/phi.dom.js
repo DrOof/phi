@@ -58,16 +58,203 @@
 	 *
 	 */
 	
-	phi.dom.requestAnimationFrame = (function(){
+	dom.requestAnimationFrame = (function(){
 	      return  window.requestAnimationFrame       || 
 	              window.webkitRequestAnimationFrame || 
 	              window.mozRequestAnimationFrame    || 
 	              window.oRequestAnimationFrame      || 
 	              window.msRequestAnimationFrame     || 
 	              function(callback, element) {
-			window.setTimeout(callback, 1000 / 60);
+						window.setTimeout(callback, 1000 / 60);
 	              };
 	})();
+	
+	
+	
+	
+	/**
+	 *
+	 * Observer Interface
+	 *
+	 */
+
+	var Observer = dom.Observer = new Interface({
+		notify: function() {
+
+		}
+	});
+	
+	
+	/**
+	 *
+	 * Observable
+	 *
+	 */
+	
+	var Observable = dom.Observable = new Class({
+
+		observers: {},
+
+		subscribe: function(observer, type) {
+			var observers = this.observers[type];
+			observers = (observers) ? observers.push(observer) : [observer];
+			this.observers[type] = observers;
+		},
+
+		unsubscribe: function(observer) {
+			
+			// remove the observer
+
+		},
+
+		dispatch: function(object) {
+			var observers = this.observers[object.type], i;
+			for (i = observers.length - 1; i >= 0; i--){
+				observers[i].notify(object);
+			}
+		}
+
+	});
+
+
+
+
+
+	var EventDispatcher = dom.EventDispatcher = new (new Class({
+
+		_extends: Observable,
+		
+		captured: {},
+		
+		captureEvent: function(type, scope) {
+			
+			var scope = (scope || document),
+				captured = this.captured[type];
+			
+			captured = (captured) ? captured.push(scope) : [scope];
+			
+			scope.addEventListener(type, this.dispatch.bind(this), true);
+			
+		}
+
+	}));
+
+
+	
+	
+
+	/**
+	 *
+	 * Observer links being clicked
+	 *
+	 */
+
+	var RelationObserver = dom.RelationObserver = new Class({
+
+		_implements: Observer,
+
+		_init: function(prefix) {
+			
+			this.prefix = prefix || '';
+			this.relations = {};
+			
+		},
+
+		notify: function(e) {
+			
+			var relation = e.target.getAttribute('rel');
+			if (this.prefix.exec(relation)) {
+				var action = relation.replace(this.prefix, '').replace('-', '');
+				if (action) {
+					if (this.relations[action]) {
+						this.relations[action](e);
+					}
+				}
+			}
+			
+		},
+		
+		add: function(key, fn) {
+			this.relations[key] = fn;
+		}
+
+	});
+	
+	
+	
+	/**
+	 *
+	 * Observe the user position
+	 *
+	 */
+	
+	var PositionObserver = dom.PositionObserver = new Class({
+		
+		_implements: Observer,
+		
+		_init: function() {
+			this.relations = [];	
+		},
+		
+		notify: function(e) {
+			for (var i = this.relations.length - 1; i >= 0; i--){
+				this.relations[i](e);
+			};
+		},
+		
+		add: function(fn) {
+			this.relations.push(fn);
+		}
+		
+	});
+	
+	
+	
+	
+	/**
+	 *
+	 * Observe changes to the hash
+	 *
+	 */
+
+	var HashObserver = dom.HashObserver = new Class({
+
+		_implements: Observer,
+		
+		_init: function(prefix) {
+			
+			this.prefix = /^\#\w*/gi;
+			this.relations = {};
+			
+		},
+
+		notify: function(e) {
+			
+			var hash = window.location.hash;
+			
+			if (hash) {
+				
+				var match = window.location.hash.match(this.prefix);
+				if (match.length) {
+					var action = match[0].replace(/\#|\?/g, '');
+					if (action) {
+						if (this.relations[action]) {
+							this.relations[action](e);
+						}
+					}
+				}
+				
+			}
+			
+		},
+		
+		add: function(key, fn) {
+			
+			this.relations[key] = fn;
+			
+		}
+
+	});
 	
 	
 	/**
