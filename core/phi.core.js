@@ -68,7 +68,8 @@
 		},
 
 		/**
-		 * extend objects with other objects
+		 *
+		 * extends objects with other objects
 		 * 
 		 */
 
@@ -86,25 +87,27 @@
 			return object;
 		},
 		
-		getVariables: function(address) {
-
+		/**
+		 *
+		 * gets the variables of a url
+		 *
+		 * @param url {String}		the url to get the variables from
+		 *
+		 */
+		
+		getVariables: function(url) {
+			var url = url || window.location.toString();
 			var variables = {};
-			
-			if (address) {
-				var hash = address.split('?');
-				if (hash.length) {
-					var pairs = hash[1].split('&');
-					var pair;
-					for (var i = pairs.length - 1; i >= 0; i--) {
-						pair = pairs[i].split('=');
-						variables[pair[0]] = pair[1];
-					};
-				}
+			var hash = url.split('?');
+			if (hash.length) {
+				var pairs = hash[1].split('&');
+				var pair;
+				for (var i = pairs.length - 1; i >= 0; i--) {
+					pair = pairs[i].split('=');
+					variables[pair[0]] = pair[1];
+				};
 			}
-			
-
 			return variables;
-
 		}
 		
 	};
