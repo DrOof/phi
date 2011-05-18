@@ -73,7 +73,7 @@
 		
 	});
 	
-	var DialogManager = dom.DialogManager = new (new Class({
+	var Dialogs = dom.Dialogs = new (new Class({
 		
 		_init: function() {
 			
@@ -83,7 +83,7 @@
 			
 		},
 		
-		registerDialog: function(name, dialog) {
+		createDialog: function(name, dialog) {
 			
 			this.dialogs[name] = dialog;
 			this.relations.add(name, dialog.open.bind(dialog));
@@ -101,6 +101,6 @@
 		
 	}));
 	
-	DialogManager.registerDialog('default', new Dialog({ html: '{{content}}', container: '#default.dialog' }));
+	Dialogs.createDialog('default', new Dialog({ html: '{{content}}', container: '#default.dialog' }));
 	
 })();
