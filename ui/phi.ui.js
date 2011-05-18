@@ -28,7 +28,7 @@
  */
 
 
-(function(dom) {
+(function() {
 	
 	
 	
@@ -43,9 +43,8 @@
 	 */
 	
 	var dom = phi.dom = function(selector) {
-			return dom(selector);
-		}
-	};
+		return jQuery(selector);
+	}
 	
 	
 	
@@ -144,4 +143,4 @@
 	});
 	
 	
-})(jQuery);
+})();
