@@ -96,18 +96,22 @@
 		 */
 		
 		getVariables: function(url) {
+			
 			var url = url || window.location.toString();
-			var variables = {};
 			var hash = url.split('?');
-			if (hash.length) {
+			var vars = undefined;
+			
+			if (hash.length && hash[1]) {
+				vars = {};
 				var pairs = hash[1].split('&');
 				var pair;
 				for (var i = pairs.length - 1; i >= 0; i--) {
 					pair = pairs[i].split('=');
-					variables[pair[0]] = pair[1];
+					vars[pair[0]] = pair[1];
 				};
 			}
-			return variables;
+			
+			return vars;
 		}
 		
 	};

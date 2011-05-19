@@ -32,46 +32,129 @@
 	
 	var dom = phi.dom;
 	
+	
+	/**
+	 *
+	 * The default Dialog from which other dialogs inherit
+	 *
+	 */
+	
 	var Dialog = dom.Dialog = new Class({
 		
 		_init: function(options) {
 			
 			this.html = new dom.Template(options.html || '');
-			this.container = options.container;
+			this.root = options.root;
+			this.node = options.node;
 			
 		},
 		
-		open: function(e) {
+		/**
+		 *
+		 * finds a node and opens the dialog
+		 *
+		 * @param e {Event}		the event that opens the dialog
+		 *
+		 */
+		
+		open: function(e) { e.preventDefault();
 			
-			phi.dom(this.container).fadeIn();
+			var node = phi.dom(this.node);
+			this.show(e, node);
 			
 		},
 		
-		close: function() {
-			
-			phi.dom(this.container).fadeOut();
+		/**
+		 *
+		 * finds a node and closes the dialog
+		 * 
+		 * @param e {Event}		the event that closes the dialog
+		 *
+		 */
+		
+		close: function(e) {
+		
+			var node = phi.dom(this.node);
+			this.hide(e, node);
 			
 		},
 		
-		position: function() {
-			
+		show: function(e, node) {
+			node.fadeIn();
+		},
+		
+		hide: function(e, node) {
+			node.fadeOut();
+		},
+		
+		position: function(e) {
 			
 			
 		}
 		
 	});
 	
-	var FlexDialog = new Class({
+	var TooltipDialog = new Class({
 		
 		_extends: Dialog,
 		
-		open: function(e) {
+		/**
+		 *
+		 * creates a node and opens the dialog
+		 *
+		 * @param e {Event}		the event that opens the dialog
+		 *
+		 */
+		
+		open: function(e) { e.preventDefault();
+			
+			var target = e.target;
+			var root = phi.dom(this.root);
+			
+			var html = this.html.parse({
+				content: e.target.getAttribute('longdesc')
+			});
+			
+			var node = phi.dom(html);
+			
+			this.close(e);
+			root.append(node);
+			this.position(e, node);
 			
 			
+		},
+		
+		position: function(e, node) {
+			
+			var target = phi.dom(e.target);
+			var offset = target.offset();
+			
+			phi.dom(node).css({
+				left: offset.left + (target.width() / 2) - (node.outerWidth() / 2),
+				top: offset.top - (node.outerHeight()) - 5
+			});
+			
+		},
+		
+		hide: function(e, node) {
+			
+			node.remove();
 			
 		}
 		
+		
+		
 	});
+	
+	
+	
+	
+	
+	/**
+	 *
+	 * A singleton Dialogs class manages all dialogs.
+	 *
+	 */
 	
 	var Dialogs = dom.Dialogs = new (new Class({
 		
@@ -94,13 +177,16 @@
 			
 			var dialogs = this.dialogs;
 			for (var name in dialogs) {
-				dialogs[name].close(e);
+				if (dialogs[name] instanceof Dialog) { // what on earth is 'map' on objects in IE < 9
+					dialogs[name].close(e);
+				}
 			};
 			
 		}
 		
 	}));
 	
-	Dialogs.createDialog('default', new Dialog({ html: '{{content}}', container: '#default.dialog' }));
+	Dialogs.createDialog('default', new Dialog({ html: '{{content}}', node: '#default.dialog' }));
+	Dialogs.createDialog('tooltip', new TooltipDialog({ html: '<div class="tooltip">{{content}}</div>', root: 'body', node: '.tooltip' }));
 	
 })();

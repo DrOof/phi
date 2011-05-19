@@ -58,16 +58,17 @@
 	 *
 	 */
 	
-	dom.requestAnimationFrame = (function(){
-	      return  window.requestAnimationFrame       || 
-	              window.webkitRequestAnimationFrame || 
-	              window.mozRequestAnimationFrame    || 
-	              window.oRequestAnimationFrame      || 
-	              window.msRequestAnimationFrame     || 
-	              function(callback, element) {
-						window.setTimeout(callback, 1000 / 60);
-	              };
+	dom.requestAnimationFrame = (function() {
+		return  window.requestAnimationFrame       || 
+	    		window.webkitRequestAnimationFrame || 
+	            window.mozRequestAnimationFrame    || 
+	            window.oRequestAnimationFrame      || 
+	            window.msRequestAnimationFrame     || 
+	            function(callback, element) {
+					window.setTimeout(callback, 1000 / 60);
+				};
 	})();
+	
 	
 	
 	
@@ -122,7 +123,12 @@
 
 
 
-
+	/**
+	 *
+	 * The EventDispatcher is a singleton responsible for dispatching events to observers
+	 *
+	 *
+	 */
 
 	var EventDispatcher = dom.EventDispatcher = new (new Class({
 
@@ -150,7 +156,7 @@
 			}
 			
 			if (bind) {
-				scope.addEventListener(type, this.dispatch.bind(this), true);
+				dom(scope).bind(type, this.dispatch.bind(this));
 			}
 			
 			this.captured[type] = captured;
