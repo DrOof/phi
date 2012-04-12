@@ -27,10 +27,15 @@
  *
  */
 
-
 (function() {
 	
 	
+	
+	/**
+	 *
+	 * 
+	 *
+	 */
 	
 	var phi = window.phi || {};
 	
@@ -42,11 +47,36 @@
 	 *
 	 */
 	
-	var dom = phi.dom = function(selector) {
-		return jQuery(selector);
+	var dom = phi.dom = jQuery;
+	
+	
+	
+	/**
+	 *
+	 * Adds an event listener to a node
+	 *
+	 * @param node {HTMLElement}	the HTMLElement to bind a callback to (can be a selector as well)
+	 * @param type {String}			the type of event to listen and bind a callback to
+	 * @param fn {Function}			the callback function to apply
+	 *
+	 */
+	
+	dom.addEventListener = function(node, type, fn) {
+		return dom(node).bind(type, fn);
 	};
 	
+	/**
+	 *
+	 * sets up ajax to send a custom ajax request headers to allow a controller to return
+	 * a specific view (eg. json, html, xml or text).
+	 *
+	 */
 	
+	dom.ajaxSetup({
+		headers: { 
+			'ajax': 'ajax' 
+		}
+	});
 	
 	
 	/**
@@ -54,11 +84,11 @@
 	 * requests an animation frame using native methods or setTimeout as a fallback
 	 *
 	 * @param callback {Function}	the callback function to apply
-	 * @param element {HTMLNode}	the node to which the animation applies
+	 * @param element {HTMLElement}	the node to which the animation applies
 	 *
 	 */
 	
-	dom.requestAnimationFrame = (function() {
+	window.phiRequestAnimationFrame = (function() {
 		return  window.requestAnimationFrame       || 
 	    		window.webkitRequestAnimationFrame || 
 	            window.mozRequestAnimationFrame    || 
@@ -70,7 +100,27 @@
 	})();
 	
 	
+	/**
+	 *
+	 * triggers a native event on an HTMLElement
+	 *
+	 * @param type {String}			the type of event to trigger, i.e. 'click', 'focus', 'blur', etc.
+	 *
+	 */
 	
+	Element.prototype.triggerEvent = function(type) {
+
+		if (document.createEvent) {
+			var e = document.createEvent('HTMLEvents');
+			e.initEvent(type, true, true);
+			return this.dispatchEvent(e);
+		}
+
+		if (this.fireEvent) {
+			return this.fireEvent('on' + type);
+		}
+
+	};
 	
 	
 	/**
@@ -156,7 +206,7 @@
 			}
 			
 			if (bind) {
-				dom(scope).bind(type, this.dispatch.bind(this));
+				dom.addEventListener(scope, type, this.dispatch.bind(this));
 			}
 			
 			this.captured[type] = captured;
@@ -168,8 +218,58 @@
 		}
 
 	}));
+	
+	
+	
+	
+	var DOMObserver = dom.DOMObserver = new Class({
+		
+		_implements: Observer,
+		
+		_init: function(prefix) {
+			EventDispatcher.captureEvent('DOMNodeInserted', document.body);
+			EventDispatcher.subscribe('DOMNodeInserted', this);
+			this.prefix = prefix || '';
+			this.relations = {};
+		},
+		
+		notify: function(e) {
+			var target = phi.dom(e.target);
+			var relations = this.relations;
+			for (key in relations) {
+				if (target.find(key).length) {
+					relations[key](e);
+				}
+			}
+			
+		},
+		
+		add: function(key, fn) {
+			this.relations[key] = fn;
+		}
+		
+	});
 
 
+
+
+	var SocketObserver = dom.SocketObserver = new Class({
+		
+		_implements: Observer,
+		
+		_init: function(socket) {
+			this.relations = {};
+		},
+		
+		notify: function(e) {
+			
+		},
+		
+		add: function(key, fn) {
+			this.relations[key] = fn;
+		}
+		
+	})
 	
 	
 
@@ -179,23 +279,22 @@
 	 *
 	 */
 
-	var RelationObserver = dom.RelationObserver = new Class({
+	var LinkRelationObserver = dom.LinkRelationObserver = new Class({
 
 		_implements: Observer,
 
 		_init: function(prefix) {
-			
 			EventDispatcher.captureEvent('click', document);
 			EventDispatcher.subscribe('click', this);
-			
 			this.prefix = prefix || '';
 			this.relations = {};
-			
 		},
 
 		notify: function(e) {
 			
-			var relation = e.target.getAttribute('rel');
+			var link = phi.dom(e.target).closest('a');
+			var relation = link.attr('rel');
+			
 			if (this.prefix.exec(relation)) {
 				var action = relation.replace(this.prefix, '').replace('-', '');
 				if (action) {
@@ -204,7 +303,6 @@
 					}
 				}
 			}
-			
 		},
 		
 		add: function(key, fn) {

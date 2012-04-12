@@ -27,8 +27,6 @@
  *
  */
 
-
-
 (function() {
 
 	/**
@@ -119,8 +117,9 @@
 	/**
 	 *
 	 * binds a Function to execute in the scope of any object. 
+	 *
 	 * The 'this' keyword inside the Function references the preferred object.
-	 * It is used in callback methods to prevent their scope defaulting a global namespace such as 'window'.
+	 * It is used in callback methods to prevent their scope defaulting to a global namespace such as 'window'.
 	 *
 	 * @param object {Object} the object to which the Function is bound
 	 *

@@ -1,152 +1,36 @@
-<!DOCTYPE html>
+<!doctype HTML>
 <html>
 	<head>
-	
-		<!-- title -->
-		<title>Phi</title>
 		
-		<style>
+		<title>PHI</title>
 		
-			body {
-				font-family: Arial;
-				line-height: 1.5em;
-				font-size: 14px;
-			}
-			
-			ul, li {
-				padding: 0;
-				margin: 0;
-			}
-			
-			ul li a {
-				text-decoration: none;
-				display: inline-block;
-				background: black;
-				padding: 4px 12px;
-				margin: 0 0 0.5em;
-				color: white;
-			}
-		
-			#position {
-				position: absolute; 
-				padding: 4px 12px; 
-				background: black;
-				color: white;
-				margin: 0;
-				right: 0;
-				top: 0; 
-			}
-			
-			#test-dialog {
-				
-			}
-			
-			.dialog {
-				margin: -200px 0 0 -200px;
-				position: absolute;
-				background: black;
-				padding: 40px;
-				display: none;
-				height: 320px;
-				color: white;
-				width: 320px;
-				left: 50%;
-				top: 50%;
-				
-			}
-			
-				.dialog .close {
-					position: absolute;
-					padding: 2px 8px;
-					color: white;
-					right: 10px;
-					top: 10px;
-				}
-				
-				.dialog a {
-					text-decoration: dotted;
-					color: white;
-				}
-				
-			.tooltip {
-				background: #c80000;
-				position: absolute;
-				padding: 4px 8px;
-				display: block;
-				color: white;
-				height: auto;
-				width: auto;
-				left: 0;
-				top: 0;
-			}
-		
-		</style>
-	
-		<!-- ext -->
-		<script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
-	
-		<!-- core -->
-		<script type="text/javascript" src="core/phi.core.js"></script>
-		
-		<!-- dom -->
-		<script type="text/javascript" src="dom/phi.dom.js"></script>
-		<script type="text/javascript" src="dom/phi.dom.dialog.js"></script>
+		<link rel="stylesheet" href="static/css/grid.css" />
+		<link rel="stylesheet" href="static/css/style.css" />
+		<link rel="stylesheet" href="static/css/component.css" />
 		
 	</head>
 	<body>
-		
-		<ul>
-			<li>
-				<a href="#" rel="test-hello">Hello!</a>
-			</li>
-			<li>
-				<a href="#" rel="test-bye">Goodbye!</a>
-			</li>
-		</ul>
-		<ul>
-			<li>
-				<a href="#" rel="dialog-default">Default dialog!</a>
-			</li>
-		</ul>
-		<p id="position">
-			x: 0, y: 0
-		</p>
-		<div id="default" class="dialog">
-			<a href="#" class="close" rel="dialog-close">Close</a>
+		<article>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur <a href="#" rel="dialog-tooltip" longdesc="Adipisicing elit">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <a href="#" rel="dialog-tooltip" longdesc="Commodo consequat">commodo</a> consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Files
 			</p>
-		</div>
+			<ul>
+				<li>phi.js</li>
+				<li>phi.dom.js</li>
+				<li>phi.dom.dialog.js</li>
+			</ul>
+		</article>
 		
-		<p>
-			Lorem ipsum dolor sit amet, consectetur <a href="#" rel="dialog-tooltip" longdesc="Adipisicing elit">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <a href="#" rel="dialog-tooltip" longdesc="Commodo consequat">commodo</a> consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</p>
+		<script type="text/javascript" src="static/js/lib/jquery/jquery-1.7.1.min.js"></script>
+		
+		<script type="text/javascript" src="static/js/lib/phi/phi.js"></script>
+		<script type="text/javascript" src="static/js/lib/phi/phi.dom.js"></script>
+		<script type="text/javascript" src="static/js/lib/phi/phi.dom.dialog.js"></script>
 		
 		<script>
 		
-			/*
-			var hash = new phi.dom.HashObserver();
-			hash.add('hello', function(e) {
-				alert('Hash changed');
-			});
-			
-			var relation = new phi.dom.RelationObserver(/test/);
-			relation.add('hello', function(e) {
-				alert('Hello!');
-			});
-			
-			relation.add('bye', function(e) {
-				alert('Goodbye!');
-			});
-			
-			var html = new phi.dom.Template('x: {{x}}, y: {{y}}');
-			var position = new phi.dom.PositionObserver();
-			position.add(function(e) {
-				var node = document.getElementById('position');
-				node.innerHTML = html.parse({ x: e.pageX, y: e.pageY });
-			});
-			*/
-			
+			var resizeObserver = new phi.dom.ResizeObserver(/all/, window);
+		
 		</script>
 		
 	</body>
