@@ -312,6 +312,70 @@
 	});
 	
 	
+	var KeyObserver = new phi.Class({
+		
+		_implements: phi.dom.Observer,
+		
+		_init: function() {
+			
+			EventDispatcher.captureEvent('keyup', document);
+			EventDispatcher.subscribe('keyup', this);
+			
+			this.setModifiers(arguments);
+			this.relations = {};
+			
+		},
+		
+		setModifiers: function(modifier) {
+			
+			if (modifier) {
+				
+				var keys = (keys instanceof Array) ? [keys] : keys;
+ 				var modifiers = {};
+
+				for (var i = 0; i < keys.length; i++) {
+					switch (keys[i]) {
+						case 'ctrl' :
+							modifiers.ctrlKey = true;
+							break;
+						case 'shift' :
+							modifiers.shiftKey = true;
+							break;
+						case 'meta' :
+							modifiers.shiftKey = true;
+							break;
+					}
+				};
+				
+				this.modifiers = modifiers;
+				
+			}
+			
+		},
+		
+		notify: function(e) {
+			
+			var type = e.keyCode;
+			
+			var match = true;
+			for (modifier in this.modifiers) {
+				if (!e[modifier]) {
+					match = false;
+				}
+			}
+			
+			if (match && this.relations[type]) {
+				this.relations[type](e);
+			}
+		},
+		
+		add: function(key, fn) {
+			this.relations[key] = fn;
+		}
+		
+	});
+	
+	
 	
 	/**
 	 *
