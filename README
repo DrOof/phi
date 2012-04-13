@@ -26,3 +26,6 @@
  *
  *
  */
+
+TODO: implement WebSocketObserver using WebSocket and LongPolling fallback
+TODO: implement simple KeyObserver
