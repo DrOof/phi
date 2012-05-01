@@ -11,31 +11,58 @@
 	</head>
 	<body>
 	    
-		<article>
-			<p>
-				Files
-			</p>
+		<nav>
 			<ul>
-				<li>phi.js</li>
-				<li>phi.dom.js</li>
-				<li>phi.dom.media.js</li>
-				<li>phi.dom.dialog.js</li>
+				<li>
+                    <a href="#phi">phi.js</a>
+				</li>
+				<li>
+				    <a href="#dom">phi.dom.js</a>
+				</li>
+				<li>
+				    <a href="#player">phi.dom.media.js</a>
+				</li>
+				<li>
+				    <a href="#dialog">phi.dom.dialog.js</a>
+				</li>
 			</ul>
+		</nav>
+		
+		<article id="phi">
+		    <p>
+		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		    </p>
 		</article>
 		
-		<article>
-		    <video width="1080px" height="720px">
-                <source src="video.mp4" type="video/mp4" />
-                <source src="video.ogg" type="video/ogg" />
-		    </video>
+		<article id="dom">
+		    <p>
+		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		    </p>
 		</article>
 		
-		<script type="text/javascript" src="static/js/lib/jquery/jquery-1.7.1.min.js"></script>
+		<article id="player">
+		    <div id="player-1" class="player"></div>
+		</article>
+		
+		<article id="dialog">
+            <p>
+		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		    </p>
+		</article>
+		
+		<script type="text/javascript" src="static/js/lib/jquery/jquery-1.7.2.min.js"></script>
 		
 		<script type="text/javascript" src="static/js/lib/phi/phi.js"></script>
 		<script type="text/javascript" src="static/js/lib/phi/phi.dom.js"></script>
 		<script type="text/javascript" src="static/js/lib/phi/phi.dom.media.js"></script>
 		<script type="text/javascript" src="static/js/lib/phi/phi.dom.dialog.js"></script>
+		
+		<script type="text/javascript">
+		    
+		    var player = new phi.dom.media.Player('player-1');
+		    player.setSrc('media/video/video.m4v');
+		    
+		</script>
 		
 	</body>
 </html>

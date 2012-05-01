@@ -42,20 +42,35 @@
 	
 	var Player = media.Player = new Class({
 		
-		_init: function(node, html, src) {
+		_init: function(node, options) {
 			
-			this.node = node;
-			this.html = html;
-			this.src = src;
+			this.node = dom(document.getElementById(node));
+			
+			this.gui = this.createGUI();
+			this.canvas = this.createCanvas();
 			
 		},
 		
-		createHTML: function(data) {
-			return this.html.parse(data);
+		createCanvas: function() {
+			
+			var canvas = new VideoMediaCanvas();
+			this.node.append(canvas.createNode());
+			
+			return canvas;
+			
+		},
+		
+		createGUI: function() {
+			
+			var gui = new PlayerGUI();
+			this.node.append(gui.createNode());
+			
+			return gui;
+			
 		},
 		
 		setSrc: function(src) {
-			this.src = src;
+			this.canvas.setSrc(src);
 		},
 		
 		getSrc: function() {
@@ -76,6 +91,34 @@
 		
 	});
 	
+	
+	var PlayerGUI = new Class({
+		
+		_init: function() {
+			
+		},
+		
+		createNode: function() {
+			return PlayerGUI.HTML.parse();
+		}
+		
+	})
+	
+	PlayerGUI.HTML = new phi.dom.Template(
+		'<div class="media-controls">' +
+			'<a href="#player-1" class="media-control media-play" name="media-play" rel="media-mute">Play</a>' +
+			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
+			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
+			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
+			'<span class="media-slide-control media-scrubber" name="media-scrubber">' +
+				'<var name="media-scrubber-head" name="media-scrubber-head"></var>' +
+			'</span>' +
+			'<a href="#player-1" class="media-control media-mute" name="media-mute" rel="media-mute">Mute</a>' +
+			'<span class="media-slide-control media-volume" name="media-volume">' +
+				'<var name="media-volume-head" name="media-volume-head"></var>' +
+			'</span>' +
+		'</div>' +
+		'<a href="#player-1" class="media-control media-full-screen" name="media-full-screen" rel="media-full-screen">Full Screen</a>');
 	
 	
 	
@@ -107,6 +150,10 @@
 		
 		load: function() {
 			throw Error('abstract method MediaCanvas.load');
+		},
+		
+		setSrc: function() {
+			
 		}
 		
 	});
@@ -120,18 +167,48 @@
 	 *
 	 */
 	
-	var HTML5AudioMediaCanvas = new Class({
+	var AudioMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('audio');
+			
+			var node = document.createElement('audio');
+			this.node = node;
+			
+			node.setAttribute('width', '100%');
+			node.setAttribute('height', '100%');
+			
+			return node;
+			
 		}
+		
 	});
 	
-	var HTML5VideoMediaCanvas = new Class({
+	var VideoMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('video');
+			
+			var node = document.createElement('video');
+			this.node = node;
+			
+			node.setAttribute('width', '100%');
+			node.setAttribute('height', '100%');
+			
+			return node;
+			
+		},
+		
+		setSrc: function(src) {
+			this.node.src = src;
+		},
+		
+		play: function() {
+			this.node.play();
 		}
+		
 	});
 	
 	
@@ -144,17 +221,25 @@
 	 */
 	
 	var FlashVideoMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('object');
+			this.node = document.createElement('object');
+			return this.node;
 		}
+		
 	});
 	
 	var FlashAudioMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('object');
+			this.node = document.createElement('object');
+			return this.node;
 		}
+		
 	});
 	
 	
@@ -167,17 +252,25 @@
 	 */
 	
 	var SilverlightVideoMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('object');
+			this.node = document.createElement('object');
+			return this.node;
 		}
+		
 	});
 	
 	var SilverlightAudioMediaCanvas = new Class({
+		
 		_extends: MediaCanvas,
+		
 		createNode: function() {
-			return document.createElement('object');
+			this.node = document.createElement('object');
+			return this.node;
 		}
+		
 	});
 	
 	
