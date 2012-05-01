@@ -29,22 +29,30 @@
 		</nav>
 		
 		<article id="phi">
+		    <h2>Core</h2>
+		    <p>depedencies: jquery-1.7.2</p>
 		    <p>
 		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		    </p>
 		</article>
 		
 		<article id="dom">
+		    <h2>Dom</h2>
+            <p>depedencies: jquery-1.7.2, phi</p>
 		    <p>
 		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		    </p>
 		</article>
 		
 		<article id="media">
+		    <h2>Media</h2>
+		    <p>depedencies: jquery-1.7.2, phi, phi.dom</p>
 		    <div id="media-player-1" class="media-player"></div>
 		</article>
 		
 		<article id="dialog">
+		    <h2>Dialog</h2>
+		    <p>depedencies: jquery-1.7.2, phi, phi.dom</p>
             <p>
 		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		    </p>
@@ -59,7 +67,7 @@
 		
 		<script type="text/javascript">
 		    
-		    var player = new phi.dom.media.Player('media-player-1');
+		    var player = new phi.dom.media.MediaPlayer('media-player-1');
 		    player.setSrc('media/video/video.m4v');
 		    
 		</script>

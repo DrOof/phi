@@ -40,7 +40,7 @@
 	 *
 	 */
 	
-	var Player = media.Player = new Class({
+	var MediaPlayer = media.MediaPlayer = new Class({
 		
 		_init: function(node, options) {
 			
@@ -62,7 +62,7 @@
 		
 		createGUI: function() {
 			
-			var gui = new PlayerGUI();
+			var gui = new MediaPlayerGUI();
 			this.node.append(gui.createNode());
 			
 			return gui;
@@ -92,19 +92,19 @@
 	});
 	
 	
-	var PlayerGUI = new Class({
+	var MediaPlayerGUI = new Class({
 		
 		_init: function() {
 			
 		},
 		
 		createNode: function() {
-			return PlayerGUI.HTML.parse();
+			return MediaPlayerGUI.HTML.parse();
 		}
 		
 	})
 	
-	PlayerGUI.HTML = new phi.dom.Template(
+	MediaPlayerGUI.HTML = new phi.dom.Template(
 		'<div class="media-controls">' +
 			'<a href="#player-1" class="media-control media-play" name="media-play" rel="media-mute">Play</a>' +
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
