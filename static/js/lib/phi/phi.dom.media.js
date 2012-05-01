@@ -33,8 +33,54 @@
 	
 	var media = dom.media = {};
 	
-	var Player = media.Player = {
+	var Player = media.Player = new Class({
 		
-	}
+		_init: function() {
+			
+		},
+		
+		
+		
+	});
+	
+	var MediaCanvas = new Class({
+		_init: function() {
+			this.node;
+		}
+	});
+	
+	
+	
+	
+	var HTML5AudioMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
+	var HTML5VideoMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
+	
+	
+	
+	var FlashVideoMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
+	var FlashAudioMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
+	
+	
+	
+	var SilverlightVideoMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
+	var SilverlightAudioMediaCanvas = new Class({
+		_extends: MediaCanvas
+	});
+	
 	
 })();
