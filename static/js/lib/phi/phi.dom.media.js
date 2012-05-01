@@ -30,38 +30,102 @@
 (function() {
 	
 	var dom = phi.dom;
-	
 	var media = dom.media = {};
+	
+	
+	
+	/**
+	 *
+	 * An instance of player controls it's media canvas and view.
+	 *
+	 */
 	
 	var Player = media.Player = new Class({
 		
-		_init: function() {
+		_init: function(node) {
+			
+			this.canvas;
+			this.html;
+			this.src;
 			
 		},
 		
+		play: function() {
+			this.canvas.play();
+		},
 		
+		pause: function() {
+			this.canvas.pause();
+		},
+		
+		load: function() {
+			
+		}
 		
 	});
 	
+	
+	
+	
+	
+	
+	/**
+	 *
+	 * Player uses a canvas to render sound and picture.
+	 *
+	 */
+	
 	var MediaCanvas = new Class({
+		
 		_init: function() {
-			this.node;
+			this.node = this.createNode();
+		},
+		
+		createNode: function() {
+			
+		},
+		
+		play: function() {
+			
+		},
+		
+		pause: function() {
+			
+		}
+		
+	});
+	
+	
+	
+	
+	/**
+	 *
+	 * HTML5 Audio & Video Media Canvas.
+	 *
+	 */
+	
+	var HTML5AudioMediaCanvas = new Class({
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('audio');
+		}
+	});
+	
+	var HTML5VideoMediaCanvas = new Class({
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('video');
 		}
 	});
 	
 	
 	
 	
-	var HTML5AudioMediaCanvas = new Class({
-		_extends: MediaCanvas
-	});
-	
-	var HTML5VideoMediaCanvas = new Class({
-		_extends: MediaCanvas
-	});
-	
-	
-	
+	/**
+	 *
+	 * Flash Audio & Video Media Canvas.
+	 *
+	 */
 	
 	var FlashVideoMediaCanvas = new Class({
 		_extends: MediaCanvas
@@ -73,6 +137,12 @@
 	
 	
 	
+	
+	/**
+	 *
+	 * Silverlight Audio & Video Media Canvas.
+	 *
+	 */
 	
 	var SilverlightVideoMediaCanvas = new Class({
 		_extends: MediaCanvas
