@@ -1,4 +1,4 @@
-.player {
+.media-player {
 	border: 1px solid #ffffff;
 	background: #000000;
 	position: relative;
@@ -6,14 +6,14 @@
 	width: 720px;
 }
 
-	.player .media-controls {
+	.media-player .media-controls {
 		position: absolute;
 		background: #fff;
 		width: 100%;
 		bottom: 0px;
 	}
 	
-	.player .media-control {
+	.media-player .media-control {
 		text-indent: -999px;
 		background: #f0f0f0;
 		overflow: hidden;
@@ -23,21 +23,21 @@
 		float: left;
 	}
 	
-	.player .media-control:hover {
+	.media-player .media-control:hover {
 		background: #000;
 	}
 	
-		.player .media-mute {
+		.media-player .media-mute {
 			float: right;
 		}
 		
-		.player .media-full-screen {
+		.media-player .media-full-screen {
 			position: absolute;
 			right: 0px;
 			top: 0px;
 		}
 	
-	.player .media-slide-control {
+	.media-player .media-slide-control {
 		border-radius: 20px;
 		background: #f0f0f0;
 		display: block;
@@ -45,19 +45,19 @@
 		height: 10px;
 	}
 	
-		.player .media-scrubber {
+		.media-player .media-scrubber {
 			margin-left: 10px;
 			width: 380px;
 			float: left;
 		}
 	
-		.player .media-volume {
+		.media-player .media-volume {
 			margin-right: 10px;
 			float: right;
 			width: 80px;
 		}
 		
-	.player .media-time-control {
+	.media-player .media-time-control {
 		display: block;
 		float: left;
 	}

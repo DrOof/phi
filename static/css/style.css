@@ -1,5 +1,7 @@
 body {
 	background: #d0d0d0;
-	font-family: arial;
+	font-family: Arial;
+	line-height: 1.5em;
+	font-size: 14px;
 	color: #777;
 }

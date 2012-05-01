@@ -110,13 +110,13 @@
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
-			'<span class="media-slide-control media-scrubber" name="media-scrubber">' +
-				'<var name="media-scrubber-head" name="media-scrubber-head"></var>' +
-			'</span>' +
+			'<var class="media-slide-control media-scrubber" name="media-scrubber">' +
+				'<em name="media-scrubber-head" name="media-scrubber-head"></em>' +
+			'</var>' +
 			'<a href="#player-1" class="media-control media-mute" name="media-mute" rel="media-mute">Mute</a>' +
-			'<span class="media-slide-control media-volume" name="media-volume">' +
-				'<var name="media-volume-head" name="media-volume-head"></var>' +
-			'</span>' +
+			'<var class="media-slide-control media-volume" name="media-volume">' +
+				'<em name="media-volume-head" name="media-volume-head"></em>' +
+			'</var>' +
 		'</div>' +
 		'<a href="#player-1" class="media-control media-full-screen" name="media-full-screen" rel="media-full-screen">Full Screen</a>');
 	
