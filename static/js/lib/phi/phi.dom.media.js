@@ -42,12 +42,24 @@
 	
 	var Player = media.Player = new Class({
 		
-		_init: function(node) {
+		_init: function(node, html, src) {
 			
-			this.canvas;
-			this.html;
-			this.src;
+			this.node = node;
+			this.html = html;
+			this.src = src;
 			
+		},
+		
+		createHTML: function(data) {
+			return this.html.parse(data);
+		},
+		
+		setSrc: function(src) {
+			this.src = src;
+		},
+		
+		getSrc: function() {
+			return this.src;
 		},
 		
 		play: function() {
@@ -59,7 +71,7 @@
 		},
 		
 		load: function() {
-			
+			this.canvas.load();
 		}
 		
 	});
@@ -82,15 +94,19 @@
 		},
 		
 		createNode: function() {
-			
+			throw Error('abstract method MediaCanvas.createNode');
 		},
 		
 		play: function() {
-			
+			throw Error('abstract method MediaCanvas.play');
 		},
 		
 		pause: function() {
-			
+			throw Error('abstract method MediaCanvas.pause');
+		},
+		
+		load: function() {
+			throw Error('abstract method MediaCanvas.load');
 		}
 		
 	});
@@ -128,11 +144,17 @@
 	 */
 	
 	var FlashVideoMediaCanvas = new Class({
-		_extends: MediaCanvas
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('object');
+		}
 	});
 	
 	var FlashAudioMediaCanvas = new Class({
-		_extends: MediaCanvas
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('object');
+		}
 	});
 	
 	
@@ -145,11 +167,17 @@
 	 */
 	
 	var SilverlightVideoMediaCanvas = new Class({
-		_extends: MediaCanvas
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('object');
+		}
 	});
 	
 	var SilverlightAudioMediaCanvas = new Class({
-		_extends: MediaCanvas
+		_extends: MediaCanvas,
+		createNode: function() {
+			return document.createElement('object');
+		}
 	});
 	
 	
