@@ -61,8 +61,8 @@
 	 *
 	 */
 	
-	dom.addEventListener = function(node, type, fn) {
-		return dom(node).bind(type, fn);
+	dom.addEventListener = function(scope, type, fn) {
+		return dom(scope).bind(type, fn);
 	};
 	
 	/**
@@ -147,11 +147,13 @@
 		subscribe: function(type, observer) {
 			
 			var observers = this.observers[type];
+			
 			if (!observers) {
 				observers = [observer];
 			} else {
 				observers.push(observer);
 			}
+			
 			this.observers[type] = observers;
 			
 		},
@@ -163,10 +165,12 @@
 		},
 
 		dispatch: function(object) {
+			
 			var observers = this.observers[object.type], i;
-			for (i = observers.length - 1; i >= 0; i--){
+			for (i = observers.length - 1; i >= 0; i--) {
 				observers[i].notify(object);
 			}
+			
 		}
 
 	});
@@ -188,32 +192,41 @@
 		
 		captureEvent: function(type, scope) {
 			
-			var scope = (scope || document);
 			var captured = this.captured[type];
+			var scope = (scope || document);
 			var bind = false;
 			
 			if (!captured) {
+				
 				captured = [scope];
 				bind = true;
+				
 			} else {
-				for (var i = captured.length - 1; i >= 0; i--){
+				
+				for (var i = captured.length - 1; i >= 0; i--) {
+					
 					if (captured[i] === scope) {
 						continue;
 					}
+					
 					captured.push(scope);
 					bind = true;
+					
 				};
+				
 			}
 			
 			if (bind) {
-				dom.addEventListener(scope, type, this.dispatch.bind(this));
+				dom.addEventListener(scope, type, function(e) {
+					this.dispatch(e);
+				}.bind(this));
 			}
 			
 			this.captured[type] = captured;
 			
 		},
 		
-		releaseEvent: function(type, scope) {
+		releaseEvent: function(type) {
 			
 		}
 
@@ -234,8 +247,10 @@
 		},
 		
 		notify: function(e) {
-			var target = phi.dom(e.target);
+			
+			var target = dom(e.target);
 			var relations = this.relations;
+			
 			for (key in relations) {
 				if (target.find(key).length) {
 					relations[key](e);
@@ -284,15 +299,19 @@
 		_implements: Observer,
 
 		_init: function(prefix) {
+			
 			EventDispatcher.captureEvent('click', document);
 			EventDispatcher.subscribe('click', this);
+			
 			this.prefix = prefix || '';
 			this.relations = {};
+			
+			
 		},
 
 		notify: function(e) {
 			
-			var link = phi.dom(e.target).closest('a');
+			var link = dom(e.target).closest('a');
 			var relation = link.attr('rel');
 			
 			if (this.prefix.exec(relation)) {
@@ -314,7 +333,7 @@
 	
 	var KeyObserver = new phi.Class({
 		
-		_implements: phi.dom.Observer,
+		_implements: dom.Observer,
 		
 		_init: function() {
 			
@@ -467,7 +486,7 @@
 	 *
 	 */
 	
-	var Template = phi.dom.Template = new Class({
+	var Template = dom.Template = new Class({
 		
 		_init: function(html) {
 			this.set(html);

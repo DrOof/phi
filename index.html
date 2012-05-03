@@ -48,6 +48,7 @@
 		    <h2>Media</h2>
 		    <p>depedencies: jquery-1.7.2, phi, phi.dom</p>
 		    <div id="media-player-1" class="media-player"></div>
+		    <div id="media-player-2" class="media-player"></div>
 		</article>
 		
 		<article id="dialog">
@@ -67,8 +68,8 @@
 		
 		<script type="text/javascript">
 		    
-		    var player = new phi.dom.media.MediaPlayer('media-player-1');
-		    player.setSrc('media/video/video.m4v');
+		    new phi.dom.media.MediaPlayer('media-player-1').setSrc('media/video/video.m4v');
+		    new phi.dom.media.MediaPlayer('media-player-2').setSrc('media/video/video.m4v');
 		    
 		</script>
 		

@@ -42,31 +42,35 @@
 	
 	var MediaPlayer = media.MediaPlayer = new Class({
 		
-		_init: function(node, options) {
+		_init: function(uid, options) {
 			
-			this.node = dom(document.getElementById(node));
+			this.node = document.getElementById(uid);
+			this.uid = uid;
 			
-			this.gui = this.createGUI();
 			this.canvas = this.createCanvas();
+			this.controls = this.createControls();
+			this.relations = this.createRelations();
+			
+		},
+		
+		createRelations: function() {
+			
+			var relations = new phi.dom.LinkRelationObserver(/media/, this.node);
+			
+			relations.add('toggle-mute', this.toggleMute.bind(this));
+			relations.add('toggle-play', this.togglePlay.bind(this));
+			relations.add('toggle-full-screen', this.toggleFullScreen.bind(this));
+			
+			return relations;
 			
 		},
 		
 		createCanvas: function() {
-			
-			var canvas = new VideoMediaCanvas();
-			this.node.append(canvas.createNode());
-			
-			return canvas;
-			
+			return new VideoMediaCanvas(this.node);
 		},
 		
-		createGUI: function() {
-			
-			var gui = new MediaPlayerGUI();
-			this.node.append(gui.createNode());
-			
-			return gui;
-			
+		createControls: function() {
+			return new MediaPlayerControls(this.node, this.uid);
 		},
 		
 		setSrc: function(src) {
@@ -75,6 +79,24 @@
 		
 		getSrc: function() {
 			return this.src;
+		},
+		
+		togglePlay: function(e) { e.preventDefault();
+			if (e.target.getAttribute('href') === ('#' + this.uid)) {
+				this.canvas[(!this.canvas.paused) ? 'pause' : 'play']();
+			}
+		},
+		
+		toggleMute: function(e) { e.preventDefault();
+			if (e.target.getAttribute('href') === ('#' + this.uid)) {
+				this.canvas.setMuted(!this.canvas.muted ? true : false);
+			}
+		},
+		
+		toggleFullScreen: function(e) { e.preventDefault();
+			if (e.target.getAttribute('href') === ('#' + this.uid)) {
+				// do stuff
+			}
 		},
 		
 		play: function() {
@@ -92,33 +114,40 @@
 	});
 	
 	
-	var MediaPlayerGUI = new Class({
+	var MediaPlayerControls = new Class({
 		
-		_init: function() {
-			
+		_init: function(root, uid) {
+			this.node = this.createNode(root, uid);
 		},
 		
-		createNode: function() {
-			return MediaPlayerGUI.HTML.parse();
+		createNode: function(root, uid) {
+			
+			var node = new phi.dom.Template(MediaPlayerControls.HTML).parse({
+				uid: uid
+			});
+			
+			dom(root).append(node);
+			
+			return node;
 		}
 		
 	})
 	
-	MediaPlayerGUI.HTML = new phi.dom.Template(
+	MediaPlayerControls.HTML = 
 		'<div class="media-controls">' +
-			'<a href="#player-1" class="media-control media-play" name="media-play" rel="media-mute">Play</a>' +
+			'<a href="#{{uid}}" class="media-control media-play" name="media-play" rel="media-toggle-play">Play</a>' +
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
 			'<var class="media-slide-control media-scrubber" name="media-scrubber">' +
 				'<em name="media-scrubber-head" name="media-scrubber-head"></em>' +
 			'</var>' +
-			'<a href="#player-1" class="media-control media-mute" name="media-mute" rel="media-mute">Mute</a>' +
+			'<a href="#{{uid}}" class="media-control media-mute" name="media-mute" rel="media-toggle-mute">Mute</a>' +
 			'<var class="media-slide-control media-volume" name="media-volume">' +
 				'<em name="media-volume-head" name="media-volume-head"></em>' +
 			'</var>' +
 		'</div>' +
-		'<a href="#player-1" class="media-control media-full-screen" name="media-full-screen" rel="media-full-screen">Full Screen</a>');
+		'<a href="#{{uid}}" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';
 	
 	
 	
@@ -126,37 +155,123 @@
 	
 	/**
 	 *
-	 * Player uses a canvas to render sound and picture.
+	 * MediaCanvas is an abstract class to define the basic interface and attributes a canvas needs to implement.
 	 *
 	 */
 	
 	var MediaCanvas = new Class({
 		
-		_init: function() {
-			this.node = this.createNode();
+		_init: function(node) {
+			this.node = this.createNode(node);
 		},
 		
-		createNode: function() {
-			throw Error('abstract method MediaCanvas.createNode');
-		},
+		createNode: function() {},
 		
-		play: function() {
-			throw Error('abstract method MediaCanvas.play');
-		},
+		play: function() {},
+		pause: function() {},
+		load: function() {},
 		
-		pause: function() {
-			throw Error('abstract method MediaCanvas.pause');
-		},
+		/**
+		 *
+		 * Display Attributes
+		 *
+		 */
 		
-		load: function() {
-			throw Error('abstract method MediaCanvas.load');
-		},
+		controls: false,
+		poster: false,
+		height: false,
+		width: false,
+		src: false,
 		
-		setSrc: function() {
-			
-		}
+		setControls: function() {},
+		getControls: function() {},
+		setPoster: function() {},
+		getPoster: function() {},
+		setHeight: function() {},
+		getHeight: function() {},
+		setWidth: function() {},
+		getWidth: function() {},
+		setSrc: function() {},
+		getSrc: function() {},
+		
+		/**
+		 *
+		 * Playback Attributes
+		 *
+		 */
+		
+		currentTime: 0.0,
+		startTime: 0.0,
+		duration: 0.0,
+		
+		paused: true,
+		ended: false,		
+		autobuffer: false,
+		seeking: false,
+		defaultPlaybackRate: 1.0,
+		playbackRate: 1.0,
+		seekable: true,
+		buffered: {},
+		played: {},
+		autoplay: false,
+		loop: false,
+		
+		setAutoplay: function() {},
+		getAutoplay: function() {},
+		setLoop: function() {},
+		getLoop: function() {},
+		
+		/**
+		 *
+		 * Other Attributes
+		 *
+		 */
+		
+		networkState: false,
+		readyState: false,
+		preload: false,
+		error: null,
+		volume: 1.0,
+		muted: false,
+		
+		setPreload: function() {},
+		getPreload: function() {},
+		setVolume: function() {},
+		getVolume: function() {},
+		setMuted: function() {},
+		getMuted: function() {}
 		
 	});
+	
+	/**
+	 *
+	 * Shadows all setters by setting appropriate shadow attributes to the desired values.
+	 * These variables shadow existing HTML5MediaElement attributes and allow fallback canvases to emulate consistent behaviour.
+	 *
+	 */
+	
+	var MediaCanvasSetterShadow = new Aspect({
+		setVolume: {
+			after: function(volume) {
+				this.volume = volume;
+			}
+		},
+		setMuted: {
+			after: function(mute) {
+				this.muted = mute;
+			}
+		},
+		play: {
+			after: function() {
+				this.paused = false;
+			}
+		},
+		pause: {
+			after: function() {
+				this.paused = true;
+			}
+		}
+	})
 	
 	
 	
@@ -170,14 +285,16 @@
 	var AudioMediaCanvas = new Class({
 		
 		_extends: MediaCanvas,
+		_applies: MediaCanvasSetterShadow,
 		
-		createNode: function() {
+		createNode: function(root) {
 			
 			var node = document.createElement('audio');
-			this.node = node;
 			
 			node.setAttribute('width', '100%');
 			node.setAttribute('height', '100%');
+			
+			dom(root).append(node);
 			
 			return node;
 			
@@ -188,15 +305,16 @@
 	var VideoMediaCanvas = new Class({
 		
 		_extends: MediaCanvas,
+		_applies: MediaCanvasSetterShadow,
 		
-		createNode: function() {
+		createNode: function(root) {
 			
 			var node = document.createElement('video');
-			this.node = node;
 			
 			node.setAttribute('width', '100%');
 			node.setAttribute('height', '100%');
 			
+			dom(root).append(node);
 			return node;
 			
 		},
@@ -207,6 +325,18 @@
 		
 		play: function() {
 			this.node.play();
+		},
+		
+		pause: function() {
+			this.node.pause();
+		},
+		
+		setMuted: function(mute) {
+			this.node.muted = mute;
+		},
+		
+		getMuted: function() {
+			return this.muted;
 		}
 		
 	});
