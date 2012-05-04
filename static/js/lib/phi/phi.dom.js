@@ -122,6 +122,36 @@
 
 	};
 	
+	/**
+	 *
+	 * Requests the browser's full screen mode.
+	 *
+	 */
+	
+	Element.prototype.requestFullScreen = (function() {
+		return 	Element.prototype.requestFullScreen ||
+				Element.prototype.webkitRequestFullScreen ||
+				HTMLMediaElement.prototype.mozRequestFullScreen ||
+				function() {
+					alert('fallback');
+				}
+	})();
+	
+	/**
+	 *
+	 * Cancels the browser's full screen mode.
+	 *
+	 */
+	
+	document.cancelFullScreen = (function() {
+		return 	document.cancelFullScreen ||
+				document.mozCancelFullScreen ||
+				document.webkitCancelFullScreen ||
+				function() {
+					alert('fallback')
+				}
+	})();
+	
 	
 	/**
 	 *
@@ -217,9 +247,7 @@
 			}
 			
 			if (bind) {
-				dom.addEventListener(scope, type, function(e) {
-					this.dispatch(e);
-				}.bind(this));
+				dom.addEventListener(scope, type, this.dispatch.bind(this));
 			}
 			
 			this.captured[type] = captured;
@@ -228,7 +256,39 @@
 		
 		releaseEvent: function(type) {
 			
+		},
+		
+		subscribe: function(type, observer, scope) {
+			
+			var observers = this.observers[type];
+			observer.scope = scope;
+			
+			if (!observers) {
+				observers = [observer];
+			} else {
+				observers.push(observer);
+			}
+			
+			this.observers[type] = observers;
+			
+		},
+		
+		dispatch: function(e) {
+		
+			var observers = this.observers[e.type], i;
+			var observer;
+			
+			for (i = observers.length - 1; i >= 0; i--) {
+				
+				observer = observers[i];
+				if (dom(observer.scope).find(e.target).length) {
+					observer.notify(e);
+				}
+				
+			}
+			
 		}
+		
 
 	}));
 	
@@ -240,10 +300,13 @@
 		_implements: Observer,
 		
 		_init: function(prefix) {
+			
 			EventDispatcher.captureEvent('DOMNodeInserted', document.body);
 			EventDispatcher.subscribe('DOMNodeInserted', this);
+			
 			this.prefix = prefix || '';
 			this.relations = {};
+			
 		},
 		
 		notify: function(e) {
@@ -298,10 +361,10 @@
 
 		_implements: Observer,
 
-		_init: function(prefix) {
+		_init: function(prefix, scope) {
 			
 			EventDispatcher.captureEvent('click', document);
-			EventDispatcher.subscribe('click', this);
+			EventDispatcher.subscribe('click', this, scope || document);
 			
 			this.prefix = prefix || '';
 			this.relations = {};

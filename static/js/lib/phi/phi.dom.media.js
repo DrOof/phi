@@ -70,7 +70,7 @@
 		},
 		
 		createControls: function() {
-			return new MediaPlayerControls(this.node, this.uid);
+			return new MediaPlayerControls(this.node);
 		},
 		
 		setSrc: function(src) {
@@ -82,21 +82,38 @@
 		},
 		
 		togglePlay: function(e) { e.preventDefault();
-			if (e.target.getAttribute('href') === ('#' + this.uid)) {
-				this.canvas[(!this.canvas.paused) ? 'pause' : 'play']();
+			if (this.canvas.paused) {
+				this.play();
+			} else {
+				this.pause();
 			}
 		},
 		
 		toggleMute: function(e) { e.preventDefault();
-			if (e.target.getAttribute('href') === ('#' + this.uid)) {
-				this.canvas.setMuted(!this.canvas.muted ? true : false);
+			if (this.canvas.muted) {
+				this.unmute();
+			} else {
+				this.mute();
 			}
 		},
 		
 		toggleFullScreen: function(e) { e.preventDefault();
-			if (e.target.getAttribute('href') === ('#' + this.uid)) {
-				// do stuff
+			if (!this.fullscreen) {
+				this.enterFullScreen();
+			} else {
+				this.leaveFullScreen();
 			}
+		},
+		
+		fullscreen: false,
+		enterFullScreen: function() {
+			this.node.requestFullScreen();
+			this.fullscreen = true;
+		},
+		
+		leaveFullScreen: function() {
+			document.cancelFullScreen();
+			this.fullscreen = false;
 		},
 		
 		play: function() {
@@ -105,6 +122,14 @@
 		
 		pause: function() {
 			this.canvas.pause();
+		},
+		
+		mute: function() {
+			this.canvas.setMuted(true);
+		},
+		
+		unmute: function() {
+			this.canvas.setMuted(false);
 		},
 		
 		load: function() {
@@ -122,9 +147,7 @@
 		
 		createNode: function(root, uid) {
 			
-			var node = new phi.dom.Template(MediaPlayerControls.HTML).parse({
-				uid: uid
-			});
+			var node = new phi.dom.Template(MediaPlayerControls.HTML).parse();
 			
 			dom(root).append(node);
 			
@@ -135,19 +158,19 @@
 	
 	MediaPlayerControls.HTML = 
 		'<div class="media-controls">' +
-			'<a href="#{{uid}}" class="media-control media-play" name="media-play" rel="media-toggle-play">Play</a>' +
+			'<a href="#" class="media-control media-play" name="media-play" rel="media-toggle-play">Play</a>' +
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
 			'<var class="media-slide-control media-scrubber" name="media-scrubber">' +
 				'<em name="media-scrubber-head" name="media-scrubber-head"></em>' +
 			'</var>' +
-			'<a href="#{{uid}}" class="media-control media-mute" name="media-mute" rel="media-toggle-mute">Mute</a>' +
+			'<a href="#" class="media-control media-mute" name="media-mute" rel="media-toggle-mute">Mute</a>' +
 			'<var class="media-slide-control media-volume" name="media-volume">' +
 				'<em name="media-volume-head" name="media-volume-head"></em>' +
 			'</var>' +
 		'</div>' +
-		'<a href="#{{uid}}" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';
+		'<a href="#" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';
 	
 	
 	
@@ -239,7 +262,7 @@
 		setVolume: function() {},
 		getVolume: function() {},
 		setMuted: function() {},
-		getMuted: function() {}
+		getMuted: function() {},
 		
 	});
 	
