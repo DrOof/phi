@@ -122,6 +122,8 @@
 
 	};
 	
+	
+	
 	/**
 	 *
 	 * Requests the browser's full screen mode.
@@ -136,6 +138,8 @@
 					alert('fallback');
 				}
 	})();
+	
+	
 	
 	/**
 	 *
