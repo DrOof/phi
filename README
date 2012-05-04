@@ -29,4 +29,4 @@
 
 TODO: implement WebSocketObserver using WebSocket and LongPolling fallback
 TODO: implement simple KeyObserver
-TODO: finish MediaPlayer
+TODO: finish phi.media.Player
