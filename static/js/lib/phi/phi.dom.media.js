@@ -116,6 +116,10 @@
 			this.fullscreen = false;
 		},
 		
+		volume: function(volume) {
+		    this.canvas.setVolume(volume);
+		},
+		
 		play: function() {
 			this.canvas.play();
 		},
@@ -147,16 +151,18 @@
 		
 		createNode: function(root, uid) {
 			
-			var node = new phi.dom.Template(MediaPlayerControls.HTML).parse();
-			
+			var node = dom(new phi.dom.Template(MediaPlayerControls.CONTROLS).parse());
 			dom(root).append(node);
 			
+			new phi.dom.Slider(dom('.media-scrubber', node));
+			
 			return node;
+			
 		}
 		
-	})
+	});
 	
-	MediaPlayerControls.HTML = 
+	MediaPlayerControls.CONTROLS = 
 		'<div class="media-controls">' +
 			'<a href="#" class="media-control media-play" name="media-play" rel="media-toggle-play">Play</a>' +
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
@@ -171,6 +177,7 @@
 			'</var>' +
 		'</div>' +
 		'<a href="#" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';
+	
 	
 	
 	
@@ -273,7 +280,12 @@
 	 *
 	 */
 	
-	var MediaCanvasSetterShadow = new Aspect({
+	var MediaCanvasShadow = new Aspect({
+	    setAutoplay: {
+	        after: function(autoplay) {
+	            this.autoplay = autoplay;
+	        }
+	    },
 		setVolume: {
 			after: function(volume) {
 				this.volume = volume;
@@ -294,7 +306,7 @@
 				this.paused = true;
 			}
 		}
-	})
+	});
 	
 	
 	
@@ -308,7 +320,7 @@
 	var AudioMediaCanvas = new Class({
 		
 		_extends: MediaCanvas,
-		_applies: MediaCanvasSetterShadow,
+		_applies: MediaCanvasShadow,
 		
 		createNode: function(root) {
 			
@@ -328,7 +340,7 @@
 	var VideoMediaCanvas = new Class({
 		
 		_extends: MediaCanvas,
-		_applies: MediaCanvasSetterShadow,
+		_applies: MediaCanvasShadow,
 		
 		createNode: function(root) {
 			
@@ -338,6 +350,7 @@
 			node.setAttribute('height', '100%');
 			
 			dom(root).append(node);
+			
 			return node;
 			
 		},
@@ -360,6 +373,22 @@
 		
 		getMuted: function() {
 			return this.muted;
+		},
+		
+		setVolume: function(volume) {
+		    this.node.volume = parseFloat(volume);
+		},
+		
+		getVolume: function() {
+		    return this.volume;
+		},
+		
+		setAutoplay: function(autoplay) {
+		    this.node.autoplay = autoplay;
+		},
+		
+		getAutoplay: function() {
+		    return this.autoplay;   
 		}
 		
 	});

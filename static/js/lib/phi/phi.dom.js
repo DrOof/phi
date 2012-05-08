@@ -619,4 +619,73 @@
 	});
 	
 	
+	
+	
+	
+	
+	
+	var Slider = phi.dom.Slider = new Class({
+        
+        _init: function(root, scope) {
+            
+            this.root = dom(root);
+            this.scope = dom(scope || document);
+            
+            this.root.bind('mousedown', this.handleMouseDown.bind(this));
+            
+            this.root.bind('touchstart', this.handleTouchStart.bind(this));
+            this.root.bind('touchdrag', this.handleTouchDrag.bind(this));
+            this.root.bind('touchend', this.handleTouchEnd.bind(this));
+            
+        },
+        
+        grab: function(e) {
+            console.log('grab');
+        },
+        
+        drag: function(e) {
+            console.log('drag');
+        },
+        
+        release: function(e) {
+            console.log('release');
+        },
+        
+        update: function(value) {
+            console.log(value);
+        },
+        
+        handleMouseDown: function(e) {
+            this.scope.bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
+            this.scope.bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
+            this.grab(e);
+        },
+        
+        handleMouseMove: function(e) {
+            this.drag(e);
+        },
+        
+        handleMouseUp: function(e) {
+            this.scope.unbind('mousemove.phi-slider mouseup.phi-slider mouseleave.phi-slider');
+            this.release(e);
+        },
+        
+        handleTouchStart: function(e) {
+            var e = e.touches[0];
+            this.grab(e);
+        },
+        
+        handleTouchDrag: function(e) {
+            var e = e.touches[0];
+            this.drag(e);
+        },
+        
+        handleTouchEnd: function(e) {
+            var e = e.touches[0];
+            this.release(e);
+        }
+        
+	});
+	
+	
 })();
