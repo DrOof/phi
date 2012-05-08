@@ -154,7 +154,7 @@
 			var node = dom(new phi.dom.Template(MediaPlayerControls.CONTROLS).parse());
 			dom(root).append(node);
 			
-			new phi.dom.Slider(dom('.media-scrubber', node));
+			new phi.dom.Dragger(node.find('.media-scrubber-head'), node.find('.media-scrubber'));
 			
 			return node;
 			
@@ -169,11 +169,11 @@
 			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
 			'<var class="media-slide-control media-scrubber" name="media-scrubber">' +
-				'<em name="media-scrubber-head" name="media-scrubber-head"></em>' +
+				'<em class="media-scrubber-head" name="media-scrubber-head"></em>' +
 			'</var>' +
 			'<a href="#" class="media-control media-mute" name="media-mute" rel="media-toggle-mute">Mute</a>' +
 			'<var class="media-slide-control media-volume" name="media-volume">' +
-				'<em name="media-volume-head" name="media-volume-head"></em>' +
+				'<em class="media-volume-head" name="media-volume-head"></em>' +
 			'</var>' +
 		'</div>' +
 		'<a href="#" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';

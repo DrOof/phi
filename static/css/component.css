@@ -58,10 +58,20 @@
 		}
 	
 			.media-scrubber {
+			    position: relative;
 				margin-left: 10px;
 				width: 380px;
 				float: left;
 			}
+			
+			    .media-scrubber-head {
+			        border-radius: 40px;
+			        position: absolute;
+			        background: #000;
+			        margin: -15px 0 0 -15px;
+			        height: 40px;
+			        width: 40px;
+			    }
 	
 			.media-volume {
 				margin-right: 10px;

@@ -624,18 +624,20 @@
 	
 	
 	
-	var Slider = phi.dom.Slider = new Class({
+	var Dragger = phi.dom.Dragger = new Class({
         
-        _init: function(root, scope) {
+        _init: function(root, scope, options) {
             
             this.root = dom(root);
             this.scope = dom(scope || document);
             
             this.root.bind('mousedown', this.handleMouseDown.bind(this));
             
+            /*
             this.root.bind('touchstart', this.handleTouchStart.bind(this));
             this.root.bind('touchdrag', this.handleTouchDrag.bind(this));
             this.root.bind('touchend', this.handleTouchEnd.bind(this));
+            */
             
         },
         
@@ -644,7 +646,17 @@
         },
         
         drag: function(e) {
-            console.log('drag');
+            
+            var top, left;
+            
+            top = this.scope.offset().top;
+            left = this.scope.offset().left;
+            
+            this.root.css({
+                left: e.pageX - left,
+                top: e.pageY - top
+            });
+            
         },
         
         release: function(e) {
@@ -655,20 +667,22 @@
             console.log(value);
         },
         
-        handleMouseDown: function(e) {
-            this.scope.bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
-            this.scope.bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
+        handleMouseDown: function(e) { e.preventDefault();
+            dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
+            dom(document).bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
             this.grab(e);
         },
         
-        handleMouseMove: function(e) {
+        handleMouseMove: function(e) { e.preventDefault();
             this.drag(e);
         },
         
-        handleMouseUp: function(e) {
-            this.scope.unbind('mousemove.phi-slider mouseup.phi-slider mouseleave.phi-slider');
+        handleMouseUp: function(e) { e.preventDefault();
+            dom(document).unbind('mousemove.phi-slider mouseup.phi-slider mouseleave.phi-slider');
             this.release(e);
-        },
+        }
+        
+        /*,
         
         handleTouchStart: function(e) {
             var e = e.touches[0];
@@ -684,6 +698,8 @@
             var e = e.touches[0];
             this.release(e);
         }
+        
+        */
         
 	});
 	
