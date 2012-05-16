@@ -29,29 +29,50 @@
 
 (function() {
 	
-	var dom = phi.dom;
-	var media = dom.media = {};
+	
 	
 	
 	
 	/**
 	 *
-	 * An instance of player controls it's media canvas and view.
+	 * Local namespaces for dom and media.
+	 *
+	 */
+	
+	var dom = phi.dom;
+	var media = dom.media = {};
+	
+	
+	
+	
+	
+	
+	/**
+	 *
+	 * The Media Player
 	 *
 	 */
 	
 	var MediaPlayer = media.MediaPlayer = new Class({
 		
-		_init: function(uid, options) {
+		_init: function(id, options) {
 			
-			this.node = document.getElementById(uid);
-			this.uid = uid;
+			this.node = document.getElementById(id);
+			this.uid = id;
 			
 			this.canvas = this.createCanvas();
 			this.controls = this.createControls();
 			this.relations = this.createRelations();
 			
 		},
+		
+		/**
+		 *
+		 * Creates a link relation observer that listen to link relations within the player.
+		 *
+		 * @returns relations:LinkRelationObserver			the link relation observer used to listen to link relations.
+		 *
+		 */
 		
 		createRelations: function() {
 			
@@ -65,12 +86,106 @@
 			
 		},
 		
+		/**
+		 *
+		 * Creates a media canvas.
+		 *
+		 * @returns canvas:MediaCanvas						The canvas used to render the media file.
+		 *
+		 */
+		
 		createCanvas: function() {
-			return new VideoMediaCanvas(this.node);
+			
+			var canvas = new VideoMediaCanvas(this.node);
+			
+			var events = MediaCanvas.EVENTS;
+			for (var type in events) {
+				canvas.addEventListener(events[type], this.handleCanvasEvent.bind(this));
+			}
+			
+			return canvas;
+			
 		},
 		
+		/**
+		 *
+		 * Handles events from the player canvas.
+		 *
+		 * @param e:Event									The event to handle.
+		 *
+		 */
+		
+		handleCanvasEvent: function(e) {
+			
+			// TODO on events
+			// handle progress
+			
+			// handle time update
+			if (e.type === 'timeupdate') {
+				this.controls.progress.move(parseFloat(this.canvas.node.currentTime / this.canvas.node.duration) * 100, 0);
+			}
+			
+			// handle volume
+			if (e.type === 'volumechange') {
+				// this.controls.volume.move(parseFloat(this.canvas.node.currentTime / this.canvas.node.duration) * 100, 0);
+			}
+			
+			// handle playable source
+			if (e.type === 'canplay') {
+				this.controls.node.find('[name="media-duration"]').html(this.canvas.node.duration);
+			}
+			
+			// handle ended
+			if (e.type === 'ended') {
+				
+			}
+			
+		},
+		
+		/**
+		 *
+		 * Creates media player controls.
+		 *
+		 * @returns controls:MediaPlayerControls			The controls for the media player.
+		 *
+		 */
+		
 		createControls: function() {
-			return new MediaPlayerControls(this.node);
+			
+			var controls = new MediaPlayerControls(this.node);
+			
+			controls.node.bind('drag', this.handleControlsEvent.bind(this));
+			
+			return controls;
+			
+		},
+		
+		/**
+		 *
+		 * Handles an event thrown by the controls.
+		 *
+		 * @param e:Event									The event to handle.
+		 *
+		 */
+		
+		handleControlsEvent: function(e) {
+			
+			var name = e.target.getAttribute('name');
+			
+			if (e.type === 'drag') {
+				
+				if (name === 'media-volume-head') {
+					var v = parseFloat(e.target.style['left']) * 0.01;
+					this.canvas.setVolume(v);
+				}
+				
+				if (name === 'media-progress-head') {
+					var t = this.canvas.node.duration * parseFloat(e.target.style['left']) * 0.01;
+					this.canvas.setCurrentTime(t);
+				}
+				
+			}
+			
 		},
 		
 		setSrc: function(src) {
@@ -143,18 +258,31 @@
 	});
 	
 	
+	
+	
+	
+	/**
+	 *
+	 * MediaPlayer Controls.
+	 *
+	 */
+	
 	var MediaPlayerControls = new Class({
 		
-		_init: function(root, uid) {
-			this.node = this.createNode(root, uid);
+		_init: function(root) {
+			this.node = this.createNode(root);
+			dom(root).append(this.node);
 		},
 		
-		createNode: function(root, uid) {
+		createNode: function(root) {
 			
 			var node = dom(new phi.dom.Template(MediaPlayerControls.CONTROLS).parse());
-			dom(root).append(node);
 			
-			new phi.dom.Dragger(node.find('.media-scrubber-head'), node.find('.media-scrubber'));
+			// progress indicator listens to changes in progress.
+			this.progress = new phi.dom.RelativeDragger(node.find('[name="media-progress-head"]'), node.find('[name="media-progress"]'), { allowY: false });
+			
+			// volume indicator listens to changes in volume.
+			this.volume = new phi.dom.RelativeDragger(node.find('[name="media-volume-head"]'), node.find('[name="media-volume"]'), { allowY: false });
 			
 			return node;
 			
@@ -162,19 +290,27 @@
 		
 	});
 	
+	/**
+	 *
+	 * MediaPlayer Controls Template.
+	 *
+	 */
+	
 	MediaPlayerControls.CONTROLS = 
 		'<div class="media-controls">' +
 			'<a href="#" class="media-control media-play" name="media-play" rel="media-toggle-play">Play</a>' +
+			/* '<time class="media-time-control media-current-time" name="media-current-time">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-duration" name="media-duration">H:mm:ss</time>' + */
-			/* '<time class="media-time-control media-progress" name="media-progress">H:mm:ss</time>' + */
 			/* '<time class="media-time-control media-remaining" name="media-remaining">H:mm:ss</time>' + */
-			'<var class="media-slide-control media-scrubber" name="media-scrubber">' +
-				'<em class="media-scrubber-head" name="media-scrubber-head"></em>' +
-			'</var>' +
+			'<span class="media-slide-control media-progress" name="media-progress">' +
+				'<var class="media-progress-time" name="media-progress-time"></var>' +
+				'<var class="media-progress-load" name="media-progress-load"></var>' +
+				'<em class="media-progress-head" name="media-progress-head"></em>' +
+			'</span>' +
 			'<a href="#" class="media-control media-mute" name="media-mute" rel="media-toggle-mute">Mute</a>' +
-			'<var class="media-slide-control media-volume" name="media-volume">' +
+			'<span class="media-slide-control media-volume" name="media-volume">' +
 				'<em class="media-volume-head" name="media-volume-head"></em>' +
-			'</var>' +
+			'</span>' +
 		'</div>' +
 		'<a href="#" class="media-control media-full-screen" name="media-full-screen" rel="media-toggle-full-screen">Full Screen</a>';
 	
@@ -193,6 +329,10 @@
 		
 		_init: function(node) {
 			this.node = this.createNode(node);
+		},
+		
+		addEventListener: function(type, fn) {
+			// 
 		},
 		
 		createNode: function() {},
@@ -273,6 +413,31 @@
 		
 	});
 	
+	MediaCanvas.EVENTS = [
+		'abort', 
+		'canplay', 
+		'canplaythrough', 
+		'durationchange', 
+		'empted', 
+		'ended', 
+		'loadeddata', 
+		'loadedmetadata', 
+		'loadstart', 
+		'pause', 
+		'play', 
+		'playing', 
+		'progress', 
+		'ratechange',
+		'readystatechange',
+		'seeked',
+		'seeking',
+		'stalled',
+		'suspend',
+		'timeupdate',
+		'volumechange',
+		'waiting'
+	];
+	
 	/**
 	 *
 	 * Shadows all setters by setting appropriate shadow attributes to the desired values.
@@ -286,6 +451,11 @@
 	            this.autoplay = autoplay;
 	        }
 	    },
+		setControls: {
+			after: function(controls) {
+				this.controls = controls;
+			}
+		},
 		setVolume: {
 			after: function(volume) {
 				this.volume = volume;
@@ -294,6 +464,11 @@
 		setMuted: {
 			after: function(mute) {
 				this.muted = mute;
+			}
+		},
+		setLoop: {
+			after: function(loop) {
+				this.loop = loop;
 			}
 		},
 		play: {
@@ -317,6 +492,74 @@
 	 *
 	 */
 	
+	var VideoMediaCanvas = new Class({
+		
+		_extends: MediaCanvas,
+		_applies: MediaCanvasShadow,
+		
+		createNode: function(root) {
+			
+			var node = document.createElement('video');
+			
+			node.setAttribute('width', '100%');
+			node.setAttribute('height', '100%');
+			
+			dom(root).append(node);
+			
+			return node;
+			
+		},
+		
+		addEventListener: function(type, fn) {
+			this.node.addEventListener(type, fn, true);
+		},
+		
+		setSrc: function(src) {
+			this.node.src = src;
+		},
+		
+		play: function() {
+			this.node.play();
+		},
+		
+		pause: function() {
+			this.node.pause();
+		},
+		
+		setCurrentTime: function(currentTime) {
+			this.node.currentTime = currentTime;
+		},
+		
+		setLoop: function(loop) {
+			// does nothing...
+		},
+		
+		setControls: function(controls) {
+			// does nothing...
+		},
+		
+		setMuted: function(mute) {
+			this.node.muted = mute;
+		},
+		
+		setVolume: function(volume) {
+		    this.node.volume = parseFloat(volume);
+		},
+		
+		setAutoplay: function(autoplay) {
+			this.node.autoplay = autoplay;
+		}
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	/*
+	
 	var AudioMediaCanvas = new Class({
 		
 		_extends: MediaCanvas,
@@ -337,70 +580,12 @@
 		
 	});
 	
-	var VideoMediaCanvas = new Class({
-		
-		_extends: MediaCanvas,
-		_applies: MediaCanvasShadow,
-		
-		createNode: function(root) {
-			
-			var node = document.createElement('video');
-			
-			node.setAttribute('width', '100%');
-			node.setAttribute('height', '100%');
-			
-			dom(root).append(node);
-			
-			return node;
-			
-		},
-		
-		setSrc: function(src) {
-			this.node.src = src;
-		},
-		
-		play: function() {
-			this.node.play();
-		},
-		
-		pause: function() {
-			this.node.pause();
-		},
-		
-		setMuted: function(mute) {
-			this.node.muted = mute;
-		},
-		
-		getMuted: function() {
-			return this.muted;
-		},
-		
-		setVolume: function(volume) {
-		    this.node.volume = parseFloat(volume);
-		},
-		
-		getVolume: function() {
-		    return this.volume;
-		},
-		
-		setAutoplay: function(autoplay) {
-		    this.node.autoplay = autoplay;
-		},
-		
-		getAutoplay: function() {
-		    return this.autoplay;   
-		}
-		
-	});
-	
-	
-	
 	
 	/**
 	 *
 	 * Flash Audio & Video Media Canvas.
 	 *
-	 */
+	 *
 	
 	var FlashVideoMediaCanvas = new Class({
 		
@@ -431,7 +616,7 @@
 	 *
 	 * Silverlight Audio & Video Media Canvas.
 	 *
-	 */
+	 *
 	
 	var SilverlightVideoMediaCanvas = new Class({
 		
@@ -454,6 +639,8 @@
 		}
 		
 	});
+	
+	*/
 	
 	
 })();

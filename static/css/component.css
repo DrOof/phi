@@ -57,27 +57,38 @@
 			height: 10px;
 		}
 	
-			.media-scrubber {
-			    position: relative;
-				margin-left: 10px;
-				width: 380px;
-				float: left;
+			.media-progress {
+				margin: -5px 160px 0 60px;
+			    position: absolute;
+				right: 0px;
+				left: 0px;
+				top: 50%;
 			}
 			
-			    .media-scrubber-head {
-			        border-radius: 40px;
+			    .media-progress-head {
+					margin: -4px 0 0 -9px;
+			        border-radius: 20px;
 			        position: absolute;
-			        background: #000;
-			        margin: -15px 0 0 -15px;
-			        height: 40px;
-			        width: 40px;
+					background: #000;
+			        height: 18px;
+			        width: 18px;
 			    }
 	
 			.media-volume {
+				position: relative;
 				margin-right: 10px;
 				float: right;
 				width: 80px;
 			}
+			
+				.media-volume-head {
+					margin: -4px 0 0 -9px;
+			        border-radius: 20px;
+			        position: absolute;
+					background: #000;
+			        height: 18px;
+			        width: 18px;
+			    }
 		
 		.media-time-control {
 			display: block;

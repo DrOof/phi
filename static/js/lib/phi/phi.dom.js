@@ -622,45 +622,71 @@
 	
 	
 	
-	
+	/**
+	 *
+	 * Generic Dragger
+	 *
+	 *
+	 */
 	
 	var Dragger = phi.dom.Dragger = new Class({
         
-        _init: function(root, scope, options) {
+        _init: function(draggable, scope, options) {
             
-            this.root = dom(root);
+            this.node = dom(draggable);
+            
             this.scope = dom(scope || document);
-            
-            this.root.bind('mousedown', this.handleMouseDown.bind(this));
+            this.scope.bind('mousedown', this.handleMouseDown.bind(this));
+			
+            this.constrain 	= (options.constrain === false) ? false : true;
+            this.allowX 	= (options.allowX === false) ? false : true;
+            this.allowY 	= (options.allowY === false) ? false : true;
             
             /*
-            this.root.bind('touchstart', this.handleTouchStart.bind(this));
-            this.root.bind('touchdrag', this.handleTouchDrag.bind(this));
-            this.root.bind('touchend', this.handleTouchEnd.bind(this));
+            this.node.bind('touchstart', this.handleTouchStart.bind(this));
+            this.node.bind('touchdrag', this.handleTouchDrag.bind(this));
+            this.node.bind('touchend', this.handleTouchEnd.bind(this));
             */
             
         },
         
         grab: function(e) {
-            console.log('grab');
+			
         },
         
         drag: function(e) {
             
-            var top, left;
+            var x, y, w, h, left, top;
             
-            top = this.scope.offset().top;
-            left = this.scope.offset().left;
+			x = e.pageX - this.scope.offset().left;
+            y = e.pageY - this.scope.offset().top;
             
-            this.root.css({
-                left: e.pageX - left,
-                top: e.pageY - top
-            });
+			w = this.scope.outerWidth();
+			h = this.scope.outerHeight();
+			
+			this.node.trigger('drag');
+			
+			this.move(x, y);
             
         },
+
+		move: function(x, y) {
+			
+			if (this.constrain) {
+				x = (x > w) ? w : ((x < 0) ? 0 : x);
+				y = (y > h) ? h : ((y < 0) ? 0 : y);
+			}
+			
+			var attributes = {};
+			if (this.allowX) attributes['left'] = x;
+			if (this.allowY) attributes['top'] = y;
+			
+            this.node.css(attributes);
+			
+		},
         
         release: function(e) {
-            console.log('release');
+			
         },
         
         update: function(value) {
@@ -668,9 +694,13 @@
         },
         
         handleMouseDown: function(e) { e.preventDefault();
-            dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
-            dom(document).bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
-            this.grab(e);
+            
+            if (dom(e.target).closest(this.node).length) {
+                dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
+                dom(document).bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
+                this.grab(e);
+            }
+            
         },
         
         handleMouseMove: function(e) { e.preventDefault();
@@ -686,7 +716,9 @@
         
         handleTouchStart: function(e) {
             var e = e.touches[0];
-            this.grab(e);
+            if (dom(e.target).closest(this.node).length) {
+                this.grab(e);
+            }
         },
         
         handleTouchDrag: function(e) {
@@ -701,6 +733,46 @@
         
         */
         
+	});
+	
+	var RelativeDragger = phi.dom.RelativeDragger = new Class({
+		
+		_extends: Dragger,
+		
+		drag: function(e) {
+			
+			var x, y, w, h, l, t, left, top;
+            
+			x = e.pageX - this.scope.offset().left;
+            y = e.pageY - this.scope.offset().top;
+            
+			w = this.scope.outerWidth();
+			h = this.scope.outerHeight();
+			
+			x = parseFloat(100 * x / w);
+			y = parseFloat(100 * y / h);
+			
+			this.node.trigger('drag');
+			
+			this.move(x, y);
+			
+		},
+		
+		move: function(x, y) {
+			
+			if (this.constrain) {
+				x = (x > 100) ? 100 : ((x < 0) ? 0 : x);
+				y = (y > 100) ? 100 : ((y < 0) ? 0 : y);
+			}
+			
+			var attributes = {};
+			if (this.allowX) attributes['left'] = x + '%';
+			if (this.allowY) attributes['top'] = y + '%';
+			
+            this.node.css(attributes);
+			
+		}
+		
 	});
 	
 	
