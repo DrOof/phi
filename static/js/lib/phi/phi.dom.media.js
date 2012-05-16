@@ -127,12 +127,13 @@
 			
 			// handle volume
 			if (e.type === 'volumechange') {
-				// this.controls.volume.move(parseFloat(this.canvas.node.currentTime / this.canvas.node.duration) * 100, 0);
+				this.controls.volume.move(parseFloat(this.canvas.node.volume) * 100, 0);
 			}
 			
 			// handle playable source
 			if (e.type === 'canplay') {
 				this.controls.node.find('[name="media-duration"]').html(this.canvas.node.duration);
+				this.controls.volume.move(parseFloat(this.canvas.node.volume) * 100, 0);
 			}
 			
 			// handle ended
@@ -170,9 +171,9 @@
 		
 		handleControlsEvent: function(e) {
 			
-			var name = e.target.getAttribute('name');
-			
 			if (e.type === 'drag') {
+				
+				var name = e.target.getAttribute('name');
 				
 				if (name === 'media-volume-head') {
 					var v = parseFloat(e.target.style['left']) * 0.01;

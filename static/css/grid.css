@@ -1,0 +1,35 @@
+/**
+ *
+ * Re-usable columns handle flexible layout. 
+ *
+ */
+
+.columns {
+	clear: both;
+}
+
+.columns::after,
+	.col::after {
+		visibility: hidden;
+		display: block;
+		content: "";
+		clear: both;
+		height: 0;
+	}
+
+	.col { width: 100%; float: left; }
+	.col.reverse { float: right; }
+
+	.two.a { width: 50%; }
+
+	.three.a { width: 33.333%; }
+	.three.b { width: 66.666%; }
+
+	.four.a { width: 25%; }
+	.four.b { width: 50%; }
+	.four.c { width: 75%; }
+
+	.five.a { width: 20%; }
+	.five.b { width: 40%; }
+	.five.c { width: 60%; }
+	.five.d { width: 80%; }
