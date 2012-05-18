@@ -636,10 +636,10 @@
         
         _init: function(draggable, scope, options) {
             
-			this.draggable = dom(draggable);
-			
             this.scope = dom(scope || document);
             this.scope.bind('mousedown', this.handleMouseDown.bind(this));
+
+			this.draggable = this.scope.find(draggable);
 			
 			var options = options || {};
 			
@@ -674,6 +674,8 @@
 			h = this.scope.outerHeight();
 			
 			this.move(x, y);
+			
+			this.draggable.trigger('drag');
             
         },
 
@@ -691,17 +693,13 @@
 			if (this.allowX) attributes['left'] = x;
 			if (this.allowY) attributes['top'] = y;
 			
-			this.draggable.css(attributes).trigger('move');
+			this.draggable.css(attributes);
 			
 		},
 		
-		update: function(x, y) {
-			this.move(x, y);
-		},
-        
         handleMouseDown: function(e) { e.preventDefault();
             
-            if (dom(e.target).closest(this.draggble).length) {
+            if (dom(e.target).closest(this.draggable).length) {
                 dom(document).bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
                 dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
                 this.grab(e.target);
@@ -760,6 +758,8 @@
 			
 			this.move(x, y);
 			
+			this.draggable.trigger('drag');
+			
 		},
 		
 		move: function(x, y) {
@@ -773,7 +773,7 @@
 			if (this.allowX) attributes['left'] = x + '%';
 			if (this.allowY) attributes['top'] = y + '%';
 			
-			this.draggable.css(attributes).trigger('move');
+			this.draggable.css(attributes);
 			
 		}
 		
