@@ -157,6 +157,9 @@
 	})();
 	
 	
+	
+	
+	
 	/**
 	 *
 	 * Observer Interface
@@ -633,10 +636,12 @@
         
         _init: function(draggable, scope, options) {
             
-            this.node = dom(draggable);
-            
+            this.node = dom(draggable, scope);
+			
             this.scope = dom(scope || document);
             this.scope.bind('mousedown', this.handleMouseDown.bind(this));
+			
+			var options = options || {};
 			
             this.constrain 	= (options.constrain === false) ? false : true;
             this.allowX 	= (options.allowX === false) ? false : true;
@@ -644,7 +649,7 @@
             
             /*
             this.node.bind('touchstart', this.handleTouchStart.bind(this));
-            this.node.bind('touchdrag', this.handleTouchDrag.bind(this));
+            this.node.bind('touchmove', this.handleTouchMove.bind(this));
             this.node.bind('touchend', this.handleTouchEnd.bind(this));
             */
             
@@ -671,6 +676,9 @@
         },
 
 		move: function(x, y) {
+			
+			w = this.scope.outerWidth();
+			h = this.scope.outerHeight();
 			
 			if (this.constrain) {
 				x = (x > w) ? w : ((x < 0) ? 0 : x);
@@ -721,7 +729,7 @@
             }
         },
         
-        handleTouchDrag: function(e) {
+        handleTouchMove: function(e) {
             var e = e.touches[0];
             this.drag(e);
         },

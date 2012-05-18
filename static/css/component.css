@@ -8,6 +8,7 @@
 	border: 1px solid #ffffff;
 	margin: 1.5em 0;
 	height: 320px;
+	width: 480px;
 }
 
 	.media-player {
@@ -94,3 +95,36 @@
 			float: left;
 		}
 		
+.dragger {
+	position: relative;
+	background: #fff;
+	margin: 1.5em 0;
+	height: 320px;
+	width: 320px;
+}
+
+	.draggable {
+		margin: -10px 0 0 -10px;
+		position: absolute;
+		background: #000;
+		height: 20px;
+		width: 20px;;
+	}
+
+.dragger.horizontal {
+	height: 10px;
+}
+
+	.dragger.horizontal .draggable {
+		margin: -5px 0 0 -10px;
+	}
+	
+.dragger.vertical {
+	width: 10px;
+}
+
+	.dragger.vertical .draggable {
+		margin: -10px 0 0 -5px;
+	}
+
+	

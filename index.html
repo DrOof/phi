@@ -42,21 +42,26 @@
 		    <p>
 		        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		    </p>
+		    <div id="horizontal-dragger" class="dragger horizontal">
+		        <div class="draggable"></div>
+		    </div>
+		    <div id="two-dimensional-dragger" class="dragger">
+		        <div class="draggable"></div>
+		    </div>
+		    <div id="vertical-dragger" class="dragger vertical">
+		        <div class="draggable"></div>
+		    </div>
 		</article>
 		
-		<article id="media" class="columns">
+		<article id="media">
 		    <h2>Media</h2>
 		    <p>depedencies: jquery-1.7.2, phi, phi.dom</p>
-		    <div class="col two a">
-    		    <section class="media-player-container">
-    		        <div id="media-player-1" class="media-player"></div>
-    		    </section>
-    		</div>
-    		<div class="col two a">
-    		    <section class="media-player-container">
-    		        <div id="media-player-2" class="media-player"></div>
-    		    </section>
-		    </div>
+		    <section class="media-player-container">
+		        <div id="media-player-1" class="media-player"></div>
+		    </section>
+		    <section class="media-player-container">
+		        <div id="media-player-2" class="media-player"></div>
+		    </section>
 		</article>
 		
 		<article id="dialog">
@@ -75,11 +80,17 @@
 		<script type="text/javascript" src="static/js/lib/phi/phi.dom.dialog.js"></script>
 		
 		<script type="text/javascript">
+		
+		    /* initialise draggers */
+		    new phi.dom.Dragger('.draggable', '#two-dimensional-dragger');
+		    new phi.dom.Dragger('.draggable', '#horizontal-dragger', { allowY: false });
+		    new phi.dom.Dragger('.draggable', '#vertical-dragger', { allowX: false });
 		    
-		    window.player = new phi.dom.media.MediaPlayer('media-player-1'); window.player.setSrc('http://content1b.omroep.nl/d93c84a56bc92d81354bc2fc6c6ea7e8/4fb37284/vpro/Gesch24/4KO/G24_TALKSHOW_fr06.mp4');
+		    /* initialise media players */
+		    new phi.dom.media.MediaPlayer('media-player-1').setSrc('http://content1b.omroep.nl/d93c84a56bc92d81354bc2fc6c6ea7e8/4fb37284/vpro/Gesch24/4KO/G24_TALKSHOW_fr06.mp4');
 		    new phi.dom.media.MediaPlayer('media-player-2').setSrc('media/video/video.m4v');
 		    
-		    // 'http://content1b.omroep.nl/d93c84a56bc92d81354bc2fc6c6ea7e8/4fb37284/vpro/Gesch24/4KO/G24_TALKSHOW_fr06.mp4'
+		    
 		    
 		</script>
 		
