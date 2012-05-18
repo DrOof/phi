@@ -636,7 +636,7 @@
         
         _init: function(draggable, scope, options) {
             
-            this.node = dom(draggable, scope);
+			this.draggable = dom(draggable);
 			
             this.scope = dom(scope || document);
             this.scope.bind('mousedown', this.handleMouseDown.bind(this));
@@ -655,7 +655,11 @@
             
         },
         
-        grab: function(e) {
+        grab: function(target) {
+			
+        },
+		
+        release: function(target) {
 			
         },
         
@@ -668,8 +672,6 @@
             
 			w = this.scope.outerWidth();
 			h = this.scope.outerHeight();
-			
-			this.node.trigger('drag');
 			
 			this.move(x, y);
             
@@ -689,24 +691,20 @@
 			if (this.allowX) attributes['left'] = x;
 			if (this.allowY) attributes['top'] = y;
 			
-            this.node.css(attributes);
+			this.draggable.css(attributes).trigger('move');
 			
 		},
-        
-        release: function(e) {
-			
-        },
-        
-        update: function(value) {
-            console.log(value);
-        },
+		
+		update: function(x, y) {
+			this.move(x, y);
+		},
         
         handleMouseDown: function(e) { e.preventDefault();
             
-            if (dom(e.target).closest(this.node).length) {
-                dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
+            if (dom(e.target).closest(this.draggble).length) {
                 dom(document).bind('mouseup.phi-slider mouseleave.phi-slider', this.handleMouseUp.bind(this));
-                this.grab(e);
+                dom(document).bind('mousemove.phi-slider', this.handleMouseMove.bind(this));
+                this.grab(e.target);
             }
             
         },
@@ -717,7 +715,7 @@
         
         handleMouseUp: function(e) { e.preventDefault();
             dom(document).unbind('mousemove.phi-slider mouseup.phi-slider mouseleave.phi-slider');
-            this.release(e);
+            this.release(e.target);
         }
         
         /*,
@@ -760,8 +758,6 @@
 			x = parseFloat(100 * x / w);
 			y = parseFloat(100 * y / h);
 			
-			this.node.trigger('drag');
-			
 			this.move(x, y);
 			
 		},
@@ -777,7 +773,7 @@
 			if (this.allowX) attributes['left'] = x + '%';
 			if (this.allowY) attributes['top'] = y + '%';
 			
-            this.node.css(attributes);
+			this.draggable.css(attributes).trigger('move');
 			
 		}
 		

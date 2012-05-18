@@ -136,11 +136,6 @@
 				this.controls.volume.move(parseFloat(this.canvas.node.volume) * 100, 0);
 			}
 			
-			// handle ended
-			if (e.type === 'ended') {
-				
-			}
-			
 		},
 		
 		/**
@@ -155,7 +150,7 @@
 			
 			var controls = new MediaPlayerControls(this.node);
 			
-			controls.node.bind('drag', this.handleControlsEvent.bind(this));
+			controls.node.bind('move', this.handleControlsEvent.bind(this));
 			
 			return controls;
 			
@@ -171,7 +166,7 @@
 		
 		handleControlsEvent: function(e) {
 			
-			if (e.type === 'drag') {
+			if (e.type === 'move') {
 				
 				var name = e.target.getAttribute('name');
 				
