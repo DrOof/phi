@@ -654,6 +654,12 @@
             */
             
         },
+
+		addEventListener: function(type, fn) {
+			
+			this.scope.bind(type, fn);
+			
+		},
         
         grab: function(target) {
 			
@@ -675,7 +681,7 @@
 			
 			this.move(x, y);
 			
-			this.draggable.trigger('drag');
+			this.draggable.trigger('dragmove');
             
         },
 
@@ -758,7 +764,7 @@
 			
 			this.move(x, y);
 			
-			this.draggable.trigger('drag');
+			this.draggable.trigger('dragmove');
 			
 		},
 		

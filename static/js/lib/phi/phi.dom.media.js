@@ -149,7 +149,7 @@
 			
 			var controls = new MediaPlayerControls(this.node);
 			
-			controls.node.bind('drag', this.handleControlsEvent.bind(this));
+			controls.node.bind('dragmove', this.handleControlsEvent.bind(this));
 			
 			return controls;
 			
@@ -165,7 +165,7 @@
 		
 		handleControlsEvent: function(e) {
 			
-			if (e.type === 'drag') {
+			if (e.type === 'dragmove') {
 				
 				var name = e.target.getAttribute('name');
 			

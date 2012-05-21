@@ -97,23 +97,38 @@
 			float: left;
 		}
 		
+.control {
+	border: 1px solid #f0f0f0;
+	display: inline-block;
+}
+
+.color {
+	display: block;
+}
+
+.color-swatch {
+	height: 40px;
+	width: 40px;
+}
+		
 .dragger {
 	position: relative;
-	background: #fff;
-	margin: 1.5em 0;
-	height: 320px;
-	width: 320px;
+	height: 256px;
+	width: 256px;
+	margin: 10px;
 }
 
 	.draggable {
+		background: rgba(255, 255, 255, 0.33);
 		margin: -10px 0 0 -10px;
+		border: 1px solid #fff;
 		position: absolute;
-		background: #000;
-		height: 20px;
-		width: 20px;;
+		height: 18px;
+		width: 18px;
 	}
 
 .dragger.horizontal {
+	margin: 5px 10px;
 	height: 10px;
 }
 
@@ -122,11 +137,11 @@
 	}
 	
 .dragger.vertical {
+	margin: 10px 5px;
 	width: 10px;
 }
 
 	.dragger.vertical .draggable {
 		margin: -10px 0 0 -5px;
 	}
-
 	
