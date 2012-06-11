@@ -114,13 +114,13 @@
 					}
 				}
 				
-				phi.dom(document).bind('keyup', this.escape.bind(this));
+				phi.dom(document).bind('keyup.escapable', this.escape.bind(this));
 				
 			}
 		},
 		hide: {
 			after: function() {
-				phi.dom(document).unbind('keyup', this.escape);
+				phi.dom(document).unbind('keyup.escapable', this.escape);
 			}
 		}
 	});

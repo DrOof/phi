@@ -4,23 +4,20 @@
 
 (function() {
 	
-	var phi = window.phi || {};
-	var dom = phi.dom || {};
+	
+	
+	var phi = phi;
+	var dom = phi.dom;
+	var widget = dom.widget = {};
 	
 	
 	
-	
-	
-	var ColorPicker = new Class({
+	var widget.ColorPicker = new Class({
 		
 		_init: function() {
 			
 			this.hue = new dom.Dragger();
 			this.gradient = new dom.Dragger();
-			
-		},
-		
-		handleEvent: function(e) {
 			
 		},
 		
@@ -32,8 +29,8 @@
 			
 		},
 		
-		hsvToRgb: function(h, s, v) {
-			
+		hsvToRgb: function() {
+		    
 		}
 		
 	});
@@ -53,7 +50,7 @@
         var grad, rgb;
         
         for (var i = 0; i < 256; i++) {
-        
+            
             grad = ctx.createLinearGradient(0, 0, 256, 0);
             
             rgb = hsvToRgb(h, 0.0, 0.0);
@@ -109,8 +106,6 @@
         
         s = x / 256;
         v = y / 256;
-        
-        console.log(h);
         
         drawColorSwatch(h, s, v);
         
