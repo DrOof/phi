@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+
+	</head>
+	<body>
+		<script type="text/javascript" src="static/js/lib/phi/phi.js"></script>
+
+		<script>
+
+			phi( 'class', 'Parent', {
+
+				__extends: Object,
+
+				__final__: {
+					do: function() {
+						alert('do');
+					}
+				}
+			});
+
+			phi( 'class', 'Child', {
+
+				__extends__: Parent,
+				
+				Child: function() {
+					console.log( 'constructor' );
+				},
+
+				do: function() {
+					alert('wap');
+				}
+
+			});
+
+		</script>
+	</body>
+</html>

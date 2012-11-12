@@ -71,7 +71,7 @@
 		 * 
 		 */
 
-		extend: function(target) {
+		extend: function( target ) {
 			var object;
 			var l = arguments.length;
 			for (var i = 1; i < l; i++) {
@@ -159,7 +159,7 @@
 	 *
 	 */
 
-	var Class = phi.Class = function(definition) {
+	var Class = phi.Class = function( definition ) {
 
 		var base, interfaces, aspects, init, statics;
 		var proto = {};
