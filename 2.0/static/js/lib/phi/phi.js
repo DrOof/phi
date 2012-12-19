@@ -51,36 +51,8 @@
 	 *
 	 */
 	 
-	phi.define = function( type, name, define ) {
-		return window[ name ] = types [ '__type__'.replace( /type/, type ) ] ( name, define );
-	};
-
-	/*
-	 *
-	 * Defines a class, interface, abstract (class) or aspect in a package
-	 *
-	 * @param type {String}							Defining a class.
-	 *
-	 */
-	
-	phi.package = function( package, type, name, define ) {
-
-		var path = window;
-		if ( typeof package === 'string') {
-			var p = package.split('.'), step;
-			for (var i = 0; i < p.length; i++) {
-				s = p[i];
-				path[ s ] = path[ s ] || {};
-				path = path[ s ];
-			};	
-		}
-
-		if ( typeof package === 'object' ) {
-			path = package;
-		}
-
-		return path [ name ] = phi.define( type, name, define );
-
+	phi.define = function( define ) {
+		return types.__class__( define );
 	};
 
 	/*
@@ -112,7 +84,6 @@
 	
 	
 	
-	
 	var types = phi.types = {};
 	
 	/**
@@ -123,55 +94,72 @@
 	 *
 	 */ 
 	 
-	types.__class__ = function( name, define ) {
+	types.__class__ = function( define ) {
 
 		var __class__ = function() {};
+		var __super__ = function() {};
 		
 		var parent = null,
-			final = {},
 			prototype = {},
 			constructor = function() {};
 
-		var def;
+		var member;
 		for ( var m in define) {
 
-			d = define[ m ];
+			member = define[ m ];
 
-			switch( m ) {
+			switch ( m ) {
+				
+				case '__init__' :
+					constructor = member;
+					break;
 
 				case '__extends__' : 
-					parent = d;
+					parent = member;
 					break;
 
 				case '__implements__' :
 					
 					break;
 
-				case name :
-					constructor = d;
-					break;
-
-				case '__final__' : 
-
-					for ( var name in d ) {
-						prototype[ name ] = d;
-						prototype[ name ].final = true;
-					};
-
-
-					break; 
-
 				default :
-					prototype[ m ] = d;
+					prototype[ m ] = member;
 					break;
 
 			}
 
 		}
-
-		var p = ( parent ) ? parent.prototype || {} : {};
-		__class__.prototype = phi.extend( {}, p, prototype );
-
+		
+		/*
+		var c = function() {
+			if (b) { b.apply(this, arguments); }
+			if (a) { a.apply(this, arguments); }
+		};
+		return c;
+		*/
+		
+		__class__ = function() {
+			constructor.apply( this, arguments );
+		};
+		
+		__super__ = function() {
+			parent.constructor.apply( this, arguments );
+		};
+		
+		if ( parent ) {
+			
+			var p = parent.prototype;
+			parent = function() {};
+			parent.prototype = p;
+			
+			__class__.prototype = new parent();
+			__class__.prototype.super = new parent();
+			
+		}
+		
+		__class__.prototype = phi.extend( __class__.prototype, prototype );
+		__class__.prototype.constructor = constructor;
+		
 		return __class__;
 
 	};
@@ -187,7 +175,7 @@
 	 *
 	 */
 	 
-	types.__aspect__ = function( name, define ) {
+	types.__aspect__ = function( define ) {
 
 		var __aspect__;
 
@@ -205,7 +193,7 @@
 	 *
 	 */
 	
-	types.__abstract__ = function( name, define ) {
+	types.__abstract__ = function( define ) {
 
 		var __abstract__;
 
@@ -223,7 +211,7 @@
 	 *
 	 */
 	
-	types.__interface__ = function( name, define ) {
+	types.__interface__ = function( define ) {
 		return define;
 	};
 	

@@ -7,31 +7,33 @@
 		<script type="text/javascript" src="static/js/lib/phi/phi.js"></script>
 
 		<script>
-
-			phi( 'class', 'Parent', {
-
-				__extends: Object,
-
-				__final__: {
-					do: function() {
-						alert('do');
-					}
-				}
-			});
-
-			phi( 'class', 'Child', {
-
-				__extends__: Parent,
-				
-				Child: function() {
-					console.log( 'constructor' );
+		
+			var A = phi.define({
+				__init__: function() {
+					console.log( hallo )
 				},
-
-				do: function() {
-					alert('wap');
-				}
-
+				hallo: 1
 			});
+
+			var B = phi.define({
+				__extends__: A,
+				__init__: function() {
+					this.dag = 'dag';
+				},
+				hallo: 2
+			});
+			
+			var C = phi.define({
+				__extends__: B,
+				__init__: function() {
+					
+				},
+				hallo: 3
+			});
+			
+			console.log( 'C is C', new C() instanceof C )
+			console.log( 'C is B', new C() instanceof B )
+			console.log( 'C is A', new C() instanceof A )
 
 		</script>
 	</body>
