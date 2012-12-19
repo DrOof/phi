@@ -8,32 +8,38 @@
 
 		<script>
 		
-			var A = phi.define({
+			var sup1, sup2;
+			
+			var A = phi({
 				__init__: function() {
-					console.log( hallo )
+					alert('hallo');
 				},
 				hallo: 1
 			});
 
-			var B = phi.define({
+			var B = phi({
 				__extends__: A,
 				__init__: function() {
-					this.dag = 'dag';
+					A.apply( this, arguments );
+					alert('doei');
 				},
+				dag: 2,
 				hallo: 2
 			});
 			
-			var C = phi.define({
+			var C = phi({
 				__extends__: B,
 				__init__: function() {
-					
+					B.apply( this, arguments );
+					alert('einde')
 				},
 				hallo: 3
 			});
 			
-			console.log( 'C is C', new C() instanceof C )
-			console.log( 'C is B', new C() instanceof B )
-			console.log( 'C is A', new C() instanceof A )
+			// Unit Testing
+			// console.log( 'C is C', new C() instanceof C );
+			// console.log( 'C is B', new C() instanceof B );
+			// console.log( 'C is A', new C() instanceof A );
 
 		</script>
 	</body>

@@ -28,16 +28,8 @@
 	 *
 	 */
 	 
-	var phi = window.phi = window.phi || function(  ) {
-
-		if ( arguments.length == 3 ) {
-			return phi.define( arguments[0], arguments[1], arguments[2] );
-		}
-		
-		if ( arguments.length == 4 ) {
-			return phi.package( arguments[0], arguments[1], arguments[2], arguments[3] );
-		}
-		
+	var phi = window.phi = window.phi || function( define ) {
+		return phi.define( define );
 	};
 	
 
@@ -97,7 +89,6 @@
 	types.__class__ = function( define ) {
 
 		var __class__ = function() {};
-		var __super__ = function() {};
 		
 		var parent = null,
 			prototype = {},
@@ -130,20 +121,8 @@
 
 		}
 		
-		/*
-		var c = function() {
-			if (b) { b.apply(this, arguments); }
-			if (a) { a.apply(this, arguments); }
-		};
-		return c;
-		*/
-		
 		__class__ = function() {
 			constructor.apply( this, arguments );
-		};
-		
-		__super__ = function() {
-			parent.constructor.apply( this, arguments );
 		};
 		
 		if ( parent ) {
