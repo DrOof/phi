@@ -152,31 +152,9 @@
             
             var colorSwatch = document.getElementById('color-swatch');
 		    
-		    drawColorSwatch(1.0, 0, 0);
-		    new phi.dom.Dragger('.draggable', '#hsla-color-s-and-l').addEventListener('dragmove', function(e) {
-		        
-                var x = phi.dom(e.target).position().left;
-                var y = phi.dom(e.target).position().top;
-                
-                s = x / 256;
-                v = y / 256;
-                
-                console.log(h);
-                
-                drawColorSwatch(h, s, v);
-                
-		    });
-		    
-		    drawColorGradient(1.0, 0, 0);
-		    new phi.dom.Dragger('.draggable', '#hsla-color-hue', { allowX: false }).addEventListener('dragmove', function(e) {
-		        
-		        var y = phi.dom(e.target).position().top;
-		        h = parseFloat(y / 256);
-		        
-		        drawColorGradient(h, s, v);
-		        drawColorSwatch(h, s, v);
-		        
-		    });
+		
+			new phi.dom.Dragger('.draggable', '#hsla-color-s-and-l');
+		    new phi.dom.Dragger('.draggable', '#hsla-color-hue', { allowX: false, constrain: true });
 		    
 		    
 		    
