@@ -8,39 +8,39 @@
 
 		<script>
 		
-			var sup1, sup2;
-			
 			var A = phi({
-				__init__: function() {
-					alert('hallo');
+				__init__: function( a, b, c ) {
+					this.apple = 'apple';
 				},
-				hallo: 1
+				name: 'A'
 			});
 
 			var B = phi({
 				__extends__: A,
-				__init__: function() {
-					A.apply( this, arguments );
-					alert('doei');
+				__init__: function( a, b, c ) {
+					this.super( arguments );
+					this.pear = 'pear';
+					this.banana = 'pear';
 				},
-				dag: 2,
-				hallo: 2
+				name: 'B'
 			});
 			
 			var C = phi({
 				__extends__: B,
-				__init__: function() {
-					B.apply( this, arguments );
-					alert('einde')
+				__init__: function( a, b, c ) {
+					this.super( arguments );
+					this.banana = 'banana';
 				},
-				hallo: 3
+				name: 'C'
 			});
 			
 			// Unit Testing
-			// console.log( 'C is C', new C() instanceof C );
-			// console.log( 'C is B', new C() instanceof B );
-			// console.log( 'C is A', new C() instanceof A );
-
+			var c = new C();
+			console.log( 'C IS-A C', c instanceof C );
+			console.log( 'C IS-A B', c instanceof B );
+			console.log( 'C IS-A A', c instanceof A );
+			console.log( c );
+			
 		</script>
 	</body>
 </html>

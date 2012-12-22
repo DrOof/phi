@@ -32,6 +32,7 @@
 		return phi.define( define );
 	};
 	
+	var id = 0;
 
 
 
@@ -58,15 +59,18 @@
 
 	phi.extend = function( target ) {
 		
+		var override = arguments[ arguments.length - 1 ];
 		var result = target;
 
 		var object;
 		for (var i = 1; i < arguments.length; i++) {
 			object = arguments[i];
 			for (var n in object) {
-				if ( !(result[n] && result[n].final) ) {
+				// doe dit altijd, tenzij niet override && result[n]
+				if ( override || (!override && !result[n]) ) {
 					result[n] = object[n];
 				}
+
 			};
 		};
 
@@ -127,12 +131,20 @@
 		
 		if ( parent ) {
 			
+			var __super__ = parent;
 			var p = parent.prototype;
 			parent = function() {};
 			parent.prototype = p;
 			
 			__class__.prototype = new parent();
-			__class__.prototype.super = new parent();
+			__class__.prototype.super = function() {
+				if ( this.__super__ ) {
+					phi.extend( this, new this.__super__( arguments ), false );
+				}
+				
+			};
+			
+			__class__.prototype.__super__ = __super__;
 			
 		}
 		
