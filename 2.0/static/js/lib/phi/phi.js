@@ -5,17 +5,12 @@
 /*
  *
  *
- * __class API
+ * phi
  *
- * __extends: (__class__ || __abstract__)
- * __implements: (__interface__ || [__interface__])
- * __applies: (__aspect__ || [__aspect__])
- * __init: Function
- * static: {}
- * final: {}
- * {}
- *
- * 
+ * 	__init__
+ *	__extends__
+ *	__implements__
+ *	__final__
  *
  *
  */
