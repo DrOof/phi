@@ -126,30 +126,22 @@
 		}
 		
 		__class__ = function() {
-			constructor.apply( this, arguments );
+			if (parent) parent.apply( this, arguments );
+			if (constructor) constructor.apply( this, arguments );
 		};
 		
 		if ( parent ) {
 			
-			var __super__ = parent;
 			var p = parent.prototype;
 			parent = function() {};
 			parent.prototype = p;
 			
 			__class__.prototype = new parent();
-			__class__.prototype.super = function() {
-				if ( this.__super__ ) {
-					phi.extend( this, new this.__super__( arguments ), false );
-				}
-				
-			};
-			
-			__class__.prototype.__super__ = __super__;
 			
 		}
 		
 		__class__.prototype = phi.extend( __class__.prototype, prototype );
-		__class__.prototype.constructor = constructor;
+		__class__.prototype.constructor = __class__;
 		
 		return __class__;
 
