@@ -225,26 +225,5 @@
 
 
 
-
-
-	/**
-	 * Creates a callback for any function where some of its arguements may be prefilled. The 
-	 * prefilled arguments always take precedence.
-	 * 
-	 */
-
-	Function.prototype.partial = function() {
-		var method = this;
-		var defined = arguments;
-		return function() {
-			var l = Math.max(defined.length, arguments.length);
-			var parameters = [];
-			for (var i = 0; i < l; i++) {
-				parameters[i] = defined[i] || arguments[i];
-			}
-			return method.apply(this, parameters);
-		};
-	};
-
 	
 })();
