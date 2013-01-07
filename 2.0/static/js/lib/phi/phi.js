@@ -195,7 +195,11 @@
 	 */
 	
 	types.__interface__ = function( define ) {
-		return define;
+		
+		var __interface__;
+		
+		return __interface__;
+		
 	};
 	
 	
