@@ -4,6 +4,7 @@
 
 	</head>
 	<body>
+        
 		<script type="text/javascript" src="static/js/lib/phi/phi.js"></script>
 
 		<script>
@@ -34,13 +35,27 @@
 				name: 'C'
 			});
 			
+            /*
 			// Unit Testing
 			var c = new C();
 			console.log( 'C IS-A C', c instanceof C );
 			console.log( 'C IS-A B', c instanceof B );
 			console.log( 'C IS-A A', c instanceof A );
 			console.log( c );
+            */
 			
 		</script>
+        
+        <script type="text/javascript" src="static/js/lib/phi/phi.mvc.js"></script>
+        
+        <script>
+        
+            var view = new phi.mvc.View();
+            var model = new phi.mvc.Model();
+            var controller = new phi.mvc.Controller( view, model );
+        
+        
+        </script>
+        
 	</body>
 </html>
