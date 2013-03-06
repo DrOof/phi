@@ -1,6 +1,17 @@
-//
+/*
+ *
+ * Model View Controller
+ *
+ *
+ *
+ */
 
 (function() {
+    
+    
+    var phi = window.phi || {};
+    phi.mvc = {};
+    
     
     
     
@@ -27,7 +38,7 @@
     
     
 
-    var Model = phi({
+    var Model = phi.mvc.Model = phi({
     
         __extends__: Observable,
     
@@ -51,7 +62,7 @@
     
     
     
-    var View = phi({
+    var View = phi.mvc.View = phi({
         
         __extends__: Observable,
         
@@ -68,7 +79,7 @@
     
     
     
-    var Controller = phi({
+    var Controller = phi.mvc.Controller = phi({
     
         __init__: function() {
             
@@ -89,35 +100,6 @@
     
     
     
-    
-    var ShoppingCartModel = phi({
-        
-        __extends__: Model,
-        __init__: function() {
-            this.super();
-        },
-        addProduct: function( product ) {
-            this.products.push( product );
-            this.set( 'products' , this.products );
-        }
-    })
-    
-    var ShoppingCartController = phi({
-        __extends__: Controller,
-        __init__: function() {
-            
-        },
-        handleMouseEnter: function() {
-            this.model.change('a/path/to/a/value', 0 );
-        }
-    });
-    
-    var ShoppingCartView = phi({
-        __extends__: View,
-        __init__: function() {
-            
-        }
-    })
     
 
 })();
