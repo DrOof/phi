@@ -11,7 +11,7 @@
         __extends__ : phi.mvc.Observable,
         
         __init__ : function( node ) {
-			
+            
             this.node = node;
             this.reset( node );
             
@@ -44,20 +44,20 @@
         },
         
         createControls: function() {
-			
+            
             var controls = this.controls = new phi.media.ui.Controls();
             this.node.appendChild( controls.createControls() );
             
             /*  */
             controls.initialise();
-			
+            
             controls.addEventListener( 'requestplay', this.handleRequestPlay.bind( this ) );
             controls.addEventListener( 'requeststop', this.handleRequestStop.bind( this ) );
             controls.addEventListener( 'requestpause', this.handleRequestPause.bind( this ) );
             controls.addEventListener( 'requestmuted', this.handleRequestMuted.bind( this ) );
             controls.addEventListener( 'requesttimeupdate', this.handleRequestTimeUpdate.bind( this ) );
             controls.addEventListener( 'requestvolumechange', this.handleRequestVolumeChange.bind( this ) );
-			
+            
         },
         
         destroyEngine: function() {
@@ -83,7 +83,7 @@
             return T;
             
         },
-		
+        
         createEngine: function( source ) {
             
             if ( this.engine ) {
@@ -113,29 +113,29 @@
             return engine;
             
         },
-		
+        
         play: function() {
-			
+            
             if ( this.engine ) {
                 this.engine.play();
             }
-			
+            
         },
-		
+        
         pause: function() {
-			
+            
             if ( this.engine ) {
                 this.engine.pause();
             }
-			
+            
         },
-		
+        
         stop: function() {
-			
+            
             if ( this.engine ) {
                 this.engine.stop();
             }
-			
+            
         },
         
         src: function( src ) {
@@ -147,7 +147,7 @@
             }
             
         },
-		
+        
         currentTime: function( currentTime ) {
             
             if ( currentTime == undefined ) {
@@ -157,11 +157,11 @@
             }
             
         },
-		
+        
         duration: function() {
             return this.getDuration();
         },
-		
+        
         volume: function( volume ) {
             
             if ( volume === undefined ) {
@@ -205,7 +205,7 @@
                 this.engine.setSrc( src );
                 
             }
-			
+            
         },
         
         getSrc: function() {
@@ -213,7 +213,7 @@
             if ( this.engine ) {
                 return this.engine.getSrc();
             }
-			
+            
         },
         
         setCurrentTime: function( currentTime ) {
@@ -221,7 +221,7 @@
             if ( this.engine ) {
                 this.engine.setCurrentTime( currentTime );
             }
-			
+            
         },
         
         getCurrentTime: function() {
@@ -229,7 +229,7 @@
             if ( this.engine ) {
                 return this.engine.getCurrentTime();
             }
-			
+            
         },
         
         setVolume: function( volume ) {
@@ -237,7 +237,7 @@
             if ( this.engine ) {
                 this.engine.setVolume( volume );
             }
-			
+            
         },
         
         getVolume: function() {
@@ -245,15 +245,15 @@
             if ( this.engine ) {
                 return this.engine.getVolume();
             }
-			
+            
         },
-		
+        
         getDuration : function() {
-			
+            
             if ( this.engine ) {
                 return this.engine.getDuration();
             }
-			
+            
         },
         
         addState: function( state ) {
@@ -279,15 +279,15 @@
         handlePlaying: function( e ) {
             this.addState( PLAYING  );
         },
-		
+        
         handleTimeUpdate: function( e ) {
-			
+            
             this.controls.updateRemainingTime( this.duration() - this.currentTime() );
             this.controls.updateCurrentTime( this.currentTime() );
             this.controls.updateDuration( this.duration() );
-			
+            
             this.controls.updateProgress( this.currentTime(), this.duration() );
-			
+            
         },
         
         handleVolumeChange: function( e ) {
@@ -301,15 +301,15 @@
             this.controls.updateVolume( this.volume() );
             
         },
-		
+        
         handleRequestPlay : function( e ) {
             this.play();
         },
-		
+        
         handleRequestStop : function( e ) {
             this.stop();
         },
-		
+        
         handleRequestPause : function( e ) {
             this.pause();
         },
@@ -321,11 +321,11 @@
         handleRequestMuted: function( e ) {
             this.muted( !this.muted() );            
         },
-		
+        
         handleRequestTimeUpdate: function( e ) {
             this.currentTime( ( this.controls.progress.valueX() / 100 ) * this.duration() );
         }
-		
+        
     });
     
 })( jQuery );

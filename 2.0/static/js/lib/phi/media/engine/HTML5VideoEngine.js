@@ -1,19 +1,19 @@
 ( function( dom ) {
-	
+    
     phi.media.engine = phi.media.engine || {};
-	
+    
     var HTML5VideoEngine = phi.media.engine.HTML5VideoEngine = phi({
-		
+        
         __implements__ : phi.media.engine.Engine,
         
         __extends__ : phi.mvc.Observable,
         
         __init__ : function() {
-			
+            
         },
-		
+        
         createCanvas: function() {
-			
+            
             var canvas = this.canvas = document.createElement( 'video' );
             
             canvas.className = 'player-canvas';
@@ -24,7 +24,7 @@
             canvas.addEventListener( 'volumechange', this.handleCanvasEvent.bind( this ), true );
             
             return canvas;
-			
+            
         },
         
         destroyCanvas: function() {
@@ -34,7 +34,7 @@
             }
             
         },
-		
+        
         play: function() {
             this.canvas.play();
         },
@@ -62,11 +62,11 @@
         getDuration: function() {
             return this.canvas.duration;
         },
-		
+        
         setSrc: function( src ) {
             this.canvas.src = src;
         },
-		
+        
         getSrc: function() {
             return this.canvas.src;
         },
@@ -76,7 +76,7 @@
             this.dispatchEvent( e );
             
         }
-		
+        
     });
     
     HTML5VideoEngine.isAvailable = function() {
@@ -86,5 +86,5 @@
     HTML5VideoEngine.canPlayType = function( mimeType ) {
         return HTML5VideoEngine.isAvailable() && document.createElement( 'video' ).canPlayType( mimeType );
     };
-	
+    
 } )( phi.dom );

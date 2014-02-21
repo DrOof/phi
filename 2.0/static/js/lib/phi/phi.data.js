@@ -405,20 +405,20 @@
         renderTableHeadCell: function( value ) {
             
             var cellData = {
-            	key: value,
-            	value: value,
-            	filter: this.filters[ value ] || '',
-            	sorted : ( value === this.sort.by ) ? this.sort.order : '',
-            	sortable : ''
+                key: value,
+                value: value,
+                filter: this.filters[ value ] || '',
+                sorted : ( value === this.sort.by ) ? this.sort.order : '',
+                sortable : ''
             };
             
             if (this.renderConfig && this.renderConfig[value]) {
-            	if (false === this.renderConfig[value].sortable) {
-            		cellData.sortable = 'not-sortable';
-            	}
-            	if (this.renderConfig[value].label) {
-            		cellData.value = '<span title="' + value + '">' + this.renderConfig[value].label + '</span>';
-            	}
+                if (false === this.renderConfig[value].sortable) {
+                    cellData.sortable = 'not-sortable';
+                }
+                if (this.renderConfig[value].label) {
+                    cellData.value = '<span title="' + value + '">' + this.renderConfig[value].label + '</span>';
+                }
             }
             
             return Grid.TH.parse( cellData );
@@ -462,25 +462,25 @@
         
         renderTableBodyCell: function( key, value ) {
         
-        	// Value can be either
-        	// 1) a two-field array of (data, view)
-        	// 2) a single field, being both data and view.
-        	// The ternary expression selects the view.
+            // Value can be either
+            // 1) a two-field array of (data, view)
+            // 2) a single field, being both data and view.
+            // The ternary expression selects the view.
         
-        	var cellData = {
-        		key : key,
-        		value : (typeof value == 'object' ? value[1] : value),
-        		dataType : 'unknown',
-        		columnRef : 'none'
-        	}
+            var cellData = {
+                key : key,
+                value : (typeof value == 'object' ? value[1] : value),
+                dataType : 'unknown',
+                columnRef : 'none'
+            }
         
-        	if (this.renderConfig && this.renderConfig[key] && this.renderConfig[key].dataType) {
-        		cellData.dataType = this.renderConfig[key].dataType;
-        	}
-        	
-        	if (this.renderConfig && this.renderConfig[key] && this.renderConfig[key].columnRef) {
-        		cellData.columnRef = this.renderConfig[key].columnRef;
-        	}
+            if (this.renderConfig && this.renderConfig[key] && this.renderConfig[key].dataType) {
+                cellData.dataType = this.renderConfig[key].dataType;
+            }
+            
+            if (this.renderConfig && this.renderConfig[key] && this.renderConfig[key].columnRef) {
+                cellData.columnRef = this.renderConfig[key].columnRef;
+            }
         
             return Grid.TD.parse( cellData );
             
@@ -519,20 +519,20 @@
     var Sort = phi.data.Sort = {};
     
     Sort._debug = function (sortFunction) {
-    	return function (a, b) {
-    		var result = sortFunction (a, b);
-    		console.log("Comparing(" + a + ", " + b + ") = " + result);
-    		return result;
-    	};
+        return function (a, b) {
+            var result = sortFunction (a, b);
+            console.log("Comparing(" + a + ", " + b + ") = " + result);
+            return result;
+        };
     };
        
     Sort.Text = function(a, b) {
-    	return (a == b) ? 0 : (a > b ? 1 : -1);
+        return (a == b) ? 0 : (a > b ? 1 : -1);
     };
     
     Sort.Number =  function(a, b) {
-    	var fA = parseFloat(a), fB = parseFloat(b);
-    	return (fA == fB) ? 0 : (fA > fB ? 1 : -1);
+        var fA = parseFloat(a), fB = parseFloat(b);
+        return (fA == fB) ? 0 : (fA > fB ? 1 : -1);
     };
     
     
@@ -607,32 +607,32 @@
         
         sort: function( by, order ) {
         
-			var sortFunction = Sort.Text;
-			
-			// Processing numbers
-			if (this.renderConfig && this.renderConfig[by] && this.renderConfig[by].dataType == 'number') {
-				sortFunction = Sort.Number;
-			}
-			
-			// Asc / Desc
-			if (order == 'asc') {
-				this.data.sort(function(a, b) {
-					var aValue = typeof a[by] == "object" ? a[by][0] : a[by];
-					var bValue = typeof b[by] == "object" ? b[by][0] : b[by];
-				
-					return sortFunction(aValue, bValue);
-				});
-			} else {
-				// Descending is basically reversing the
-				// arguments to the Ascending sort function..
-				this.data.sort(function(a, b) {
-				
-					var aValue = typeof a[by] == "object" ? a[by][0] : a[by];
-					var bValue = typeof b[by] == "object" ? b[by][0] : b[by];
-				
-					return sortFunction(bValue, aValue);
-				});
-			}
+            var sortFunction = Sort.Text;
+            
+            // Processing numbers
+            if (this.renderConfig && this.renderConfig[by] && this.renderConfig[by].dataType == 'number') {
+                sortFunction = Sort.Number;
+            }
+            
+            // Asc / Desc
+            if (order == 'asc') {
+                this.data.sort(function(a, b) {
+                    var aValue = typeof a[by] == "object" ? a[by][0] : a[by];
+                    var bValue = typeof b[by] == "object" ? b[by][0] : b[by];
+                
+                    return sortFunction(aValue, bValue);
+                });
+            } else {
+                // Descending is basically reversing the
+                // arguments to the Ascending sort function..
+                this.data.sort(function(a, b) {
+                
+                    var aValue = typeof a[by] == "object" ? a[by][0] : a[by];
+                    var bValue = typeof b[by] == "object" ? b[by][0] : b[by];
+                
+                    return sortFunction(bValue, aValue);
+                });
+            }
             
             this.dispatchEvent( { type : 'datachange', target : this } );
             

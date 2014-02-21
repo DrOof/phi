@@ -19,26 +19,26 @@
     };
     
     
-	/**
-	 *
-	 * Observer links being clicked
-	 *
-	 */
+    /**
+     *
+     * Observer links being clicked
+     *
+     */
 
     var LinkRelations = phi.dom.LinkRelations = phi({
 
-		__init__: function( prefix, scope ) {
+        __init__: function( prefix, scope ) {
             
             dom( scope || document ).bind( 'click', this.handleClick.bind( this ) );
             
-			this.prefix = prefix || '';
-			this.relations = {};
+            this.prefix = prefix || '';
+            this.relations = {};
             
-		},
+        },
 
-		handleClick: function( e ) {
+        handleClick: function( e ) {
             
-			var link  = dom( e.target ).closest( 'a' ),
+            var link  = dom( e.target ).closest( 'a' ),
                 rel   = link.attr( 'rel' );
                 
             if ( rel ) {
@@ -48,27 +48,27 @@
                 
                     r = relations[i];
                 
-        			if ( this.prefix.exec( r ) ) {
+                    if ( this.prefix.exec( r ) ) {
                 
-        				var action = r.replace( this.prefix, '' ).replace( ':', '' );
+                        var action = r.replace( this.prefix, '' ).replace( ':', '' );
                 
-        				if ( action ) {
+                        if ( action ) {
                     
-        					if ( this.relations[ action ] ) {
-        						this.relations[ action ](e);
-        					}
-        				}
-        			}
+                            if ( this.relations[ action ] ) {
+                                this.relations[ action ](e);
+                            }
+                        }
+                    }
                 };    
             }
             
-		},
-		
-		add: function( key, fn ) {
-			this.relations[ key ] = fn;
-		}
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
 
-	});
+    });
     
     
     
@@ -131,13 +131,13 @@
                         
                             var key = r.replace( this.prefix, '' ).replace( ':', '' );
                             
-            				if ( key ) {
+                            if ( key ) {
             
-            					if ( this.relations[ key ] ) {
-            						this.relations[ key ](e);
-            					}
+                                if ( this.relations[ key ] ) {
+                                    this.relations[ key ](e);
+                                }
                             
-            				}
+                            }
                         
                         }
                     
@@ -149,9 +149,9 @@
             
         },
         
-		add: function( key, fn ) {
-			this.relations[ key ] = fn;
-		}
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
         
     });
     
@@ -161,18 +161,18 @@
     
     var FieldRelations = phi.dom.FieldRelations = phi({
 
-		__init__: function( prefix, scope ) {
+        __init__: function( prefix, scope ) {
             
             dom( scope || document ).bind( 'change', this.handleChange.bind( this ) );
             
-			this.prefix = prefix || '';
-			this.relations = {};
+            this.prefix = prefix || '';
+            this.relations = {};
             
-		},
+        },
 
-		handleChange: function( e ) {
+        handleChange: function( e ) {
             
-			var field  = dom( e.target ).closest( 'input, textarea, select' ),  
+            var field  = dom( e.target ).closest( 'input, textarea, select' ),  
                 rel = field.attr( 'data-relation' );
                 
                 if ( rel ) {
@@ -182,27 +182,27 @@
                 
                         r = relations[i];
                 
-            			if ( this.prefix.exec( r ) ) {
+                        if ( this.prefix.exec( r ) ) {
                 
-            				var action = r.replace( this.prefix, '' ).replace( ':', '' );
+                            var action = r.replace( this.prefix, '' ).replace( ':', '' );
                 
-            				if ( action ) {
+                            if ( action ) {
                     
-            					if ( this.relations[ action ] ) {
-            						this.relations[ action ](e);
-            					}
-            				}
-            			}
+                                if ( this.relations[ action ] ) {
+                                    this.relations[ action ](e);
+                                }
+                            }
+                        }
                     };    
                 }
             
-		},
-		
-		add: function( key, fn ) {
-			this.relations[ key ] = fn;
-		}
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
 
-	});
+    });
     
     
     
@@ -211,126 +211,126 @@
     
     var HashRelations = phi.dom.HashRelations = phi({
 
-		__init__: function( prefix ) {
+        __init__: function( prefix ) {
             
             dom( window ).bind( 'hashchange ready', this.handleHashChange.bind( this ) );
             
-			this.prefix = prefix || '';
-			this.relations = {};
+            this.prefix = prefix || '';
+            this.relations = {};
             
-		},
+        },
 
-		handleHashChange: function( e ) {
+        handleHashChange: function( e ) {
             
-			var rel = window.location.hash.replace( '#', '' );
+            var rel = window.location.hash.replace( '#', '' );
             
             if ( rel ) {
                 
-    			if ( this.prefix.exec( rel ) ) {
+                if ( this.prefix.exec( rel ) ) {
                     
-    				var action = rel.replace( this.prefix, '' ).replace( /.*:|\?.*/g, '' );
+                    var action = rel.replace( this.prefix, '' ).replace( /.*:|\?.*/g, '' );
                     
-    				if ( action ) {
+                    if ( action ) {
             
-    					if ( this.relations[ action ] ) {
-    						this.relations[ action ]( e );
-    					}
-    				}
-    			}  
+                        if ( this.relations[ action ] ) {
+                            this.relations[ action ]( e );
+                        }
+                    }
+                }  
             }
             
-		},
-		
-		add: function( key, fn ) {
-			this.relations[ key ] = fn;
-		}
-
-	});
-    
-    
-    
-    
-    
-	/**
-	 *
-	 * A basic template parser to create new Nodes as a string
-	 *
-	 *
-	 */
-	
-	var Template = phi.dom.Template = phi({
-		
-		__init__: function( html ) {
-			this.set( html );
-		},
-		
-		/**
-		 *
-		 * parses through data to generate html as a string, replacing any variables between brackets, i.e. {{my.var}}
-		 *
-		 * @param data {Object} 	the data to pass through the object
-		 * @param parent {String} 	the name of the parent of a data point, when using recursive looping in nested data
-		 * @param html {String} 	the (partially) generated HTML if data is nested
-		 *
-		 * @return html {String}	the generated HTML
-		 *
-		 */
-		
-		parse: function( data, parent, html ) {
-			
-			var html = html || this.get();
-			var a = ( parent ) ? parent + '.' : '';
-			var b = ( parent ) ? parent + '\\.' : '';
-			
-			for ( var name in data ) {
-                
-				if ( typeof name === 'string' ) {
-                    
-					var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
-                    
-					if (typeof data[name] === 'object') {
-						html = this.parse( data[ name ], a + name, html );
-					} else {
-						html = html.replace( property, data[ name ] );
-					}
-				}
-			}
-			
-			return html;
-			
-		},
-		
-		/**
-		 *
-		 * set the base template
-		 *
-		 * @param html {String} 	the base template to parse over
-		 *
-		 */
-		
-		set: function( html ) {
-			this.html = html;
-		},
-		
-		/**
-		 *
-		 * gets the base template
-		 *
-		 * @returns html {String}	 	the base template to parse over
-		 *
-		 */
-		
-		get: function() {
-			return this.html;
-		},
+        },
         
-		/**
-		 *
-		 * Parses and removes any unused references.
-		 *
-		 * @returns html {String}	 	the base template to parse over
-		 *
-		 */
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
+
+    });
+    
+    
+    
+    
+    
+    /**
+     *
+     * A basic template parser to create new Nodes as a string
+     *
+     *
+     */
+    
+    var Template = phi.dom.Template = phi({
+        
+        __init__: function( html ) {
+            this.set( html );
+        },
+        
+        /**
+         *
+         * parses through data to generate html as a string, replacing any variables between brackets, i.e. {{my.var}}
+         *
+         * @param data {Object}     the data to pass through the object
+         * @param parent {String}     the name of the parent of a data point, when using recursive looping in nested data
+         * @param html {String}     the (partially) generated HTML if data is nested
+         *
+         * @return html {String}    the generated HTML
+         *
+         */
+        
+        parse: function( data, parent, html ) {
+            
+            var html = html || this.get();
+            var a = ( parent ) ? parent + '.' : '';
+            var b = ( parent ) ? parent + '\\.' : '';
+            
+            for ( var name in data ) {
+                
+                if ( typeof name === 'string' ) {
+                    
+                    var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
+                    
+                    if (typeof data[name] === 'object') {
+                        html = this.parse( data[ name ], a + name, html );
+                    } else {
+                        html = html.replace( property, data[ name ] );
+                    }
+                }
+            }
+            
+            return html;
+            
+        },
+        
+        /**
+         *
+         * set the base template
+         *
+         * @param html {String}     the base template to parse over
+         *
+         */
+        
+        set: function( html ) {
+            this.html = html;
+        },
+        
+        /**
+         *
+         * gets the base template
+         *
+         * @returns html {String}         the base template to parse over
+         *
+         */
+        
+        get: function() {
+            return this.html;
+        },
+        
+        /**
+         *
+         * Parses and removes any unused references.
+         *
+         * @returns html {String}         the base template to parse over
+         *
+         */
         
         parseAndClean: function( data, parent, html ) {
             
@@ -338,8 +338,8 @@
             return html.replace( /{{([^}}]*)}}/, '');
             
         }
-		
-	});
+        
+    });
     
     
     
@@ -379,26 +379,26 @@
     
     
     /**
-	 *
-	 * Generic Dragger
-	 *
-	 *
-	 */
+     *
+     * Generic Dragger
+     *
+     *
+     */
 
-	var Dragger = phi.dom.Dragger = phi( {
+    var Dragger = phi.dom.Dragger = phi( {
         
         __extends__ : phi.mvc.Observable,
     
         __init__: function( scope, draggable, options ) {
-			
-			this.scope = dom( scope || document );
+            
+            this.scope = dom( scope || document );
             this.draggable = draggable;
 
-			var options = options || {};
+            var options = options || {};
 
-            this.constrain 	= ( options.constrain === false ) ? false : true;
-            this.allowX 	= ( options.allowX === false ) ? false : true;
-            this.allowY 	= ( options.allowY === false ) ? false : true;
+            this.constrain     = ( options.constrain === false ) ? false : true;
+            this.allowX     = ( options.allowX === false ) ? false : true;
+            this.allowY     = ( options.allowY === false ) ? false : true;
             
             this.scope.bind( 'mousedown', this.handleMouseDown.bind( this ) );
             this.scope.bind( 'touchstart', this.handleTouchStart.bind( this ));
@@ -406,14 +406,14 @@
             this.scope.bind( 'touchend', this.handleTouchEnd.bind( this ));
             
         },
-		
-		isDragging: function() {
-			return !!this.dragging;
-		},
+        
+        isDragging: function() {
+            return !!this.dragging;
+        },
         
         grab: function( target ) {
             
-			this.dragging = dom( target ).closest( this.draggable, this.scope );
+            this.dragging = dom( target ).closest( this.draggable, this.scope );
             this.dragging.addClass( 'dragging' );
             
             this.dispatchEvent( { type : 'dragstart', target : this }  );
@@ -470,43 +470,43 @@
         
             var x, y, w, h, left, top;
         
-			x = e.pageX - this.scope.offset().left;
+            x = e.pageX - this.scope.offset().left;
             y = e.pageY - this.scope.offset().top;
         
-			w = this.scope.outerWidth();
-			h = this.scope.outerHeight();
+            w = this.scope.outerWidth();
+            h = this.scope.outerHeight();
 
-			this.move( x, y );
+            this.move( x, y );
             
             this.dispatchEvent( { type : 'dragmove', target : this }  );
         
         },
 
-		move: function( x, y ) {
+        move: function( x, y ) {
 
-			w = this.scope.outerWidth();
-			h = this.scope.outerHeight();
+            w = this.scope.outerWidth();
+            h = this.scope.outerHeight();
 
-			if ( this.constrain ) {
-				x = (x > w) ? w : ((x < 0) ? 0 : x);
-				y = (y > h) ? h : ((y < 0) ? 0 : y);
-			}
+            if ( this.constrain ) {
+                x = (x > w) ? w : ((x < 0) ? 0 : x);
+                y = (y > h) ? h : ((y < 0) ? 0 : y);
+            }
 
-			var css = {};
-			if ( this.allowX ) {
+            var css = {};
+            if ( this.allowX ) {
                 css['left'] = x;
             }
             
-			if ( this.allowY ) {
+            if ( this.allowY ) {
                 css['top'] = y;
             }
 
             if ( this.isDragging() ) {
                 this.dragging.css( css );    
             }
-			
+            
 
-		},
+        },
 
         handleMouseDown: function( e ) { e.preventDefault();
             
@@ -552,57 +552,57 @@
             
         }
         
-	});
+    });
 
 
 
 
 
-	var RelativeDragger = phi.dom.RelativeDragger = phi({
+    var RelativeDragger = phi.dom.RelativeDragger = phi({
 
-		__extends__: Dragger,
+        __extends__: Dragger,
 
-		drag: function( e ) {
+        drag: function( e ) {
 
-			var x, y, w, h, l, t, left, top;
+            var x, y, w, h, l, t, left, top;
         
-			x = e.pageX - this.scope.offset().left;
+            x = e.pageX - this.scope.offset().left;
             y = e.pageY - this.scope.offset().top;
         
-			w = this.scope.outerWidth();
-			h = this.scope.outerHeight();
+            w = this.scope.outerWidth();
+            h = this.scope.outerHeight();
 
-			x = parseFloat( 100 * x / w );
-			y = parseFloat( 100 * y / h );
+            x = parseFloat( 100 * x / w );
+            y = parseFloat( 100 * y / h );
 
-			this.move( x, y );
+            this.move( x, y );
 
             this.dispatchEvent( { type : 'dragmove', target : this }  );
             
-		},
+        },
 
-		move: function( x, y ) {
+        move: function( x, y ) {
 
-			if ( this.constrain ) {
-				x = (x > 100) ? 100 : ((x < 0) ? 0 : x);
-				y = (y > 100) ? 100 : ((y < 0) ? 0 : y);
-			}
+            if ( this.constrain ) {
+                x = (x > 100) ? 100 : ((x < 0) ? 0 : x);
+                y = (y > 100) ? 100 : ((y < 0) ? 0 : y);
+            }
 
-			var css = {};
-			if ( this.allowX ) {
+            var css = {};
+            if ( this.allowX ) {
                 css['left'] = x + '%';
             }
             
-			if ( this.allowY ) {
+            if ( this.allowY ) {
                 css['top'] = y + '%';
             }
             
             if ( this.isDragging() ) {
                 this.dragging.css( css );    
             }
-			
+            
 
-		},
+        },
         
         /* get or set valueX */
         valueX: function( x ) {
@@ -636,7 +636,7 @@
             
         }
 
-	});
+    });
 
     
 })(phi, jQuery);

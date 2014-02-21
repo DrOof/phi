@@ -1,19 +1,19 @@
 ( function( dom ) {
-	
+    
     phi.media = phi.media || {};
-	
+    
     var Source = phi.media.Source = phi({
-		
+        
         __init__ : function( src, mimeType ) {
-			
+            
             this.src = src;
             this.mimeType = mimeType || this.resolveMimeType( src );
-			
-			
+            
+            
         },
-		
+        
         resolveMimeType: function( src ) {
-			
+            
             var mimeType = 'video/x-unknown';
             
             if ( /\.mp4$/.test( src ) ) {
@@ -40,7 +40,7 @@
             return mimeType;
             
         }
-		
+        
     });
-	
+    
 } )( phi.dom );

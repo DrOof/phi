@@ -14,7 +14,7 @@
         },
         
         save: function( key, object ) {
-        	
+            
             var prefix = this.prefix;
             localStorage.setItem( [ prefix, key ].join(':'), JSON.stringify( object ) );
             

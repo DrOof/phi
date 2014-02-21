@@ -1,5 +1,5 @@
 (function( phi, dom ) {
-	
+    
     phi.form = {};
 
 
@@ -37,8 +37,8 @@
         },
         
         handleChange: function( e ) {
-        	
-        	// console.log('FORM handleChange=', e.target);
+            
+            // console.log('FORM handleChange=', e.target);
             this.validate( e.target, true );
         },
         
@@ -47,23 +47,23 @@
         },
         
         handleSubmit: function( e ) { 
-        	
-	            // if ( ! this.validateAll( true ) ) {
-	                // // your form isn't valid... trigger the user to act
-	            // } else {
-	                // // submit the form as normal
-	            // }
+            
+                // if ( ! this.validateAll( true ) ) {
+                    // // your form isn't valid... trigger the user to act
+                // } else {
+                    // // submit the form as normal
+                // }
             
             // console.log('FORM handleSubmit calls VALIDATE_ALL');
             
             if ( !this.validateAll( true ) ) {
-            	
+                
                 // your form isn't valid... trigger the user to act
                 console.log('phi.FORM::handleSubmit form not valid');
                 e.preventDefault();
                 
             } else {
-            	
+                
                 // submit the form as normal
                 console.log('phi.FORM::handleSubmit form valid');
             }
@@ -76,7 +76,7 @@
             var nodesToValidate = [];
             var valid = [], node;
             for (var i = nodes.length - 1; i >= 0; i--) {
-            	
+                
                 node = nodes[i];
                 
                 // Only push in node if it has a max, min, required or pattern attribute
@@ -86,52 +86,52 @@
                 
                 var min = dNode.attr('min');
                 if (typeof min !== 'undefined' && min !== false) {
-				   isValidated = true;
-				}
-				
+                   isValidated = true;
+                }
+                
                 var max = dNode.attr('max');
                 if (typeof max !== 'undefined' && max !== false) {
-				   isValidated = true;
-				}
-				
+                   isValidated = true;
+                }
+                
                 var required = dNode.attr('required');
                 if (typeof required !== 'undefined' && required !== false) {
-				   isValidated = true;
-				}
-				
+                   isValidated = true;
+                }
+                
                 var pattern = dNode.attr('pattern');
                 if (typeof pattern !== 'undefined' && pattern !== false) {
-				   isValidated = true;
-				}
+                   isValidated = true;
+                }
                 
                 // console.log('NODE node=',node);
                 
                 if ( !node.disabled && isValidated) {
-                	
-                	// console.log('NODE 2B validated=',node);
-                	
-                	nodesToValidate.push(node)
-                	
+                    
+                    // console.log('NODE 2B validated=',node);
+                    
+                    nodesToValidate.push(node)
+                    
                     // valid.push( this.validate( node, dispatch ) );    
                 }
             };
             
             if(this.checkforFilledFields(nodesToValidate) === false){
-        		
-        		console.log('FORM::validateAll NO FIELDS FILLED');
-        		return;
-        	}else{
-        		
-        		console.log('FORM::validateAll SOME FIELDS FILLED');
-        	}
-        	
-        	
-        	var len = nodesToValidate.length;
-        	
-        	for(var i=0,j=nodesToValidate.length; i<j; i++){
-        		
-            	valid.push( this.validate( nodesToValidate[i], dispatch ) ); 
-			};
+                
+                console.log('FORM::validateAll NO FIELDS FILLED');
+                return;
+            }else{
+                
+                console.log('FORM::validateAll SOME FIELDS FILLED');
+            }
+            
+            
+            var len = nodesToValidate.length;
+            
+            for(var i=0,j=nodesToValidate.length; i<j; i++){
+                
+                valid.push( this.validate( nodesToValidate[i], dispatch ) ); 
+            };
             
             
             return valid.every( function( a ) { return a; } );
@@ -151,8 +151,8 @@
             */
             
             if ( node.type === 'file' ) {
-				value = node.getAttribute( 'data-file' );
-			}
+                value = node.getAttribute( 'data-file' );
+            }
             
             var min = node.getAttribute('min'),
                 max = node.getAttribute('max'),
@@ -162,7 +162,7 @@
             var exists = function( a ) { return a !== null };
             
             if ( exists( req ) || exists( min ) || exists( max ) || exists( exp ) ) {
-        		
+                
                 if (!( exists( req ) && !value) && 
                     !( exists( min ) && min > parseInt( value ) ) &&
                     !( exists( max ) && max < parseInt( value ) ) &&
@@ -172,10 +172,10 @@
     
                 if ( dispatch ) {
                     if ( valid ) {
-                    	// console.log('FORM validate VALID node=',node);
+                        // console.log('FORM validate VALID node=',node);
                         this.dispatchEvent( { type: 'valid', target: node } );
                     } else {
-                    	// console.log('FORM validate INVALID node=',node);
+                        // console.log('FORM validate INVALID node=',node);
                         this.dispatchEvent( { type: 'invalid', target: node } );
                     }    
                 }
@@ -184,10 +184,10 @@
             
             /*
             if ( node.type === 'file' ) {
-				value = node.getAttribute( 'data-file' );
-			}
+                value = node.getAttribute( 'data-file' );
+            }
             */
-        	
+            
             return valid;
             
             
@@ -197,23 +197,23 @@
         // RE. fny of validating fields on arrival at a section only if one of the fields has already been filled
         // i.e. a visual reminder (red border) of all the still-to-be-completed fields
         checkforFilledFields: function(nodesToValidate){
-        	
-        	var len = nodesToValidate.length;
-        	
-        	for(var i=0,j=nodesToValidate.length; i<j; i++){
-        		
-        		var node = dom(nodesToValidate[i]);
-        		
-        		// console.log('node=',node);
-        		
-        		if(node.val() !== ''){
-        			
-        			// console.log('FILLED =',node.val());
-        			return true;
-        		}
-        	}
-        	
-        	return false;
+            
+            var len = nodesToValidate.length;
+            
+            for(var i=0,j=nodesToValidate.length; i<j; i++){
+                
+                var node = dom(nodesToValidate[i]);
+                
+                // console.log('node=',node);
+                
+                if(node.val() !== ''){
+                    
+                    // console.log('FILLED =',node.val());
+                    return true;
+                }
+            }
+            
+            return false;
         },
         
         /**
@@ -447,25 +447,25 @@
             
             var files = [], file;
 
-        	if ( mimes.length ) {
-        	
-            	for (var i = dt.files.length -1; i >= 0; i--) {
-            		
-            		file = dt.files[i];
-            		if ( mimes.indexOf( file.type ) !== -1 ) {
-            			files.push( file );
-            		}
-            	}
-            	
-        	} else {
-        		files = dt.files;
-        	}
-        	
-            if ( files.length ) {
-            	this.renderUpload( files );
-            	this.node.find(':file').trigger('valid');
+            if ( mimes.length ) {
+            
+                for (var i = dt.files.length -1; i >= 0; i--) {
+                    
+                    file = dt.files[i];
+                    if ( mimes.indexOf( file.type ) !== -1 ) {
+                        files.push( file );
+                    }
+                }
+                
             } else {
-            	this.node.find(':file').trigger('invalid');
+                files = dt.files;
+            }
+            
+            if ( files.length ) {
+                this.renderUpload( files );
+                this.node.find(':file').trigger('valid');
+            } else {
+                this.node.find(':file').trigger('invalid');
             }
             
         },
@@ -484,7 +484,7 @@
          */
         
         handleLoad: function( e, uuid, file ) {
-        	
+            
             var name = this.node.find( '[type="file"]' ).attr('name');
             var id = this.node.find( '[type="file"]' ).attr('id');
             
@@ -495,7 +495,7 @@
             // this.node.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
             
             /* this.node.trigger( 'upload' ); */
-           	// console.log('handleLoad file.name=',file.name);
+               // console.log('handleLoad file.name=',file.name);
             this.upload(); 
         },
         
@@ -512,19 +512,19 @@
             // console.log('FIELD UPLOAD upload pFileName=',pFileName);
             
             // Serialize
-        	dom.ajax({
-            	
+            dom.ajax({
+                
                 type: 'put',
                 
-            	url: form.attr( 'action' ),
+                url: form.attr( 'action' ),
                 
                 dataType: 'json',
                 
-            	headers: {
-             		Accept : 'application/json; charset=utf-8'
-             	},
+                headers: {
+                     Accept : 'application/json; charset=utf-8'
+                 },
                 
-            	data: form.serialize(),
+                data: form.serialize(),
                 
                 xhr: function( request ) {
                     
@@ -600,17 +600,17 @@
         handleClick: function( e ) {
             
             if(!dom(e.target).hasClass('field-upload-file-browse')){
-            	return;
+                return;
             }else{
-            	e.preventDefault();
-            	var input = dom(e.target).find('[type="file"]');
-            	if(input){
-            		input.trigger('click');
-            	}
+                e.preventDefault();
+                var input = dom(e.target).find('[type="file"]');
+                if(input){
+                    input.trigger('click');
+                }
             }
             
-			// console.log('handleClicker e.target=',e.target);
-			
+            // console.log('handleClicker e.target=',e.target);
+            
             // var base64 = this.node.find( '[type="hidden"]' );
             // console.log('base64=',base64);
             // base64.remove();
@@ -619,7 +619,7 @@
         
         handleLoad: function( e, uuid, file  ) {
             
-           	var name = this.node.find( '[type="file"]' ).attr('name');
+               var name = this.node.find( '[type="file"]' ).attr('name');
             var id = this.node.find( '[type="file"]' ).attr('id');
             
             // console.log('upload file name=',file.name);
@@ -716,18 +716,18 @@
             // use data-json attribute to parse JSON in a clean way, rather than interpret HTML as JSON and then render it as HTML again 
             } else if (node.getAttribute('data-suggestions-ref')) {
                 
-            	var completeList = this.node.find( node.getAttribute('data-suggestions-ref') );
+                var completeList = this.node.find( node.getAttribute('data-suggestions-ref') );
                 
                 var optionNodes = completeList.find( "li a" );
                 
-            	this.suggestions = [];
+                this.suggestions = [];
                 var that = this;
                 
-            	optionNodes.each(function() {
-            		that.suggestions.push( { value : this.getAttribute('data-suggestion'), description : this.innerHTML } );
-            	});
+                optionNodes.each(function() {
+                    that.suggestions.push( { value : this.getAttribute('data-suggestion'), description : this.innerHTML } );
+                });
                 
-            	this.close();
+                this.close();
                 
             }
             
@@ -748,25 +748,25 @@
         },
         
         handleClick: function (e ) {
-        	// console.log('handleClick e.target=',e.target);
-        	
-        	var targ = dom(e.target);
-        	
-        	// if click on field-complete inputs - do nothing, else close field-complete
-        	if(targ.attr('name') == 'product-taxrate' || targ.hasClass('field-complete-link') || targ.hasClass('field-complete-result') || targ.hasClass('fa fa-remove')){
-        		// console.log('INPUT ',targ.closest('.field-complete-result'));
-        		
-        		// if clicking on clear results icon in field-complete inputs (& not on close icon in error dialog)
-        		if( targ.hasClass('fa fa-remove') && targ.closest('.field-complete-result').length){
-        			this.node.find( 'input' ).val('');
-        			
-        			this.suggest( '' );
-        		}
-        		
-        	}else{
-        		this.close();
-        	}
-        	
+            // console.log('handleClick e.target=',e.target);
+            
+            var targ = dom(e.target);
+            
+            // if click on field-complete inputs - do nothing, else close field-complete
+            if(targ.attr('name') == 'product-taxrate' || targ.hasClass('field-complete-link') || targ.hasClass('field-complete-result') || targ.hasClass('fa fa-remove')){
+                // console.log('INPUT ',targ.closest('.field-complete-result'));
+                
+                // if clicking on clear results icon in field-complete inputs (& not on close icon in error dialog)
+                if( targ.hasClass('fa fa-remove') && targ.closest('.field-complete-result').length){
+                    this.node.find( 'input' ).val('');
+                    
+                    this.suggest( '' );
+                }
+                
+            }else{
+                this.close();
+            }
+            
         },
         
         handleEscape: function( e ) { e.preventDefault();
@@ -966,7 +966,7 @@
     
     var completes = dom( '.field-complete' );
     for (var i = 0; i < completes.length; i++) {
-    	
+        
         new FieldComplete( completes[i] );
     }
     
@@ -976,14 +976,14 @@
     }
     
     dom( '.radio-button input' ).bind( 'change', function ( e ) {
-    	
-        // loop through class and reset state
-    	dom( '.radio-button' ).removeClass( 'on' );
         
-    	if ( e.target.checked ) { 
-    		dom( e.target ).closest( '.radio-button' ).addClass( 'on' );	
-    	}
-    	
+        // loop through class and reset state
+        dom( '.radio-button' ).removeClass( 'on' );
+        
+        if ( e.target.checked ) { 
+            dom( e.target ).closest( '.radio-button' ).addClass( 'on' );    
+        }
+        
     } );
     
     
