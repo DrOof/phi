@@ -6,16 +6,18 @@
  *
  */
 
-(function() {
+(function(phi) {
     
-    
-    var phi = window.phi || {};
     phi.mvc = {};
     
     
+    /*
+     *
+     * Observable
+     *
+     */
     
-    
-    var Observable = phi({
+    var Observable = phi.mvc.Observable = phi({
         
         __init__: function() {
             
@@ -24,8 +26,6 @@
         },
         
         addEventListener: function( type, fn ) {
-            
-
             
             var fns = this.listeners[ type ] || [];
             
@@ -39,9 +39,24 @@
         
         removeEventListener: function( type, fn ) {
             
+            var fns = this.listeners[ type ] || [];
+            
+            if ( !fn ) {
+                fns = [];
+            } else if ( fns.indexOf( fn ) !== -1 ) {
+                fns = fns.splice( fns.indexOf( fn ), 1 );
+            }
+            
+            this.listeners[ type ] = fns;
+            
         },
         
         dispatchEvent: function( e ) {
+            
+            e.preventDefault = function() {};
+            e.stopPropagation = function() {};
+            
+            e.target = e.target || this;
             
             var fns = this.listeners[ e.type ] || [];
             
@@ -56,8 +71,8 @@
     
 	
     /*
-     * Model
      *
+     * Model
      *
      */
 
@@ -66,27 +81,34 @@
         __extends__: Observable,
     
         __init__: function() {
-            this.super();
             this.__data__ = {};
         },
         
-        change: function( path, value ) {
-        
-            this.__data__[ path ] = value;
-            this.dispatchEvent( { type: 'modelchange', target: this.__data__[ path ], path: path, data: this.__data__ } );
+        change: function( key, value ) {
+            
+            this.__data__[ key ] = value;
+            this.dispatchEvent( { type: 'modelchange', key: key, target: this.__data__[ key ], data: this.__data__ } );
             
         },
         
         save: function() {
             // TODO: implement save to local storage or backend
+        },
+        
+        set: function( key, value ) {
+            this.change( key, value );
+        },
+        
+        get: function( key ) {
+            return this.__data__[ key ];
         }
         
     });
     
     
     /*
-     * View
      *
+     * View
      *
      */
     
@@ -94,12 +116,34 @@
         
         __extends__: Observable,
         
-        __init__: function() {
-            this.super();
+        __init__: function( element ) {
+            
+            this.element = element;
+            
         },
         
-        update: function( path, target ) {
-            console.log( path, target );
+        update: function( key, target ) {
+            
+            var steps = key.split('/');
+            var data = target;
+            
+            this.parse( key, data );
+            
+        },
+        
+        /*
+         *
+         * Parse the view and edit changed values.
+         *
+         */
+        
+        parse: function( key, data ) {
+            
+            var elements = this.element.querySelectorAll( '[data-key="' + key + '"]' );
+            for ( var n in elements ) {
+                elements[ n ].innerHTML = data;
+            }
+            
         }
         
     });
@@ -107,8 +151,8 @@
     
     
     /*
-     * Controller
      *
+     * Controller
      *
      */
     
@@ -119,21 +163,29 @@
             this.view = view;
             this.model = model;
             
-            this.model.addEventListener( 'modelchange', this.handleModelChange.bind( this ) );
+            model.addEventListener( 'modelchange', this.handleModelChange.bind( this ) );
             
         },
         
+        /* Override this method. */
+        onchange: function( e ) {
+            this.view.update( e.key, e.target );
+        },
+        
+        /* 
+         *
+         * Handles a change from the model, and calls the onchange method.
+         *
+         * @param e {Event}             A ModelChangeEvent.
+         *
+         */
+        
         handleModelChange: function( e ) {
-            console.log( 'handleModelChange', e );
-            this.view.update( e.path, e.target );
+            this.onchange( e );
         }
     
     });
     
     
-    
-    
-    
-    
 
-})();
+}(phi));
