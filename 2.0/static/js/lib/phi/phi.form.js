@@ -13,7 +13,7 @@
     
     var Form = phi.form.Form = phi({
         
-        __extends__: phi.mvc.Observable,
+        __extends__: phi.mvc.EventTarget,
         
         __init__: function( node ) {
             
@@ -342,7 +342,7 @@
     
     var FieldUpload = phi.form.FieldUpload = phi({
         
-        __extends__ : phi.mvc.Observable,
+        __extends__ : phi.mvc.EventTarget,
         
         __init__: function( node ) {
             
@@ -690,7 +690,7 @@
     
     var FieldComplete = phi.form.FieldComplete = phi({
         
-        __extends__ : phi.mvc.Observable,
+        __extends__ : phi.mvc.EventTarget,
         
         __init__ : function( node, options ) {
             

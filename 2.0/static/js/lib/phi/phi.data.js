@@ -545,7 +545,7 @@
     
     var DataModel = phi.data.DataModel = phi({
         
-        __extends__ : phi.mvc.Observable, 
+        __extends__ : phi.mvc.EventTarget, 
         
         __init__ : function( data, renderConfig) {
             

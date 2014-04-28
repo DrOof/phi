@@ -13,11 +13,11 @@
     
     /*
      *
-     * Observable
+     * EventTarget
      *
      */
     
-    var Observable = phi.mvc.Observable = phi({
+    var EventTarget = phi.mvc.EventTarget = phi({
         
         __init__: function() {
             
@@ -78,7 +78,7 @@
 
     var Model = phi.mvc.Model = phi({
     
-        __extends__: Observable,
+        __extends__: EventTarget,
     
         __init__: function() {
             this.__data__ = {};
@@ -114,7 +114,7 @@
     
     var View = phi.mvc.View = phi({
         
-        __extends__: Observable,
+        __extends__: EventTarget,
         
         __init__: function( element ) {
             

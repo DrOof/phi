@@ -2,23 +2,25 @@
     
     phi.media.ui = phi.media.ui || {};
     
-    var AspectRatio = phi.media.ui.AspectRatio = phi({
+    var Poster = phi.media.ui.Poster = phi({
         
-        __init__ : function() {
+        __init__ : function( poster ) {
+            
+            this.__poster__ = poster;
             
         },
         
-        createAspectRatio: function() {
+        createPoster: function() {
             
-            var ratio = this.ratio = dom( HTML )[0];
-            return ratio;
+            var poster = this.poster = dom( new phi.dom.Template( HTML ).parse( { 'poster' : this.__poster__ } ) )[0];
+            return poster;
             
         }
         
     });
     
     var HTML =  '<div class="player-poster">' +
-                    '<img src="{{poster}}" alt="Aspect Ratio 720p" />' +
+                    '<img src="{{poster}}" />' +
                 '</div>';
     
 } )( phi.dom );

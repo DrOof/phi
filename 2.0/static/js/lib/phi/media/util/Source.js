@@ -1,8 +1,8 @@
 ( function( dom ) {
     
-    phi.media = phi.media || {};
+    phi.media.util = phi.media.util || {};
     
-    var Source = phi.media.Source = phi({
+    var Source = phi.media.util.Source = phi({
         
         __init__ : function( src, mimeType ) {
             

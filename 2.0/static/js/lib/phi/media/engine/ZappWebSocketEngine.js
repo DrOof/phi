@@ -6,7 +6,7 @@
         
         __implements__ : phi.media.engine.Engine,
         
-        __extends__ : phi.mvc.Observable,
+        __extends__ : phi.mvc.EventTarget,
         
         __init__ : function() {
             

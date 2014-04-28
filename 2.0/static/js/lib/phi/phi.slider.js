@@ -393,12 +393,4 @@
 
     Slider.THRESHOLD = 20;
     
-    var nodes = dom( '.slider' );
-    
-    for (var i = nodes.length - 1; i >= 0; i--){
-        new Slider( nodes[i] );
-    };
-    
-    
-    
 })( jQuery );

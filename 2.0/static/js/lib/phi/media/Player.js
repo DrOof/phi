@@ -8,7 +8,7 @@
     
     var Player = phi.media.Player = phi({
         
-        __extends__ : phi.mvc.Observable,
+        __extends__ : phi.mvc.EventTarget,
         
         __init__ : function( node ) {
             
@@ -19,19 +19,25 @@
                 this.setSrc( node.getAttribute( 'src' ) );
             }
             
-            if ( node.hasAttribute( 'muted' ) ) {
-                this.setMuted( true );
-            }
-            
         },
         
         reset: function( node ) {
             
             node.innerHTML = '';
             
-            this.createAspectRatio();
-            this.createControls();
+            if ( node.hasAttribute( 'poster' ) ) {
+                this.setPoster( node.getAttribute( 'poster' ) );
+            }
             
+            if ( node.hasAttribute( 'muted' ) ) {
+                this.setMuted( true );
+            }
+            
+            if ( node.hasAttribute( 'controls') ) {
+                this.createControls();
+            }
+            
+            this.createAspectRatio();
             this.removeState( WAITING, MUTED, PLAYING );
             
         },
@@ -57,6 +63,13 @@
             controls.addEventListener( 'requestmuted', this.handleRequestMuted.bind( this ) );
             controls.addEventListener( 'requesttimeupdate', this.handleRequestTimeUpdate.bind( this ) );
             controls.addEventListener( 'requestvolumechange', this.handleRequestVolumeChange.bind( this ) );
+            
+        },
+        
+        createPoster: function() {
+            
+            var poster = new phi.media.ui.Poster( this.__poster__ );
+            this.node.appendChild( poster.createPoster() );
             
         },
         
@@ -88,20 +101,21 @@
             
             if ( this.engine ) {
                 this.engine.destroyCanvas();
-                delete this.engine;
+                this.engine = null;
             }
             
-            /*
-            * var engine = this.engine = new phi.media.engine.YouTubeIFrameEngine();
-            * this.node.appendChild( engine.createCanvas() );
-            * 
-            * engine.addEventListener( 'timeupdate', this.handleTimeUpdate.bind( this ) );
-            * 
-            */
+            /**
+             *
+             * var engine = this.engine = new phi.media.engine.YouTubeIFrameEngine();
+             * this.node.appendChild( engine.createCanvas() );
+             * 
+             * engine.addEventListener( 'timeupdate', this.handleTimeUpdate.bind( this ) );
+             * 
+             */
             
-            var T = this.resolveEngineType( source );
+            var clazz = this.resolveEngineType( source );
             
-            var engine = new T();
+            var engine = new clazz(); // clazz.apply();
             
             this.node.appendChild( engine.createCanvas() );
             
@@ -144,6 +158,16 @@
                 return this.getSrc();
             } else {
                 this.setSrc( src );
+            }
+            
+        },
+        
+        poster: function( poster ) {
+            
+            if ( poster == undefined ) {
+                return this.getPoster();
+            } else {
+                this.setPoster( poster );
             }
             
         },
@@ -216,6 +240,14 @@
             
         },
         
+        setPoster: function( poster ) {
+            this.__poster__ = this.createPoster( poster );
+        },
+        
+        getPoster: function() {
+            return this.__poster__;
+        },
+        
         setCurrentTime: function( currentTime ) {
             
             if ( this.engine ) {
@@ -257,14 +289,22 @@
         },
         
         addState: function( state ) {
+            
+            if ( arguments.length > 1 ) {
+                for ( a in arguments ) {
+                    this.addState( arguments[ a ] );
+                }
+            }
+            
             dom( this.node ).addClass( state );
+            
         },
         
         removeState: function( state ) {
             
             if ( arguments.length > 1 ) {
                 for ( a in arguments ) {
-                    this.removeState( arguments[ a ] )
+                    this.removeState( arguments[ a ] );
                 }
             }
             
