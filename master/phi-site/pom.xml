@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>guru.phi.magnolia</groupId>
+    <artifactId>phi-site</artifactId>
+    <name>phi-site</name>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <magnolia.version>5.2.4</magnolia.version>
+        <java.version>1.7</java.version>
+    </properties>
+
+    <!-- Fill the following in, so you can use the release plugin -->
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <url/>
+    </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            
+            <!-- 
+                Importing dependencyManagement of CE bundle. 
+                This means you don't have to specify versions of modules you depend on (unless you want a different version than that of the bundle). 
+                Alternatively, use info.magnolia.eebundle:magnolia-enterprise-bundle-parent 
+            -->
+                
+            <dependency>
+                <groupId>info.magnolia.bundle</groupId>
+                <artifactId>magnolia-bundle-parent</artifactId>
+                <version>${magnolia.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- TEST -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <webapps>
+                        <webapp>
+                            <groupId>guru.phi.magnolia</groupId>
+                            <artifactId>magnolia-webapp</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <type>war</type>
+                            <asWebapp>true</asWebapp>
+                            <contextPath>/author</contextPath>
+                        </webapp>
+                        <!--
+                        <webapp>
+                            <groupId>guru.phi.magnolia</groupId>
+                            <artifactId>magnolia</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <type>war</type>
+                            <asWebapp>true</asWebapp>
+                            <contextPath>/public</contextPath>
+                        </webapp>
+                        -->
+                    </webapps>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <!-- default resources configuration which will filter your module descriptors -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>META-INF/magnolia/*</include>
+                </includes>
+            </resource>
+        </resources>
+        
+    </build>
+
+    <repositories>
+        <repository>
+            <id>magnolia.public</id>
+            <url>http://nexus.magnolia-cms.com/content/groups/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <!-- IF YOU NEED MODULES FROM THE ENTERPRISE VERSION, UNCOMMENT THE FOLLOWING REPOSITORY -->
+        <!--
+            <repository>
+                <id>magnolia.enterprise.releases</id>
+                <url>http://nexus.magnolia-cms.com/content/repositories/magnolia.enterprise.releases</url>
+                <snapshots>
+                <enabled>false</enabled>
+                </snapshots>
+            </repository>
+        -->
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>magnolia-module-phi-templating-kit</module>
+        <module>magnolia-webapp</module>
+    </modules>
+    
+</project>

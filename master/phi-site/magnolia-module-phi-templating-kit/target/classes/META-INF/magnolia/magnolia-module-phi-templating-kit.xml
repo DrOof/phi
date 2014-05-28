@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+    <name>magnolia-module-phi-templating-kit</name>
+    <displayName>magnolia-module-phi-templating-kit</displayName>
+    <description>${project.description}</description>
+    <class>guru.phi.magnolia.PhiTemplatingKit</class>
+    <versionHandler>guru.phi.magnolia.setup.PhiTemplatingKitVersionHandler</versionHandler>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <name>core</name>
+            <version>5.2.4/*</version>
+        </dependency>
+        <!-- Add other dependencies here, e.g the standard-templating-kit, or the multisite module with the enterprise edition. -->
+        <!--
+        <dependency>
+            <name>standard-templating-kit</name>
+            <version>2.7/*</version>
+        </dependency>
+        -->
+    </dependencies>
+</module>
