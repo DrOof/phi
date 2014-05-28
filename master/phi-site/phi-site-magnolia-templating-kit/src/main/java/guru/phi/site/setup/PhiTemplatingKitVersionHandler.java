@@ -1,4 +1,4 @@
-package guru.phi.magnolia.setup;
+package guru.phi.site.setup;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
 

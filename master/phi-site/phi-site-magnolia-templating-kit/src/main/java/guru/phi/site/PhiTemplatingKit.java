@@ -1,4 +1,4 @@
-package guru.phi.magnolia;
+package guru.phi.site;
 
 /**
  * This class is optional and represents the configuration for the magnolia-module-phi-templating-kit module.
