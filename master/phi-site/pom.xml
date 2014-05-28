@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>guru.phi.magnolia</groupId>
+    <groupId>guru.phi</groupId>
     <artifactId>phi-site</artifactId>
     <name>phi-site</name>
     <version>1.0-SNAPSHOT</version>
@@ -132,8 +132,8 @@
     </repositories>
 
     <modules>
-        <module>magnolia-module-phi-templating-kit</module>
-        <module>magnolia-webapp</module>
+        <module>phi-site-magnolia-webapp</module>
+        <module>phi-site-magnolia-templating-kit</module>
     </modules>
     
 </project>
