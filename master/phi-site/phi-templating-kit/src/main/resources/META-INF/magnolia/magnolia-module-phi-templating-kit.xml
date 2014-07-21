@@ -10,18 +10,17 @@
     <version>${project.version}</version>
 
     <dependencies>
+        
         <dependency>
             <name>core</name>
-            <version>5.2.4/*</version>
+            <version>${magnolia.version}</version>
         </dependency>
         
-        <!-- Add other dependencies here, e.g the standard-templating-kit, or the multisite module with the enterprise edition. -->
-        <!--
         <dependency>
             <name>standard-templating-kit</name>
-            <version>2.7/*</version>
+            <version>2.7.4</version>
         </dependency>
-        -->
-            
+        
     </dependencies>
+    
 </module>

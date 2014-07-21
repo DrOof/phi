@@ -78,16 +78,6 @@
                             <asWebapp>true</asWebapp>
                             <contextPath>/author</contextPath>
                         </webapp>
-                        <!--
-                        <webapp>
-                            <groupId>guru.phi.magnolia</groupId>
-                            <artifactId>magnolia</artifactId>
-                            <version>1.0-SNAPSHOT</version>
-                            <type>war</type>
-                            <asWebapp>true</asWebapp>
-                            <contextPath>/public</contextPath>
-                        </webapp>
-                        -->
                     </webapps>
                 </configuration>
             </plugin>
