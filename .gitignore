@@ -49,3 +49,5 @@ target/
 workspace.xml
 uiDesigner.xml
 nb-configuration.xml
+
+*.log
