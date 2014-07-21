@@ -11,6 +11,7 @@
     <properties>
         <magnolia.version>5.2.4</magnolia.version>
         <java.version>1.7</java.version>
+        <postgres.version>9.3-1102-jdbc41</postgres.version>
     </properties>
 
     <!-- Fill the following in, so you can use the release plugin -->
@@ -21,6 +22,7 @@
     </scm>
 
     <dependencyManagement>
+        
         <dependencies>
             
             <!-- 
@@ -44,7 +46,9 @@
                 <version>4.11</version>
                 <scope>test</scope>
             </dependency>
+            
         </dependencies>
+        
     </dependencyManagement>
 
 
