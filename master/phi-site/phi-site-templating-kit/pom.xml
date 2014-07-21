@@ -9,10 +9,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>phi-site-magnolia-templating-kit</artifactId>
+    <artifactId>phi-site-templating-kit</artifactId>
     <packaging>jar</packaging>
     
-    <name>phi-site-magnolia-templating-kit</name>
+    <name>phi-site-templating-kit</name>
         
     <!-- description>Please uncomment and fill in ...</description -->
     <dependencies>

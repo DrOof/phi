@@ -67,7 +67,7 @@
                     <webapps>
                         <webapp>
                             <groupId>guru.phi</groupId>
-                            <artifactId>phi-site-magnolia-webapp</artifactId>
+                            <artifactId>phi-site-webapp</artifactId>
                             <version>1.0-SNAPSHOT</version>
                             <type>war</type>
                             <asWebapp>true</asWebapp>
@@ -132,8 +132,8 @@
     </repositories>
 
     <modules>
-        <module>phi-site-magnolia-webapp</module>
-        <module>phi-site-magnolia-templating-kit</module>
+        <module>phi-site-webapp</module>
+        <module>phi-site-templating-kit</module>
     </modules>
     
 </project>
