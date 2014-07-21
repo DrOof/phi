@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module SYSTEM "module.dtd" >
 <module>
-    <name>magnolia-module-phi-templating-kit</name>
+    <name>phi-templating-kit</name>
     <displayName>${project.name}</displayName>
     <description>${project.description}</description>
-    <class>guru.phi.magnolia.PhiTemplatingKit</class>
-    <versionHandler>guru.phi.magnolia.setup.PhiTemplatingKitVersionHandler</versionHandler>
+    <class>guru.phi.site.magnolia.PhiTemplatingKit</class>
+    <versionHandler>guru.phi.site.setup.PhiTemplatingKitVersionHandler</versionHandler>
     <version>${project.version}</version>
 
     <dependencies>

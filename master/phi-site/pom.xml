@@ -71,7 +71,7 @@
                     <webapps>
                         <webapp>
                             <groupId>guru.phi</groupId>
-                            <artifactId>phi-site-webapp</artifactId>
+                            <artifactId>phi-webapp</artifactId>
                             <version>1.0-SNAPSHOT</version>
                             <type>war</type>
                             <asWebapp>true</asWebapp>
@@ -136,8 +136,8 @@
     </repositories>
 
     <modules>
-        <module>phi-site-webapp</module>
-        <module>phi-site-templating-kit</module>
+        <module>phi-webapp</module>
+        <module>phi-templating-kit</module>
     </modules>
     
 </project>
