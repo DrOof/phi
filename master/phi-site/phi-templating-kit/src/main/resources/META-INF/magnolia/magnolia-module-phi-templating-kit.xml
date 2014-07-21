@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module SYSTEM "module.dtd" >
 <module>
+    
     <name>phi-templating-kit</name>
     <displayName>${project.name}</displayName>
     <description>${project.description}</description>
-    <class>guru.phi.site.magnolia.PhiTemplatingKit</class>
+    <class>guru.phi.site.PhiTemplatingKit</class>
     <versionHandler>guru.phi.site.setup.PhiTemplatingKitVersionHandler</versionHandler>
     <version>${project.version}</version>
 
@@ -13,6 +14,7 @@
             <name>core</name>
             <version>5.2.4/*</version>
         </dependency>
+        
         <!-- Add other dependencies here, e.g the standard-templating-kit, or the multisite module with the enterprise edition. -->
         <!--
         <dependency>
@@ -20,5 +22,6 @@
             <version>2.7/*</version>
         </dependency>
         -->
+            
     </dependencies>
 </module>
