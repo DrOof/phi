@@ -3,7 +3,7 @@
 <module>
     
     <name>phi-templating-kit</name>
-    <displayName>${project.name}</displayName>
+    <displayName>Magnolia Module Phi Templating Kit</displayName>
     <description>${project.description}</description>
     <class>guru.phi.site.PhiTemplatingKit</class>
     <versionHandler>guru.phi.site.setup.PhiTemplatingKitVersionHandler</versionHandler>
