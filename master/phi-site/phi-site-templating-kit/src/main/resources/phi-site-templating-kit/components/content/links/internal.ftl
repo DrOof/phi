@@ -1,0 +1,1 @@
+<a href="${defaultBaseUrl}${content.link!}[#if content.hash ? has_content]#${content.hash}[/#if]" class="internal-link"> ${content.title!} </a>
