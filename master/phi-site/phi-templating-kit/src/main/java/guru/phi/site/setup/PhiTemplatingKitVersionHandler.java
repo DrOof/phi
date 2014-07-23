@@ -1,6 +1,12 @@
 package guru.phi.site.setup;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
+import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.Task;
+import info.magnolia.setup.initial.AddFilterBypassTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is optional and lets you manager the versions of your module,
@@ -8,12 +14,18 @@ import info.magnolia.module.DefaultModuleVersionHandler;
  * If you don't need this, simply remove the reference to this class in the module descriptor xml.
  */
 public class PhiTemplatingKitVersionHandler extends DefaultModuleVersionHandler {
+	
+	private final List tasks = new ArrayList(); 
     
-    @Override
-	protected void setInstallOrUpdateTasks( InstallContext context ) {
+	@Override
+    protected List<Task> getExtraInstallTasks( InstallContext context ) {
     	
-    	System.out.println( context );
-        
+		final List t = new ArrayList( tasks );
+		
+		t.add( new AddFilterBypassTask( "/server/filters", "phi-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-templating-kit" ) );
+		
+		return t;
+		
     }
 
 }
