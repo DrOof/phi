@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/phi-templating-kit/static/style.css" />
+<link rel="stylesheet" href="${contextPath}/phi-templating-kit/static/style.css" />
