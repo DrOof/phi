@@ -56,12 +56,16 @@
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
+                    
                     <!-- 
                         exclude jars copied "physically" from the webapp overlay - 
                         so we only get those resolved by Maven's dependency management 
                     -->
+                    
                     <dependentWarExcludes>WEB-INF/lib/*.jar</dependentWarExcludes>
+                    
                 </configuration>
             </plugin>
         </plugins>
