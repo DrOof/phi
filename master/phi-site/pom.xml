@@ -81,14 +81,13 @@
                     </webapps>
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
                 <version>1.1.5</version>
                 <configuration>
                		<addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
                		<alwaysGenerate>true</alwaysGenerate>
-           			<showGenerated>true</showGenerated>
                 </configuration>    
                 <executions>
                     <execution>
@@ -99,7 +98,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin -->
         </plugins>
 
         <!-- default resources configuration which will filter your module descriptors -->

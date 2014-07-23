@@ -9,7 +9,6 @@
     </head>
     <body>
         
-        <h1>Hello...</h1>
         [#include def.parameters.view ! '' /]
         [#include 'include/nav.ftl' /]
         
