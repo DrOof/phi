@@ -62,6 +62,7 @@
                         exclude jars copied "physically" from the webapp overlay - 
                         so we only get those resolved by Maven's dependency management 
                     -->
+                    <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
                     <dependentWarExcludes>WEB-INF/lib/*.jar</dependentWarExcludes>
                 </configuration>
             </plugin>
