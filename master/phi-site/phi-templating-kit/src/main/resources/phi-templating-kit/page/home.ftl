@@ -1,1 +1,1 @@
-<h1>Home</h1>
+<h1>${content.title!}</h1>

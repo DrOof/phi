@@ -9,8 +9,6 @@
     </head>
     <body>
         
-        <h1>Decorator</h1>
-        
         [#include def.parameters.view ! '' /]
         [#include 'include/nav.ftl' /]
         

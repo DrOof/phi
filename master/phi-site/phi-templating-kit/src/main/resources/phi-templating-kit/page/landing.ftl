@@ -1,1 +1,1 @@
-<h1>Landing</h1>
+<h1>${content.title!}</h1>
