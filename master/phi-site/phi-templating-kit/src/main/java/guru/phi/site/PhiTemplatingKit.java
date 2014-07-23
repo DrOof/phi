@@ -8,5 +8,5 @@ package guru.phi.site;
  */
 public class PhiTemplatingKit {
     /* you can optionally implement info.magnolia.module.ModuleLifecycle */
-
+	
 }
