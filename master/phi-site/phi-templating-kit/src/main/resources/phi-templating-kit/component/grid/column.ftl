@@ -1,4 +1,4 @@
-<div class="${resolveColumn(content.size!)}">
+<div class="${resolveColumn(content.size!)} ${content.theme!}">
     <section cms:edit>
 		[@cms.area name = 'content' /]
 	</section>

@@ -1,17 +1,47 @@
-.text-content {}
-.text-content-title {}
+.text-content {
+    padding: 20px;
+}
 
-.code-content {}
-.code-content-title {}
+.text-content-title {
+    /**/
+}
+
+.code-content {
+    padding: 20px;
+}
+
+.code-content-title {
+    /**/
+}
  
-.html-content {}
-.html-content-title {}
+.html-content {
+    padding: 20px;
+}
+
+.html-content-title {
+    /**/
+}
  
-.image-content {}
-.image-content-title {}
+.image-content {
+    
+}
+
+.image-content-title {
+    /**/
+}
  
-.slider-content {}
-.slider-content-title {}
+.slider-content {
+    
+}
+
+.slider-content-title {
+    /**/
+}
  
-.title-content {}
-.title-content-title {}
+.title-content {
+    padding: 20px;
+}
+
+.title-content-title {
+    /**/
+}
