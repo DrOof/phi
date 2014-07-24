@@ -62,6 +62,11 @@
                         exclude jars copied "physically" from the webapp overlay - 
                         so we only get those resolved by Maven's dependency management 
                     -->
+                    <webResources>
+                        <resource>
+                            <directory>../phi-templating-kit/src/main/resources/</directory>
+                        </resource>
+                    </webResources>
                     <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
                     <dependentWarExcludes>WEB-INF/lib/*.jar</dependentWarExcludes>
                 </configuration>
