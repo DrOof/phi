@@ -9,6 +9,14 @@
     [#local class = '' ]
     
     [#switch size ]
+    
+        [#case '16' ]
+            [#local class = 'column six a' ]
+            [#break ]
+    
+        [#case '20' ]
+            [#local class = 'column five a' ]
+            [#break ]
 
         [#case '25' ]
             [#local class = 'column four a' ]
