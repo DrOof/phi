@@ -1,41 +1,41 @@
 <div class="${resolveColumn(content.size!)}">
-	<section cms:edit>
-		<@cms.area name = 'content' />
+    <section cms:edit>
+		[@cms.area name = 'content' /]
 	</section>
 </div>
 
-<#function resolveColumn size >
+[#function resolveColumn size]
 
-    <#local class = '' >
+    [#local class = '' ]
     
-    <#switch size >
+    [#switch size ]
 
-        <#case '25' >
-            <#local class = 'columns four a' >
-            <#break >
+        [#case '25' ]
+            [#local class = 'column four a' ]
+            [#break ]
 
-        <#case '33' >
-            <#local class = 'columns three a' >
-            <#break >
+        [#case '33' ]
+            [#local class = 'column three a' ]
+            [#break ]
 
-        <#case '50' >
-            <#local class = 'columns two a' >
-            <#break >
+        [#case '50' ]
+            [#local class = 'column two a' ]
+            [#break ]
 
-        <#case '66' >
-            <#local class = 'columns three b' >
-            <#break >
+        [#case '66' ]
+            [#local class = 'column three b' ]
+            [#break ]
 
-        <#case '75' >
-            <#local class = 'columns four c' >
-            <#break >
+        [#case '75' ]
+            [#local class = 'column four c' ]
+            [#break ]
             
-        <#default >
-            <#local class = 'columns' >
-            <#break >
+        [#default ]
+            [#local class = 'column' ]
+            [#break ]
             
-    </#switch>
+    [/#switch]
     
-    <#return class >
+    [#return class ]
 
-</#function>
+[/#function]
