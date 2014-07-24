@@ -9,8 +9,13 @@
     </head>
     <body>
         
-        <#include def.parameters.view ! '' />
+        <div class="grid">
+            <#include def.parameters.view ! '' />
+        </div>
+        
+        
         <#include 'include/nav.ftl' />
+        <#include 'include/script.ftl' />
         
     </body>
 </html>
