@@ -2,15 +2,15 @@
 <html lang="en"> 
     <head>
         
-        [@cms.init /]
+        <@cms.init />
         
-        [#include 'include/head.ftl' /]
+        <#include 'include/head.ftl' />
         
     </head>
     <body>
         
-        [#include def.parameters.view ! '' /]
-        [#include 'include/nav.ftl' /]
+        <#include def.parameters.view ! '' />
+        <#include 'include/nav.ftl' />
         
     </body>
 </html>

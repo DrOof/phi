@@ -1,7 +1,7 @@
-[#if content.image ? has_content ]
+<#if content.image ? has_content >
     <a href="${content.link!}" class="external-action">
         <img src="${damfn.getAssetForId( content.image ).link!}" alt="${content.title!}" />
     </a>
-[#else]
+<#else>
     <a href="${content.link!}" class="external-action button"> ${content.title!} </a>
-[/#if]
+</#if>

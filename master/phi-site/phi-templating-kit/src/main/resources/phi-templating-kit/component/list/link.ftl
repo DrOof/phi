@@ -1,8 +1,8 @@
 <div class="link-list-content" cms:edit>
-    [#if content.title ? has_content ]
+    <#if content.title ? has_content >
     <p class="link-list-content-title"> ${content.title} </p>
-    [/#if]
+    </#if>
     <ul class="link-list">
-        [@cms.area name = 'list' /]
+        <@cms.area name = 'list' />
     </ul>
 </div>

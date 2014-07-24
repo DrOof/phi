@@ -1,6 +1,6 @@
 <div class="html-content" cms:edit>
-    [#if content.title ? has_content ]
+    <#if content.title ? has_content >
     <p class="html-content-title"> ${content.title} </p>
-    [/#if]
+    </#if>
     ${cmsfn.decode(content).html}
 </div>
