@@ -1,9 +1,13 @@
-
 html, 
  body {
+     
     font-family: "OpenSans", "Arial", "Sans-Serif";
     line-height: 18px;
     font-size: 12px;
+    
+    background: #000000;
+    color: #ffffff;
+    
 }
 
 
@@ -37,12 +41,23 @@ a {
 }
 
 img {
-    background: #f0f0f0;
-    max-width: 100%;
+    
     display: block;
     margin: 0;
+    
+    max-width: 100%;
+    background: #f0f0f0;
+    
 }
 
+code {
+    
+    display: block;
+    padding: 10px;
+    
+    border: 1px solid #f0f0f0;
+    
+}
 
 
 
@@ -141,6 +156,9 @@ img {
     border-right: 1px solid rgba( 255, 255, 255, 0.1 );
     
 }
+
+
+
 
 /* CSS - Cascading Style Sheet */
 /* Palette color codes */

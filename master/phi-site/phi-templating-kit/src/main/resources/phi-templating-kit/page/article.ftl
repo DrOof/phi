@@ -1,1 +1,2 @@
-<h1>Article</h1>
+<h1>${content.title!}</h1>
+<@cms.area name = "content" />

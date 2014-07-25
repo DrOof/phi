@@ -9,12 +9,12 @@
     </head>
     <body>
         
-        <div class="grid">
-            <#include def.parameters.view ! '' />
-        </div>
-        
+        <#include 'include/content.ftl' />
         
         <#include 'include/nav.ftl' />
+        <#include 'include/header.ftl' />
+        <#include 'include/footer.ftl' />
+        
         <#include 'include/script.ftl' />
         
     </body>
