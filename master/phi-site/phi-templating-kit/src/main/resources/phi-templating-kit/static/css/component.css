@@ -13,9 +13,19 @@
 .code-content-title {
     /**/
 }
+
+.title-content {
+    padding: 20px;
+}
+
+.title-content-title {
+    /**/
+}
+
+
  
 .html-content {
-    padding: 20px;
+    /**/
 }
 
 .html-content-title {
@@ -23,7 +33,7 @@
 }
  
 .image-content {
-    
+    /**/
 }
 
 .image-content-title {
@@ -31,17 +41,9 @@
 }
  
 .slider-content {
-    
+    /**/    
 }
 
 .slider-content-title {
-    /**/
-}
- 
-.title-content {
-    padding: 20px;
-}
-
-.title-content-title {
     /**/
 }
