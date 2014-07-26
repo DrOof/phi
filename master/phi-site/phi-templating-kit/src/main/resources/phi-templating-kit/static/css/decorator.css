@@ -14,6 +14,14 @@
     
 }
 
+.content:after {    
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
 .content-title {
     margin: 1em 20px;
 }
@@ -31,7 +39,13 @@
     height: 120px;
 }
 
-
+.header:after {    
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+}
 
 
 /* 
@@ -131,4 +145,12 @@
 
 .footer {
     padding: 40px 0;
+}
+
+.footer:after {    
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
 }

@@ -2,7 +2,7 @@
     
     <!-- 
         
-        TODO : implement simple navigation model
+        TODO : implement getNavigationByName( '' );
         
         model.navigation.horizontalNavigation.items
         
@@ -17,7 +17,6 @@
                 item.isCurrent
         
     -->
-    
     <@renderNavList model.navigation.horizontalNavigation.items />
     
 </nav>
@@ -33,5 +32,5 @@
 </#macro>
 
 <#macro renderNavLink item>
-    <a class="nav-link"></a>
+    <a href="${item.href!}" class="nav-link">${item.title!}</a>
 </#macro>
