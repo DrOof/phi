@@ -1,10 +1,16 @@
+/* 
+ *
+ * Content
+ *
+ */
+
 .content {
     
-    margin: 120px 0 0 0;
+    margin: 0;
+    padding: 40px 0;
+    
     background: #f0f0f0;
     color: #666666;
-    
-    padding: 40px 0;
     
 }
 
@@ -12,20 +18,39 @@
     margin: 1em 20px;
 }
 
+
+
+
+/* 
+ *
+ * Header
+ *
+ */
+
 .header {
-    
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
-    
     height: 120px;
-    z-index: 100;
-    
 }
+
+
+
+
+/* 
+ *
+ * Nav
+ *
+ */
 
 .nav {    
     display: block;
+    background: #3a3a3a;
+}
+
+.nav:after {    
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
 }
 
 @media screen and ( min-width: 768px ) {
@@ -35,7 +60,7 @@
         position: absolute;
         right: 0;
         left: 0;
-        top: 0;
+        top: 120px;
     
         z-index: 1000;
     
@@ -90,63 +115,20 @@
 }
 
 .nav-link:hover {
-    background: #333333;
-    color: #ffffff;
+    background: #303030;
+    color: #f0f0f0;
 }
+
+
+
+
+
+/* 
+ *
+ * Footer
+ *
+ */
 
 .footer {
     padding: 40px 0;
-}
-
-
-
-
-.text-content {
-    padding: 20px;
-}
-
-.text-content-title {
-    /**/
-}
-
-.code-content {
-    padding: 20px;
-}
-
-.code-content-title {
-    /**/
-}
-
-.title-content {
-    padding: 20px;
-}
-
-.title-content-title {
-    /**/
-}
-
-
- 
-.html-content {
-    /**/
-}
-
-.html-content-title {
-    padding: 20px 20px 0;
-}
- 
-.image-content {
-    /**/
-}
-
-.image-content-title {
-    padding: 20px 20px 0;
-}
- 
-.slider-content {
-    /**/    
-}
-
-.slider-content-title {
-    padding: 20px 20px 0;
 }

@@ -9,6 +9,7 @@
     </head>
     <body>
         
+        <#include 'include/header.ftl' />
         <#include 'include/content.ftl' />
         
         <#include 'include/nav.ftl' />

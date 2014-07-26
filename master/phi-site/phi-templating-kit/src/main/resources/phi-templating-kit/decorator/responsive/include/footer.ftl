@@ -1,5 +1,3 @@
-<footer class="footer-content">
-    <div class="grid">
-        <@cms.area name = "footer-content" />
-    </div>
+<footer class="footer">
+    <@cms.area name = "footer-content" />
 </footer>

@@ -45,6 +45,9 @@ body,
         float: right;
     }
     
+    .column.phi.a { width: 38.197%; }
+    .column.phi.b { width: 61.803%; }
+    
     .column.two.a { width: 50%; }
 
     .column.three.a { width: 33.333%; }
