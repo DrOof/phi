@@ -115,6 +115,27 @@
     
 }
 
+@media screen and ( min-width: 768px ) {
+    
+    .nav-list > li > .nav-list {
+        
+        font-size: 0;
+    
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 36px;
+        
+        background: #606060;
+        
+    }
+    
+    .nav-list .nav-list > li {
+        font-size: 10px;
+    }
+    
+}
+
 
 .nav-link {
     
@@ -128,6 +149,7 @@
     
 }
 
+.nav-link.selected,
 .nav-link:hover {
     background: #303030;
     color: #f0f0f0;
