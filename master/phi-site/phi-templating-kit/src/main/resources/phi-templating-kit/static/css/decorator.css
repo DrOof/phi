@@ -122,8 +122,9 @@
     .nav-list .nav-list {
         
         font-size: 0;
-    
+        
         position: absolute;
+        display: block;
         right: 0;
         left: 0;
         top: 36px;

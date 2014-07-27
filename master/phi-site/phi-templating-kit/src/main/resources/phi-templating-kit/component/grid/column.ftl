@@ -25,9 +25,17 @@
         [#case '33' ]
             [#local class = 'column three a' ]
             [#break ]
+            
+        [#case '38' ]
+            [#local class = 'column phi a' ]
+            [#break ]
 
         [#case '50' ]
             [#local class = 'column two a' ]
+            [#break ]
+            
+        [#case '62' ]
+            [#local class = 'column phi b' ]
             [#break ]
 
         [#case '66' ]
