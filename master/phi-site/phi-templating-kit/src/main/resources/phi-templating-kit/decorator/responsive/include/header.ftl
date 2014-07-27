@@ -1,3 +1,5 @@
 <header class="header">
-    <@cms.area name = "header-content" />
+    <div class="grid">
+        <@cms.area name = "header-content" />
+    </div>
 </header>

@@ -82,10 +82,6 @@
     
 }
 
-.nav-title {
-    display: none;
-}
-
 .nav-list {
     list-style: none;
     padding: 0;
@@ -119,9 +115,7 @@
 
 @media screen and ( min-width: 768px ) {
     
-    .nav-list .nav-list {
-        
-        font-size: 0;
+    .nav .nav {
         
         position: absolute;
         display: block;
@@ -131,10 +125,6 @@
         
         background: #606060;
         
-    }
-    
-    .nav-list .nav-list > li {
-        font-size: 12px;
     }
     
 }
