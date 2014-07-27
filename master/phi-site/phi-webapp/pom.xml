@@ -71,6 +71,35 @@
                     <dependentWarExcludes>WEB-INF/lib/*.jar</dependentWarExcludes>
                 </configuration>
             </plugin>
+            
+            <!-- plugin>
+                <groupId>com.pyx4j</groupId>
+                <artifactId>maven-junction-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>link</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>unlink</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>unlink</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <links>
+                        <link>
+                            <dst>${basedir}/src/main/resources/phi-templating-kit</dst>
+                            <src>${basedir}/../phi-templating-kit/src/main/resources/phi-templating-kit</src>
+                        </link>
+                    </links>
+                </configuration>
+            </plugin -->
+            
         </plugins>
     </build>
 </project>
