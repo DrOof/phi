@@ -23,9 +23,18 @@
 }
 
 .content-title {
-    margin: 1em 20px;
+    margin: 20px;
 }
 
+.content-abstract {
+    
+    margin: 20px;
+    font-size: 12px;
+    padding: 20px;
+    
+    background: #fff;
+    
+}
 
 
 

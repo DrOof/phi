@@ -1,11 +1,13 @@
 <section class="content">
     <div class="grid">
-        <h1 class="content-title">${content.title!}</h1>
-        <div class="columns phi b">
-            <@cms.area name = "content" />        
+        <div class="column phi b">
+            <h1 class="content-title">${content.title!}</h1>
+            <div class="content-abstract">
+                ${content.abstract!}
+            </div>
         </div>
-        <div class="columns phi a">
-            <!-- add article navigation -->
-        </div>
+    </div>
+    <div class="grid">
+        <@cms.area name = "content" />
     </div>
 </section>

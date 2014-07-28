@@ -1,7 +1,5 @@
 package guru.phi.site;
 
-import info.magnolia.module.InstallContext;
-
 /**
  * This class is optional and represents the configuration for the phi-templating-kit module.
  * By exposing simple getter/setter/adder methods, this bean can be configured via content2bean

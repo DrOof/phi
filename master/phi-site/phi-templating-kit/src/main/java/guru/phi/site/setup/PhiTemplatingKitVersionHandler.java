@@ -15,15 +15,13 @@ import java.util.List;
  */
 public class PhiTemplatingKitVersionHandler extends DefaultModuleVersionHandler {
 	
-	private final List tasks = new ArrayList(); 
+	private final List<Task> tasks = new ArrayList<Task>(); 
     
 	@Override
     protected List<Task> getExtraInstallTasks( InstallContext context ) {
     	
-		final List t = new ArrayList( tasks );
-		
+		final List<Task> t = new ArrayList<Task>( tasks );
 		t.add( new AddFilterBypassTask( "/server/filters", "phi-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-templating-kit" ) );
-		
 		return t;
 		
     }

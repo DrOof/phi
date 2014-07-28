@@ -2,8 +2,8 @@ html,
  body {
      
     font-family: "OpenSans", "Arial", "Sans-Serif";
-    line-height: 24px;
-    font-size: 16px;
+    line-height: 28px;
+    font-size: 14px;
     
     background: #000000;
     color: #ffffff;
@@ -40,6 +40,10 @@ a {
     text-decoration: none;
 }
 
+p {
+    margin: 0 0 1em;
+}
+
 img {
     
     display: block;
@@ -47,112 +51,5 @@ img {
     
     max-width: 100%;
     background: #f0f0f0;
-    
-}
-
-code {
-    
-    display: block;
-    padding: 10px;
-    
-    border: 1px solid #f0f0f0;
-    
-}
-
-
-
-
-
-
-.button {
-    
-    background: -moz-linear-gradient(top, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
-    
-    text-decoration: none;
-    color: #fff;
-    
-    font-size: 12px;
-    
-    padding: 0.75em 1em;
-    box-sizing: border-box;
-    border: none;
-    background-color: #121212;
-    
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    
-    line-height: 1.5em;
-    
-    display: inline-block;
-    
-    margin: 0;
-    
-    font-family: "OpenSans", "Arial", "Sans-Serif";
-    font-weight: 300;
-    
-    cursor: pointer;
-    
-}
-
-.button:hover {
-    background-color: #000;
-}
-
-.button.reduce {
-    padding: 0.25em 0.5em;
-}
-
-.button.blue {
-    border-color: #53bcdb;
-    background-color: #53bcdb;
-    color: #fff;
-}
-
-.button.blue:hover {
-    border-color: #000;
-    background-color: #000;
-}
-
-.button.red {
-    border-color: #AF002A;
-    background-color: #AF002A;
-    color: #fff;
-}
-
-.button.grey {
-    border-color: #f0f0f0;
-    background-color: #f0f0f0;
-    color: #999;
-}
-
-.button.grey:hover {
-    border-color: #e0e0e0;
-    background-color: #e0e0e0;
-}
-
-.button.link {
-    background: none;
-    color: #999;
-}
-
-.button.link:hover {
-    background: none;
-    color: #53bcdb;
-}
-
-.button-icon {
-    
-    display: inline-block;
-    
-    padding: 0.75em 1em;
-    margin: -0.75em 1em -0.75em -1em;
-    
-    border-right: 1px solid rgba( 255, 255, 255, 0.1 );
     
 }
