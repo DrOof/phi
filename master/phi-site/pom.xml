@@ -81,6 +81,26 @@
                     </webapps>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>8080</port>
+                        </connector>
+                    </connectors>
+                    <webAppConfig>
+                        <!-- contextPath>/phi-webapp</contextPath -->
+                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                            <resourcesAsCSV>
+                                ${basedir}/phi-webapp/target/phi-webapp-${project.version},
+                                ${basedir}/phi-templating-kit/src/main/resources
+                            </resourcesAsCSV>
+                        </baseResource>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
             <!-- plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
