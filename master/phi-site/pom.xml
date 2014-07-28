@@ -91,7 +91,7 @@
                         </connector>
                     </connectors>
                     <webAppConfig>
-                        <!-- contextPath>/phi-webapp</contextPath -->
+                        <contextPath>/phi-webapp</contextPath>
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>
                                 ${basedir}/phi-webapp/target/phi-webapp-${project.version},
