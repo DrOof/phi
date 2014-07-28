@@ -1,6 +1,6 @@
 <div class="slider-content" cms:edit>
     <#if content.title ? has_content >
-    <p class="slider-content-title"> ${content.title} </p>
+    <h4 class="slider-content-title"> ${content.title} </h4>
     </#if>
     <div class="slider">
         <ul class="slider-list">

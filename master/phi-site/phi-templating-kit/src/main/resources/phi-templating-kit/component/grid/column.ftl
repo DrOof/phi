@@ -1,7 +1,5 @@
-<div class="${resolveColumn(content.size!)} ${content.theme!}">
-    <section cms:edit>
-		[@cms.area name = 'content' /]
-	</section>
+<div class="${resolveColumn(content.size!)} theme-${content.theme!} ${content.contrast!?string('contrast','')}" cms:edit>
+    [@cms.area name = 'content' /]
 </div>
 
 [#function resolveColumn size]

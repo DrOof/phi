@@ -1,10 +1,10 @@
 <div class="text-content" cms:edit>
     <#if content.title ? has_content >
-    <p class="text-content-title"> ${content.title} </p>
+    <h4 class="text-content-title"> ${content.title} </h4>
     </#if>
-    <div class="text">
     <#if content.text ? has_content >
-        ${cmsfn.decode(content).text}
+        <div class="text">
+            ${cmsfn.decode(content).text}
+        </div>
     </#if>
-    </div>
 </div>
