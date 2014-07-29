@@ -105,7 +105,7 @@
                                 ${basedir}/../phi-lib/phi-lib-core/src/main/resources,
                                 ${basedir}/../phi-lib/phi-lib-dom/src/main/resources,
                                 ${basedir}/../phi-lib/phi-lib-graph/src/main/resources,
-                                ${basedir}/../phi-lib/phi-lib-player/src/main/resources
+                                ${basedir}/../phi-lib/phi-lib-media/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>
