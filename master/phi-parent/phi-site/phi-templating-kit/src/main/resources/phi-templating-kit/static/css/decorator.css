@@ -4,7 +4,43 @@
  *
  */
 
-.content {
+.content-header {
+    
+    background-color:   #1A60FF;
+    background-image:   linear-gradient( rgba( 255, 255, 255, .1 ) 2px, transparent 2px ),
+                        linear-gradient( 90deg, rgba( 255, 255, 255, .1) 2px, transparent 2px ),
+                        linear-gradient( rgba( 255, 255, 255, .1) 1px, transparent 1px ),
+                        linear-gradient( 90deg, rgba( 255, 255, 255, .1 ) 1px, transparent 1px );
+                        
+    background-size: 120px 120px, 120px 120px, 12px 12px, 12px 12px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    
+    padding: 40px 0;
+    
+}
+
+.content-header-title {
+    margin: 20px;
+}
+
+.content-header-title:before {
+    padding: 0 10px;
+    content: "{";
+}
+
+.content-header-title:after {
+    padding: 0 10px;
+    content: "}";
+}
+
+.content-header-abstract {
+    
+    margin: 20px;
+    font-size: 12px;
+    
+}
+
+.content-section {
     
     margin: 0;
     padding: 40px 0;
@@ -14,26 +50,12 @@
     
 }
 
-.content:after {    
+.content-section:after {    
     visibility: hidden;
     display: block;
     content: "";
     clear: both;
     height: 0;
-}
-
-.content-title {
-    margin: 20px;
-}
-
-.content-abstract {
-    
-    margin: 20px;
-    font-size: 12px;
-    padding: 20px;
-    
-    background: #fff;
-    
 }
 
 
@@ -45,7 +67,15 @@
  */
 
 .header {
-    height: 120px;
+    height: 80px;
+}
+
+@media screen and ( min-width: 768px ) {
+    
+    .header {
+        height: 112px;
+    }
+    
 }
 
 .header:after {    
@@ -83,7 +113,7 @@
         position: absolute;
         right: 0;
         left: 0;
-        top: 84px;
+        top: 80px;
     
         z-index: 1000;
     
@@ -93,9 +123,7 @@
 
 .nav-list {
     
-    margin: 0 20px;
     padding: 0;
-    
     list-style: none;
     
 }
@@ -103,6 +131,7 @@
 @media screen and ( min-width: 768px ) {
     
     .nav-list {
+        margin: 0 20px;
         font-size: 0;
     }
     
@@ -135,7 +164,7 @@
         left: 0;
         top: 36px;
         
-        background: #606060;
+        background: #6a6a6a;
         
     }
     
@@ -155,8 +184,16 @@
 }
 
 .nav-link.selected,
+.nav-link.open,
 .nav-link:hover {
     background: #303030;
+    color: #f0f0f0;
+}
+
+.nav .nav .nav-link.selected,
+.nav .nav .nav-link.open,
+.nav .nav .nav-link:hover {
+    background: #606060;
     color: #f0f0f0;
 }
 

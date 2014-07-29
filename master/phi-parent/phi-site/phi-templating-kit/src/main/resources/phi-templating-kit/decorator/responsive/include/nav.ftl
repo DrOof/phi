@@ -15,7 +15,7 @@
 </#macro>
 
 <#macro renderNavLink item>
-    <a href="${item.href!}" class="nav-link ${item.selected?string('selected', '')}">${item.title!}</a>
+    <a href="${item.href!}" class="nav-link ${item.selected?string('selected', '')} ${item.open?string('open', '')}">${item.title!}</a>
     <#if ( item.open || item.selected ) && item.items ? has_content>
         <@renderNavList item.items />
     </#if>

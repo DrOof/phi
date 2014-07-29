@@ -9,6 +9,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
+    <dependencies>
+        
+    </dependencies>
+    
     <artifactId>phi-js-dom</artifactId>
     <name>phi-js-dom</name>
     <packaging>jar</packaging>
