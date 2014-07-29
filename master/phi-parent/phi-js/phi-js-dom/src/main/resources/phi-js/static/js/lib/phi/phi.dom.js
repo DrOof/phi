@@ -353,7 +353,7 @@
     
     var Progress = phi.dom.Progress = phi({
         
-        __extends__ : phi.mvc.EventTarget,
+        __extends__ : phi.EventTarget,
         
         __init__ : function( node ) {
             
@@ -387,7 +387,7 @@
 
     var Dragger = phi.dom.Dragger = phi( {
         
-        __extends__ : phi.mvc.EventTarget,
+        __extends__ : phi.EventTarget,
     
         __init__: function( scope, draggable, options ) {
             

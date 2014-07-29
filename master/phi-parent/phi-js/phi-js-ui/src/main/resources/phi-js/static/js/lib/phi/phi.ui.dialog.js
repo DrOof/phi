@@ -27,9 +27,9 @@
  *
  */
 
-(function(window, document, phi, dom ) {
+( function( dom ) {
     
-    var dialog = phi.dialog = {
+    var dialog = phi.ui.dialog = {
         
         registered: {},
         relations: new dom.LinkRelations( /dialog/ ),
@@ -81,7 +81,7 @@
      *
      */
     
-    var Escapable = phi.dialog.Escapable = phi.aspect({
+    var Escapable = phi.ui.dialog.Escapable = phi.aspect({
         open: {
             after: function() {
                 dom( document ).bind( 'keydown.dialog', function(e) {
@@ -107,7 +107,7 @@
      *
      */
     
-    var Attention = phi.dialog.Attention = phi.aspect({
+    var Attention = phi.ui.dialog.Attention = phi.aspect({
         create: {
             after: function() {
                 var node = dom(this.node);
@@ -123,7 +123,7 @@
      *
      */
     
-    var Modal = phi.dialog.Modal = phi.aspect({
+    var Modal = phi.ui.dialog.Modal = phi.aspect({
         open: {
             after: function() {
                 
@@ -150,7 +150,7 @@
     
     
     
-    var Closable = phi.dialog.Closable = phi.aspect({
+    var Closable = phi.ui.dialog.Closable = phi.aspect({
         open: {
             after: function() {
                 dom( document ).bind( 'click.closable', function( e ) {
@@ -177,7 +177,7 @@
      *
      */
     
-    var Dialog = phi.dialog.Dialog = phi({
+    var Dialog = phi.ui.dialog.Dialog = phi({
         
         __extends__ : phi.EventTarget,
         
@@ -696,4 +696,4 @@
     
     
     
-})(window, document, phi, jQuery );
+})( phi.dom );

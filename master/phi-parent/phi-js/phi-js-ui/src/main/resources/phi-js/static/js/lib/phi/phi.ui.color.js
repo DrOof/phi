@@ -1,10 +1,10 @@
-(function( window, document, phi, dom ) {
+( function( dom ) {
     
     
-    phi.color = {};
+    phi.ui.color = {};
     
     
-    var ColorPicker = phi.color.ColorPicker = phi({
+    var ColorPicker = phi.ui.color.ColorPicker = phi({
         
         __extends__ : phi.EventTarget,
         
@@ -407,4 +407,4 @@
     });
     
     
-})(window, document, phi, jQuery );
+})( phi.dom );

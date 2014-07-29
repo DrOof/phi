@@ -6,7 +6,7 @@
         
         __implements__ : phi.media.engine.Engine,
         
-        __extends__ : phi.mvc.EventTarget,
+        __extends__ : phi.EventTarget,
         
         createCanvas : function() {
             

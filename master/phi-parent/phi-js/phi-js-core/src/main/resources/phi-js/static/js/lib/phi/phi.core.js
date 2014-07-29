@@ -27,7 +27,7 @@
  *
  */
 
-(function(window, document) {
+( function() {
 
     /**
      *
@@ -665,5 +665,56 @@
         }
 
     });
+    
+    var EventTarget = phi.EventTarget = phi({
+        
+        __init__: function() {
+            
+            this.listeners = {};
+            
+        },
+        
+        addEventListener: function( type, fn ) {
+            
+            var fns = this.listeners[ type ] || [];
+            
+            if ( fns.indexOf( fn ) === -1 ) {
+                fns.push( fn );
+            }
+            
+            this.listeners[ type ] = fns;
+            
+        },
+        
+        removeEventListener: function( type, fn ) {
+            
+            var fns = this.listeners[ type ] || [];
+            
+            if ( !fn ) {
+                fns = [];
+            } else if ( fns.indexOf( fn ) !== -1 ) {
+                fns = fns.splice( fns.indexOf( fn ), 1 );
+            }
+            
+            this.listeners[ type ] = fns;
+            
+        },
+        
+        dispatchEvent: function( e ) {
+            
+            e.preventDefault = function() {}; //
+            e.stopPropagation = function() {}; //
+            
+            e.target = e.target || this;
+            
+            var fns = this.listeners[ e.type ] || [];
+            
+            for ( var i = fns.length - 1; i >= 0; i-- ) {
+                fns[ i ]( e );
+            }
+            
+        }
+        
+    });
 
-}(window, document));
+})();

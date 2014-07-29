@@ -4,7 +4,7 @@
     
     var Controls = phi.media.ui.Controls = phi( {
         
-        __extends__ : phi.mvc.EventTarget,
+        __extends__ : phi.EventTarget,
         
         controls : null,
         progress : null,

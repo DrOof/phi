@@ -4,7 +4,7 @@
  *
  */
 
-.content-header {
+.content-stage {
     
     background-color:   #1A60FF;
     background-image:   linear-gradient( rgba( 255, 255, 255, .1 ) 2px, transparent 2px ),
@@ -19,21 +19,21 @@
     
 }
 
-.content-header-title {
+.content-stage-title {
     margin: 20px;
 }
 
-.content-header-title:before {
+.content-stage-title:before {
     padding: 0 10px;
     content: "{";
 }
 
-.content-header-title:after {
+.content-stage-title:after {
     padding: 0 10px;
     content: "}";
 }
 
-.content-header-abstract {
+.content-stage-abstract {
     
     margin: 20px;
     font-size: 12px;

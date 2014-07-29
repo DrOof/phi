@@ -8,7 +8,7 @@
     
     var Player = phi.media.Player = phi({
         
-        __extends__ : phi.mvc.EventTarget,
+        __extends__ : phi.EventTarget,
         
         __init__ : function( node ) {
             
