@@ -22,11 +22,6 @@
         </dependency>
         
         <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-lib-core</artifactId>
-        </dependency>
-        
-        <dependency>
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-module-standard-templating-kit</artifactId>
         </dependency>

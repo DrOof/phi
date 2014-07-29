@@ -3,17 +3,15 @@
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>guru.phi</groupId>
-    <artifactId>phi-lib</artifactId>
+    <artifactId>phi-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>phi-lib</name>
+    <name>phi-parent</name>
     <packaging>pom</packaging>
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
-        <module>phi-lib-core</module>
-        <module>phi-lib-dom</module>
-        <module>phi-lib-graph</module>
-        <module>phi-lib-player</module>
+        <module>phi-lib</module>
+        <module>phi-site</module>
     </modules>
     
 </project>

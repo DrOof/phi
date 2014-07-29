@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+    	<groupId>guru.phi</groupId>
+        <artifactId>phi-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>phi-lib</artifactId>
+    <name>phi-lib</name>
+    <packaging>pom</packaging>
+        
+    <!-- description>Please uncomment and fill in ...</description -->
+    <modules>
+        <module>phi-lib-core</module>
+        <module>phi-lib-dom</module>
+        <module>phi-lib-graph</module>
+        <module>phi-lib-player</module>
+    </modules>
+    
+</project>
