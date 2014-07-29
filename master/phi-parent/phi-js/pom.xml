@@ -17,6 +17,7 @@
     <modules>
         <module>phi-js-core</module>
         <module>phi-js-dom</module>
+        <module>phi-js-form</module>
         <module>phi-js-graph</module>
         <module>phi-js-media</module>
     </modules>
