@@ -16,7 +16,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <magnolia.version>5.2.4</magnolia.version>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
+        <jetty.version>8.1.15.v20140411</jetty.version>
         <postgres.version>9.3-1102-jdbc41</postgres.version>
     </properties>
 
@@ -88,6 +89,7 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
                 <configuration>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
@@ -99,7 +101,11 @@
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>
                                 ${basedir}/phi-webapp/target/phi-webapp-${project.version},
-                                ${basedir}/phi-templating-kit/src/main/resources
+                                ${basedir}/phi-templating-kit/src/main/resources,
+                                ${basedir}/../phi-lib/phi-lib-core/src/main/resources,
+                                ${basedir}/../phi-lib/phi-lib-dom/src/main/resources,
+                                ${basedir}/../phi-lib/phi-lib-graph/src/main/resources,
+                                ${basedir}/../phi-lib/phi-lib-player/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>
