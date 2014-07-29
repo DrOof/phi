@@ -6,7 +6,7 @@
     <artifactId>phi-lib</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>phi-lib</name>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>

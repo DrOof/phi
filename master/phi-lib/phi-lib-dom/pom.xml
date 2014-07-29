@@ -9,8 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>phi-lib-core</artifactId>
-    <name>phi-lib-core</name>
+    <artifactId>phi-lib-dom</artifactId>
+    <name>phi-lib-dom</name>
     <packaging>jar</packaging>
         
 </project>
