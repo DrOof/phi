@@ -18,7 +18,7 @@
         <module>phi-lib-core</module>
         <module>phi-lib-dom</module>
         <module>phi-lib-graph</module>
-        <module>phi-lib-player</module>
+        <module>phi-lib-media</module>
     </modules>
     
 </project>
