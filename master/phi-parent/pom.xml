@@ -10,7 +10,7 @@
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
-        <module>phi-lib</module>
+        <module>phi-js</module>
         <module>phi-site</module>
     </modules>
     

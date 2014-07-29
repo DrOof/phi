@@ -5,12 +5,20 @@
     
     <parent>
     	<groupId>guru.phi</groupId>
-        <artifactId>phi-lib</artifactId>
+        <artifactId>phi-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>phi-lib-player</artifactId>
-    <name>phi-lib-player</name>
-    <packaging>jar</packaging>
+    <artifactId>phi-js</artifactId>
+    <name>phi-js</name>
+    <packaging>pom</packaging>
         
+    <!-- description>Please uncomment and fill in ...</description -->
+    <modules>
+        <module>phi-js-core</module>
+        <module>phi-js-dom</module>
+        <module>phi-js-graph</module>
+        <module>phi-js-media</module>
+    </modules>
+    
 </project>

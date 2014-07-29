@@ -102,10 +102,10 @@
                             <resourcesAsCSV>
                                 ${basedir}/phi-webapp/target/phi-webapp-${project.version},
                                 ${basedir}/phi-templating-kit/src/main/resources,
-                                ${basedir}/../phi-lib/phi-lib-core/src/main/resources,
-                                ${basedir}/../phi-lib/phi-lib-dom/src/main/resources,
-                                ${basedir}/../phi-lib/phi-lib-graph/src/main/resources,
-                                ${basedir}/../phi-lib/phi-lib-media/src/main/resources
+                                ${basedir}/../phi-js/phi-js-core/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-dom/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-graph/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-media/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>
