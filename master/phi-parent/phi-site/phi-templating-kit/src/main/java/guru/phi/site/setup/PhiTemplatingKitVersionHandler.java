@@ -21,6 +21,7 @@ public class PhiTemplatingKitVersionHandler extends DefaultModuleVersionHandler 
     protected List<Task> getExtraInstallTasks( InstallContext context ) {
     	
 		final List<Task> t = new ArrayList<Task>( tasks );
+        t.add( new AddFilterBypassTask( "/server/filters", "phi-js", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-js" ) );
 		t.add( new AddFilterBypassTask( "/server/filters", "phi-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-templating-kit" ) );
 		return t;
 		
