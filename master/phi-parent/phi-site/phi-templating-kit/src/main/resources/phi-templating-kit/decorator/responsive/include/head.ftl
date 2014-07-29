@@ -5,3 +5,5 @@
 <link rel="stylesheet" href="${contextPath}/phi-templating-kit/static/css/theme.css" />
 <link rel="stylesheet" href="${contextPath}/phi-templating-kit/static/css/decorator.css" />
 <link rel="stylesheet" href="${contextPath}/phi-templating-kit/static/css/component.css" />
+
+<link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo' rel='stylesheet' type='text/css'>

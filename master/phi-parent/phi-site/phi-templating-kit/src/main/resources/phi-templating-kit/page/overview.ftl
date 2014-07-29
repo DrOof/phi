@@ -20,6 +20,11 @@
 
 <#macro renderOverviewLink child>
 <a class="overview-link theme-four contrast" href="${cmsfn.link( child )}">
+    <#if child.image ? has_content >
+    <div class="overview-link-image">
+        <img src="${damfn.getAssetForId( child.image ).link!}" alt="${child.title!}" />
+    </div>
+    </#if>
     <#if child.title ? has_content >
     <h4 class="overview-link-title"> ${child.title} </h4>
     </#if>

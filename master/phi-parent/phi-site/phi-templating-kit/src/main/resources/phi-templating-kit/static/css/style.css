@@ -2,8 +2,9 @@ html,
  body {
      
     font-family: "OpenSans", "Arial", "Sans-Serif";
-    line-height: 28px;
+    
     font-size: 14px;
+    line-height: 28px;
     
     background: #000000;
     color: #ffffff;
