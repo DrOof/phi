@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <magnolia.version>5.2.4</magnolia.version>
-        <java.version>1.8</java.version>
+        <java.version>1.7</java.version>
         <jetty.version>8.1.15.v20140411</jetty.version>
         <postgres.version>9.3-1102-jdbc41</postgres.version>
     </properties>
@@ -71,7 +71,7 @@
                     <webapps>
                         <webapp>
                             <groupId>guru.phi</groupId>
-                            <artifactId>phi-webapp</artifactId>
+                            <artifactId>phi-site-webapp</artifactId>
                             <version>1.0-SNAPSHOT</version>
                             <type>war</type>
                             <asWebapp>true</asWebapp>
@@ -90,10 +90,10 @@
                         </connector>
                     </connectors>
                     <webAppConfig>
-                        <contextPath>/phi-webapp</contextPath>
+                        <contextPath>/phi-site-webapp</contextPath>
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>
-                                ${basedir}/phi-webapp/target/phi-webapp-${project.version},
+                                ${basedir}/phi-site-webapp/target/phi-site-webapp-${project.version},
                                 ${basedir}/phi-templating-kit/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-core/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-dom/src/main/resources,
@@ -142,7 +142,7 @@
     </repositories>
 
     <modules>
-        <module>phi-webapp</module>
+        <module>phi-site-webapp</module>
         <module>phi-templating-kit</module>
     </modules>
     

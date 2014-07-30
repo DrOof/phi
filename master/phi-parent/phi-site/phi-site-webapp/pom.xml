@@ -10,8 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     
-    <artifactId>phi-webapp</artifactId>
-    <name>phi-webapp</name>
+    <artifactId>phi-site-webapp</artifactId>
+    <name>phi-site-webapp</name>
     <packaging>war</packaging>
     
     <dependencies>
