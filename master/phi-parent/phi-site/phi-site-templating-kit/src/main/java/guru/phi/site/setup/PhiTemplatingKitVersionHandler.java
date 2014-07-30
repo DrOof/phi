@@ -22,7 +22,7 @@ public class PhiTemplatingKitVersionHandler extends DefaultModuleVersionHandler 
     	
 		final List<Task> t = new ArrayList<Task>( tasks );
         t.add( new AddFilterBypassTask( "/server/filters", "phi-js", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-js" ) );
-		t.add( new AddFilterBypassTask( "/server/filters", "phi-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-templating-kit" ) );
+		t.add( new AddFilterBypassTask( "/server/filters", "phi-site-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-site-templating-kit" ) );
 		return t;
 		
     }
