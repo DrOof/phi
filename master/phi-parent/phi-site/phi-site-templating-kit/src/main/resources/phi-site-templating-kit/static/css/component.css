@@ -1,3 +1,18 @@
+.player-content {
+    padding: 20px;
+}
+
+.player-content-title {
+    
+}
+
+.player {
+	
+	height: 400px;
+	background: #000;
+	
+}
+
 .card-content {
     margin: 20px;
     padding: 1px;
@@ -142,3 +157,8 @@
     display: block;
     margin: 0;
 }
+
+
+
+
+
