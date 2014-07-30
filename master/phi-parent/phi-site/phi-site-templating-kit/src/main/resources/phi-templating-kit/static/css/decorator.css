@@ -6,12 +6,12 @@
 
 .content-stage {
     
-    background-color:   #1A60FF;
-    background-image:   linear-gradient( rgba( 255, 255, 255, .1 ) 2px, transparent 2px ),
+    background-color:   #909090;
+	background-image:   linear-gradient( rgba( 255, 255, 255, .1 ) 2px, transparent 2px ),
                         linear-gradient( 90deg, rgba( 255, 255, 255, .1) 2px, transparent 2px ),
                         linear-gradient( rgba( 255, 255, 255, .1) 1px, transparent 1px ),
                         linear-gradient( 90deg, rgba( 255, 255, 255, .1 ) 1px, transparent 1px );
-                        
+                      
     background-size: 120px 120px, 120px 120px, 12px 12px, 12px 12px;
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
     
@@ -95,6 +95,7 @@
  */
 
 .nav {    
+	
     display: block;
     background: #3a3a3a;
 }

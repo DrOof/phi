@@ -94,7 +94,7 @@
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>
                                 ${basedir}/phi-site-webapp/target/phi-site-webapp-${project.version},
-                                ${basedir}/phi-templating-kit/src/main/resources,
+                                ${basedir}/phi-site-templating-kit/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-core/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-dom/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-form/src/main/resources,
@@ -143,7 +143,7 @@
 
     <modules>
         <module>phi-site-webapp</module>
-        <module>phi-templating-kit</module>
+        <module>phi-site-templating-kit</module>
     </modules>
     
 </project>

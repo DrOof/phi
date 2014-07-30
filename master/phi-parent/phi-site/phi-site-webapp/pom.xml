@@ -38,7 +38,7 @@
         
         <dependency>
             <groupId>guru.phi</groupId>
-            <artifactId>phi-templating-kit</artifactId>
+            <artifactId>phi-site-templating-kit</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>

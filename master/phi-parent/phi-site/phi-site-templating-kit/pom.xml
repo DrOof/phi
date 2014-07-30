@@ -9,8 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>phi-templating-kit</artifactId>
-    <name>phi-templating-kit</name>
+    <artifactId>phi-site-templating-kit</artifactId>
+    <name>phi-site-templating-kit</name>
     <packaging>jar</packaging>
         
     <!-- description>Please uncomment and fill in ...</description -->

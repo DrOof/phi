@@ -1,6 +1,6 @@
 ( function( dom ) {
     
-    var graph = phi.graph || {};
+    var graph = phi.graph = phi.graph || {};
     
     var Graph = phi.graph.Graph = phi({
         

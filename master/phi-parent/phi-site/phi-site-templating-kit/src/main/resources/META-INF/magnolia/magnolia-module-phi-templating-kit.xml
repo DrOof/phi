@@ -2,7 +2,7 @@
 <!DOCTYPE module SYSTEM "module.dtd" >
 <module>
     
-    <name>phi-templating-kit</name>
+    <name>phi-site-templating-kit</name>
     <displayName>Magnolia Module Phi Templating Kit</displayName>
     <description>${project.description}</description>
     <class>guru.phi.site.PhiTemplatingKit</class>
