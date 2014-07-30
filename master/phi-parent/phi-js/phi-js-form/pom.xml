@@ -12,5 +12,21 @@
     <artifactId>phi-js-form</artifactId>
     <name>phi-js-form</name>
     <packaging>jar</packaging>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>guru.phi</groupId>
+			<artifactId>phi-js-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>guru.phi</groupId>
+			<artifactId>phi-js-dom</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+	</dependencies>
     
 </project>

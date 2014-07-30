@@ -20,14 +20,8 @@
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-core</artifactId>
         </dependency>
-        
-        <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-js-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
+		
+		<dependency>
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-module-standard-templating-kit</artifactId>
         </dependency>
@@ -36,6 +30,58 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+		
+		<!-- 
+			
+			Importing phi js modules here copies resources 
+			to their respective jars in the final war file. 
+			
+			They are available under 
+			
+				/phi-js/static/js/lib/phi/phi.core.js
+				/phi-js/static/js/lib/phi/phi.dom.js
+				/phi-js/static/js/lib/phi/phi.ui.js
+				/phi-js/static/js/lib/phi/phi.form.js
+				/phi-js/static/js/lib/phi/phi.graph.js
+				/phi-js/static/js/lib/phi/phi.media.js
+			
+		-->
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-dom</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-ui</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-media</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-form</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-graph</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         
     </dependencies>
