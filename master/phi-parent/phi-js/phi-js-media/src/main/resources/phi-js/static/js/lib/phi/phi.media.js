@@ -79,7 +79,7 @@
             
         },
         
-        resolveEngineType: function( source ) {
+        resolveEngineClass: function( source ) {
             
             var T, clazz;
             for ( var e in phi.media.engine ) {
@@ -98,7 +98,7 @@
         },
         
         createEngine: function( source ) {
-            
+			
             if ( this.engine ) {
                 this.engine.destroyCanvas();
                 this.engine = null;
@@ -113,10 +113,8 @@
              * 
              */
             
-            var clazz = this.resolveEngineType( source );
-            
-            var engine = new clazz(); // clazz.apply();
-            
+            var engine = new ( this.resolveEngineClass( source ) )(); // clazz.apply();
+			
             this.node.appendChild( engine.createCanvas() );
             
             engine.addEventListener( 'pause', this.handlePause.bind( this ) );
@@ -221,9 +219,9 @@
         },
         
         setSrc: function( src ) {
-            
-            this.reset( this.node );
-            this.engine = this.createEngine( new phi.media.Source( src ) );
+			
+			this.reset( this.node );
+            this.engine = this.createEngine( new phi.media.util.Source( src ) );
             
             if ( this.engine ) {
                 this.engine.setSrc( src );
@@ -322,12 +320,12 @@
         
         handleTimeUpdate: function( e ) {
             
-            this.controls.updateRemainingTime( this.duration() - this.currentTime() );
-            this.controls.updateCurrentTime( this.currentTime() );
-            this.controls.updateDuration( this.duration() );
+			this.controls.updateRemainingTime( this.duration() - this.currentTime() );
+			this.controls.updateCurrentTime( this.currentTime() );
+			this.controls.updateDuration( this.duration() );
             
-            this.controls.updateProgress( this.currentTime(), this.duration() );
-            
+			this.controls.updateProgress( this.currentTime(), this.duration() );
+				
         },
         
         handleVolumeChange: function( e ) {
@@ -338,8 +336,8 @@
                 this.removeState( MUTED );
             }
             
-            this.controls.updateVolume( this.volume() );
-            
+			this.controls.updateVolume( this.volume() );
+			
         },
         
         handleRequestPlay : function( e ) {

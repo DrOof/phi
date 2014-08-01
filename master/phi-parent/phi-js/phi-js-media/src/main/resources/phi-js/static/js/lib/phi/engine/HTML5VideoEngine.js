@@ -13,7 +13,7 @@
         },
         
         createCanvas: function() {
-            
+			
             var canvas = this.canvas = document.createElement( 'video' );
             
             canvas.className = 'player-canvas';

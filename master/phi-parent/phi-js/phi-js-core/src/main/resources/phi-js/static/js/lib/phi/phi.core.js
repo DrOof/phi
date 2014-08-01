@@ -46,6 +46,10 @@
     phi['interface'] = function( def ) {
         return new Interface( def );
     };
+	
+	phi.module = function( def ) {
+		
+	};
     
     
     
@@ -60,8 +64,8 @@
     
     for( var v = 0; v < vendors.length && !window.requestAnimationFrame; ++v ) {
         
-        window.requestAnimationFrame     = window[ vendors[ v ] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame     = window[ vendors[ v ] + 'CancelAnimationFrame'] || window[ vendors [ v ]+'CancelRequestAnimationFrame' ];
+        window.requestAnimationFrame	= window[ vendors[ v ] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame		= window[ vendors[ v ] + 'CancelAnimationFrame'] || window[ vendors [ v ]+'CancelRequestAnimationFrame' ];
     }
     
     (function() {
