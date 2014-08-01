@@ -12,29 +12,21 @@
             
             this.node = dom( node );
             
-            this.colorDragger = this.createColorDragger( this.node );
-            this.hueDragger = this.createColorHueDragger( this.node );
-            
-            this.node.bind( 'mousedown', this.handleMouseDown.bind( this ) );
-            
-            color = color || node.getAttribute('data-color') || '#ff0000';
-            
-                // var hsv = this.hexToHSV( color );
-                // this.hsv( hsv );
-            this.hex(color);
+            this.createColorDragger( this.node );
+            this.createColorHueDragger( this.node );
+			
+            this.hex( color || node.getAttribute('data-color') || '#ff0000' );
+			
+	        this.saturation = 0;
+	        this.value = 100;
+	        this.hue = 0;
             
         },
-        
-        saturation: 0,
-        value: 100,
-        hue: 0,
         
         createColorDragger: function( node ) {
             
             var dragger = new phi.dom.RelativeDragger( node.find( '.color-picker' ), node.find( '.color-picker-bezel' ), {} );
-            
             dragger.addEventListener( 'dragmove', this.handleColorChange.bind( this ) );
-            
             return dragger;
             
         },
@@ -42,9 +34,7 @@
         createColorHueDragger: function( node ) {
             
             var dragger = new phi.dom.RelativeDragger( node.find( '.color-hue-picker' ), node.find( '.color-hue-picker-bezel' ), { allowX: false } );
-            
             dragger.addEventListener( 'dragmove', this.handleColorHueChange.bind( this ) );
-            
             return dragger;
             
         },
@@ -56,9 +46,7 @@
             this.value = 100 - Math.round( e.target.valueY() );
             
             this.node.find( '.color-preview' ).css( { 'background-color' : this.hex() } );
-            
-            var hexNum = this.hex();
-            this.node.find('.color-picker-input').val(this.hexStripped(hexNum));
+            this.node.find( '.color-picker-input' ).val( this.hex().substr(1) );
             
             this.dispatchEvent( { type: 'colorchange' } );
             
@@ -72,88 +60,12 @@
             
             this.node.find( '.color-picker' ).css( { 'background-color' : this.hsvToHEX( [ this.hue, 100, 100 ] ) } );
             this.node.find( '.color-preview' ).css( { 'background-color' : this.hex() } );
-            
-            var hexNum = this.hex();
-            this.node.find('.color-picker-input').val(this.hexStripped(hexNum));
+            this.node.find( '.color-picker-input' ).val( this.hex().substr(1) );
             
             this.dispatchEvent( { type: 'colorhuechange' } );
             
         },
         
-        handleMouseDown: function(e) { 
-            
-            if(e.target.className === 'color-picker'){
-                
-                this.mouseDownColorPicker(e);
-                
-            }else if(e.target.className === 'color-hue-picker'){
-                
-                this.mouseDownColorHuePicker(e);
-            }
-        },
-        
-        mouseDownColorPicker: function(e){
-            
-            // console.log('COLOR mouseDownColorPicker dom(e.target)=',dom(e.target));
-            
-            // if we have clicked on the colorDragger - do nothing (now taken care of in handleMouseDown)
-            // if (dom(e.target).closest( this.colorDragger.draggable).length !== 0 ) return;
-            
-            var x, y, w, h, left, top;
-            
-            var scope = dom(e.target);
-            
-            var cs = window.getComputedStyle(scope[0]);
-            
-            w = parseInt(cs.width);
-            h = parseInt(cs.height);
-            
-            x = e.pageX - scope.offset().left - 1;// needs 1 px adjustment for some reason
-            y = e.pageY - scope.offset().top - 1;
-            
-            if(x < 0 || x > w || y < 0 || y > h){
-                return;
-            }
-            
-            // console.log('COLOR mouseDownColorPicker x,y=',x,y);
-            
-            left = this.normalize(x, 0, 220) * 100;
-            top = this.normalize(y, 0, 220) * 100;
-            
-            // set color picker bezel
-            scope.find( '.color-picker-bezel' ).css("left", left + "%");
-            scope.find( '.color-picker-bezel' ).css("top", top + "%");
-            
-            var e = {target: this.colorDragger.draggable, preventDefault: function(){}};
-            this.colorDragger.handleMouseDown(e)
-        },
-        
-        mouseDownColorHuePicker: function(e){
-            
-            var y, h, top;
-            
-            var scope = dom(e.target);
-            
-            var cs = window.getComputedStyle(scope[0]);
-            
-            h = parseInt(cs.height);
-            
-            y = e.pageY - scope.offset().top - 1;// needs 1 px adjustment for some reason
-            
-            if(y < 0 || y > h){
-                return;
-            }
-            
-            // console.log('COLOR mouseDownColorHuePicker y=',y);
-            
-            top = this.normalize(y, 0, 220) * 100;
-            
-            // set color picker bezel
-            scope.find( '.color-picker-bezel' ).css("top", top + "%");
-            
-            var e = {target: this.hueDragger.draggable, preventDefault: function(){}};
-            this.hueDragger.handleMouseDown(e)
-        },
         
         hsvToRGB: function( hsv ) {
             
@@ -162,9 +74,9 @@
             var f, p, q, t;
             
             // Make sure our arguments stay in-range
-            h = Math.max(0, Math.min(360, hsv[0] ));
-            s = Math.max(0, Math.min(100, hsv[1] ));
-            v = Math.max(0, Math.min(100, hsv[2] ));
+            h = Math.max( 0, Math.min( 360, hsv[0] ) );
+            s = Math.max( 0, Math.min( 100, hsv[1] ) );
+            v = Math.max( 0, Math.min( 100, hsv[2] ) );
 
             // We accept saturation and value arguments from 0 to 100 because that's
             // how Photoshop represents those values. Internally, however, the
@@ -225,43 +137,49 @@
             }
             
             return [ Math.round( r * 255 ), Math.round( g * 255 ), Math.round( b * 255 ) ];
+			
         },
         
-        rgbToHSV:function (rgb) {
-            var rr, gg, bb,
-                r = rgb[0] / 255,
-                g = rgb[1] / 255,
-                b = rgb[2] / 255,
-                h, s,
+        rgbToHSV: function( rgb ) {
+			
+            var rr, r = rgb[0] / 255,
+				gg, g = rgb[1] / 255,
+				bb, b = rgb[2] / 255,
+                
+				h, 
+				s,
                 v = Math.max(r, g, b),
+				
                 diff = v - Math.min(r, g, b),
-                diffc = function(c){
-                    return (v - c) / 6 / diff + 1 / 2;
+                diffc = function( c ) {
+                    return ( v - c ) / 6 / diff + 1 / 2;
                 };
         
-            if (diff == 0) {
+            if ( diff == 0 ) {
                 h = s = 0;
             } else {
+				
                 s = diff / v;
-                rr = diffc(r);
-                gg = diffc(g);
-                bb = diffc(b);
+                rr = diffc( r );
+                gg = diffc( g );
+                bb = diffc( b );
         
-                if (r === v) {
+                if ( r === v ) {
                     h = bb - gg;
-                }else if (g === v) {
-                    h = (1 / 3) + rr - bb;
-                }else if (b === v) {
-                    h = (2 / 3) + gg - rr;
+                } else if ( g === v ) {
+                    h = ( 1 / 3 ) + rr - bb;
+                } else if ( b === v ) {
+                    h = ( 2 / 3 ) + gg - rr;
                 }
-                if (h < 0) {
+				
+                if ( h < 0 ) {
                     h += 1;
-                }else if (h > 1) {
+                } else if ( h > 1 ) {
                     h -= 1;
                 }
             }
             
-            return [Math.round(h * 360), Math.round(s * 100), Math.round(v * 100)]
+            return [ Math.round( h * 360 ), Math.round( s * 100 ), Math.round( v * 100 ) ];
         },
         
         rgbToHEX: function( rgb ) {
@@ -275,17 +193,16 @@
             
         },
         
-        hexToRgb:function(hex) {
+        hexToRgb:function( hex ) {
             
-            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+            // Fix shorthand
+            hex = hex.replace( /^#?([a-f\d])([a-f\d])([a-f\d])$/i, function( m, r, g, b ) {
                 return r + r + g + g + b + b;
             });
         
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
             
-            return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
+            return result ? [ parseInt( result[1], 16 ), parseInt( result[2], 16 ), parseInt( result[3], 16 ) ] : null;
             
         },
         
@@ -303,36 +220,9 @@
         },
         
         hexToHSV:function(hex){
-            var rgb = this.hexToRgb(hex);
-            // console.log('1 hexToHSV::rgb=',rgb);//nn
-            var hsv = this.rgbToHSV(rgb);
+            var rgb = this.hexToRgb( hex );
+            var hsv = this.rgbToHSV( rgb );
             return hsv;
-        },
-        
-        __set_color_pickers__:function(){
-            
-            // set preview bar
-            this.node.find( '.color-preview' ).css( { 'background-color' : this.hex() } );
-            
-            // set color picker bg with hue at maximum saturation & lightness
-            var maxHSV = this.__get_hsv__();
-            maxHSV[1] = maxHSV[2] = 100;
-            this.node.find( '.color-picker' ).css( { 'background-color' : this.hsvToHEX( maxHSV ) } );
-            
-            // set hue picker bezel
-            var huePerc = this.hue * 100 / 360;
-            var bezelPerc = 100 - huePerc; 
-            this.node.find( '.color-hue-picker-bezel' ).css("top", bezelPerc + "%");
-            
-            // set color picker bezel
-            this.node.find( '.color-picker-bezel' ).css("left", this.saturation + "%");
-            this.node.find( '.color-picker-bezel' ).css("top", (100 - this.value) + "%");
-            
-            // set input field - DON'T FEEDBACK TO INPUT FIELD - value can come back from color value conversion process 1 out,
-            // which forces a different color code to the one just input which is confusing to the user
-            // (I think the discrepancy happens in rgbToHSV, I tried several different algorithms all with the same result)
-            // var hexNum = this.hex();
-            // this.node.find('.color-picker-input').val(this.hexStripped(hexNum));
         },
         
         __set_hsv__: function(hsv) {
@@ -368,7 +258,6 @@
         hsv: function( hsv ) {
             if ( hsv ) {
                 this.__set_hsv__(hsv);
-                this.__set_color_pickers__();
             } else {
                 return this.__get_hsv__(); 
             }
@@ -390,19 +279,13 @@
             }
         },
         
-        // strip leading #
-        hexStripped: function(pHex){
-            
-            return pHex.substr(1);
-        },
-        
-        normalize: function ( value, a, b ){
+        fit: function ( value, a, b ){
                  
             var min = ( a < b ) ? a : b;
             var max = ( a > b ) ? a : b;
-            return (value - min) / (max - min);
-                 
-        },
+            return ( value - min ) / ( max - min );
+			
+        }
         
     });
     
