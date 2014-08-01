@@ -1,6 +1,6 @@
-( function() {
+( function( phi ) {
     
-    // start pretty print...
-    prettyPrint();
+    // phi.dom.register( '.player', phi.media.Player );
+	// phi.dom.register( '.slider', phi.dom.Slider );
     
 } )( phi );

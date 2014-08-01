@@ -17,7 +17,7 @@
         return params;
         
     };
-    
+	
     /**
      *
      * SVGShapeElement
