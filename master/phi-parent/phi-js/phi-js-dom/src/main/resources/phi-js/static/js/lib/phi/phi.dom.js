@@ -56,7 +56,7 @@
     
     /**
      *
-     * Observer links being clicked
+     * Observes links
      *
      */
 
@@ -105,34 +105,11 @@
 
     });
     
-    
-    
-    
-    
-    
-    var AnimationRelations = phi.dom.AnimationRelations = phi({
-        
-        __init__ : function( prefix, scope ) {
-            
-            ( scope || document ).addEventListener( 'animationstart', this.handleNodeInsert );
-            ( scope || document ).addEventListener( 'MSAnimationStart', this.handleNodeInsert );
-            ( scope || document ).addEventListener( 'webkitAnimationStart', this.handleNodeInsert );
-            
-        },
-        
-        handleNodeInsert: function( e ) {
-            
-            if ( e.animationName === prefix ) {
-                console.log( e );    
-            }
-            
-        }
-        
-    });
-    
-    
-    
-    
+    /**
+     *
+     * Observes animation
+     *
+     */
     
     var AnimationRelations = phi.dom.AnimationRelations = phi({
         
@@ -190,9 +167,11 @@
         
     });
     
-    
-    
-    
+    /**
+	 *
+	 * Observer field changes
+	 *
+	 */
     
     var FieldRelations = phi.dom.FieldRelations = phi({
 
@@ -239,10 +218,11 @@
 
     });
     
-    
-    
-    
-    
+    /**
+	 *
+	 * Observer hash changes
+	 *
+	 */
     
     var HashRelations = phi.dom.HashRelations = phi({
 
@@ -282,14 +262,9 @@
 
     });
     
-    
-    
-    
-    
     /**
      *
      * A basic template parser to create new Nodes as a string
-     *
      *
      */
     
@@ -298,18 +273,6 @@
         __init__: function( html ) {
             this.set( html );
         },
-        
-        /**
-         *
-         * parses through data to generate html as a string, replacing any variables between brackets, i.e. {{my.var}}
-         *
-         * @param data {Object}     the data to pass through the object
-         * @param parent {String}     the name of the parent of a data point, when using recursive looping in nested data
-         * @param html {String}     the (partially) generated HTML if data is nested
-         *
-         * @return html {String}    the generated HTML
-         *
-         */
         
         parse: function( data, parent, html ) {
             
@@ -335,50 +298,15 @@
             
         },
         
-        /**
-         *
-         * set the base template
-         *
-         * @param html {String}     the base template to parse over
-         *
-         */
-        
         set: function( html ) {
             this.html = html;
         },
         
-        /**
-         *
-         * gets the base template
-         *
-         * @returns html {String}         the base template to parse over
-         *
-         */
-        
         get: function() {
             return this.html;
-        },
-        
-        /**
-         *
-         * Parses and removes any unused references.
-         *
-         * @returns html {String}         the base template to parse over
-         *
-         */
-        
-        parseAndClean: function( data, parent, html ) {
-            
-            var html = this.parse( data, parent, html );
-            return html.replace( /{{([^}}]*)}}/, '');
-            
         }
         
     });
-    
-    
-    
-    
     
     /*
      *
@@ -406,17 +334,11 @@
             
         }
         
-    } );
-    
-    
-    
-    
-    
+    });
     
     /**
      *
-     * Generic Dragger
-     *
+     * Dragger
      *
      */
 
@@ -589,10 +511,12 @@
         
     });
 
-
-
-
-
+    /**
+     *
+     * Relative Dragger
+     *
+     */
+	
     var RelativeDragger = phi.dom.RelativeDragger = phi({
 
         __extends__: Dragger,
@@ -639,35 +563,25 @@
 
         },
         
-        /* get or set valueX */
         valueX: function( x ) {
             
             if ( x !== undefined ) {
                 this.move( x, 0 );
+            } else {
+            	return parseFloat( ( this.dragging.css( 'left' ) ) / this.scope.outerWidth() ) * 100;
             }
-            
-            var left = 0;
-            if ( this.isDragging() ) {
-                left = parseFloat( ( this.dragging.css( 'left' ) ) / this.scope.outerWidth() ) * 100;
-            }
-            
-            return left;
             
         },
         
-        /* get or set valueY */
         valueY: function( y ) {
             
             if ( y !== undefined ) {
                 this.move( 0, y );
+            } else {
+	            if ( this.isDragging() ) {
+	                return parseFloat( ( this.dragging.css( 'top' ) ) / this.scope.height() ) * 100;
+	            }
             }
-            
-            var top = 0;
-            if ( this.isDragging() ) {
-                top = parseFloat( ( this.dragging.css( 'top' ) ) / this.scope.height() ) * 100;
-            }
-            
-            return top;
             
         }
 
