@@ -58,7 +58,7 @@
 	        var script = document.createElement( 'script' );
 	            script.src = arguments[i];
             
-	        body.appendChild( script );
+	        document.body.appendChild( script );
 			
 		}
         
