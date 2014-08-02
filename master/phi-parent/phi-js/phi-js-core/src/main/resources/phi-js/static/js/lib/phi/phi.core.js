@@ -53,6 +53,15 @@
 	
 	phi.import = function( /* src.. */ ) {
 		
+		for (var i = 0; i < arguments.length; i++) {
+			
+	        var script = document.createElement( 'script' );
+	            script.src = arguments[i];
+            
+	        body.appendChild( script );
+			
+		}
+        
 	};
     
     
