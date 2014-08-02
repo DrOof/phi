@@ -48,6 +48,10 @@
     };
 	
 	phi.module = function( def ) {
+		// TODO : implement simple module pattern
+	};
+	
+	phi.import = function( /* src.. */ ) {
 		
 	};
     
