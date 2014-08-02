@@ -5,16 +5,22 @@
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.form.js"></script>
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.graph.js"></script>
 
-<link rel="stylesheet" href="${contextPath}/phi-js/static/css/player.css" />
+<!-- TODO : add stylesheet and classes dynamically by adding to the document -->
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.media.js"></script>
 
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/ui/AspectRatio.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/ui/Controls.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/ui/Poster.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/util/Source.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/engine/Engine.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/engine/HTML5VideoEngine.js"></script>
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/engine/DefaultEngine.js"></script>
+<link rel="stylesheet" href="${contextPath}/phi-js/static/css/player.css" />
+
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/player/Player.js"></script>
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/player/Source.js"></script>
+
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/ui/AspectRatio.js"></script>
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/ui/Controls.js"></script>
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/ui/Poster.js"></script>
+
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/engine/Engine.js"></script>
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/engine/HTML5VideoEngine.js"></script>
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/engine/DefaultEngine.js"></script>
+<!-- TODO : add stylesheet and classes dynamically by adding to the document -->
 
 
 <script type="text/javascript" src="${contextPath}/phi-site-templating-kit/static/js/app/init.js"></script>

@@ -1,12 +1,12 @@
 (function( dom ) {
     
-    phi.media = phi.media || {};
+    phi.media.player = phi.media.player || {};
     
     var WAITING         = 'waiting';
     var MUTED           = 'muted';
     var PLAYING         = 'playing';
     
-    var Player = phi.media.Player = phi({
+    var Player = phi.media.player.Player = phi({
         
         __extends__ : phi.EventTarget,
         
@@ -221,7 +221,7 @@
         setSrc: function( src ) {
 			
 			this.reset( this.node );
-            this.engine = this.createEngine( new phi.media.util.Source( src ) );
+            this.engine = this.createEngine( new phi.media.player.Source( src ) );
             
             if ( this.engine ) {
                 this.engine.setSrc( src );

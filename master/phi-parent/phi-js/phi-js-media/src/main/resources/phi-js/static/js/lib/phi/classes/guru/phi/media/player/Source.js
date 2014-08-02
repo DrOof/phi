@@ -1,15 +1,13 @@
 ( function( dom ) {
     
-    phi.media.util = phi.media.util || {};
-    
-    var Source = phi.media.util.Source = phi({
+    var Source = phi.media.player.Source = phi({
         
         __init__ : function( src, mimeType ) {
             
             this.src = src;
             this.mimeType = mimeType || this.resolveMimeType( src );
             
-            
+           
         },
         
         resolveMimeType: function( src ) {
