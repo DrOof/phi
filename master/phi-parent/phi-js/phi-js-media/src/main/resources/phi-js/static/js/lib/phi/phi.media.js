@@ -13,12 +13,12 @@
         __init__ : function( node ) {
             
             this.node = node;
-            this.reset( node );
+            // this.reset( node );
             
             if ( node.hasAttribute( 'src' ) ) {
                 this.setSrc( node.getAttribute( 'src' ) );
             }
-            
+			
         },
         
         reset: function( node ) {
@@ -53,7 +53,7 @@
             
             var controls = this.controls = new phi.media.ui.Controls();
             this.node.appendChild( controls.createControls() );
-            
+			
             /*  */
             controls.initialise();
             

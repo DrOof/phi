@@ -27,6 +27,18 @@
 			<version>${project.version}</version>
 		</dependency>
 		
+		<!-- dependency>
+			<groupId>com.jquery</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${jquery.version}</version>
+		</dependency -->
+		
+		<!-- dependency>
+			<groupId>com.fontawesome</groupId>
+			<artifactId>fontawesome</artifactId>
+			<version>${fontawesome.version}</version>
+		</dependency -->
+		
 	</dependencies>
         
 </project>

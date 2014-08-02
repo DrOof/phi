@@ -346,21 +346,21 @@
         
         __extends__ : phi.EventTarget,
     
-        __init__: function( scope, draggable, options ) {
+        __init__: function( node, draggable, options ) {
             
-            this.scope = dom( scope || document );
+            this.node = dom( node || document );
             this.draggable = draggable;
 
             var options = options || {};
 
-            this.constrain     = ( options.constrain === false ) ? false : true;
+            this.constrain	= ( options.constrain === false ) ? false : true;
             this.allowX     = ( options.allowX === false ) ? false : true;
             this.allowY     = ( options.allowY === false ) ? false : true;
             
-            this.scope.bind( 'mousedown', this.handleMouseDown.bind( this ) );
-            this.scope.bind( 'touchstart', this.handleTouchStart.bind( this ));
-            this.scope.bind( 'touchmove', this.handleTouchMove.bind( this ));
-            this.scope.bind( 'touchend', this.handleTouchEnd.bind( this ));
+            this.node.bind( 'mousedown', this.handleMouseDown.bind( this ) );
+            this.node.bind( 'touchstart', this.handleTouchStart.bind( this ));
+            this.node.bind( 'touchmove', this.handleTouchMove.bind( this ));
+            this.node.bind( 'touchend', this.handleTouchEnd.bind( this ));
             
         },
         
@@ -370,7 +370,7 @@
         
         grab: function( target ) {
             
-            this.dragging = dom( target ).closest( this.draggable, this.scope );
+            this.dragging = dom( target ).closest( this.draggable, this.node );
             this.dragging.addClass( 'dragging' );
             
             this.dispatchEvent( { type : 'dragstart', target : this }  );
@@ -427,11 +427,11 @@
         
             var x, y, w, h, left, top;
         
-            x = e.pageX - this.scope.offset().left;
-            y = e.pageY - this.scope.offset().top;
+            x = e.pageX - this.node.offset().left;
+            y = e.pageY - this.node.offset().top;
         
-            w = this.scope.outerWidth();
-            h = this.scope.outerHeight();
+            w = this.node.outerWidth();
+            h = this.node.outerHeight();
 
             this.move( x, y );
             
@@ -440,9 +440,11 @@
         },
 
         move: function( x, y ) {
+			
+			
 
-            w = this.scope.outerWidth();
-            h = this.scope.outerHeight();
+            w = this.node.outerWidth();
+            h = this.node.outerHeight();
 
             if ( this.constrain ) {
                 x = (x > w) ? w : ((x < 0) ? 0 : x);
@@ -457,7 +459,7 @@
             if ( this.allowY ) {
                 css['top'] = y;
             }
-
+			
             if ( this.isDragging() ) {
                 this.dragging.css( css );    
             }
@@ -525,11 +527,11 @@
 
             var x, y, w, h, l, t, left, top;
         
-            x = e.pageX - this.scope.offset().left;
-            y = e.pageY - this.scope.offset().top;
+            x = e.pageX - this.node.offset().left;
+            y = e.pageY - this.node.offset().top;
         
-            w = this.scope.outerWidth();
-            h = this.scope.outerHeight();
+            w = this.node.outerWidth();
+            h = this.node.outerHeight();
 
             x = parseFloat( 100 * x / w );
             y = parseFloat( 100 * y / h );
@@ -541,10 +543,10 @@
         },
 
         move: function( x, y ) {
-
+			
             if ( this.constrain ) {
-                x = (x > 100) ? 100 : ((x < 0) ? 0 : x);
-                y = (y > 100) ? 100 : ((y < 0) ? 0 : y);
+                x = ( x > 100 ) ? 100 : ( ( x < 0 ) ? 0 : x );
+                y = ( y > 100 ) ? 100 : ( ( y < 0 ) ? 0 : y );
             }
 
             var css = {};
@@ -564,13 +566,13 @@
         },
         
         valueX: function( x ) {
-            
-            if ( x !== undefined ) {
+			
+			if ( x !== undefined ) {
                 this.move( x, 0 );
             } else {
-            	return parseFloat( ( this.dragging.css( 'left' ) ) / this.scope.outerWidth() ) * 100;
+            	return parseFloat( this.dragging.css( 'left' ) ) / this.node.outerWidth() * 100;
             }
-            
+			
         },
         
         valueY: function( y ) {
@@ -578,11 +580,9 @@
             if ( y !== undefined ) {
                 this.move( 0, y );
             } else {
-	            if ( this.isDragging() ) {
-	                return parseFloat( ( this.dragging.css( 'top' ) ) / this.scope.height() ) * 100;
-	            }
+            	return  parseFloat( this.dragging.css( 'top' ) ) / this.node.height() * 100;
             }
-            
+			
         }
 
     });

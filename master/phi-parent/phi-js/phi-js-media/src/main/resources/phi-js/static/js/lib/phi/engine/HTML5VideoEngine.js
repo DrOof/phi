@@ -72,9 +72,7 @@
         },
         
         handleCanvasEvent: function( e ) {
-            
             this.dispatchEvent( e );
-            
         }
         
     });

@@ -6,11 +6,11 @@
         
         __extends__ : phi.EventTarget,
         
-        controls : null,
-        progress : null,
-        
         __init__ : function() {
-            
+			
+			this.controls = null;
+            this.progress = null;
+			
         },
         
         initialise: function() {
@@ -23,16 +23,17 @@
         
         createProgress: function() {
             
-            var progress = this.progress = new phi.dom.RelativeDragger( '.player-progress', '.player-progress-handle', { allowY: false } );
-            
-            progress.addEventListener( 'dragend', this.handleProgress.bind( this ) );
+            this.progress = new phi.dom.RelativeDragger( '.player-progress', '.player-progress-handle', { allowY: false } );
+            this.progress.addEventListener( 'dragend', this.handleProgress.bind( this ) );
+			
+			// console.log( this.progress );
             
         },
         
         createVolume: function() {
             
-            var volume = this.volume = new phi.dom.RelativeDragger( '.player-volume', '.player-volume-handle', { allowY: false } );
-            volume.addEventListener( 'dragend', this.handleVolume.bind( this ) );
+            this.volume = new phi.dom.RelativeDragger( '.player-volume', '.player-volume-handle', { allowY: false } );
+            this.volume.addEventListener( 'dragend', this.handleVolume.bind( this ) );
             
         },
         
@@ -47,10 +48,8 @@
         },
         
         createControls: function() {
-            
             var controls = this.controls = dom( HTML )[0];
             return controls;
-            
         },
         
         handleMuted: function( e ) { e.preventDefault();
@@ -75,34 +74,40 @@
         
         updateVolume: function( volume ) {
             
-            dom( this.controls ).find( '.player-volume-fill' ).css( { width : parseFloat( ( volume ) * 100 ) + '%' } );
+			
             
             if ( !this.volume.isDragging() ) {
+				
+				dom( this.controls ).find( '.player-volume-fill' ).css( { width : parseFloat( ( volume ) * 100 ) + '%' } );
+				dom( this.controls ).find( '.player-volume-handle' ).css( { left : parseFloat( ( volume ) * 100 ) + '%' } );
+				
                 this.volume.valueX( parseFloat( ( volume ) * 100 ) );    
             }
             
         },
         
         updateCurrentTime: function( currentTime ) {
-            dom( this.controls ).find( '.player-controls-current-time' ).html( this.secondsToHms( currentTime ) ); //.css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+            dom( this.controls ).find( '.player-controls-current-time' ).html( this.secondsToHms( currentTime ) );
         },
         
         updateRemainingTime: function( remainingTime ) {
-            dom( this.controls ).find( '.player-controls-remaining-time' ).html( this.secondsToHms( remainingTime ) ); // .css( { width : parseFloat( ( remainingTime / duration ) * 100 ) + '%' } );
+			dom( this.controls ).find( '.player-controls-remaining-time' ).html( this.secondsToHms( remainingTime ) );
         },
         
         updateDuration: function( duration ) {
-            dom( this.controls ).find( '.player-controls-duration' ).html( this.secondsToHms( duration ) ); // .css( { width : parseInt( duration ) + '%' } );
+            dom( this.controls ).find( '.player-controls-duration' ).html( this.secondsToHms( duration ) ).css( { width : parseInt( duration ) + '%' } );
         },
         
         updateProgress: function( currentTime, duration ) {
             
-            dom( this.controls ).find( '.player-progress-fill' ).css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
-            
             if ( !this.progress.isDragging() ) {
-                this.progress.valueX( parseFloat( ( currentTime / duration ) * 100 ) );    
+				
+	            dom( this.controls ).find( '.player-progress-fill' ).css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+				dom( this.controls ).find( '.player-progress-handle' ).css( { left : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+                this.progress.valueX( parseFloat( ( currentTime / duration ) ) * 100 );
+				
             }
-            
+			
         },
         
         secondsToHms: function( seconds ) {
