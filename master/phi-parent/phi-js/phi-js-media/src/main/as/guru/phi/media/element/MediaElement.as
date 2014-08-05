@@ -1,16 +1,16 @@
 import fl.video.FLVPlayback;
 
-package guru.phi.media.player {
+package guru.phi.media.element {
     
     /**
-    *
-    * MediaElement in Flash
-    *
-    */
+     *
+     * MediaElement in Flash
+     *
+     */
     
-    public class Player extends EventTarget {
+    public class MediaElement extends EventTarget {
         
-        public Player( Object options ) {
+        public MediaElement( Object options ) {
             
         }
         
@@ -38,10 +38,9 @@ package guru.phi.media.player {
             //
             // canvas.addEventListener( VideoProgressEvent.PROGRESS, this.handleProgress );
             //
-            // canvas.addEventListener( ErrorEvent.PROGRESS, this.handleProgress );
+            // canvas.addEventListener( ErrorEvent.ERROR, this.handleErrorEvent );
             //
             // canvas.addEventListener( SoundEvent.SOUND_UPDATE, this.handleSoundUpdate );
-
             
              /**
               *
@@ -118,7 +117,46 @@ package guru.phi.media.player {
             
         }
         
-        private handleComplete( event:VideoEvent ) : void {
+        private handleVideoEvent( event : VideoEvent ) : void {
+            
+            /**
+             *
+             * AUTO_REWOUND
+             * BUFFERING_STATE_ENTERED -> 'MediaEvent.BUFFERING'
+             * CLOSE
+             * COMPLETE -> 'MediaEvent.COMPLETE'
+             * FAST_FORWARD -> 'MediaEvent.TIMEUPDATE'
+             * PAUSED_STATE_ENTERED -> 'MediaEvent.PAUSED'
+             * PLAYHEAD_UPDATE -> 'MediaEvent.TIMEUPDATE'
+             * PLAYING_STATE_ENTERED -> 'MediaEvent.PLAYING'
+             * READY -> 'MediaEvent.CANPLAY'
+             * REWIND -> 'MediaEvent.TIMEUPDATE'
+             * SCRUB_FINISH -> 'MediaEvent.SEEKED'
+             * SCRUB_START -> 'MediaEvent.SEEKING'
+             * SEEKED -> 'MediaEvent.SEEKED'
+             * SKIN_LOADED -> '...'
+             * STATE_CHANGE -> '...'
+             * STOPPED_STATE_ENTERED -> '...'
+             * 
+             */
+            
+            // Switch on type and dispatch normalised event.
+            //
+            // this.dispatchEvent( new MediaEvent( 'play' ) );
+            // this.dispatchEvent( new MediaEvent( 'pause' ) );
+            
+        }
+        
+        private handleVideoError( event : VideoError ) : void {
+            
+            // this.dispatchEvent( new MediaEvent( 'error' ) );
+            
+        }
+        
+        private handleSoundEvent( event : SoundEvent ) : void {
+            
+            // this.dispatchEvent( new MediaEvent( 'volumechange' ) );
+            // this.dispatchEvent( new MediaEvent( 'muted' ) );
             
         }
         
