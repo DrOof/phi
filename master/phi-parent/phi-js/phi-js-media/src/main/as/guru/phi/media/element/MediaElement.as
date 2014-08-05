@@ -27,10 +27,11 @@
  *
  */
 
-package guru.phi.media.element {
+package phi.guru.media.element {
     
     import fl.video.FLVPlayback;
     import flash.events.EventDispatcher;
+    import phi.guru.media.event.MediaEvent;
     
     /**
      *
@@ -38,9 +39,9 @@ package guru.phi.media.element {
      *
      */
     
-    private function class MediaElement extends EventDispatcher {
+    public class MediaElement extends EventDispatcher {
         
-        private function MediaElement( Object options ) {
+        public function MediaElement( options:Object ) {
             
         }
         
@@ -196,19 +197,19 @@ package guru.phi.media.element {
             
         }
         
-        private function void play() {
+        private function play() : void {
             // canvas.play();
         }
         
-        private function void pause() {
+        private function pause() : void {
             // canvas.pause();
         }
         
-        private function String getSrc() {
+        private function getSrc() : String {
             return '';
         }
         
-        private function void setSrc( src:String ) {
+        private function setSrc( src:String ) : void {
             // canvas.src = src;
         }
         
@@ -228,7 +229,7 @@ package guru.phi.media.element {
             return 0;
         }
         
-        private function void setCurrentTime( currentTime:Number ) {
+        private function setCurrentTime( currentTime:Number ) : void {
             // canvas.currentTime = currentTime;
         }
         
