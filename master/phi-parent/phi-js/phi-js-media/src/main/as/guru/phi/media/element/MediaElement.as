@@ -1,6 +1,7 @@
-import fl.video.FLVPlayback;
-
 package guru.phi.media.element {
+    
+    import fl.video.FLVPlayback;
+    import flash.events.EventDispatcher;
     
     /**
      *
@@ -8,7 +9,7 @@ package guru.phi.media.element {
      *
      */
     
-    public class MediaElement extends EventTarget {
+    public class MediaElement extends EventDispatcher {
         
         public MediaElement( Object options ) {
             
@@ -19,22 +20,22 @@ package guru.phi.media.element {
             // TODO : create canvas and listen to every video event
             //
             // FLVPlayback canvas = new FLVPlayback();
-            // canvas.addEventListener( VideoEvent.AUTO_REWOUND, this.handleAutoRewound );
-            // canvas.addEventListener( VideoEvent.BUFFERING_STATE_ENTERED, this.handleBufferingStateEntered );
-            // canvas.addEventListener( VideoEvent.CLOSE, this.handleClose );
-            // canvas.addEventListener( VideoEvent.COMPLETE, this.handleComplete );
-            // canvas.addEventListener( VideoEvent.FAST_FOWARD, this.handleFastFoward );
-            // canvas.addEventListener( VideoEvent.PAUSED_STATE_ENTERED, this.handlePauseStateEntered );
-            // canvas.addEventListener( VideoEvent.PLAYHEAD_UPDATE, this.handlePlayheadUpdate );
-            // canvas.addEventListener( VideoEvent.PLAYING_STATE_ENTERED, this.handlePlayingStateEntered );
-            // canvas.addEventListener( VideoEvent.READY, this.handleReady );
-            // canvas.addEventListener( VideoEvent.REWIND, this.handleRewind );
-            // canvas.addEventListener( VideoEvent.SCRUB_FINISH, this.handleScrubFinish );
-            // canvas.addEventListener( VideoEvent.SCRUB_START, this.handleScrubStart );
-            // canvas.addEventListener( VideoEvent.SEEKED, this.handleSeeked );
-            // canvas.addEventListener( VideoEvent.SKIN_LOADED, this.handleSkinLoaded );
-            // canvas.addEventListener( VideoEvent.STATE_CHANGE, this.handleStateChange );
-            // canvas.addEventListener( VideoEvent.STOPPED_STATE_ENTERED, this.handleStopStateEntered );
+            // canvas.addEventListener( VideoEvent.AUTO_REWOUND, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.BUFFERING_STATE_ENTERED, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.CLOSE, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.COMPLETE, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.FAST_FOWARD, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.PAUSED_STATE_ENTERED, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.PLAYHEAD_UPDATE, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.PLAYING_STATE_ENTERED, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.READY, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.REWIND, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.SCRUB_FINISH, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.SCRUB_START, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.SEEKED, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.SKIN_LOADED, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.STATE_CHANGE, this.handleCanvasEvent );
+            // canvas.addEventListener( VideoEvent.STOPPED_STATE_ENTERED, this.handleCanvasEvent );
             //
             // canvas.addEventListener( VideoProgressEvent.PROGRESS, this.handleProgress );
             //
@@ -112,8 +113,14 @@ package guru.phi.media.element {
         }
         
         private destroyCanvas() : void {
-            
             // delete canvas;
+        }
+        
+        private handleCanvasEvent( event ) : void {
+            
+            // event instanceof VideoEvent
+            // event instanceof VideoError
+            // event instanceof SoundEvent
             
         }
         
