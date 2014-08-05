@@ -211,7 +211,7 @@
 
         nearest: function( Dx, EDx ) {
 
-            var direction = ( Dx < 0 ) ? '>' : '<';
+            var direction = ( Dx < 0 ) ? 'forward' : 'back';
 
             // First update control this might change the width so after that recalculate the direction again
             this.renderControl( this[ direction ]( EDx ) );
@@ -252,7 +252,7 @@
 
         },
 
-        '>': function( EDx ) {
+        forward : function( EDx ) {
 
             var list     = this.list.find('> li'),
                 width     = this.node.width(),
@@ -274,7 +274,7 @@
 
         },
 
-        '<': function( EDx ) {
+        back : function( EDx ) {
 
             var list     = this.list.find('> li'),
                 width     = this.node.width(),
