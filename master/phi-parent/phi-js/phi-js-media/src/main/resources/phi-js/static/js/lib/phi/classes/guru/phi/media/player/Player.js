@@ -1,3 +1,32 @@
+/**
+ *
+ * Phi Core - A multi-paradigm JavaScript library
+ *
+ * // Externalized source: javascript/phi/src/main/javascript
+ *
+ * Copyright (c) 2010 Authors of PHI
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ */
+
 (function( dom ) {
     
     phi.media.player = phi.media.player || {};
@@ -18,7 +47,7 @@
             if ( node.hasAttribute( 'src' ) ) {
                 this.setSrc( node.getAttribute( 'src' ) );
             }
-			
+            
         },
         
         reset: function( node ) {
@@ -53,7 +82,7 @@
             
             var controls = this.controls = new phi.media.ui.Controls();
             this.node.appendChild( controls.createControls() );
-			
+            
             /*  */
             controls.initialise();
             
@@ -98,7 +127,7 @@
         },
         
         createEngine: function( source ) {
-			
+            
             if ( this.engine ) {
                 this.engine.destroyCanvas();
                 this.engine = null;
@@ -114,7 +143,7 @@
              */
             
             var engine = new ( this.resolveEngineClass( source ) )(); // clazz.apply();
-			
+            
             this.node.appendChild( engine.createCanvas() );
             
             engine.addEventListener( 'pause', this.handlePause.bind( this ) );
@@ -219,8 +248,8 @@
         },
         
         setSrc: function( src ) {
-			
-			this.reset( this.node );
+            
+            this.reset( this.node );
             this.engine = this.createEngine( new phi.media.player.Source( src ) );
             
             if ( this.engine ) {
@@ -320,12 +349,12 @@
         
         handleTimeUpdate: function( e ) {
             
-			this.controls.updateRemainingTime( this.duration() - this.currentTime() );
-			this.controls.updateCurrentTime( this.currentTime() );
-			this.controls.updateDuration( this.duration() );
+            this.controls.updateRemainingTime( this.duration() - this.currentTime() );
+            this.controls.updateCurrentTime( this.currentTime() );
+            this.controls.updateDuration( this.duration() );
             
-			this.controls.updateProgress( this.currentTime(), this.duration() );
-				
+            this.controls.updateProgress( this.currentTime(), this.duration() );
+                
         },
         
         handleVolumeChange: function( e ) {
@@ -336,8 +365,8 @@
                 this.removeState( MUTED );
             }
             
-			this.controls.updateVolume( this.volume() );
-			
+            this.controls.updateVolume( this.volume() );
+            
         },
         
         handleRequestPlay : function( e ) {

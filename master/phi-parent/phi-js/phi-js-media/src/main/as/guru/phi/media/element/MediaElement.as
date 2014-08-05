@@ -1,3 +1,32 @@
+/**
+ *
+ * Phi Core - A multi-paradigm JavaScript library
+ *
+ * // Externalized source: javascript/phi/src/main/javascript
+ *
+ * Copyright (c) 2010 Authors of PHI
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ */
+
 package guru.phi.media.element {
     
     import fl.video.FLVPlayback;
@@ -9,13 +38,13 @@ package guru.phi.media.element {
      *
      */
     
-    public class MediaElement extends EventDispatcher {
+    private function class MediaElement extends EventDispatcher {
         
-        public MediaElement( Object options ) {
+        private function MediaElement( Object options ) {
             
         }
         
-        private createCanvas() : FLVPlayback {
+        private function createCanvas() : FLVPlayback {
             
             // TODO : create canvas and listen to every video event
             //
@@ -112,11 +141,11 @@ package guru.phi.media.element {
             
         }
         
-        private destroyCanvas() : void {
+        private function destroyCanvas() : void {
             // delete canvas;
         }
         
-        private handleCanvasEvent( event ) : void {
+        private function handleCanvasEvent( event ) : void {
             
             // event instanceof VideoEvent
             // event instanceof VideoError
@@ -124,7 +153,7 @@ package guru.phi.media.element {
             
         }
         
-        private handleVideoEvent( event : VideoEvent ) : void {
+        private function handleVideoEvent( event : VideoEvent ) : void {
             
             /**
              *
@@ -154,52 +183,52 @@ package guru.phi.media.element {
             
         }
         
-        private handleVideoError( event : VideoError ) : void {
+        private function handleVideoError( event : VideoError ) : void {
             
             // this.dispatchEvent( new MediaEvent( 'error' ) );
             
         }
         
-        private handleSoundEvent( event : SoundEvent ) : void {
+        private function handleSoundEvent( event : SoundEvent ) : void {
             
             // this.dispatchEvent( new MediaEvent( 'volumechange' ) );
             // this.dispatchEvent( new MediaEvent( 'muted' ) );
             
         }
         
-        public void play() {
+        private function void play() {
             // canvas.play();
         }
         
-        public void pause() {
+        private function void pause() {
             // canvas.pause();
         }
         
-        public String getSrc() {
+        private function String getSrc() {
             return '';
         }
         
-        public void setSrc( src:String ) {
+        private function void setSrc( src:String ) {
             // canvas.src = src;
         }
         
-        public getVolume() : Number {
+        private function getVolume() : Number {
             return 0.0;
         }
         
-        public setVolume( volume:Number ) : void {
+        private function setVolume( volume:Number ) : void {
             // canvas.volume = volume;
         }
         
-        public getDuration() : Number {
+        private function getDuration() : Number {
             return 0;
         }
         
-        public getCurrentTime() : Number {
+        private function getCurrentTime() : Number {
             return 0;
         }
         
-        public void setCurrentTime( currentTime:Number ) {
+        private function void setCurrentTime( currentTime:Number ) {
             // canvas.currentTime = currentTime;
         }
         

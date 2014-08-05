@@ -1,3 +1,32 @@
+/**
+ *
+ * Phi Core - A multi-paradigm JavaScript library
+ *
+ * // Externalized source: javascript/phi/src/main/javascript
+ *
+ * Copyright (c) 2010 Authors of PHI
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ */
+
 (function( phi, dom ) {
     
     phi.dom = dom;
@@ -17,7 +46,7 @@
         return params;
         
     };
-	
+    
     /**
      *
      * SVGShapeElement
@@ -168,10 +197,10 @@
     });
     
     /**
-	 *
-	 * Observer field changes
-	 *
-	 */
+     *
+     * Observer field changes
+     *
+     */
     
     var FieldRelations = phi.dom.FieldRelations = phi({
 
@@ -219,10 +248,10 @@
     });
     
     /**
-	 *
-	 * Observer hash changes
-	 *
-	 */
+     *
+     * Observer hash changes
+     *
+     */
     
     var HashRelations = phi.dom.HashRelations = phi({
 
@@ -353,7 +382,7 @@
 
             var options = options || {};
 
-            this.constrain	= ( options.constrain === false ) ? false : true;
+            this.constrain    = ( options.constrain === false ) ? false : true;
             this.allowX     = ( options.allowX === false ) ? false : true;
             this.allowY     = ( options.allowY === false ) ? false : true;
             
@@ -440,8 +469,8 @@
         },
 
         move: function( x, y ) {
-			
-			
+            
+            
 
             w = this.node.outerWidth();
             h = this.node.outerHeight();
@@ -459,7 +488,7 @@
             if ( this.allowY ) {
                 css['top'] = y;
             }
-			
+            
             if ( this.isDragging() ) {
                 this.dragging.css( css );    
             }
@@ -518,7 +547,7 @@
      * Relative Dragger
      *
      */
-	
+    
     var RelativeDragger = phi.dom.RelativeDragger = phi({
 
         __extends__: Dragger,
@@ -543,7 +572,7 @@
         },
 
         move: function( x, y ) {
-			
+            
             if ( this.constrain ) {
                 x = ( x > 100 ) ? 100 : ( ( x < 0 ) ? 0 : x );
                 y = ( y > 100 ) ? 100 : ( ( y < 0 ) ? 0 : y );
@@ -566,13 +595,13 @@
         },
         
         valueX: function( x ) {
-			
-			if ( x !== undefined ) {
+            
+            if ( x !== undefined ) {
                 this.move( x, 0 );
             } else {
-            	return parseFloat( this.dragging.css( 'left' ) ) / this.node.outerWidth() * 100;
+                return parseFloat( this.dragging.css( 'left' ) ) / this.node.outerWidth() * 100;
             }
-			
+            
         },
         
         valueY: function( y ) {
@@ -580,9 +609,9 @@
             if ( y !== undefined ) {
                 this.move( 0, y );
             } else {
-            	return  parseFloat( this.dragging.css( 'top' ) ) / this.node.height() * 100;
+                return  parseFloat( this.dragging.css( 'top' ) ) / this.node.height() * 100;
             }
-			
+            
         }
 
     });

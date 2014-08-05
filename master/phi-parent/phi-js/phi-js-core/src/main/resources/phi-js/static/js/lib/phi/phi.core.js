@@ -46,23 +46,23 @@
     phi['interface'] = function( def ) {
         return new Interface( def );
     };
-	
-	phi.module = function( def ) {
-		// TODO : implement simple module pattern
-	};
-	
-	phi.import = function( /* src.. */ ) {
-		
-		for (var i = 0; i < arguments.length; i++) {
-			
-	        var script = document.createElement( 'script' );
-	            script.src = arguments[i];
-            
-	        document.body.appendChild( script );
-			
-		}
+    
+    phi.module = function( def ) {
+        // TODO : implement simple module pattern
+    };
+    
+    phi.import = function( /* src.. */ ) {
         
-	};
+        for (var i = 0; i < arguments.length; i++) {
+            
+            var script = document.createElement( 'script' );
+                script.src = arguments[i];
+            
+            document.body.appendChild( script );
+            
+        }
+        
+    };
     
     
     
@@ -77,8 +77,8 @@
     
     for( var v = 0; v < vendors.length && !window.requestAnimationFrame; ++v ) {
         
-        window.requestAnimationFrame	= window[ vendors[ v ] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame		= window[ vendors[ v ] + 'CancelAnimationFrame'] || window[ vendors [ v ]+'CancelRequestAnimationFrame' ];
+        window.requestAnimationFrame    = window[ vendors[ v ] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame        = window[ vendors[ v ] + 'CancelAnimationFrame'] || window[ vendors [ v ]+'CancelRequestAnimationFrame' ];
     }
     
     (function() {

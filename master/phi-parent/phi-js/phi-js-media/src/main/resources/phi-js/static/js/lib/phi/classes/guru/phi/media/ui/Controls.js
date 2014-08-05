@@ -1,3 +1,32 @@
+/**
+ *
+ * Phi Core - A multi-paradigm JavaScript library
+ *
+ * // Externalized source: javascript/phi/src/main/javascript
+ *
+ * Copyright (c) 2010 Authors of PHI
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ *
+ */
+
 ( function( dom ) {
     
     phi.media.ui = phi.media.ui || {};
@@ -7,10 +36,10 @@
         __extends__ : phi.EventTarget,
         
         __init__ : function() {
-			
-			this.controls = null;
+            
+            this.controls = null;
             this.progress = null;
-			
+            
         },
         
         initialise: function() {
@@ -25,8 +54,8 @@
             
             this.progress = new phi.dom.RelativeDragger( '.player-progress', '.player-progress-handle', { allowY: false } );
             this.progress.addEventListener( 'dragend', this.handleProgress.bind( this ) );
-			
-			// console.log( this.progress );
+            
+            // console.log( this.progress );
             
         },
         
@@ -74,13 +103,13 @@
         
         updateVolume: function( volume ) {
             
-			
+            
             
             if ( !this.volume.isDragging() ) {
-				
-				dom( this.controls ).find( '.player-volume-fill' ).css( { width : parseFloat( ( volume ) * 100 ) + '%' } );
-				dom( this.controls ).find( '.player-volume-handle' ).css( { left : parseFloat( ( volume ) * 100 ) + '%' } );
-				
+                
+                dom( this.controls ).find( '.player-volume-fill' ).css( { width : parseFloat( ( volume ) * 100 ) + '%' } );
+                dom( this.controls ).find( '.player-volume-handle' ).css( { left : parseFloat( ( volume ) * 100 ) + '%' } );
+                
                 this.volume.valueX( parseFloat( ( volume ) * 100 ) );    
             }
             
@@ -91,7 +120,7 @@
         },
         
         updateRemainingTime: function( remainingTime ) {
-			dom( this.controls ).find( '.player-controls-remaining-time' ).html( this.secondsToHms( remainingTime ) );
+            dom( this.controls ).find( '.player-controls-remaining-time' ).html( this.secondsToHms( remainingTime ) );
         },
         
         updateDuration: function( duration ) {
@@ -101,13 +130,13 @@
         updateProgress: function( currentTime, duration ) {
             
             if ( !this.progress.isDragging() ) {
-				
-	            dom( this.controls ).find( '.player-progress-fill' ).css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
-				dom( this.controls ).find( '.player-progress-handle' ).css( { left : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+                
+                dom( this.controls ).find( '.player-progress-fill' ).css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+                dom( this.controls ).find( '.player-progress-handle' ).css( { left : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
                 this.progress.valueX( parseFloat( ( currentTime / duration ) ) * 100 );
-				
+                
             }
-			
+            
         },
         
         secondsToHms: function( seconds ) {

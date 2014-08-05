@@ -14,12 +14,12 @@
             
             this.createColorDragger( this.node );
             this.createColorHueDragger( this.node );
-			
+            
             this.hex( color || node.getAttribute('data-color') || '#ff0000' );
-			
-	        this.saturation = 0;
-	        this.value = 100;
-	        this.hue = 0;
+            
+            this.saturation = 0;
+            this.value = 100;
+            this.hue = 0;
             
         },
         
@@ -137,19 +137,19 @@
             }
             
             return [ Math.round( r * 255 ), Math.round( g * 255 ), Math.round( b * 255 ) ];
-			
+            
         },
         
         rgbToHSV: function( rgb ) {
-			
+            
             var rr, r = rgb[0] / 255,
-				gg, g = rgb[1] / 255,
-				bb, b = rgb[2] / 255,
+                gg, g = rgb[1] / 255,
+                bb, b = rgb[2] / 255,
                 
-				h, 
-				s,
+                h, 
+                s,
                 v = Math.max(r, g, b),
-				
+                
                 diff = v - Math.min(r, g, b),
                 diffc = function( c ) {
                     return ( v - c ) / 6 / diff + 1 / 2;
@@ -158,7 +158,7 @@
             if ( diff == 0 ) {
                 h = s = 0;
             } else {
-				
+                
                 s = diff / v;
                 rr = diffc( r );
                 gg = diffc( g );
@@ -171,7 +171,7 @@
                 } else if ( b === v ) {
                     h = ( 2 / 3 ) + gg - rr;
                 }
-				
+                
                 if ( h < 0 ) {
                     h += 1;
                 } else if ( h > 1 ) {
@@ -284,7 +284,7 @@
             var min = ( a < b ) ? a : b;
             var max = ( a > b ) ? a : b;
             return ( value - min ) / ( max - min );
-			
+            
         }
         
     });
