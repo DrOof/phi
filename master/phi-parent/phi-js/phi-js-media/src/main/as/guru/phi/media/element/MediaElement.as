@@ -47,9 +47,11 @@ package phi.guru.media.element {
         
         private function createCanvas() : FLVPlayback {
             
+			var canvas : FLVPlayback = new FLVPlayback();
+			
             // TODO : create canvas and listen to every video event
             //
-            // FLVPlayback canvas = new FLVPlayback();
+            // 
             // canvas.addEventListener( VideoEvent.AUTO_REWOUND, this.handleCanvasEvent );
             // canvas.addEventListener( VideoEvent.BUFFERING_STATE_ENTERED, this.handleCanvasEvent );
             // canvas.addEventListener( VideoEvent.CLOSE, this.handleCanvasEvent );

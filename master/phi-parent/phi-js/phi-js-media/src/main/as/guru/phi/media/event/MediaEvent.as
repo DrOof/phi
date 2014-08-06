@@ -28,36 +28,39 @@
  */
 
 package guru.phi.media.event {
-    
-    import flash.events.Event;
-    
-    
-    public static LOADSTART         = 'loadstart'
-    public static PROGRESS          = 'progress'
-    public static SUSPEND           = 'suspend'
-    public static ABORT             = 'abort'
-    public static ERROR             = 'error'
-    public static EMPTIED           = 'emptied'
-    public static STALLED           = 'stalled'
-    public static LOADEDMETADATA    = 'loadedmetadata'
-    public static LOADEDDATA        = 'loadeddata'
-    public static CANPLAY           = 'canplay'
-    public static CANPLAYTHROUGH    = 'canplaythrough'
-    public static PLAYING           = 'playing'
-    public static WAITING           = 'waiting'
-    public static SEEKING           = 'seeking'
-    public static SEEKED            = 'seeked'
-    public static ENDED             = 'ended'
-    public static DURATIONCHANGE    = 'durationchange'
-    public static TIMEUPDATE        = 'timeupdate'
-    public static PLAY              = 'play'
-    public static PAUSE             = 'pause'
-    public static RATECHANGE        = 'ratechange'
-    public static RESIZE            = 'resize'
-    public static VOLUMECHANGE      = 'volumechange'
-    
-    public class MediaEvent extends Event {
-        
-    }
-    
+	
+	import flash.events.Event;
+	
+	public class MediaEvent extends Event {
+		
+		public static var LOADSTART         : String = 'loadstart';
+		public static var PROGRESS          : String = 'progress';
+		public static var SUSPEND           : String = 'suspend';
+		public static var ABORT             : String = 'abort';
+		public static var ERROR             : String = 'error';
+		public static var EMPTIED           : String = 'emptied';
+		public static var LOADEDDATA        : String = 'loadeddata';
+		public static var STALLED           : String = 'stalled';
+		public static var LOADEDMETADATA    : String = 'loadedmetadata';
+		public static var CANPLAY           : String = 'canplay';
+		public static var CANPLAYTHROUGH    : String = 'canplaythrough';
+		public static var PLAYING           : String = 'playing';
+		public static var WAITING           : String = 'waiting';
+		public static var SEEKING           : String = 'seeking';
+		public static var SEEKED            : String = 'seeked';
+		public static var ENDED             : String = 'ended';
+		public static var DURATIONCHANGE    : String = 'durationchange';
+		public static var TIMEUPDATE        : String = 'timeupdate';
+		public static var PLAY              : String = 'play';
+		public static var PAUSE             : String = 'pause';
+		public static var RATECHANGE        : String = 'ratechange';
+		public static var RESIZE            : String = 'resize';
+		public static var VOLUMECHANGE      : String = 'volumechange';
+		
+		public function MediaEvent( type:String, bubbles:Boolean, cancelable:Boolean ) {
+			super( type, bubbles, cancelable )
+		}
+		
+	}
+	
 }
