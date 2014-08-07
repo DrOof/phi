@@ -9,21 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>phi-js-dom</artifactId>
-    <name>phi-js-dom</name>
+    <artifactId>phi-js-ext</artifactId>
+    <name>phi-js-ext</name>
     <packaging>jar</packaging>
-    
-    <dependencies>
-        <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-js-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-js-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
     
 </project>

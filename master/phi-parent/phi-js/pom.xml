@@ -15,6 +15,7 @@
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
+        <module>phi-js-ext</module>
         <module>phi-js-core</module>
         <module>phi-js-dom</module>
         <module>phi-js-form</module>
