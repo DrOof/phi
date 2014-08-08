@@ -1,8 +1,8 @@
 ( function( dom ) {
     
     
-    phi.ui.color = {};
-    
+    var ui = phi.ui = phi.ui || {};
+        ui.color = {};
     
     var ColorPicker = phi.ui.color.ColorPicker = phi({
         

@@ -29,6 +29,9 @@
 
 ( function( dom ) {
     
+    var ui = phi.ui = phi.ui || {};
+        ui.dialog = {};
+    
     var dialog = phi.ui.dialog = {
         
         registered: {},

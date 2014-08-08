@@ -17,8 +17,9 @@
      *
      */
     
+    var ui = phi.ui = phi.ui || {};
+        ui.slider = {};
     
-
     var Slider = phi.ui.slider.Slider = phi( {
 
         __x        : 0,
@@ -60,7 +61,7 @@
         createLinkObserver: function( node ) {
 
             // Create a LinkRelationObserver.
-            this.links = new phi.ui.slider.LinkRelations( /slider/, node[0] );
+            this.links = new phi.dom.LinkRelations( /slider/, node[0] );
 
             // Move the slider forward and backward.
             this.links.add('forward', this.forward.bind( this ) );

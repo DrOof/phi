@@ -5,11 +5,12 @@
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.form.js"></script>
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.graph.js"></script>
 
-<!-- TODO : add stylesheet and classes dynamically by adding to the document -->
-<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.media.js"></script>
-
-<link rel="stylesheet" href="${contextPath}/phi-js/static/css/player.css" />
 <link rel="stylesheet" href="${contextPath}/phi-js/static/css/slider.css" />
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.ui.slider.js"></script>
+
+<!-- TODO : add stylesheet and classes dynamically by adding to the document -->
+<link rel="stylesheet" href="${contextPath}/phi-js/static/css/player.css" />
+<script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/phi.media.js"></script>
 
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/player/Player.js"></script>
 <script type="text/javascript" src="${contextPath}/phi-js/static/js/lib/phi/classes/guru/phi/media/player/Source.js"></script>
