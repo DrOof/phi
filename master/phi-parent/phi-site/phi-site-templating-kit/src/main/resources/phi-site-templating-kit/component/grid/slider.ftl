@@ -6,7 +6,7 @@
         <ul class="slider-list">
             <@cms.area name='content' />
         </ul>
-        <a href="#" rel="slider:forward" class="slider-forward-link"><i class="icon-adyen-chevron-right"></i></a>
-        <a href="#" rel="slider:back" class="slider-back-link"><i class="icon-adyen-chevron-left"></i></a>
+        <a href="#" rel="slider:forward" class="slider-nav-link slider-nav-forward-link"><i class="icon-adyen-chevron-right"></i></a>
+        <a href="#" rel="slider:back" class="slider-nav-link slider-nav-back-link"><i class="icon-adyen-chevron-left"></i></a>
     </div>
 </div>
