@@ -31,18 +31,6 @@
     
     phi.media = phi.media || {};
     
-    /* solve classpath issue.
-    
-    phi.import( 'phi-js/static/js/lib/phi/classes/guru/phi/media/player/Player.js', 
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/player/Source.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/engine/Engine.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/engine/DefaultEngine.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/engine/HTML5VideoEngine.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/ui/AspectRatio.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/ui/Controls.js',
-                'phi-js/static/js/lib/phi/classes/guru/phi/media/ui/Poster.js' );
-    */
-    
     // TODO : import classes
     
 })( jQuery );
