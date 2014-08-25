@@ -58,3 +58,26 @@ img {
     background: #f0f0f0;
     
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+table > thead > tr > th {
+    background: #606060;
+    padding: 40px 10px 10px;
+    text-align: left;
+    color: #fff;
+    font-weight: normal;
+}
+
+table > tbody > tr > td {
+    background: #fff;
+    padding: 10px;
+}
+
+table > tbody > tr:nth-child( even ) > td {
+    background: #f0f0f0;
+}
