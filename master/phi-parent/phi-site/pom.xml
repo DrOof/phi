@@ -101,7 +101,9 @@
                                 ${basedir}/../phi-js/phi-js-form/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-graph/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-media/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-ui/src/main/resources
+                                ${basedir}/../phi-js/phi-js-slider/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-dialog/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-color/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>

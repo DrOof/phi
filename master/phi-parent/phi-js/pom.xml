@@ -21,7 +21,9 @@
         <module>phi-js-form</module>
         <module>phi-js-graph</module>
         <module>phi-js-media</module>
-        <module>phi-js-ui</module>
+        <module>phi-js-dialog</module>
+        <module>phi-js-slider</module>
+        <module>phi-js-color</module>
     </modules>
     
 </project>
