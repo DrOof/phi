@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-    	<groupId>guru.phi</groupId>
+        <groupId>guru.phi</groupId>
         <artifactId>phi-site</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -20,8 +20,8 @@
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-core</artifactId>
         </dependency>
-		
-		<dependency>
+        
+        <dependency>
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-module-standard-templating-kit</artifactId>
         </dependency>
@@ -31,59 +31,94 @@
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-		
-		<!-- 
-			
-			Importing phi js modules here copies resources 
-			to their respective jars in the final war file. 
-			
-			They are available under 
-			
-				/phi-js/static/js/lib/phi/phi.core.js
-				/phi-js/static/js/lib/phi/phi.dom.js
-				/phi-js/static/js/lib/phi/phi.ui.js
-				/phi-js/static/js/lib/phi/phi.form.js
-				/phi-js/static/js/lib/phi/phi.graph.js
-				/phi-js/static/js/lib/phi/phi.media.js
-			
-		-->
         
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-		
+        
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-dom</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-		
+        
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-ui</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-		
+        
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-media</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-		
+        
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-form</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-		
+        
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-graph</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-api</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-spi</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-util</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-impl</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-connector-basic</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-classpath</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-file</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-http</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-wagon</artifactId>
+            <version>${aether.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-aether-provider</artifactId>
+            <version>${maven.version}</version>
+        </dependency>
+            
     </dependencies>
         
     <build>
