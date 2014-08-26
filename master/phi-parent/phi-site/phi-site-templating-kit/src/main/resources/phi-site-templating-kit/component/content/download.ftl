@@ -2,7 +2,6 @@
     <#if content.title ? has_content >
     <h4 class="download-content-title"> ${content.title} </h4>
     </#if>
-    <div> ${model.helloCompontent()} </div>
     <#list model ? keys as key>
         <div>${key}</div>
     </#list>
