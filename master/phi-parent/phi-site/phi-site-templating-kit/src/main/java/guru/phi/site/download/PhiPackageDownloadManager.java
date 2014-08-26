@@ -5,40 +5,40 @@ import java.util.ArrayList;
 
 public class PhiPackageDownloadManager {
     
-    public static String PHI_CORE_PACKAGE           = "phi.core.js";
-    public static String PHI_DOM_PACKAGE            = "phi.dom.js";
-    public static String PHI_UI_PACKAGE             = "phi.ui.js";
-    public static String PHI_UI_COLOR_PACKAGE       = "phi.ui.color.js";
-    public static String PHI_UI_DIALOG_PACKAGE      = "phi.ui.dialog.js";
-    public static String PHI_UI_SLIDER_PACKAGE      = "phi.ui.slider.js";
-    public static String PHI_FORM_PACKAGE           = "phi.form.js";
-    public static String PHI_GRAPH_PACKAGE          = "phi.graph.js";
-    public static String PHI_MEDIA_PACKAGE          = "phi.media.js";
+    public static String PHI_CORE_MODULE        = "phi.core.js";
+    public static String PHI_DOM_MODULE         = "phi.dom.js";
+    public static String PHI_UI_MODULE          = "phi.ui.js";
+    public static String PHI_UI_COLOR_MODULE    = "phi.ui.color.js";
+    public static String PHI_UI_DIALOG_MODULE   = "phi.ui.dialog.js";
+    public static String PHI_UI_SLIDER_MODULE   = "phi.ui.slider.js";
+    public static String PHI_FORM_MODULE        = "phi.form.js";
+    public static String PHI_GRAPH_MODULE       = "phi.graph.js";
+    public static String PHI_MEDIA_MODULE       = "phi.media.js";
     
-    public DownloadManager() {
+    public PhiPackageDownloadManager() {
         
     }
     
-    public String concatenateFiles( String files... ) {
+    public String concatenateFiles( String files ) {
         return "";
     }
     
-    public String compressFiles( String files... ) {
+    public String compressFiles( String files ) {
         return "";
     }
     
-    public String minifyFiles( String files.. ) {
+    public String minifyFiles( String files ) {
         return "";
     }
     
-    public List<String> resolveDependencies( String package ) {
+    public List<String> resolveDependencies( String module ) {
         
-        List<String> packages = new ArrayList<String>();
+        List<String> dependencies = new ArrayList<String>();
         
         // loop through all dependencies
-        // packages.join( package.getDependencies() );
+        // packages.join( module.getDependencies() );
         
-        return packages;
+        return dependencies;
         
     }
     
