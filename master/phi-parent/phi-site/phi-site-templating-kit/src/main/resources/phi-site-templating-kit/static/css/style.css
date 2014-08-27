@@ -60,21 +60,28 @@ img {
 }
 
 table {
+    
     width: 100%;
     border-collapse: collapse;
+    
     border: none;
+    border: 1px solid #e4e4e4;
+    
 }
 
 table > thead > tr > th {
+    
     background: #606060;
-    padding: 40px 10px 10px;
+    color: #ffffff;
+    
+    padding: 10px;
     text-align: left;
-    color: #fff;
     font-weight: normal;
+    
 }
 
 table > tbody > tr > td {
-    background: #fff;
+    background: #ffffff;
     padding: 10px;
 }
 
