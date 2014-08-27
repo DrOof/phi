@@ -73,8 +73,6 @@
             <artifactId>aether-api</artifactId>
             <version>${aether.version}</version>
         </dependency>
-        
-        <!--
         <dependency>
             <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-spi</artifactId>
@@ -120,7 +118,6 @@
             <artifactId>maven-aether-provider</artifactId>
             <version>${maven.version}</version>
         </dependency>
-        -->
             
     </dependencies>
         

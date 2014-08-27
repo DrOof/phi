@@ -7,8 +7,13 @@ import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 
 import javax.jcr.Node;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 // FIXME : move to phi-site-package-manager module
 public class PhiPackageDownloadManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
+	
+	public static Logger logger = LogManager.getLogger( PhiPackageDownloadManagerModel.class ); 
     
     public static final String PHI_JS_COLOR     = "phi-js-color";
     public static final String PHI_JS_CORE      = "phi-js-core";
@@ -32,6 +37,23 @@ public class PhiPackageDownloadManagerModel<RD extends RenderableDefinition> ext
     public String resolveDependencies() {
     	
     	String result = "";
+    	
+    	/*
+    	DefaultRepositorySystem system = new DefaultRepositorySystem();
+    	DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
+    	session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, new LocalRepository( "target/local-repo" ) ) );
+    	
+    	CollectRequest request = new CollectRequest();
+    	
+    	try {
+    		system.collectDependencies( session, request );	
+    	} catch ( Exception e ) {
+    		logger.info( e );
+    	}
+    	*/
+    	
+    	
+    	// system.collectDependencies(arg0, arg1)
         
     	/*
         DefaultServiceLocator locator = new DefaultServiceLocator();
