@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>guru.phi</groupId>
-            <artifactId>phi-js-core</artifactId>
+            <artifactId>phi-js-ext</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
