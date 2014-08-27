@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+    
+    <name>phi-site-package-manager</name>
+    <displayName>Magnolia Module Phi Package Manager</displayName>
+    <description>${project.description}</description>
+    <class>guru.phi.site.package.PhiPackageManager</class>
+    <versionHandler>guru.phi.site.package.setup.PhiPackageManagerVersionHandler</versionHandler>
+    <version>${project.version}</version>
+
+    <dependencies>
+        
+        <dependency>
+            <name>core</name>
+            <version>${magnolia.version}</version>
+        </dependency>
+        
+    </dependencies>
+    
+</module>

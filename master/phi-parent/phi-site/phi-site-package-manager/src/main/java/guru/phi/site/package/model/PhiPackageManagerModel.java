@@ -1,4 +1,4 @@
-package guru.phi.site.component;
+package guru.phi.site.package.model;
 
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
@@ -7,8 +7,7 @@ import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 
 import javax.jcr.Node;
 
-// FIXME : move to phi-site-package-manager module
-public class PhiPackageDownloadManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
+public class PhiPackageManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
     
     public static final String PHI_JS_COLOR     = "phi-js-color";
     public static final String PHI_JS_CORE      = "phi-js-core";
@@ -20,7 +19,7 @@ public class PhiPackageDownloadManagerModel<RD extends RenderableDefinition> ext
     public static final String PHI_JS_MEDIA     = "phi-js-media";
     public static final String PHI_JS_SLIDER    = "phi-js-slider";
     
-    public PhiPackageDownloadManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry templateDefinitions ) throws Exception {
+    public PhiPackageManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry templateDefinitions ) throws Exception {
         super( content, definition, parent );
     }
 
