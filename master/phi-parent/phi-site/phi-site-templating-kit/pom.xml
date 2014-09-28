@@ -34,24 +34,6 @@
         
         <dependency>
             <groupId>guru.phi</groupId>
-            <artifactId>phi-js-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-js-dom</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>guru.phi</groupId>
-            <artifactId>phi-js-ui</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>guru.phi</groupId>
             <artifactId>phi-js-media</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
