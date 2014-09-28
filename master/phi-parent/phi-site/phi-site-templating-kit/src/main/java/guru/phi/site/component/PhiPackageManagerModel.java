@@ -134,7 +134,8 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
         
          DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
-         LocalRepository localRepo = new LocalRepository( "~/.m2/repository" );
+         // TODO : Move repository to property file
+         LocalRepository localRepo = new LocalRepository( "/home/phi/.m2/repository" );
          session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, localRepo ) );
 
          // session.setTransferListener( new ConsoleTransferListener() );
