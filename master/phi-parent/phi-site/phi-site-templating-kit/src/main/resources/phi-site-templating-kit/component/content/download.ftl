@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <#list model.resolveDependencies( "guru.phi:phi-js-dom:1.0-SNAPSHOT" ).dependencies as dependency>
+            <#list model.resolveDependencies( "guru.phi:phi-js-dom:3.0-SNAPSHOT" ).dependencies as dependency>
                 <tr>
                     <td>${dependency.artifact.groupId}</td>
                     <td>${dependency.artifact.artifactId}</td>

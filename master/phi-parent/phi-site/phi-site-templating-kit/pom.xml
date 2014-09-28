@@ -35,19 +35,19 @@
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-media</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${phi.version}</version>
         </dependency>
         
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-form</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${phi.version}</version>
         </dependency>
         
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-graph</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${phi.version}</version>
         </dependency>
         
         <dependency>

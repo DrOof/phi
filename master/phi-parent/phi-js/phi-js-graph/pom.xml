@@ -6,7 +6,7 @@
     <parent>
         <groupId>guru.phi</groupId>
         <artifactId>phi-js</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
     
     <artifactId>phi-js-graph</artifactId>
