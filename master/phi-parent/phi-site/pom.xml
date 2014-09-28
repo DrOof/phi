@@ -142,14 +142,14 @@
     <repositories>
         <repository>
             <id>magnolia.public</id>
-            <url>http://nexus.magnolia-cms.com/content/groups/public</url>
+            <url>https://nexus.magnolia-cms.com/content/groups/public</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
             <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
     </repositories>
 
