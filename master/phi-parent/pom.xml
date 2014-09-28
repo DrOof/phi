@@ -7,6 +7,20 @@
     <version>1.0-SNAPSHOT</version>
     <name>phi-parent</name>
     <packaging>pom</packaging>
+    
+    <repositories>
+        <repository>
+            <id>magnolia.public</id>
+            <url>http://nexus.magnolia-cms.com/content/groups/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
