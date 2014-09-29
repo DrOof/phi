@@ -115,7 +115,7 @@
                 </configuration>
             </plugin>
         </plugins>
-            
+        
         <!-- default resources configuration which will filter the module descriptor -->
         <resources>
             <resource>
