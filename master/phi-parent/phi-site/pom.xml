@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-    	<groupId>guru.phi</groupId>
+        <groupId>guru.phi</groupId>
         <artifactId>phi-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -12,7 +12,7 @@
     <artifactId>phi-site</artifactId>
     <name>phi-site</name>
     <packaging>pom</packaging>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <magnolia.version>5.2.4</magnolia.version>
@@ -24,16 +24,15 @@
         <maven.version>3.2.1</maven.version>
         <log4j.version>2.0.2</log4j.version>
     </properties>
-
+    
     <!-- Fill the following in, so you can use the release plugin -->
     <scm>
         <connection />
         <developerConnection />
         <url />
     </scm>
-
+    
     <dependencyManagement>
-        
         <dependencies>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -59,10 +58,8 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-        
     </dependencyManagement>
-
-
+    
     <build>
         <plugins>
             <plugin>
@@ -105,7 +102,7 @@
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>
                                 ${basedir}/phi-site-webapp/target/phi-site-webapp-${project.version}
-                                <!-- ${basedir}/phi-site-templating-kit/src/main/resources,
+                                ${basedir}/phi-site-templating-kit/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-ext/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-core/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-dom/src/main/resources,
@@ -114,7 +111,7 @@
                                 ${basedir}/../phi-js/phi-js-media/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-slider/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-dialog/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-color/src/main/resources -->
+                                ${basedir}/../phi-js/phi-js-color/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>
@@ -158,7 +155,7 @@
             </resource>
         </resources>
     </build>
-
+    
     <repositories>
         <repository>
             <id>magnolia.public</id>
@@ -172,7 +169,7 @@
             <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
     </repositories>
-
+    
     <modules>
         <module>phi-site-webapp</module>
         <module>phi-site-templating-kit</module>

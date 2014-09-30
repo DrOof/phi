@@ -116,7 +116,7 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
         locator.addService( RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class );
         locator.addService( TransporterFactory.class, FileTransporterFactory.class );
         locator.addService( TransporterFactory.class, HttpTransporterFactory.class );
-
+        
         locator.setErrorHandler( new DefaultServiceLocator.ErrorHandler() {
                 @Override
                 public void serviceCreationFailed( Class<?> type, Class<?> impl, Throwable e ) {
@@ -124,9 +124,8 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
                 }
             } 
         );
-
-        return locator.getService( RepositorySystem.class );
         
+        return locator.getService( RepositorySystem.class );
         
     }
     
