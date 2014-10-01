@@ -31,22 +31,23 @@ import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
 
-// FIXME : move to phi-site-package-manager module
+/**
+ *
+ * Manages the process of packaging phi modules and it's dependencies.
+ * 
+ * The manager user Aether to resolve dependencies based on project object models.
+ * 
+ * @author olivier
+ * @param <RD>
+ * 
+ */
+
 public class PhiPackageManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
     
+	public static final String LOCAL_M2_REPOSITORY_PATH = "/home/phi/.m2/repository";
     public static Logger logger = LogManager.getLogger( PhiPackageManagerModel.class ); 
     
-    public static final String PHI_JS_COLOR     = "phi-js-color";
-    public static final String PHI_JS_CORE      = "phi-js-core";
-    public static final String PHI_JS_DIALOG    = "phi-js-dialog";
-    public static final String PHI_JS_DOM       = "phi-js-dom";
-    public static final String PHI_JS_EXT       = "phi-js-ext";
-    public static final String PHI_JS_FORM      = "phi-js-form";
-    public static final String PHI_JS_GRAPH     = "phi-js-graph";
-    public static final String PHI_JS_MEDIA     = "phi-js-media";
-    public static final String PHI_JS_SLIDER    = "phi-js-slider";
-    
-    public PhiPackageManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry templateDefinitions ) throws Exception {
+    public PhiPackageManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry registry ) throws Exception {
         super( content, definition, parent );
     }
 
@@ -64,7 +65,7 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
      * 
      */
     
-    private File[] minifyFiles( File... files ) {
+    private File[] minifyFiles( boolean minify, File... files ) {
         return files;
     }
     
@@ -77,7 +78,7 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
      * 
      */
     
-    private File[] obfuscateFiles( File...files ) {
+    private File[] obfuscateFiles( boolean obfuscate, File...files ) {
         return files;
     }
     
@@ -90,7 +91,7 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
      * 
      */
     
-    private File concatenateFiles( File...files ) {
+    private File concatenateFiles( boolean concatenate, File...files ) {
         return files[0];
     }
     
@@ -103,57 +104,19 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
      * 
      */
     
-    public File resolveFile( File...files ) {
-        
-        
-        return concatenateFiles( obfuscateFiles( minifyFiles( files ) ) );
-        
+    public File resolveFile( boolean concatenate, boolean obfuscate, boolean minify, File...files ) {
+        return concatenateFiles( concatenate, obfuscateFiles( obfuscate, minifyFiles( minify, files ) ) );
     }
     
-    private RepositorySystem createRepositorySystem() {
-                
-        DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();
-        locator.addService( RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class );
-        locator.addService( TransporterFactory.class, FileTransporterFactory.class );
-        locator.addService( TransporterFactory.class, HttpTransporterFactory.class );
-        
-        locator.setErrorHandler( new DefaultServiceLocator.ErrorHandler() {
-                @Override
-                public void serviceCreationFailed( Class<?> type, Class<?> impl, Throwable e ) {
-                    // 
-                }
-            } 
-        );
-        
-        return locator.getService( RepositorySystem.class );
-        
-    }
+    /**
+     * 
+     * Resolves the dependencies of an artifact by name.
+     * 
+     * @param name The name of the artifact
+     * @return
+     * 
+     */
     
-    private RepositorySystemSession createRepositorySystemSession( RepositorySystem system ) {
-        
-         DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
-
-         // TODO : Move repository to property file
-         LocalRepository localRepo = new LocalRepository( "/home/phi/.m2/repository" );
-         session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, localRepo ) );
-
-         // session.setTransferListener( new ConsoleTransferListener() );
-         // session.setRepositoryListener( new ConsoleRepositoryListener() );
-
-         // uncomment to generate dirty trees
-         // session.setDependencyGraphTransformer( null );
-
-         return session;
-        
-    }
-    
-    private List<RemoteRepository> createRepositories() {
-        List<RemoteRepository> repositories = new ArrayList<RemoteRepository>();
-        repositories.add( new RemoteRepository.Builder( "central", "default", "http://central.maven.org/maven2/" ).build() );
-        return repositories;
-    }
-    
-    // "guru.phi:phi-js-core:3.0.0"
     public ArtifactDescriptorResult resolveDependencies( String name ) {
         
         // TODO: Create a system
@@ -186,8 +149,84 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
 
     }
     
+    /**
+     * 
+     * Resolves the link to download packaged modules
+     * 
+     * @return link
+     * 
+     */
+    
     public String resolveDownloadLink() {
         return "";
+    }
+    
+    /**
+     * 
+     * Creates a repository system
+     * 
+     * @return system
+     * 
+     */
+    
+    private RepositorySystem createRepositorySystem() {
+                
+        DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();
+        locator.addService( RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class );
+        locator.addService( TransporterFactory.class, FileTransporterFactory.class );
+        locator.addService( TransporterFactory.class, HttpTransporterFactory.class );
+        
+        locator.setErrorHandler( new DefaultServiceLocator.ErrorHandler() {
+                @Override
+                public void serviceCreationFailed( Class<?> type, Class<?> impl, Throwable e ) {
+                    // 
+                }
+            } 
+        );
+        
+        return locator.getService( RepositorySystem.class );
+        
+    }
+    
+    /**
+     * 
+     * Creates a repository system session
+     * 
+     * @param system A repository system
+     * @return session
+     * 
+     */
+    
+    private RepositorySystemSession createRepositorySystemSession( RepositorySystem system ) {
+        
+         DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
+
+         // TODO : Move repository to property file
+         LocalRepository localRepo = new LocalRepository( LOCAL_M2_REPOSITORY_PATH );
+         session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, localRepo ) );
+
+         // session.setTransferListener( new ConsoleTransferListener() );
+         // session.setRepositoryListener( new ConsoleRepositoryListener() );
+
+         // uncomment to generate dirty trees
+         // session.setDependencyGraphTransformer( null );
+
+         return session;
+        
+    }
+    
+    /**
+     * 
+     * Create remote repositories.
+     * 
+     * @return repositories
+     * 
+     */
+    
+    private List<RemoteRepository> createRepositories() {
+        List<RemoteRepository> repositories = new ArrayList<RemoteRepository>();
+        repositories.add( new RemoteRepository.Builder( "central", "default", "http://central.maven.org/maven2/" ).build() );
+        return repositories;
     }
 
 }
