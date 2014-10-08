@@ -8,18 +8,27 @@
             <thead>
                 <tr>
                     <th>Component</th>
-                    <th colspan="2">
+                    <th>
                         <select>
+                            <!-- TODO : resolve available versions -->
                             <option value="3.0.2" selected>3.0.2</option>
                             <option value="3.0.1">3.0.1</option>
                             <option value="3.0.0">3.0.0</option>
                             <option value="3.0-SNAPSHOT">3.0-SNAPSHOT</option>
                         </select>
                     </th>
+                    <th>
+                        <label>
+                            <input type="checkbox" /> Minify
+                        </label>
+                        <label>
+                            <input type="checkbox" /> Obfuscate
+                        </label>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <!-- TODO : resolve available modules -->
+                <!-- TODO : resolve available modules by version -->
                 <tr>
                     <td>{module.artifact.artifactId}</td>
                     <td>{module.artifact.version}</td>

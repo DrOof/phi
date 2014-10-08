@@ -23,7 +23,7 @@
             Alternatively, use the bundled-webapp or the enterprise-webapp. 
             Dependencies versions are already imported by parent, so no need to replicate here. 
         -->
-			
+        
         <dependency>
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-empty-webapp</artifactId>
