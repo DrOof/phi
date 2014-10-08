@@ -35,11 +35,7 @@
         
         __extends__ : phi.graph.Graph,
         
-        __init__ : function() {
-            
-        },
-        
-        update: function( data ) {
+        __init__ : function( node ) {
             
         },
         

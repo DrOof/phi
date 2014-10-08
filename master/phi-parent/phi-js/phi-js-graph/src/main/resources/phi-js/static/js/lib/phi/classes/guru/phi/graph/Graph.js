@@ -37,16 +37,27 @@
         
         __init__ : function( node ) {
             
+            this.data = [];
             this.canvas = document.createElement( 'div' );
+            
+        },
+        
+        add: function( data ) {
+            
+            this.update( this.data.join( data ) );
             
         },
         
         update: function( data ) {
             
+            this.data = data;
+            this.render( data );
+            this.dispatchEvent( { type : 'dataupdate', target : this } );
+            
         },
         
-        render: function() {
-            
+        render: function( data ) {
+            console.log( data );
         }
         
     });
