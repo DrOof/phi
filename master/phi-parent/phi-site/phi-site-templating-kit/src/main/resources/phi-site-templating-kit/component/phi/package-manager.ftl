@@ -10,11 +10,9 @@
                     <th>Component</th>
                     <th>
                         <select>
-                            <!-- TODO : resolve available versions -->
-                            <option value="3.0.2" selected>3.0.2</option>
-                            <option value="3.0.1">3.0.1</option>
-                            <option value="3.0.0">3.0.0</option>
-                            <option value="3.0-SNAPSHOT">3.0-SNAPSHOT</option>
+                            <#list model.resolveAvailableVersionsByName( "guru.phi.phi-js" ).versions as version />
+                                <option value="${version}">${version}</option>
+                            </#list>
                         </select>
                     </th>
                     <th>
@@ -48,7 +46,7 @@
             </tr>
         </thead>
         <tbody>
-            <#list model.resolveDependencies( "guru.phi:phi-js-dom:3.0-SNAPSHOT" ).dependencies as dependency>
+            <#list model.resolveDependenciesByName( "guru.phi:phi-js-dom:3.0-SNAPSHOT" ).dependencies as dependency>
                 <tr>
                     <td>${dependency.artifact.groupId}</td>
                     <td>${dependency.artifact.artifactId}</td>

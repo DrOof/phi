@@ -26,6 +26,9 @@ import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
 import org.eclipse.aether.resolution.ArtifactDescriptorRequest;
 import org.eclipse.aether.resolution.ArtifactDescriptorResult;
+import org.eclipse.aether.resolution.VersionRangeException;
+import org.eclipse.aether.resolution.VersionRangeRequest;
+import org.eclipse.aether.resolution.VersionRangeResult;
 import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
@@ -110,6 +113,37 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
     
     /**
      * 
+     * Resolves the versions of an artifact by name.
+     * 
+     * @param name The name of the artifact
+     * @return
+     * 
+     */
+    
+    public VersionRangeResult resolveAvailableVersionsByName( String name ) {
+        
+        RepositorySystem system = createRepositorySystem();
+        RepositorySystemSession session = createRepositorySystemSession( system );
+        
+        Artifact artifact = new DefaultArtifact( name );
+        VersionRangeRequest request = new VersionRangeRequest();
+        
+        request.setArtifact( artifact );
+        request.setRepositories( createRepositories() );
+        
+        VersionRangeResult result = null;
+        try {
+            result = system.readVersionRange( session, request );
+        } catch ( VersionRangeException e ) {
+            logger.error( e );
+        }
+        
+        return result;
+        
+    }
+    
+    /**
+     * 
      * Resolves the dependencies of an artifact by name.
      * 
      * @param name The name of the artifact
@@ -117,36 +151,26 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
      * 
      */
     
-    public ArtifactDescriptorResult resolveDependencies( String name ) {
+    public ArtifactDescriptorResult resolveDependenciesByName( String name ) {
         
-        // TODO: Create a system
         RepositorySystem system = createRepositorySystem();
-        
-        // TODO : Create a session 
         RepositorySystemSession session = createRepositorySystemSession( system );
         
-        // TODO : Define an artifact
         Artifact artifact = new DefaultArtifact( name );
-        
-        // TODO : Create a request
         ArtifactDescriptorRequest request = new ArtifactDescriptorRequest();
         
-        // TODO : set the root of the request
         request.setArtifact( artifact );
-        
-        // TODO : set the repositories of the request
         request.setRepositories( createRepositories() );
         
-        // TODO : Create a result
         ArtifactDescriptorResult result = null;
         try {
             result = system.readArtifactDescriptor( session, request );
         } catch ( ArtifactDescriptorException e ) {
             logger.error( e );
         }
-                        
+        
         return result;
-
+        
     }
     
     /**
