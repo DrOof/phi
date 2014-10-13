@@ -26,8 +26,8 @@ import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
 import org.eclipse.aether.resolution.ArtifactDescriptorRequest;
 import org.eclipse.aether.resolution.ArtifactDescriptorResult;
-import org.eclipse.aether.resolution.VersionRangeException;
 import org.eclipse.aether.resolution.VersionRangeRequest;
+import org.eclipse.aether.resolution.VersionRangeResolutionException;
 import org.eclipse.aether.resolution.VersionRangeResult;
 import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
@@ -47,7 +47,8 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory;
 
 public class PhiPackageManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
     
-	public static final String LOCAL_M2_REPOSITORY_PATH = "/home/phi/.m2/repository";
+	// public static final String LOCAL_M2_REPOSITORY_PATH = "/home/phi/.m2/repository";
+	public static final String LOCAL_M2_REPOSITORY_PATH = "/Users/olivier/.m2/repository";
     public static Logger logger = LogManager.getLogger( PhiPackageManagerModel.class ); 
     
     public PhiPackageManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry registry ) throws Exception {
@@ -133,8 +134,8 @@ public class PhiPackageManagerModel<RD extends RenderableDefinition> extends Ren
         
         VersionRangeResult result = null;
         try {
-            result = system.readVersionRange( session, request );
-        } catch ( VersionRangeException e ) {
+            result = system.resolveVersionRange( session, request );
+        } catch ( VersionRangeResolutionException e ) {
             logger.error( e );
         }
         
