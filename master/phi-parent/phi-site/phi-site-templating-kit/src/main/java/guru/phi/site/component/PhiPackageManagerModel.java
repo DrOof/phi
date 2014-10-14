@@ -47,8 +47,8 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory;
 
 public class PhiPackageManagerModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
     
-	// public static final String LOCAL_M2_REPOSITORY_PATH = "/home/phi/.m2/repository";
-	public static final String LOCAL_M2_REPOSITORY_PATH = "/Users/olivier/.m2/repository";
+    public static final String LOCAL_M2_REPOSITORY_PATH = "/home/phi/.m2/repository";
+    // public static final String LOCAL_M2_REPOSITORY_PATH = "/Users/olivier/.m2/repository";
     public static Logger logger = LogManager.getLogger( PhiPackageManagerModel.class ); 
     
     public PhiPackageManagerModel( Node content, RD definition, RenderingModel<?> parent, TemplateDefinitionRegistry registry ) throws Exception {
