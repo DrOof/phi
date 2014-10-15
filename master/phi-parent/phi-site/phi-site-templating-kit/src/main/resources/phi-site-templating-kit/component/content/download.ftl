@@ -19,9 +19,6 @@
                         <label>
                             <input type="checkbox" /> Minify
                         </label>
-                        <label>
-                            <input type="checkbox" /> Obfuscate
-                        </label>
                     </th>
                 </tr>
             </thead>
