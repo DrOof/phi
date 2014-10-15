@@ -10,7 +10,7 @@
                     <th>Component</th>
                     <th>
                         <select>
-                            <#list model.resolveAvailableVersionsByName( "guru.phi:phi-js:[0,)" ).versions as version>
+                            <#list model.resolveAvailableVersionsByName( "guru.phi:phi-js:[3,)" ).versions as version>
                                 <option value="${version}">${version}</option>
                             </#list>
                         </select>
