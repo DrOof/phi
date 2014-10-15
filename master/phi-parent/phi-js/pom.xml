@@ -28,7 +28,6 @@
         <module>phi-js-color</module>
     </modules>
     
-    
     <build>
         <plugins>
             <!-- Run for local development on phi only -->
