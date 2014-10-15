@@ -8,6 +8,12 @@
     <groupId>guru.phi</groupId>
     <version>3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.7</java.version>
+        <jetty.version>8.1.15.v20140411</jetty.version>
+    </properties>
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
@@ -21,5 +27,40 @@
         <module>phi-js-slider</module>
         <module>phi-js-color</module>
     </modules>
+    
+    
+    <build>
+        <plugins>
+            <!-- Run for local development on phi only -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>8080</port>
+                        </connector>
+                    </connectors>
+                    <webAppConfig>
+                        <contextPath>/phi-js</contextPath>
+                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                            <resourcesAsCSV>                                                                              
+                                ${basedir}/phi-js-ext/src/main/resources    ,${basedir}/phi-js-ext/src/test/resources,
+                                ${basedir}/phi-js-core/src/main/resources   ,${basedir}/phi-js-core/src/test/resources,
+                                ${basedir}/phi-js-dom/src/main/resources    ,${basedir}/phi-js-dom/src/test/resources,
+                                ${basedir}/phi-js-form/src/main/resources   ,${basedir}/phi-js-form/src/test/resources,
+                                ${basedir}/phi-js-graph/src/main/resources  ,${basedir}/phi-js-graph/src/test/resources,
+                                ${basedir}/phi-js-media/src/main/resources  ,${basedir}/phi-js-media/src/test/resources,
+                                ${basedir}/phi-js-slider/src/main/resources ,${basedir}/phi-js-slider/src/test/resources,
+                                ${basedir}/phi-js-dialog/src/main/resources ,${basedir}/phi-js-dialog/src/test/resources,
+                                ${basedir}/phi-js-color/src/main/resources  ,${basedir}/phi-js-color/src/test/resources
+                            </resourcesAsCSV>
+                        </baseResource>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>
