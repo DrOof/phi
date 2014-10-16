@@ -6,7 +6,7 @@
     <parent>
     	<groupId>guru.phi</groupId>
         <artifactId>phi-js</artifactId>
-        <version>3.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </parent>
     
     <artifactId>phi-js-core</artifactId>

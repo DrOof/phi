@@ -6,7 +6,7 @@
     <artifactId>phi-js</artifactId>
     <name>phi-js</name>
     <groupId>guru.phi</groupId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
     
     <properties>
