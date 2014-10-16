@@ -10,8 +10,9 @@
     </parent>
     
     <artifactId>phi-js-dom</artifactId>
-    <name>phi-js-dom</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-dom</name>
     
     <dependencies>
         <dependency>

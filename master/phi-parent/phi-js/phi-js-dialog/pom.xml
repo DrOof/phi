@@ -10,6 +10,7 @@
     </parent>
     
     <artifactId>phi-js-dialog</artifactId>
+    <version>3.0.0</version>
     <name>phi-js-dialog</name>
     <packaging>jar</packaging>
     

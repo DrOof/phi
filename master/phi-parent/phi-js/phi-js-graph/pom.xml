@@ -10,8 +10,9 @@
     </parent>
     
     <artifactId>phi-js-graph</artifactId>
-    <name>phi-js-graph</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-graph</name>
     
     <dependencies>
         <dependency>

@@ -10,7 +10,8 @@
     </parent>
     
     <artifactId>phi-js-core</artifactId>
-    <name>phi-js-core</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-core</name>
         
 </project>

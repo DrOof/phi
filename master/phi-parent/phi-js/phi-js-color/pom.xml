@@ -10,8 +10,9 @@
     </parent>
     
     <artifactId>phi-js-color</artifactId>
-    <name>phi-js-color</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-color</name>
     
     <dependencies>
         <dependency>

@@ -10,8 +10,9 @@
     </parent>
     
     <artifactId>phi-js-form</artifactId>
-    <name>phi-js-form</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-form</name>
     
     <dependencies>
         <dependency>

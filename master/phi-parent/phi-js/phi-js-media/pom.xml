@@ -10,8 +10,9 @@
     </parent>
     
     <artifactId>phi-js-media</artifactId>
-    <name>phi-js-media</name>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
+    <name>phi-js-media</name>
     
     <dependencies>
         <dependency>
