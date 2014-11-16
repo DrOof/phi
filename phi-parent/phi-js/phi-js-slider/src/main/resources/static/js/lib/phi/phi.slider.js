@@ -19,7 +19,7 @@
     
     var slider = phi.slider = phi.slider || {};
     
-    var Slider = phi.slider.slider.Slider = phi( {
+    var Slider = phi.slider.Slider = phi( {
 
         __x        : 0,
         __y     : 0,
