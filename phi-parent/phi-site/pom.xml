@@ -110,8 +110,7 @@
                                 ${basedir}/../phi-js/phi-js-graph/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-media/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-slider/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-dialog/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-color/src/main/resources
+                                ${basedir}/../phi-js/phi-js-dialog/src/main/resources
                             </resourcesAsCSV>
                         </baseResource>
                     </webAppConfig>
@@ -132,7 +131,6 @@
                         <resource><directory>../../phi-js/phi-js-media/src/main/resources</directory></resource>
                         <resource><directory>../../phi-js/phi-js-slider/src/main/resources</directory></resource>
                         <resource><directory>../../phi-js/phi-js-dialog/src/main/resources</directory></resource>
-                        <resource><directory>../../phi-js/phi-js-color/src/main/resources</directory></resource>
                     </webResources>
                 </configuration>
             </plugin>
