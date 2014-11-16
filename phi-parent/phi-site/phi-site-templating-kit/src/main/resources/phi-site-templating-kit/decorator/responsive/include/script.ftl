@@ -1,4 +1,4 @@
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/lib/jquery/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/jquery/jquery-2.1.1.js"></script>
 
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.core.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.dom.js"></script>

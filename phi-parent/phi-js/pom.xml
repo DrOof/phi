@@ -17,7 +17,7 @@
         
     <!-- description>Please uncomment and fill in ...</description -->
     <modules>
-        <module>phi-js-ext</module>
+        <module>phi-js-jquery</module>
         <module>phi-js-core</module>
         <module>phi-js-dom</module>
         <module>phi-js-form</module>
@@ -44,7 +44,7 @@
                         <contextPath>/phi-js</contextPath>
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                             <resourcesAsCSV>                                                                              
-                                ${basedir}/phi-js-ext/src/main/resources    ,${basedir}/phi-js-ext/src/test/resources,
+                                ${basedir}/phi-js-jquery/src/main/resources    ,${basedir}/phi-js-jquery/src/test/resources,
                                 ${basedir}/phi-js-core/src/main/resources   ,${basedir}/phi-js-core/src/test/resources,
                                 ${basedir}/phi-js-dom/src/main/resources    ,${basedir}/phi-js-dom/src/test/resources,
                                 ${basedir}/phi-js-form/src/main/resources   ,${basedir}/phi-js-form/src/test/resources,

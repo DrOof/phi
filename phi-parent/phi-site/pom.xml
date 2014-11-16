@@ -103,7 +103,7 @@
                             <resourcesAsCSV>
                                 ${basedir}/phi-site-webapp/target/phi-site-webapp-${project.version},
                                 ${basedir}/phi-site-templating-kit/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-ext/src/main/resources,
+                                ${basedir}/../phi-js/phi-js-jquery/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-core/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-dom/src/main/resources,
                                 ${basedir}/../phi-js/phi-js-form/src/main/resources,
@@ -123,7 +123,7 @@
                 <configuration>
                     <webResources>
                         <resource><directory>../phi-site-templating-kit/src/main/resources</directory></resource>
-                        <resource><directory>../../phi-js/phi-js-ext/src/main/resources</directory></resource>
+                        <resource><directory>../../phi-js/phi-js-jquery/src/main/resources</directory></resource>
                         <resource><directory>../../phi-js/phi-js-core/src/main/resources</directory></resource>
                         <resource><directory>../../phi-js/phi-js-dom/src/main/resources</directory></resource>
                         <resource><directory>../../phi-js/phi-js-form/src/main/resources</directory></resource>

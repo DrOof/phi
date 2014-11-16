@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>guru.phi</groupId>
-            <artifactId>phi-js-ext</artifactId>
+            <artifactId>phi-js-jquery</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
