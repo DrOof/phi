@@ -17,10 +17,9 @@
      *
      */
     
-    var ui = phi.ui = phi.ui || {};
-        ui.slider = {};
+    var slider = phi.slider = phi.slider || {};
     
-    var Slider = phi.ui.slider.Slider = phi( {
+    var Slider = phi.slider.slider.Slider = phi( {
 
         __x        : 0,
         __y     : 0,

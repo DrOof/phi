@@ -4,9 +4,10 @@
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.dom.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.form.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.graph.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.dialog.js"></script>
 
 <link rel="stylesheet" href="${contextPath}/static/css/slider.css" />
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.ui.slider.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.slider.js"></script>
 
 <!-- TODO : add stylesheet and classes dynamically by adding to the document -->
 <link rel="stylesheet" href="${contextPath}/static/css/player.css" />
