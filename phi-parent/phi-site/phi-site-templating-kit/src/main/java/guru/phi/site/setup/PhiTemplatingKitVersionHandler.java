@@ -13,17 +13,18 @@ import java.util.List;
  * by registering "deltas" to maintain the module's configuration, or other type of content.
  * If you don't need this, simply remove the reference to this class in the module descriptor xml.
  */
+
 public class PhiTemplatingKitVersionHandler extends DefaultModuleVersionHandler {
 	
-	private final List<Task> tasks = new ArrayList<Task>(); 
+    private final List<Task> tasks = new ArrayList<Task>(); 
     
-	@Override
+    @Override
     protected List<Task> getExtraInstallTasks( InstallContext context ) {
     	
-		final List<Task> t = new ArrayList<Task>( tasks );
-        t.add( new AddFilterBypassTask( "/server/filters", "phi-js", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-js" ) );
-		t.add( new AddFilterBypassTask( "/server/filters", "phi-site-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-site-templating-kit" ) );
-		return t;
+        final List<Task> t = new ArrayList<Task>( tasks );
+        t.add( new AddFilterBypassTask( "/server/filters", "static", info.magnolia.voting.voters.URIStartsWithVoter.class, "/static" ) );
+        t.add( new AddFilterBypassTask( "/server/filters", "phi-site-templating-kit", info.magnolia.voting.voters.URIStartsWithVoter.class, "/phi-site-templating-kit" ) );
+        return t;
 		
     }
 

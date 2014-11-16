@@ -25,7 +25,6 @@
         <module>phi-js-media</module>
         <module>phi-js-dialog</module>
         <module>phi-js-slider</module>
-        <module>phi-js-color</module>
     </modules>
     
     <build>
