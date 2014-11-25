@@ -72,47 +72,26 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <webapps>
-                        <webapp>
-                            <groupId>guru.phi</groupId>
-                            <artifactId>phi-site-webapp</artifactId>
-                            <version>1.0-SNAPSHOT</version>
-                            <type>war</type>
-                            <asWebapp>true</asWebapp>
-                        </webapp>
-                    </webapps>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <!-- Run for local development on phi only -->
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
-                        </connector>
-                    </connectors>
                     <webAppConfig>
                         <contextPath>/author</contextPath>
-                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                            <resourcesAsCSV>
-                                ${basedir}/phi-site-webapp/target/phi-site-webapp-${project.version},
-                                ${basedir}/phi-site-templating-kit/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-jquery/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-core/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-dom/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-form/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-graph/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-media/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-slider/src/main/resources,
-                                ${basedir}/../phi-js/phi-js-dialog/src/main/resources
-                            </resourcesAsCSV>
-                        </baseResource>
+                        <resourceBases>
+                            <baseResource>phi-site-webapp/target/phi-site-webapp-${project.version}</baseResource>
+                            <baseResource>phi-site-templating-kit/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-jquery/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-core/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-dom/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-form/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-graph/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-media/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-slider/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-dialog/src/main/resources</baseResource>
+                            <baseResource>../phi-js/phi-js-jquery/src/main/resources</baseResource>
+                        </resourceBases>
                     </webAppConfig>
                 </configuration>
             </plugin>
@@ -135,7 +114,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        
         <!-- default resources configuration which will filter your module descriptors -->
         <resources>
             <resource>
