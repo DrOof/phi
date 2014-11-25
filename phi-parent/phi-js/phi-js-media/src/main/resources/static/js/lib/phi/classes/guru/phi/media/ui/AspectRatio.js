@@ -47,7 +47,7 @@
     });
     
     var HTML =  '<div class="player-aspect-ratio">' +
-                    '<img src="/static/png/aspect-ratio-720p.png" alt="Aspect Ratio 720p" />' +
+                    '<img src="/author/static/png/aspect-ratio-720p.png" alt="Aspect Ratio 720p" />' +
                 '</div>';
     
 } )( phi.dom );
