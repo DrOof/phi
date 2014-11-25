@@ -43,26 +43,35 @@
         
         render: function( data ) {
             
-            var rangeX = this.resolveRangeX( data );
-            var rangeY = this.resolveRangeY( data );
+            var rx = this.resolveRangeX( data );
+            var ry = this.resolveRangeY( data );
+            
+            var d = this.resolveCanvasDimensions();
             
             var point;
             for (var i = 0; i < data.length; i++) {
                 point = data[i];
-                this.renderPoint( point );
+                this.renderPoint( point, rx, ry, d );
             }
             
         },
         
-        renderPoint: function( point ) {
+        renderPoint: function( point, rx, ry, d ) {
             
-            // resolveX
-            // resolveY
-            var x = this.resolveValueX( point );
-            var y = this.resolveValueY( point );
+            var vx = this.resolveValueX( point );
+            var vy = this.resolveValueY( point );
             
-            // console.log( x, y );
-            // draw a point on x, y coordinates.
+            var x = ( d.width / rx.delta ) * ( vx - rx.min );
+            var y = ( d.height / ry.delta ) * ( vy - ry.min );
+            
+            this.renderPointCircle( x, y );
+            
+        },
+        
+        renderPointCircle: function( x, y ) {
+            
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, fill : '#09f', r : 5 } );
+            this.canvas.appendChild( circle );
             
         }
         

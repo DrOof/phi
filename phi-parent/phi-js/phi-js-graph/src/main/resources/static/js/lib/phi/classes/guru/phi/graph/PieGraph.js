@@ -43,39 +43,48 @@
             
             var sigma = this.resolveSigmaX( data );
             
+            var d = this.resolveCanvasDimensions();
+            this.renderCircle( d.cx, d.cy );
+            
             var point;
             for ( var i = 0; i < data.length; i++ ) {
                 point = data[i];
-                this.renderPoint( point, sigma );
+                this.renderPoint( point, sigma, d );
             }
             
         },
         
-        renderPoint: function( point, sigma ) {
+        renderPoint: function( point, sigma, d ) {
             
             var v = this.resolveValueX( point );
-            var p = ( ( v / sigma ) * 100 );
-            var a = ( p / 100 ) * 360;
-            var R = 50; // FIXME : resolve from actual viewport
+            var a = ( ( v / sigma ) * 360 );
             
-            var x = Math.sin( a ) * R;
-            var y = Math.cos( a ) * R;
+            var R = 100; // FIXME : resolve from actual viewport
+            var x = Math.cos( a ) * R;
+            var y = Math.sin( a ) * R;
             
-            this.renderPointCircle( x, y );
+            this.renderPointCircle( x + d.cx, y + d.cy );
+            this.renderPointLine( d.cx, d.cy, x + d.cx, y + d.cy );
             
+        },
+        
+        renderCircle: function( cx, cy ) {
+            
+            // draw a circle in the background
+            this.canvas.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : cx, cy : cy, r : 100, stroke: '#09f', fill : 'none' } ) );
         },
         
         renderPointCircle: function( x, y ) {
             
             // draw a circle at the position of the point
-            this.canvas.appendChild( new phi.dom.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5 } ) );
+            this.canvas.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f' } ) );
             
         },
         
-        renderPointLine: function( x, y ) {
+        renderPointLine: function( x1, y1, x2, y2 ) {
             
             // draw a line from the center of the canvas to the position of the point
-            
+            this.canvas.appendChild( new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } ) );
             
         }
         

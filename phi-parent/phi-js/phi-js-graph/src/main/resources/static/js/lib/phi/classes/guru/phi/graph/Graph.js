@@ -68,22 +68,15 @@
         resolveRangeX: function() {
             
             var values = this.resolveValuesByName( this.options.x.name );
-            
-            return {
-                min: this.__min__( values ),
-                max: this.__max__( values )
-            }
+            return this.__range__( values );
             
         },
         
         resolveRangeY: function() {
             
             var values = this.resolveValuesByName( this.options.y.name );
+            return this.__range__( values );
             
-            return {
-                min: this.__min__( values ),
-                max: this.__max__( values )
-            }
             
         },
         
@@ -96,12 +89,28 @@
         },
         
         resolveValuesByName : function( name ) {
-            return this.data.map( function( a ) { return a[ name ] } )
+            return this.data.map( function( a ) { return a[ name ] } );
+        },
+        
+        resolveCanvasDimensions: function() {
+            
+            var w = this.canvas.element.offsetWidth;
+            var h = this.canvas.element.offsetHeight;
+            
+            return {
+                width : w,
+                height : h,
+                cx : w / 2,
+                cy : h / 2
+            }
         },
         
         createCanvas: function( node ) {
             
-            var canvas = new phi.dom.SVGShapeElement( 'svg' );
+            var w = node.offsetWidth;
+            var h = node.offsetHeight;
+            
+            var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
             node.appendChild( canvas.element );
             
             return canvas;
@@ -126,6 +135,18 @@
             // console.log( data );
         },
         
+        __range__: function( values ) {
+            
+            var min = this.__min__( values );
+            var max = this.__max__( values );
+            
+            return {
+                min: min,
+                max: max,
+                delta: max - min
+            }
+        },
+        
         /**
          *
          * TODO : replace with functional js ( oliver steele )
@@ -143,7 +164,7 @@
          */
         
         __max__: function( values ) {
-            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
+            return values.reduce( function( a, b ) { return Math.max( a, b ) } );
         },
         
         /**

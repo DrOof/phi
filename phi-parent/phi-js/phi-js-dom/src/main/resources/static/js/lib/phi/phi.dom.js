@@ -53,8 +53,14 @@
      *
      */
     
+    var svg = dom.svg = {
+        shape: function() {
+            
+        }
+    };
+    
     var SVGNS = 'http://www.w3.org/2000/svg';
-    var SVGShapeElement = dom.SVGShapeElement = phi({
+    var SVGShapeElement = svg.SVGShapeElement = phi({
     
         __init__ : function( element, attributes ) {
         
@@ -79,6 +85,8 @@
         }
     
     });
+    
+    
     
     
     /**
