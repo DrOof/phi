@@ -1,1 +1,69 @@
-phi-js-graph
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="/phi-js/static/css/grid.css" media="screen" />
+        
+        <style>
+        
+        .graph {
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            
+            height: 400px;
+        }
+        
+        .demo {
+            margin: 10px;
+        }
+        
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="grid">
+            <header class="demo">
+                <h1>Graphs</h1>
+            </header>
+            <div class="column three a">
+                <section class="demo">
+                    <h2>Pie Graph</h2>
+                    <div id="pie-graph" class="graph"></div>
+                </section>
+            </div>
+            <div class="column three a">
+                <section class="demo">
+                    <h2>Bar Graph</h2>
+                    <div id="bar-graph" class="graph"></div>
+                </section>
+            </div>
+            <div class="column three a">
+                <section class="demo">
+                    <h2>Line Graph</h2>
+                    <div id="line-graph" class="graph"></div>
+                </section>
+            </div>
+        </div>
+        
+        <script type="application/javascript" src="/phi-js/static/js/lib/jquery/jquery-2.1.1.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dom.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.graph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/Graph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/PieGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/BarGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/LineGraph.js"></script>
+        
+        <script type="application/javascript">
+            
+            var pie = new phi.graph.PieGraph( document.getElementById( '#pie-graph' ) );
+            
+            var bar = new phi.graph.BarGraph( document.getElementById( '#bar-graph' ) );
+            
+            var line = new phi.graph.LineGraph( document.getElementById( '#line-graph' ) );
+            
+        </script>
+        
+    </body>
+</html>

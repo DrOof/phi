@@ -23,6 +23,7 @@
         <module>phi-js-media</module>
         <module>phi-js-dialog</module>
         <module>phi-js-slider</module>
+        <module>phi-js-grid</module>
     </modules>
     <build>
         <plugins>
@@ -51,6 +52,8 @@
                             <baseResource>${project.basedir}/phi-js-dialog/src/test/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-slider/src/main/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-slider/src/test/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-grid/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-grid/src/test/resources</baseResource>
                         </resourceBases>
                     </webAppConfig>
                 </configuration>
