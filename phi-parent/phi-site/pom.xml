@@ -15,13 +15,13 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <magnolia.version>5.2.4</magnolia.version>
         <phi.version>3.0-SNAPSHOT</phi.version>
         <java.version>1.8</java.version>
-        <jetty.version>8.1.15.v20140411</jetty.version>
+        <jetty.version>9.2.4.v20141103</jetty.version>
+        <maven.version>3.2.1</maven.version>
+        <magnolia.version>5.2.4</magnolia.version>
         <postgres.version>9.3-1102-jdbc41</postgres.version>
         <aether.version>1.0.0.v20140518</aether.version>
-        <maven.version>3.2.1</maven.version>
         <log4j.version>2.0.2</log4j.version>
     </properties>
     
@@ -31,7 +31,7 @@
         <developerConnection />
         <url />
     </scm>
-    
+        
     <dependencyManagement>
         <dependencies>
             <dependency>
