@@ -31,4 +31,18 @@
     
     var graph = phi.graph = phi.graph || {};
     
+    var GraphFactory = graph.GraphFactory = phi({
+        
+        __init__ : function() {
+            
+        },
+        
+        createGraph: function() {
+            
+        }
+        
+    });
+    
+    
+    
 } )( phi.dom );
