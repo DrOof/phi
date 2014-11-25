@@ -35,30 +35,126 @@
         
         __extends__ : phi.EventTarget,
         
-        __init__ : function( node ) {
+        /**
+         *
+         * 
+         *
+         */
+        
+        __init__ : function( node, options ) {
             
+            this.node = node;
+            this.options = options;
+            
+            this.canvas = this.createCanvas( node );
             this.data = [];
-            this.canvas = document.createElement( 'div' );
+            
+        },
+        
+        resolveSigmaX: function() {
+            
+            var values = this.resolveValuesByName( this.options.x.name );
+            return this.__sigma__( values );
+            
+        },
+        
+        resolveSigmaY: function() {
+            
+            var values = this.resolveValuesByName( this.options.y.name );
+            return this.__sigma__( values );
+            
+        },
+        
+        resolveRangeX: function() {
+            
+            var values = this.resolveValuesByName( this.options.x.name );
+            
+            return {
+                min: this.__min__( values ),
+                max: this.__max__( values )
+            }
+            
+        },
+        
+        resolveRangeY: function() {
+            
+            var values = this.resolveValuesByName( this.options.y.name );
+            
+            return {
+                min: this.__min__( values ),
+                max: this.__max__( values )
+            }
+            
+        },
+        
+        resolveValueX: function( point ) {
+            return point[ this.options.x.name ];
+        },
+        
+        resolveValueY: function( point ) {
+            return point[ this.options.y.name ];
+        },
+        
+        resolveValuesByName : function( name ) {
+            return this.data.map( function( a ) { return a[ name ] } )
+        },
+        
+        createCanvas: function( node ) {
+            
+            var canvas = new phi.dom.SVGShapeElement( 'svg' );
+            node.appendChild( canvas.element );
+            
+            return canvas;
             
         },
         
         add: function( data ) {
             
-            this.update( this.data.join( data ) );
+            this.set( this.data.join( data ) );
             
         },
         
-        update: function( data ) {
+        set: function( data ) {
             
             this.data = data;
             this.render( data );
-            this.dispatchEvent( { type : 'dataupdate', target : this } );
+            this.dispatchEvent( { type : 'dataupdate' } );
             
         },
         
         render: function( data ) {
-            console.log( data );
-        }
+            // console.log( data );
+        },
+        
+        /**
+         *
+         * TODO : replace with functional js ( oliver steele )
+         *
+         */
+        
+        __min__: function( values ) {
+            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
+        },
+        
+        /**
+         *
+         * TODO : replace with functional js ( oliver steele )
+         *
+         */
+        
+        __max__: function( values ) {
+            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
+        },
+        
+        /**
+         *
+         * TODO : replace with functional js ( oliver steele )
+         *
+         */
+        
+        __sigma__: function( values ) {
+            return values.reduce( function( a, b ) { return a + b; } );
+        },
         
     });
     

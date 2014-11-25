@@ -74,10 +74,8 @@
         
         },
         
-        appendChild: function( svg ) {
-            
-            this.element.appendChild( svg.element )
-            
+        appendChild: function( child ) {
+            this.element.appendChild( child.element )   
         }
     
     });

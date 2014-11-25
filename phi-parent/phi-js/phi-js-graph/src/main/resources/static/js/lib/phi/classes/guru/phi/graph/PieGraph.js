@@ -35,11 +35,47 @@
         
         __extends__ : phi.graph.Graph,
         
-        __init__ : function( node ) {
+        __init__ : function( node, options ) {
             
         },
         
-        render: function() {
+        render: function( data ) {
+            
+            var sigma = this.resolveSigmaX( data );
+            
+            var point;
+            for ( var i = 0; i < data.length; i++ ) {
+                point = data[i];
+                this.renderPoint( point, sigma );
+            }
+            
+        },
+        
+        renderPoint: function( point, sigma ) {
+            
+            var v = this.resolveValueX( point );
+            var p = ( ( v / sigma ) * 100 );
+            var a = ( p / 100 ) * 360;
+            var R = 50; // FIXME : resolve from actual viewport
+            
+            var x = Math.sin( a ) * R;
+            var y = Math.cos( a ) * R;
+            
+            this.renderPointCircle( x, y );
+            
+        },
+        
+        renderPointCircle: function( x, y ) {
+            
+            // draw a circle at the position of the point
+            this.canvas.appendChild( new phi.dom.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5 } ) );
+            
+        },
+        
+        renderPointLine: function( x, y ) {
+            
+            // draw a line from the center of the canvas to the position of the point
+            
             
         }
         

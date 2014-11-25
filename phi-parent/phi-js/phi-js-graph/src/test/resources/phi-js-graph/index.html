@@ -56,12 +56,32 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/LineGraph.js"></script>
         
         <script type="application/javascript">
+        
+            var data = [{
+                    label: '1',
+                    a: 2,
+                    b: 5
+                },
+                {
+                    label: '2',
+                    a: 10,
+                    b: 20
+                },
+                {
+                    label: '3',
+                    a: 5,
+                    b: 2
+                }
+            ]
+        
+            var pie = new phi.graph.PieGraph( document.getElementById( 'pie-graph' ), { x : { name : 'a' }, label : 'label' } );
+            pie.set( data );
             
-            var pie = new phi.graph.PieGraph( document.getElementById( '#pie-graph' ) );
+            var bar = new phi.graph.BarGraph( document.getElementById( 'bar-graph' ) );
+            bar.set( data );
             
-            var bar = new phi.graph.BarGraph( document.getElementById( '#bar-graph' ) );
-            
-            var line = new phi.graph.LineGraph( document.getElementById( '#line-graph' ) );
+            var line = new phi.graph.LineGraph( document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' }, label : 'label' } );
+            line.set( data );
             
         </script>
         

@@ -35,11 +35,34 @@
         
         __extends__ : phi.graph.Graph,
         
-        __init__ : function( node ) {
+        __init__ : function( node, options ) {
+            
+            // console.log( options );
             
         },
         
         render: function( data ) {
+            
+            var rangeX = this.resolveRangeX( data );
+            var rangeY = this.resolveRangeY( data );
+            
+            var point;
+            for (var i = 0; i < data.length; i++) {
+                point = data[i];
+                this.renderPoint( point );
+            }
+            
+        },
+        
+        renderPoint: function( point ) {
+            
+            // resolveX
+            // resolveY
+            var x = this.resolveValueX( point );
+            var y = this.resolveValueY( point );
+            
+            // console.log( x, y );
+            // draw a point on x, y coordinates.
             
         }
         
