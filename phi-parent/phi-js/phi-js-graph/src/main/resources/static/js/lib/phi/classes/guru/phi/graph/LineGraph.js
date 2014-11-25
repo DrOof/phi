@@ -48,10 +48,8 @@
             
             var d = this.resolveCanvasDimensions();
             
-            var point;
-            for (var i = 0; i < data.length; i++) {
-                point = data[i];
-                this.renderPoint( point, rx, ry, d );
+            for ( var i = 0; i < data.length; i++ ) {
+                this.renderPoint( data[i], rx, ry, d );
             }
             
         },
@@ -70,7 +68,7 @@
         
         renderPointCircle: function( x, y ) {
             
-            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, fill : '#09f', r : 5 } );
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', stroke: 'none' } );
             this.canvas.appendChild( circle );
             
         }

@@ -41,6 +41,35 @@
         
         render: function( data ) {
             
+            var values = this.resolveValuesByName( this.options.x.name );
+            var rx = this.resolveRangeX();
+            var d = this.resolveCanvasDimensions();
+            
+            for ( var i = 0; i < data.length; i++ ) {
+                this.renderPoint( data[i], rx, values, d, i );
+            }
+            
+        },
+        
+        renderPoint: function( point, rx, values, d, i ) {
+            
+            var s = ( d.width / values.length ); 
+            
+            var v = this.resolveValueX( point );
+            var w = 50;
+            var h = ( d.height / rx.max ) * v;
+            var x = ( s * i )+ ( s / 2 );
+            var y = d.height - h;
+            
+            this.renderPointRect( x, y, w, h );
+            
+        },
+        
+        renderPointRect: function( x, y, w, h ) {
+            
+            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, fill : '#09f', stroke : 'none' } );
+            this.canvas.appendChild( rect );
+            
         }
         
     });

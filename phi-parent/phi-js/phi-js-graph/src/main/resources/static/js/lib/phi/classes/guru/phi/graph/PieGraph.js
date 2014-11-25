@@ -46,10 +46,8 @@
             var d = this.resolveCanvasDimensions();
             this.renderCircle( d.cx, d.cy );
             
-            var point;
             for ( var i = 0; i < data.length; i++ ) {
-                point = data[i];
-                this.renderPoint( point, sigma, d );
+                this.renderPoint( data[i], sigma, d );
             }
             
         },
