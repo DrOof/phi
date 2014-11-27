@@ -105,12 +105,21 @@
             }
         },
         
+        resolveSortOrder: function( data, name ) {
+            
+            return this.data.sort( function( a, b ) { return a[name] - b[name]; } );
+            
+        },
+        
         createCanvas: function( node ) {
             
             var w = node.offsetWidth;
             var h = node.offsetHeight;
             
             var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
+            
+            // calculate viewbox
+            canvas.attr( { viewBox : '0 0 {{w}} {{h}}'.replace( '{{w}}', w ).replace( '{{h}}', h ) } );
             node.appendChild( canvas.element );
             
             return canvas;
@@ -133,6 +142,12 @@
         
         render: function( data ) {
             // console.log( data );
+        },
+        
+        sort: function( data ) {
+            
+            return this.data.sort( function( a, b ) {  } );
+            
         },
         
         __range__: function( values ) {
@@ -176,6 +191,18 @@
         __sigma__: function( values ) {
             return values.reduce( function( a, b ) { return a + b; } );
         },
+        
+        handlePointEnter: function( e ) {
+            
+            this.dispatchEvent( { type : 'pointenter', explicitOriginalTarget : e.target } );
+            
+        },
+        
+        handlePointLeave: function( e ) {
+            
+            this.dispatchEvent( { type : 'pointleave', explicitOriginalTarget : e.target } );
+            
+        }
         
     });
     

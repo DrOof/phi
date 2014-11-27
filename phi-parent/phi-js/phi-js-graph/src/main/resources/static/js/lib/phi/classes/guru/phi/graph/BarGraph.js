@@ -56,18 +56,20 @@
             var s = ( d.width / values.length ); 
             
             var v = this.resolveValueX( point );
-            var w = 50;
+            var w = 10;
             var h = ( d.height / rx.max ) * v;
             var x = ( s * i )+ ( s / 2 );
             var y = d.height - h;
             
-            this.renderPointRect( x, y, w, h );
+            this.renderPointRect( point, x, y, w, h );
             
         },
         
-        renderPointRect: function( x, y, w, h ) {
+        renderPointRect: function( point, x, y, w, h ) {
             
-            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, fill : '#09f', stroke : 'none' } );
+            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, fill : '#09f', stroke : 'none', point : point, id : phi.uuid() } );
+            rect.element.addEventListener( 'mouseenter', this.handlePointEnter.bind( this ), true );
+            rect.element.addEventListener( 'mouseleave', this.handlePointLeave.bind( this ), true );
             this.canvas.appendChild( rect );
             
         }

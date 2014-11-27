@@ -61,7 +61,7 @@
             var x = Math.cos( a ) * R;
             var y = Math.sin( a ) * R;
             
-            this.renderPointCircle( x + d.cx, y + d.cy );
+            this.renderPointCircle( point, x + d.cx, y + d.cy );
             this.renderPointLine( d.cx, d.cy, x + d.cx, y + d.cy );
             
         },
@@ -72,10 +72,14 @@
             this.canvas.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : cx, cy : cy, r : 100, stroke: '#09f', fill : 'none' } ) );
         },
         
-        renderPointCircle: function( x, y ) {
+        renderPointCircle: function( point, x, y ) {
             
             // draw a circle at the position of the point
-            this.canvas.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f' } ) );
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', point : point, id : phi.uuid() } );
+            circle.element.addEventListener( 'mouseenter', this.handlePointEnter.bind( this ), true );
+            circle.element.addEventListener( 'mouseleave', this.handlePointLeave.bind( this ), true );
+            
+            this.canvas.appendChild( circle );
             
         },
         

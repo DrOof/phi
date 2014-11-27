@@ -43,18 +43,35 @@
         
         render: function( data ) {
             
+            data = this.resolveSortOrder( data, this.options.x.name );
+            
             var rx = this.resolveRangeX( data );
             var ry = this.resolveRangeY( data );
             
             var d = this.resolveCanvasDimensions();
             
+            var p0 = null;
+            var p1 = null;
+            var point = null;
             for ( var i = 0; i < data.length; i++ ) {
-                this.renderPoint( data[i], rx, ry, d );
+                
+                point = data[i];
+                
+                p0 = this.resolvePosition( point, rx, ry, d );
+                
+                this.renderPointCircle( point, p0.x, p0.y );
+                if ( p0 && p1 ) {
+                    this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y );
+                }
+                
+                // shift p0 to p1
+                p1 = p0;
+                
             }
             
         },
         
-        renderPoint: function( point, rx, ry, d ) {
+        resolvePosition: function( point, rx, ry, d ) {
             
             var vx = this.resolveValueX( point );
             var vy = this.resolveValueY( point );
@@ -62,14 +79,24 @@
             var x = ( d.width / rx.delta ) * ( vx - rx.min );
             var y = ( d.height / ry.delta ) * ( vy - ry.min );
             
-            this.renderPointCircle( x, y );
+            return { x : x, y: y };
             
         },
         
-        renderPointCircle: function( x, y ) {
+        renderPointCircle: function( point, x, y ) {
             
-            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', stroke: 'none' } );
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', stroke: 'none', point : point, id : 'phi-circle-' + phi.uuid() } );
+            circle.element.addEventListener( 'mouseenter', this.handlePointEnter.bind( this ), true );
+            circle.element.addEventListener( 'mouseleave', this.handlePointLeave.bind( this ), true );
+            
             this.canvas.appendChild( circle );
+            
+        },
+        
+        renderPointToPointLine: function( x1, y1, x2, y2 ) {
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } );
+            this.canvas.appendChild( line );
             
         }
         

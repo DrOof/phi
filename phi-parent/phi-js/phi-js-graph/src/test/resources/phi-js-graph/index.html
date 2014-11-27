@@ -6,11 +6,22 @@
         
         <style>
         
+        html, body {
+            font-size: 18px;
+            font-family: sans-serif;
+            line-height: 1.5em;
+        }
+        
         .graph {
+            
+            height: 400px;
+            
             background: #f0f0f0;
             border: 1px solid #d0d0d0;
             
-            height: 300px;
+        }
+        
+        .graph svg {
             
         }
         
@@ -26,24 +37,54 @@
         <div class="grid">
             <header class="demo">
                 <h1>Graphs</h1>
+                <p>
+                    This graph was render in <time id="graph-render-time"></time> milliseconds.
+                </p>
             </header>
-            <div class="column three a">
-                <section class="demo">
-                    <h2>Pie Graph</h2>
-                    <div id="pie-graph" class="graph"></div>
-                </section>
+            <div class="column">
+                <div class="column phi a">
+                    <section class="demo">
+                        <h2>Pie Graph</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </section>
+                </div>
+                <div class="column phi b">
+                    <section class="demo">
+                        <div id="pie-graph" class="graph"></div>
+                    </section>
+                </div>
             </div>
-            <div class="column three a">
-                <section class="demo">
-                    <h2>Bar Graph</h2>
-                    <div id="bar-graph" class="graph"></div>
-                </section>
+            <div class="column">
+                <div class="column phi b">
+                    <section class="demo">
+                        <div id="bar-graph" class="graph"></div>
+                    </section>
+                </div>
+                <div class="column phi a">
+                    <section class="demo">
+                        <h2>Bar Graph</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </section>
+                </div>
             </div>
-            <div class="column three a">
-                <section class="demo">
-                    <h2>Line Graph</h2>
-                    <div id="line-graph" class="graph"></div>
-                </section>
+            <div class="column">
+                <div class="column phi a">
+                    <section class="demo">
+                        <h2>Line Graph</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </section>
+                </div>
+                <div class="column phi b">
+                    <section class="demo">
+                        <div id="line-graph" class="graph"></div>
+                    </section>
+                </div>
             </div>
         </div>
         
@@ -57,47 +98,55 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/LineGraph.js"></script>
         
         <script type="application/javascript">
-        
-            var data = [{
-                    label: '1',
-                    a: 2,
-                    b: 5
-                },
-                {
-                    label: '2',
-                    a: 12,
-                    b: 20
-                },
-                {
-                    label: '3',
-                    a: 5,
-                    b: 2
-                },
-                {
-                    label: '4',
-                    a: 3,
-                    b: 8
-                },
-                {
-                    label: '5',
-                    a: 10,
-                    b: 50
-                },
-                {
-                    label: '6',
-                    a: 1,
-                    b: 11
-                }
-            ]
-        
-            var pie = new phi.graph.PieGraph( document.getElementById( 'pie-graph' ), { x : { name : 'a' }, label : 'label' } );
+            
+            var rand = function( x ) {
+                return Math.round( Math.random() * x );
+            };
+            
+            var data = [];
+            var size = 100;
+            
+            for ( var i = 0; i < size; i++) {
+                data.push( {
+                    label : phi.uuid(),
+                    a : rand( 100 ),
+                    b : rand( 100 )
+                } );
+            }
+            
+            var t = +new Date();
+            
+            /* start pie graph */
+            var pie = new phi.graph.PieGraph( document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
             pie.set( data );
             
-            var bar = new phi.graph.BarGraph( document.getElementById( 'bar-graph' ), { x : { name : 'a' }, label : 'label' } );
+            pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
+            pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            /* end pie graph */
+            
+            
+            
+            /* start bar graph */
+            var bar = new phi.graph.BarGraph( document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
             bar.set( data );
             
-            var line = new phi.graph.LineGraph( document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' }, label : 'label' } );
+            bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
+            bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            /* end bar graph */
+            
+            
+            
+            /* start line graph */
+            var line = new phi.graph.LineGraph( document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' } } );
             line.set( data );
+            
+            line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
+            line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
+            /* end line graph */
+            
+            
+            document.getElementById( 'graph-render-time' ).innerHTML = -(t -new Date());
+            
             
         </script>
         
