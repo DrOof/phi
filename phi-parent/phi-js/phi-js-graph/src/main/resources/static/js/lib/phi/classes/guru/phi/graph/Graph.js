@@ -141,7 +141,13 @@
         },
         
         render: function( data ) {
-            // console.log( data );
+            
+            /**
+             *
+             * Implement this method to render a graph.
+             *
+             */
+            
         },
         
         sort: function( data ) {
@@ -192,17 +198,35 @@
             return values.reduce( function( a, b ) { return a + b; } );
         },
         
+        /**
+         *
+         * Handle point enter
+         *
+         */
+        
         handlePointEnter: function( e ) {
             
             this.dispatchEvent( { type : 'pointenter', explicitOriginalTarget : e.target } );
             
         },
         
+        /**
+         *
+         * Handle point leave
+         *
+         */
+        
         handlePointLeave: function( e ) {
             
             this.dispatchEvent( { type : 'pointleave', explicitOriginalTarget : e.target } );
             
         },
+        
+        /**
+         *
+         * Handle point select
+         *
+         */
         
         handlePointSelect: function( e ) {
             
