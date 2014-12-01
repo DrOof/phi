@@ -70,6 +70,8 @@
             var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, fill : '#09f', stroke : 'none', point : point, id : phi.uuid() } );
             rect.element.addEventListener( 'mouseenter', this.handlePointEnter.bind( this ), true );
             rect.element.addEventListener( 'mouseleave', this.handlePointLeave.bind( this ), true );
+            rect.element.addEventListener( 'click', this.handlePointSelect.bind( this ), true );
+            
             this.canvas.appendChild( rect );
             
         }

@@ -202,6 +202,12 @@
             
             this.dispatchEvent( { type : 'pointleave', explicitOriginalTarget : e.target } );
             
+        },
+        
+        handlePointSelect: function( e ) {
+            
+            this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
+            
         }
         
     });

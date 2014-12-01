@@ -15,9 +15,7 @@
         .graph {
             
             height: 400px;
-            
             background: #f0f0f0;
-            border: 1px solid #d0d0d0;
             
         }
         
@@ -103,6 +101,9 @@
                 return Math.round( Math.random() * x );
             };
             
+            
+            
+            /* start generate random data */
             var data = [];
             var size = 100;
             
@@ -113,8 +114,9 @@
                     b : rand( 100 )
                 } );
             }
+            /* end generate random data */
             
-            var t = +new Date();
+            
             
             /* start pie graph */
             var pie = new phi.graph.PieGraph( document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
@@ -122,6 +124,7 @@
             
             pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
             pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            pie.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end pie graph */
             
             
@@ -132,6 +135,7 @@
             
             bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
             bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            bar.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end bar graph */
             
             
@@ -142,10 +146,9 @@
             
             line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
             line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
+            line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end line graph */
             
-            
-            document.getElementById( 'graph-render-time' ).innerHTML = -(t -new Date());
             
             
         </script>
