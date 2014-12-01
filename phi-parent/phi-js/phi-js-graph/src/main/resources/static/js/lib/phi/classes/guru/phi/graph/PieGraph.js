@@ -76,9 +76,9 @@
             
             // draw a circle at the position of the point
             var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', point : point, id : phi.uuid() } );
-            circle.element.addEventListener( 'mouseenter', this.handlePointEnter.bind( this ), true );
-            circle.element.addEventListener( 'mouseleave', this.handlePointLeave.bind( this ), true );
-            circle.element.addEventListener( 'click', this.handlePointSelect.bind( this ), true );
+            circle.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
+            circle.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
+            circle.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
             
             this.canvas.appendChild( circle );
             

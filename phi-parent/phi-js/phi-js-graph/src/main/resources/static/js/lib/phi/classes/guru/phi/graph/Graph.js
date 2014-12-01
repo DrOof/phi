@@ -204,7 +204,7 @@
          *
          */
         
-        handlePointEnter: function( e ) {
+        handleMouseEnter: function( e ) {
             
             this.dispatchEvent( { type : 'pointenter', explicitOriginalTarget : e.target } );
             
@@ -216,7 +216,7 @@
          *
          */
         
-        handlePointLeave: function( e ) {
+        handleMouseLeave: function( e ) {
             
             this.dispatchEvent( { type : 'pointleave', explicitOriginalTarget : e.target } );
             
@@ -228,7 +228,7 @@
          *
          */
         
-        handlePointSelect: function( e ) {
+        handleMouseUp: function( e ) {
             
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
             
