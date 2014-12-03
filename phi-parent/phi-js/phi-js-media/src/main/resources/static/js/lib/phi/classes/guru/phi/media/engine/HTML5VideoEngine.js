@@ -43,16 +43,16 @@
         
         createCanvas: function() {
             
-            var canvas = this.canvas = document.createElement( 'video' );
+            var __canvas__ = this.__canvas__ = document.createElement( 'video' );
             
-            canvas.className = 'player-canvas';
+            __canvas__.className = 'player-__canvas__';
             
-            canvas.addEventListener( 'pause', this.handleCanvasEvent.bind( this ), true );
-            canvas.addEventListener( 'playing', this.handleCanvasEvent.bind( this ), true );
-            canvas.addEventListener( 'timeupdate', this.handleCanvasEvent.bind( this ), true );
-            canvas.addEventListener( 'volumechange', this.handleCanvasEvent.bind( this ), true );
+            __canvas__.addEventListener( 'pause', this.handleCanvasEvent.bind( this ), true );
+            __canvas__.addEventListener( 'playing', this.handleCanvasEvent.bind( this ), true );
+            __canvas__.addEventListener( 'timeupdate', this.handleCanvasEvent.bind( this ), true );
+            __canvas__.addEventListener( 'volumechange', this.handleCanvasEvent.bind( this ), true );
             
-            return canvas;
+            return __canvas__;
             
         },
         
@@ -65,39 +65,39 @@
         },
         
         play: function() {
-            this.canvas.play();
+            this.__canvas__.play();
         },
         
         pause: function() {
-            this.canvas.pause();
+            this.__canvas__.pause();
         },
         
         setVolume: function( volume ) {
-            this.canvas.volume = volume;
+            this.__canvas__.volume = volume;
         },
         
         getVolume: function() {
-            return this.canvas.volume;
+            return this.__canvas__.volume;
         },
         
         setCurrentTime: function( currentTime ) {
-            this.canvas.currentTime = currentTime;
+            this.__canvas__.currentTime = currentTime;
         },
         
         getCurrentTime: function() {
-            return this.canvas.currentTime;
+            return this.__canvas__.currentTime;
         },
         
         getDuration: function() {
-            return this.canvas.duration;
+            return this.__canvas__.duration;
         },
         
         setSrc: function( src ) {
-            this.canvas.src = src;
+            this.__canvas__.src = src;
         },
         
         getSrc: function() {
-            return this.canvas.src;
+            return this.__canvas__.src;
         },
         
         handleCanvasEvent: function( e ) {

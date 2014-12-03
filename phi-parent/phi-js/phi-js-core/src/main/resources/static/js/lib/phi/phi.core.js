@@ -678,15 +678,15 @@
     var Map = phi.Map = new Class({
 
         _init: function() {
-            this.data = {};
+            this.__data__ = {};
         },
 
         set: function(property, value) {
-            this.data[property] = value;
+            this.__data__[property] = value;
         },
 
         get: function(property) {
-            return this.data[property];
+            return this.__data__[property];
         }
 
     });

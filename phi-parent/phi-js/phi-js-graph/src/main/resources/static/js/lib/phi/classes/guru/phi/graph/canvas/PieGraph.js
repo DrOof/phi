@@ -31,73 +31,66 @@
     
     var graph = phi.graph = phi.graph || {};
     
-    var LineGraph = phi.graph.LineGraph = phi({
+    var PieGraph = phi.graph.PieGraph = phi({
         
         __extends__ : phi.graph.Graph,
         
         __init__ : function( node, options ) {
             
-            // console.log( options );
-            
         },
         
         render: function( data ) {
             
-            data = this.resolveSortOrder( data, this.options.x.name );
-            
-            var rx = this.resolveRangeX( data );
-            var ry = this.resolveRangeY( data );
+            var sigma = this.resolveSigmaX( data );
             
             var d = this.resolveCanvasDimensions();
+            this.renderCircle( d.cx, d.cy );
             
-            var p0 = null;
-            var p1 = null;
-            var point = null;
             for ( var i = 0; i < data.length; i++ ) {
-                
-                point = data[i];
-                
-                p0 = this.resolvePosition( point, rx, ry, d );
-                
-                this.renderPointCircle( point, p0.x, p0.y );
-                if ( p0 && p1 ) {
-                    this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y );
-                }
-                
-                // shift p0 to p1
-                p1 = p0;
-                
+                this.renderPoint( data[i], sigma, d );
             }
             
         },
         
-        resolvePosition: function( point, rx, ry, d ) {
+        renderPoint: function( point, sigma, d ) {
             
-            var vx = this.resolveValueX( point );
-            var vy = this.resolveValueY( point );
+            var v = this.resolveValueX( point );
+            var a = ( ( v / sigma ) * 360 );
             
-            var x = ( d.width / rx.delta ) * ( vx - rx.min );
-            var y = ( d.height / ry.delta ) * ( vy - ry.min );
+            var d = this.resolveCanvasDimensions();
+            var R = Math.min( d.width, d.height ) / 2;
+            var x = Math.cos( a ) * R;
+            var y = Math.sin( a ) * R;
             
-            return { x : x, y: y };
+            // this.renderPointCircle( point, x + d.cx, y + d.cy );
+            this.renderPointLine( d.cx, d.cy, x + d.cx, y + d.cy );
             
+        },
+        
+        renderCircle: function( cx, cy ) {
+            
+            var d = this.resolveCanvasDimensions();
+            var R = Math.min( d.width, d.height ) / 2;
+            // draw a circle in the background
+            this.__canvas__.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : cx, cy : cy, r : R, stroke: '#09f', fill : 'none' } ) );
         },
         
         renderPointCircle: function( point, x, y ) {
             
-            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', stroke: 'none', point : point, id : 'phi-circle-' + phi.uuid() } );
+            // draw a circle at the position of the point
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', point : point, id : phi.uuid() } );
             circle.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
             circle.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
             circle.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
             
-            this.canvas.appendChild( circle );
+            this.__canvas__.appendChild( circle );
             
         },
         
-        renderPointToPointLine: function( x1, y1, x2, y2 ) {
+        renderPointLine: function( x1, y1, x2, y2 ) {
             
-            var line = new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } );
-            this.canvas.appendChild( line );
+            // draw a line from the center of the __canvas__ to the position of the point
+            this.__canvas__.appendChild( new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } ) );
             
         }
         

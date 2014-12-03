@@ -39,12 +39,12 @@
         
         createCanvas : function() {
             
-            var canvas = this.canvas = document.createElement( 'div' );
-            canvas.className = 'player-canvas';
+            var __canvas__ = this.__canvas__ = document.createElement( 'div' );
+            __canvas__.className = 'player-__canvas__';
             
-            canvas.innerHTML = '<p class="player-error"> Unfortunately, we are unable to play this video on the current device. </p>';
+            __canvas__.innerHTML = '<p class="player-error"> Unfortunately, we are unable to play this video on the current device. </p>';
             
-            return canvas;
+            return __canvas__;
             
         },
         

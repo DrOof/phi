@@ -41,7 +41,7 @@
         
         render: function( data ) {
             
-            var values = this.resolveValuesByName( this.options.x.name );
+            var values = this.resolveValuesByName( this.__options__.x.name );
             var rx = this.resolveRangeX();
             var d = this.resolveCanvasDimensions();
             
@@ -56,7 +56,7 @@
             var s = ( d.width / values.length ); 
             
             var v = this.resolveValueX( point );
-            var w = 10;
+            var w = 30;
             var h = ( d.height / rx.max ) * v;
             var x = ( s * i )+ ( s / 2 );
             var y = d.height - h;
@@ -67,12 +67,12 @@
         
         renderPointRect: function( point, x, y, w, h ) {
             
-            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, fill : '#09f', stroke : 'none', point : point, id : phi.uuid() } );
+            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, class : 'graph-point', stroke : 'none', point : point, id : phi.uuid() } );
             rect.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
             rect.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
             rect.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
             
-            this.canvas.appendChild( rect );
+            this.__canvas__.appendChild( rect );
             
         }
         

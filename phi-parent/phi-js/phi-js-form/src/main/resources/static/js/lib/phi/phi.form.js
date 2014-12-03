@@ -46,10 +46,10 @@
         
         __init__: function( node ) {
             
-            this.node = dom( node );
+            this.__node__ = dom( node );
             
             /* disable native form validation */
-            this.node.find( 'form' ).attr( 'novalidate', 'novalidate' );
+            this.__node__.find( 'form' ).attr( 'novalidate', 'novalidate' );
             this.createEventListeners( node );
             
         },
@@ -100,7 +100,7 @@
          
         validateAll: function( dispatch ) {  
             
-            var nodes = dom( this.node ).find( ':text, select, :checkbox, textarea, :file' );
+            var nodes = dom( this.__node__ ).find( ':text, select, :checkbox, textarea, :file' );
             
             var nodesToValidate = [];
             var valid = [], node;
@@ -258,7 +258,7 @@
         
         toJSON: function( scope ) {
             
-            var fields = dom( this.node ).find( 'input, textarea, select' );
+            var fields = dom( this.__node__ ).find( 'input, textarea, select' );
             
             var data = {}
             
@@ -310,14 +310,14 @@
         
         __init__ : function( node ) {
             
-            this.node = dom( node );
+            this.__node__ = dom( node );
             
             /* get the checkbox */
-            this.field = this.node.find( ':checkbox' );
+            this.field = this.__node__.find( ':checkbox' );
             this.field.bind( 'change', this.handleChange.bind( this ) ); 
             
             /* create a draggable toggle */
-            this.dragger = new phi.dom.RelativeDragger( this.node.find( '.switch-bezel' ), this.node.find( '.switch-bezel-handle' ), { allowY : false } );
+            this.dragger = new phi.dom.RelativeDragger( this.__node__.find( '.switch-bezel' ), this.__node__.find( '.switch-bezel-handle' ), { allowY : false } );
             this.dragger.addEventListener( 'dragend', this.handleDragEnd.bind( this ) ); 
             
             this.toggle( !!this.field.prop( 'checked' ) );
@@ -340,7 +340,7 @@
         toggle: function( toggle ) {
             
             this.dragger.valueX( toggle ? 100 : 0 );
-            this.node.toggleClass( 'on', toggle );
+            this.__node__.toggleClass( 'on', toggle );
             this.field.prop( 'checked', toggle );
             
         }
@@ -375,16 +375,16 @@
         
         __init__: function( node ) {
             
-            this.node = dom( node );
+            this.__node__ = dom( node );
             
-            this.node.bind( 'change', this.handleChange.bind( this ) );
-            this.node.bind( 'click', this.handleClick.bind( this ) );
+            this.__node__.bind( 'change', this.handleChange.bind( this ) );
+            this.__node__.bind( 'click', this.handleClick.bind( this ) );
             
-            // console.log('FieldUpload node=',this.node);
+            // console.log('FieldUpload node=',this.__node__);
             
-            this.node[0].addEventListener( 'drop', this.handleDrop.bind( this ), false );
-            this.node[0].addEventListener( 'dragover', this.handleDragOver.bind( this ), false );
-            this.node[0].addEventListener( 'dragenter', this.handleDragEnter.bind( this ), false );
+            this.__node__[0].addEventListener( 'drop', this.handleDrop.bind( this ), false );
+            this.__node__[0].addEventListener( 'dragover', this.handleDragOver.bind( this ), false );
+            this.__node__[0].addEventListener( 'dragenter', this.handleDragEnter.bind( this ), false );
             
             this.links = new phi.dom.LinkRelations( /upload/ );
             this.links.add( 'remove-file', this.handleRemoveFile.bind( this ) );
@@ -393,7 +393,7 @@
         
         handleClick: function( e ) {
             
-            var base64 = this.node.find( '[type="hidden"]' );
+            var base64 = this.__node__.find( '[type="hidden"]' );
             base64.remove();
         },
         
@@ -414,7 +414,7 @@
             };
                 
             
-            this.node.find( '.field-upload-file-table' ).html( rows.join('') ); 
+            this.__node__.find( '.field-upload-file-table' ).html( rows.join('') ); 
             
         },
         
@@ -438,7 +438,7 @@
         
         handleDragOver: function( e ) { e.preventDefault();
 
-            var dt = e.dataTransfer;
+            var dt = e.__data__Transfer;
             dt.effectAllowed = dt.dropEffect = 'copy';
 
         },
@@ -452,7 +452,7 @@
          
         handleDragEnter: function( e ) { e.preventDefault();
             
-            var dt = e.dataTransfer;
+            var dt = e.__data__Transfer;
             dt.effectAllowed = dt.dropEffect = 'copy';
             
         },
@@ -466,10 +466,10 @@
         
         handleDrop: function( e ) { e.preventDefault();
             
-            var dt = e.dataTransfer;
+            var dt = e.__data__Transfer;
             dt.effectAllowed = dt.dropEffect = 'copy';
             
-            var accept = this.node.find(':file').attr('accept');
+            var accept = this.__node__.find(':file').attr('accept');
             var mimes = accept.split(',');
             
             console.log("handleDrop mimes=", mimes );
@@ -492,9 +492,9 @@
             
             if ( files.length ) {
                 this.renderUpload( files );
-                this.node.find(':file').trigger('valid');
+                this.__node__.find(':file').trigger('valid');
             } else {
-                this.node.find(':file').trigger('invalid');
+                this.__node__.find(':file').trigger('invalid');
             }
             
         },
@@ -514,16 +514,16 @@
         
         handleLoad: function( e, uuid, file ) {
             
-            var name = this.node.find( '[type="file"]' ).attr('name');
-            var id = this.node.find( '[type="file"]' ).attr('id');
+            var name = this.__node__.find( '[type="file"]' ).attr('name');
+            var id = this.__node__.find( '[type="file"]' ).attr('id');
             
             document.getElementById( uuid ).innerHTML = FieldUpload.FILE.parse( { result: e.target.result, name: name, id: id, 'file-name' : file.name } );
             
             // for image previewing
-            // var id = this.node.find( '[type="file"]' ).attr('id');
-            // this.node.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
+            // var id = this.__node__.find( '[type="file"]' ).attr('id');
+            // this.__node__.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
             
-            /* this.node.trigger( 'upload' ); */
+            /* this.__node__.trigger( 'upload' ); */
                // console.log('handleLoad file.name=',file.name);
             this.upload(); 
         },
@@ -536,7 +536,7 @@
         
         upload: function(pFileName) {
             
-            var form = this.node.closest( 'form' );
+            var form = this.__node__.closest( 'form' );
             
             // console.log('FIELD UPLOAD upload pFileName=',pFileName);
             
@@ -575,9 +575,9 @@
         
         handleUploadProgress: function( e ) {
             
-            var form = this.node.closest('form');
+            var form = this.__node__.closest('form');
             
-            this.node.find( '.field-upload-progress .progress-bezel' ).css( { width : ( ( e.loaded / e.total ) * 100 ) + '%' } );
+            this.__node__.find( '.field-upload-progress .progress-bezel' ).css( { width : ( ( e.loaded / e.total ) * 100 ) + '%' } );
             this.dispatchEvent( { type : 'uploadprogress', target : this, originalEvent: e } );
             
         },
@@ -640,7 +640,7 @@
             
             // console.log('handleClicker e.target=',e.target);
             
-            // var base64 = this.node.find( '[type="hidden"]' );
+            // var base64 = this.__node__.find( '[type="hidden"]' );
             // console.log('base64=',base64);
             // base64.remove();
             
@@ -648,16 +648,16 @@
         
         handleLoad: function( e, uuid, file  ) {
             
-               var name = this.node.find( '[type="file"]' ).attr('name');
-            var id = this.node.find( '[type="file"]' ).attr('id');
+               var name = this.__node__.find( '[type="file"]' ).attr('name');
+            var id = this.__node__.find( '[type="file"]' ).attr('id');
             
             // console.log('upload file name=',file.name);
             
             document.getElementById( uuid ).innerHTML = FieldUpload.FILE.parse( { result: e.target.result, name: name, id: id, 'file-name' : file.name } );
             
             // for image previewing
-            var id = this.node.find( '[type="file"]' ).attr('id');
-            this.node.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
+            var id = this.__node__.find( '[type="file"]' ).attr('id');
+            this.__node__.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
             
             this.upload(file.name); 
         }
@@ -678,8 +678,8 @@
         handleLoad: function( e, uuid, file  ) {
             
             // for image previewing
-            var id = this.node.find( '[type="file"]' ).attr('id');
-            this.node.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
+            var id = this.__node__.find( '[type="file"]' ).attr('id');
+            this.__node__.find( '.field-upload-file-preview' ).html( ImageFieldUpload.PREVIEW.parse( { src: e.target.result, id: id } ) );
             
         },
         
@@ -699,7 +699,7 @@
             };
                 
             
-            this.node.find( '.field-upload-file-table' ).html( rows.join('') ); 
+            this.__node__.find( '.field-upload-file-table' ).html( rows.join('') ); 
         }
     });
     
@@ -723,10 +723,10 @@
         
         __init__ : function( node, options ) {
             
-            this.node = dom( node );
-            this.node.bind( 'keyup', this.handleKeyUp.bind( this ) );
-            this.node.bind( 'keydown', this.handleKeyDown.bind( this ) );
-            this.node.find( 'input' ).prop( 'autocomplete', 'off' ).bind( 'focus', this.handleFocus.bind( this ) );
+            this.__node__ = dom( node );
+            this.__node__.bind( 'keyup', this.handleKeyUp.bind( this ) );
+            this.__node__.bind( 'keydown', this.handleKeyDown.bind( this ) );
+            this.__node__.find( 'input' ).prop( 'autocomplete', 'off' ).bind( 'focus', this.handleFocus.bind( this ) );
             dom('.dashboard-product-entry').bind('click', this.handleClick.bind(this));
             
             this.links = this.createLinkRelations();
@@ -745,7 +745,7 @@
             // use data-json attribute to parse JSON in a clean way, rather than interpret HTML as JSON and then render it as HTML again 
             } else if (node.getAttribute('data-suggestions-ref')) {
                 
-                var completeList = this.node.find( node.getAttribute('data-suggestions-ref') );
+                var completeList = this.__node__.find( node.getAttribute('data-suggestions-ref') );
                 
                 var optionNodes = completeList.find( "li a" );
                 
@@ -769,7 +769,7 @@
         
         createLinkRelations: function() {
             
-            var links = new phi.dom.LinkRelations( /complete/, this.node[0] );
+            var links = new phi.dom.LinkRelations( /complete/, this.__node__[0] );
                 links.add( 'select', this.handleSelect.bind( this ) );
                 
             return links;
@@ -787,7 +787,7 @@
                 
                 // if clicking on clear results icon in field-complete inputs (& not on close icon in error dialog)
                 if( targ.hasClass('fa fa-remove') && targ.closest('.field-complete-result').length){
-                    this.node.find( 'input' ).val('');
+                    this.__node__.find( 'input' ).val('');
                     
                     this.suggest( '' );
                 }
@@ -812,7 +812,7 @@
         
         handleEnter: function( e ) { 
             
-            var suggestion = this.node.find( '.field-complete-link.select' );
+            var suggestion = this.__node__.find( '.field-complete-link.select' );
             if ( suggestion.length ) { e.preventDefault(); 
                 this.select( suggestion.attr( 'href' ).replace( '#', '' ) );    
             }
@@ -863,13 +863,13 @@
         
         close: function( e ) {
             
-            this.node.find( '.field-complete-list' ).remove(); 
+            this.__node__.find( '.field-complete-list' ).remove(); 
             
         },
         
         up: function( e ) {
             
-            var links = this.node.find( '.field-complete-link' );
+            var links = this.__node__.find( '.field-complete-link' );
             var select = 0;
             for ( var i = 0; i < links.length; i++ ) {
                 if ( links.eq(i).is('.select') ) {
@@ -884,7 +884,7 @@
         
         down: function( e ) {
             
-            var links = this.node.find( '.field-complete-link' );
+            var links = this.__node__.find( '.field-complete-link' );
             
             var select = 0;
             for ( var i = 0; i < links.length; i++ ) {
@@ -900,8 +900,8 @@
         
         select: function( value ) {
             
-            this.node.find( '.field-complete-list' ).remove();
-            this.node.find('input').val( value );
+            this.__node__.find( '.field-complete-list' ).remove();
+            this.__node__.find('input').val( value );
             
         },
         
@@ -909,10 +909,10 @@
             
             var suggestions = this.filterSuggestions( val );
             
-            this.node.find( '.field-complete-list' ).remove();
+            this.__node__.find( '.field-complete-list' ).remove();
             var list = this.renderSuggestionList( suggestions, val );
             
-            this.node.append( list ); 
+            this.__node__.append( list ); 
             
         },
         

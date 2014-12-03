@@ -29,15 +29,15 @@
         __init__: function( node ) {
 
             // nodes
-            this.node = dom( node ); 
+            this.__node__ = dom( node ); 
             
             // nodes
-            this.list = this.node.find('.slider-list');
+            this.list = this.__node__.find('.slider-list');
             this.renderControl( 0 );
 
             // handle events
-            this.createEventBindings( this.node );
-            this.createLinkObserver( this.node );
+            this.createEventBindings( this.__node__ );
+            this.createLinkObserver( this.__node__ );
             
         },
 
@@ -82,7 +82,7 @@
             
             // adding this class creates an ugly motion when dragging in firefox
             // without it dragging in chrome isn't as responsive - but still works well
-            // this.node.addClass('moving');
+            // this.__node__.addClass('moving');
 
             this.__y     = e.pageY;
             this.__x    = e.pageX;
@@ -242,7 +242,7 @@
 
         max: function() {
 
-            var width     = this.node.width();
+            var width     = this.__node__.width();
 
             var item     = this.list.find('> li:last-child')[0],
                 x        = ( item ) ? item.offsetLeft : 0,
@@ -255,7 +255,7 @@
         forward : function( EDx ) {
 
             var list     = this.list.find('> li'),
-                width     = this.node.width(),
+                width     = this.__node__.width(),
                 item, x, w;
 
             for (var i = 0; i < list.length; i++) {
@@ -277,7 +277,7 @@
         back : function( EDx ) {
 
             var list     = this.list.find('> li'),
-                width     = this.node.width(),
+                width     = this.__node__.width(),
                 item, x, w;
 
             for (var i = list.length - 1; i >= 0; i--) {
@@ -312,10 +312,10 @@
 
         renderControl: function( EDx ) {
 
-            this.node.addClass('forward-slider back-slider');
+            this.__node__.addClass('forward-slider back-slider');
 
-            if ( EDx >= this.min() ) { this.node.removeClass('back-slider'); }
-            if ( EDx <= this.max() ) { this.node.removeClass('forward-slider'); }            
+            if ( EDx >= this.min() ) { this.__node__.removeClass('back-slider'); }
+            if ( EDx <= this.max() ) { this.__node__.removeClass('forward-slider'); }            
         },
         
         handleResize: function( e ) {
@@ -337,7 +337,7 @@
 
         handleMouseDown: function( e ) { e.preventDefault();
 
-            this.node.bind('mousemove', this.handleMouseMove.bind( this ));
+            this.__node__.bind('mousemove', this.handleMouseMove.bind( this ));
             this.grab( e );
 
         },
@@ -345,15 +345,15 @@
         handleMouseUp: function( e ) {
             e.preventDefault();
 
-            this.node.unbind('mousemove');
+            this.__node__.unbind('mousemove');
             this.release( e );
 
         },
 
         handleMouseLeave: function( e ) { e.preventDefault();
 
-            this.node.removeClass( 'moving' );
-            this.node.unbind( 'mousemove' );
+            this.__node__.removeClass( 'moving' );
+            this.__node__.unbind( 'mousemove' );
             this.__Dx    = 0;
 
         },

@@ -41,7 +41,7 @@
         
         __init__ : function( node ) {
             
-            this.node = node;
+            this.__node__ = node;
             // this.reset( node );
             
             if ( node.hasAttribute( 'src' ) ) {
@@ -74,14 +74,14 @@
         createAspectRatio: function() {
             
             var ratio = this.ratio = new phi.media.ui.AspectRatio();
-            this.node.appendChild( ratio.createAspectRatio() );
+            this.__node__.appendChild( ratio.createAspectRatio() );
             
         },
         
         createControls: function() {
             
             var controls = this.controls = new phi.media.ui.Controls();
-            this.node.appendChild( controls.createControls() );
+            this.__node__.appendChild( controls.createControls() );
             
             /*  */
             controls.initialise();
@@ -98,7 +98,7 @@
         createPoster: function() {
             
             var poster = new phi.media.ui.Poster( this.__poster__ );
-            this.node.appendChild( poster.createPoster() );
+            this.__node__.appendChild( poster.createPoster() );
             
         },
         
@@ -136,7 +136,7 @@
             /**
              *
              * var engine = this.engine = new phi.media.engine.YouTubeIFrameEngine();
-             * this.node.appendChild( engine.createCanvas() );
+             * this.__node__.appendChild( engine.createCanvas() );
              * 
              * engine.addEventListener( 'timeupdate', this.handleTimeUpdate.bind( this ) );
              * 
@@ -144,7 +144,7 @@
             
             var engine = new ( this.resolveEngineClass( source ) )(); // clazz.apply();
             
-            this.node.appendChild( engine.createCanvas() );
+            this.__node__.appendChild( engine.createCanvas() );
             
             engine.addEventListener( 'pause', this.handlePause.bind( this ) );
             engine.addEventListener( 'playing', this.handlePlaying.bind( this ) );
@@ -249,7 +249,7 @@
         
         setSrc: function( src ) {
             
-            this.reset( this.node );
+            this.reset( this.__node__ );
             this.engine = this.createEngine( new phi.media.player.Source( src ) );
             
             if ( this.engine ) {
@@ -323,7 +323,7 @@
                 }
             }
             
-            dom( this.node ).addClass( state );
+            dom( this.__node__ ).addClass( state );
             
         },
         
@@ -335,7 +335,7 @@
                 }
             }
             
-            dom( this.node ).removeClass( state );
+            dom( this.__node__ ).removeClass( state );
             
         },
         

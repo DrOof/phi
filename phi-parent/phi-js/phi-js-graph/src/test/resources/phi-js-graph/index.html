@@ -17,10 +17,28 @@
             height: 400px;
             background: #f0f0f0;
             
+            position: relative;
+            
         }
         
-        .graph svg {
+        .graph-dialog  {
             
+            border: 1px solid #f0f0f0;
+            background: #ffffff;
+            
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 10px;
+            
+        }
+        
+        .graph-point {
+            fill: #09f;
+        }
+        
+        .graph-point:hover {
+            fill: #07d;
         }
         
         .demo {
@@ -89,11 +107,13 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/jquery/jquery-2.1.1.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dom.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dialog.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.graph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/Graph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/PieGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/BarGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/LineGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/Graph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/PieGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/BarGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/LineGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/GraphDialog.js"></script>
         
         <script type="application/javascript">
             
@@ -105,7 +125,7 @@
             
             /* start generate random data */
             var data = [];
-            var size = 100;
+            var size = 20;
             
             for ( var i = 0; i < size; i++) {
                 data.push( {
@@ -119,34 +139,34 @@
             
             
             /* start pie graph */
-            var pie = new phi.graph.PieGraph( document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
+            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
             pie.set( data );
             
-            pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
-            pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
-            pie.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
+            // pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
+            // pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            // pie.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end pie graph */
             
             
             
             /* start bar graph */
-            var bar = new phi.graph.BarGraph( document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
+            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
             bar.set( data );
             
-            bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
-            bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
-            bar.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
+            // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
+            // bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
+            // bar.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end bar graph */
             
             
             
             /* start line graph */
-            var line = new phi.graph.LineGraph( document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' } } );
+            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' } } );
             line.set( data );
             
-            line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
-            line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
-            line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
+            // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
+            // line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
+            // line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
             /* end line graph */
             
             

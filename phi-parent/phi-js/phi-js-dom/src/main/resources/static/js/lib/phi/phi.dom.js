@@ -355,7 +355,7 @@
         
         __init__ : function( node ) {
             
-            this.node = dom( node );
+            this.__node__ = dom( node );
             this.progress = 0;
             
         },
@@ -363,9 +363,9 @@
         update: function( progress ) {
             
             this.progress = Math.min( progress, 100 );
-            this.node.find( '.progress-bezel' ).css({ width: this.progress + '%' });
+            this.__node__.find( '.progress-bezel' ).css({ width: this.progress + '%' });
             
-            this.dispatchEvent( { type : 'progresschange', target: this.node[0] } );
+            this.dispatchEvent( { type : 'progresschange', target: this.__node__[0] } );
             
         }
         
@@ -383,7 +383,7 @@
     
         __init__: function( node, draggable, options ) {
             
-            this.node = dom( node || document );
+            this.__node__ = dom( node || document );
             this.draggable = draggable;
 
             var options = options || {};
@@ -392,10 +392,10 @@
             this.allowX     = ( options.allowX === false ) ? false : true;
             this.allowY     = ( options.allowY === false ) ? false : true;
             
-            this.node.bind( 'mousedown', this.handleMouseDown.bind( this ) );
-            this.node.bind( 'touchstart', this.handleTouchStart.bind( this ));
-            this.node.bind( 'touchmove', this.handleTouchMove.bind( this ));
-            this.node.bind( 'touchend', this.handleTouchEnd.bind( this ));
+            this.__node__.bind( 'mousedown', this.handleMouseDown.bind( this ) );
+            this.__node__.bind( 'touchstart', this.handleTouchStart.bind( this ));
+            this.__node__.bind( 'touchmove', this.handleTouchMove.bind( this ));
+            this.__node__.bind( 'touchend', this.handleTouchEnd.bind( this ));
             
         },
         
@@ -405,7 +405,7 @@
         
         grab: function( target ) {
             
-            this.dragging = dom( target ).closest( this.draggable, this.node );
+            this.dragging = dom( target ).closest( this.draggable, this.__node__ );
             this.dragging.addClass( 'dragging' );
             
             this.dispatchEvent( { type : 'dragstart', target : this }  );
@@ -462,11 +462,11 @@
         
             var x, y, w, h, left, top;
         
-            x = e.pageX - this.node.offset().left;
-            y = e.pageY - this.node.offset().top;
+            x = e.pageX - this.__node__.offset().left;
+            y = e.pageY - this.__node__.offset().top;
         
-            w = this.node.outerWidth();
-            h = this.node.outerHeight();
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
 
             this.move( x, y );
             
@@ -478,8 +478,8 @@
             
             
 
-            w = this.node.outerWidth();
-            h = this.node.outerHeight();
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
 
             if ( this.constrain ) {
                 x = (x > w) ? w : ((x < 0) ? 0 : x);
@@ -562,11 +562,11 @@
 
             var x, y, w, h, l, t, left, top;
         
-            x = e.pageX - this.node.offset().left;
-            y = e.pageY - this.node.offset().top;
+            x = e.pageX - this.__node__.offset().left;
+            y = e.pageY - this.__node__.offset().top;
         
-            w = this.node.outerWidth();
-            h = this.node.outerHeight();
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
 
             x = parseFloat( 100 * x / w );
             y = parseFloat( 100 * y / h );
@@ -605,7 +605,7 @@
             if ( x !== undefined ) {
                 this.move( x, 0 );
             } else {
-                return parseFloat( this.dragging.css( 'left' ) ) / this.node.outerWidth() * 100;
+                return parseFloat( this.dragging.css( 'left' ) ) / this.__node__.outerWidth() * 100;
             }
             
         },
@@ -615,7 +615,7 @@
             if ( y !== undefined ) {
                 this.move( 0, y );
             } else {
-                return  parseFloat( this.dragging.css( 'top' ) ) / this.node.height() * 100;
+                return  parseFloat( this.dragging.css( 'top' ) ) / this.__node__.height() * 100;
             }
             
         }

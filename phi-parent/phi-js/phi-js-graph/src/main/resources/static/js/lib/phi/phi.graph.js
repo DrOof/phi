@@ -34,14 +34,16 @@
     var GraphFactory = graph.GraphFactory = phi({
         
         __init__ : function() {
-            
+            this.__graphs__ = [];
         },
         
-        createGraph: function() {
-            
+        createGraph: function( className, node, options ) {
+            return new phi.graph[className]( node, options );
         }
         
     });
+    
+    var factory = graph.factory = new GraphFactory();
     
     
     

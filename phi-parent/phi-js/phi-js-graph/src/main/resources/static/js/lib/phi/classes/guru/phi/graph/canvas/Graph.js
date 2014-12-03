@@ -43,59 +43,59 @@
         
         __init__ : function( node, options ) {
             
-            this.node = node;
-            this.options = options;
+            this.__node__       = node;
+            this.__options__    = options;
             
-            this.canvas = this.createCanvas( node );
-            this.data = [];
+            this.__canvas__     = this.createCanvas( node );
+            this.__dialog__     = this.createDialog( node );
+            this.__data__       = [];
             
         },
         
         resolveSigmaX: function() {
             
-            var values = this.resolveValuesByName( this.options.x.name );
+            var values = this.resolveValuesByName( this.__options__.x.name );
             return this.__sigma__( values );
             
         },
         
         resolveSigmaY: function() {
             
-            var values = this.resolveValuesByName( this.options.y.name );
+            var values = this.resolveValuesByName( this.__options__.y.name );
             return this.__sigma__( values );
             
         },
         
         resolveRangeX: function() {
             
-            var values = this.resolveValuesByName( this.options.x.name );
+            var values = this.resolveValuesByName( this.__options__.x.name );
             return this.__range__( values );
             
         },
         
         resolveRangeY: function() {
             
-            var values = this.resolveValuesByName( this.options.y.name );
+            var values = this.resolveValuesByName( this.__options__.y.name );
             return this.__range__( values );
-            
             
         },
         
         resolveValueX: function( point ) {
-            return point[ this.options.x.name ];
+            return point[ this.__options__.x.name ];
         },
         
         resolveValueY: function( point ) {
-            return point[ this.options.y.name ];
+            return point[ this.__options__.y.name ];
         },
         
         resolveValuesByName : function( name ) {
-            return this.data.map( function( a ) { return a[ name ] } );
+            return this.__data__.map( function( a ) { return a[ name ] } );
         },
         
         resolveCanvasDimensions: function() {
             
-            var w = this.canvas.element.offsetWidth;
-            var h = this.canvas.element.offsetHeight;
+            var w = this.__canvas__.element.offsetWidth;
+            var h = this.__canvas__.element.offsetHeight;
             
             return {
                 width : w,
@@ -107,7 +107,7 @@
         
         resolveSortOrder: function( data, name ) {
             
-            return this.data.sort( function( a, b ) { return a[name] - b[name]; } );
+            return this.__data__.sort( function( a, b ) { return a[name] - b[name]; } );
             
         },
         
@@ -126,15 +126,31 @@
             
         },
         
+        createDialog: function( node ) {
+            
+            var dialog = new phi.graph.GraphDialog( {
+                template : '<div class="graph-dialog">{{point.a}} / {{point.b}}</div>',
+                selector : '.graph-dialog',
+                parent : this.__node__
+            } );
+            
+            return dialog;
+            
+        },
+        
+        openDialog: function( e ) {
+            this.__dialog__.open( e );
+        },
+        
         add: function( data ) {
             
-            this.set( this.data.join( data ) );
+            this.set( this.__data__.join( data ) );
             
         },
         
         set: function( data ) {
             
-            this.data = data;
+            this.__data__ = data;
             this.render( data );
             this.dispatchEvent( { type : 'dataupdate' } );
             
@@ -152,7 +168,7 @@
         
         sort: function( data ) {
             
-            return this.data.sort( function( a, b ) {  } );
+            return this.__data__.sort( function( a, b ) {  } );
             
         },
         
@@ -205,9 +221,7 @@
          */
         
         handleMouseEnter: function( e ) {
-            
             this.dispatchEvent( { type : 'pointenter', explicitOriginalTarget : e.target } );
-            
         },
         
         /**
@@ -217,9 +231,7 @@
          */
         
         handleMouseLeave: function( e ) {
-            
             this.dispatchEvent( { type : 'pointleave', explicitOriginalTarget : e.target } );
-            
         },
         
         /**
@@ -229,9 +241,8 @@
          */
         
         handleMouseUp: function( e ) {
-            
+            this.openDialog( e );
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
-            
         }
         
     });

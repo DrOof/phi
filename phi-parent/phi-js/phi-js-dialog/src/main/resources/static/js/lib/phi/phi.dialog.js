@@ -110,7 +110,7 @@
     var Attention = phi.dialog.Attention = phi.aspect({
         create: {
             after: function() {
-                var node = dom(this.node);
+                var node = dom(this.__selector__);
                 node.find('input, textarea').eq(0).focus();
             }
         }
@@ -155,7 +155,7 @@
             after: function() {
                 dom( document ).bind( 'click.closable', function( e ) {
                     
-                    if ( !dom( e.target ).closest( this.node ).length ) {
+                    if ( !dom( e.target ).closest( this.__selector__ ).length ) {
                         this.close( e );
                     }
                     
@@ -183,13 +183,10 @@
         
         __init__ : function( options ) {
             
-            if (typeof options !== "object") {
-                options = {};
-            }
-            
-            this.html = new dom.Template( options.html || '' );
-            this.root = options.root || 'body';
-            this.node = options.node;
+            this.__options__        = options || {};
+            this.__template__       = new dom.Template( this.__options__.template || '' );
+            this.__parent__         = this.__options__.parent || 'body';
+            this.__selector__       = this.__options__.selector;
             
         },
         
@@ -202,7 +199,8 @@
          */
         
         open: function( e ) { e.preventDefault();
-            var node = dom( this.node );
+            
+            var node = dom( this.__selector__ );
             this.show( node, e );
             
         },
@@ -217,7 +215,7 @@
         
         close: function(e) { e.preventDefault();
             
-            var node = dom( this.node );
+            var node = dom( this.__selector__ );
             this.hide( node, e );
             
         },
@@ -307,7 +305,7 @@
         
         create: function( response, e ) {
             
-            var html = this.html.parse({ content: response, uuid: phi.getUUID() });
+            var html = this.__template__.parse({ content: response, uuid: phi.getUUID() });
             var node = dom( html );
             this.show( node, e );
             
@@ -326,7 +324,7 @@
             
             node.hide();
             
-            dom( this.root ).append( node );
+            dom( this.__parent__ ).append( node );
             
             node.show();
             
@@ -384,7 +382,7 @@
         
         create: function( content, e ) {
             
-            var html = this.html.parse({ content: content, uuid: phi.getUUID() });
+            var html = this.__template__.parse({ content: content, uuid: phi.getUUID() });
             var node = dom( html );
             
             dom( e.target ).closest( '.field' ).append( node.addClass( 'hidden' ) );
@@ -569,10 +567,6 @@
             var link = dom(e.target).closest('a');
             var url = link.attr('href');
             
-            
-            console.log( e );
-            
-            
             dom.ajax({ url: url,
                 success: function( response ) {
                     this.create( response, e );
@@ -583,7 +577,7 @@
         
         create: function( content, e ) {
             
-            var html = this.html.parse({ content: content, uuid: phi.getUUID() });
+            var html = this.__template__.parse({ content: content, uuid: phi.getUUID() });
             var node = dom( html );
             
             this.show( node, e );   
