@@ -37,62 +37,56 @@
         
         __init__ : function( node, options ) {
             
-            this.__poly__ = new phi.dom.Template( PieGraph.POLY );
+            this.__path__ = new phi.dom.Template( PieGraph.PATH );
+            this.__count__;
             
         },
         
         render: function( data ) {
             
-            var sigma = this.resolveSigmaX( data );
             var box = this.resolveCanvasDimensions();
             
             // TODO : calculate the sum and shift from there... doh...
-            var p1, p2;
+            var angle = 0, 
+                sigma = this.resolveSigmaX( data ),
+                radius = Math.min( box.width, box.height ) / 2;
+                
             for ( var i = 0; i < data.length; i++ ) {
                 
                 p1 = data[i];
                 p2 = data[i+1] ? data[i+1] : data[0];
                 
-                this.renderPoint( p1, p2, sigma, box, i );
+                angle = this.renderPoint( p1, p2, sigma, box, i, angle );
                 
             }
             
         },
         
-        renderPoint: function( p1, p2, sigma, box, i ) {
+        renderPoint: function( p1, p2, sigma, box, i, angle ) {
             
             var v1 = this.resolveValueX( p1 );
-            var a1 = ( ( v1 / sigma ) );
+            angle += v1;
+            var a1 = ( ( angle / sigma ) );
             
             var v2 = this.resolveValueX( p2 );
-            var a2 = ( ( v2 / sigma ) );
+            var a2 = ( ( angle + v2 / sigma ) );
             
             this.renderPointShape( p1, box, v1, a1, v2, a2, i );
+            
+            return angle;
             
         },
         
         renderPointShape: function( p1, box, v1, a1, v2, a2, i ) {
             
-            /*
-            // draw a line from the center of the __canvas__ to the position of the point
-            
-            */
-            
             var R = Math.min( box.width, box.height ) / 2;
             
             var x1 = Math.round( box.cx ), 
                 y1 = Math.round( box.cy ), 
-                x2 = Math.round( ( Math.cos( 360 * a1 ) * R ) + box.cx ),
-                y2 = Math.round( ( Math.sin( 360 * a1 ) * R ) + box.cy ),
-                x3 = Math.round( ( Math.cos( 360 * a2 ) * R ) + box.cx ),
-                y3 = Math.round( ( Math.sin( 360 * a2 ) * R ) + box.cy );
-            
-            /*
-            var line = new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, class : 'graph-point' } );
-            this.processSVGShapeElement( line );
-            
-            this.__canvas__.appendChild( line );
-            */
+                x2 = Math.round( ( Math.cos( 2 * Math.PI * a1 ) * R ) + box.cx ),
+                y2 = Math.round( ( Math.sin( 2 * Math.PI * a1 ) * R ) + box.cy ),
+                x3 = Math.round( ( Math.cos( 2 * Math.PI * a2 ) * R ) + box.cx ),
+                y3 = Math.round( ( Math.sin( 2 * Math.PI * a2 ) * R ) + box.cy );
             
             var shape = new phi.dom.svg.SVGShapeElement( 'path' );
             this.processSVGShapeElement( shape );
@@ -101,7 +95,7 @@
             
             shape.attr( { point : p1 } );
             shape.attr( { class : 'graph-point graph-point-' + i } );
-            shape.attr( { d : this.__poly__.parse( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, v1 : v1, v2 : v2, rx : R, ry : R } ) } );
+            shape.attr( { d : this.__path__.parse( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, v1 : v1, v2 : v2, rx : R, ry : R } ) } );
             
             this.__canvas__.appendChild( shape );
             
@@ -109,7 +103,7 @@
         
     });
     
-    PieGraph.POLY = 'M {{x1}} {{y1}}' + // move to center
+    PieGraph.PATH = 'M {{x1}} {{y1}}' + // move to center
                     'L {{x2}} {{y2}}' + // line to value
                     'L {{x3}} {{y3}}' + // arc to next value
                     'L {{x1}} {{y1}}' + // line to center
