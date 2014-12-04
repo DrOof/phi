@@ -47,8 +47,31 @@
             this.__options__    = options;
             
             this.__canvas__     = this.createCanvas( node );
-            this.__dialog__     = this.createDialog( node );
+            this.__label__     = this.createLabel( node );
             this.__data__       = [];
+            
+        },
+        
+        createCanvas: function( node ) {
+            
+            var w = node.offsetWidth;
+            var h = node.offsetHeight;
+            
+            var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
+            
+            // calculate viewbox
+            canvas.attr( { viewBox : '0 0 {{w}} {{h}}'.replace( '{{w}}', w ).replace( '{{h}}', h ) } );
+            node.appendChild( canvas.element );
+            
+            return canvas;
+            
+        },
+        
+        createLabel: function( node ) {
+            
+            var dialog = new phi.dom.Template( Graph.DIALOG );
+            
+            return dialog;
             
         },
         
@@ -111,37 +134,6 @@
             
         },
         
-        createCanvas: function( node ) {
-            
-            var w = node.offsetWidth;
-            var h = node.offsetHeight;
-            
-            var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
-            
-            // calculate viewbox
-            canvas.attr( { viewBox : '0 0 {{w}} {{h}}'.replace( '{{w}}', w ).replace( '{{h}}', h ) } );
-            node.appendChild( canvas.element );
-            
-            return canvas;
-            
-        },
-        
-        createDialog: function( node ) {
-            
-            var dialog = new phi.graph.GraphDialog( {
-                template : '<div class="graph-dialog">{{point.a}} / {{point.b}}</div>',
-                selector : '.graph-dialog',
-                parent : this.__node__
-            } );
-            
-            return dialog;
-            
-        },
-        
-        openDialog: function( e ) {
-            this.__dialog__.open( e );
-        },
-        
         add: function( data ) {
             
             this.set( this.__data__.join( data ) );
@@ -166,6 +158,12 @@
             
         },
         
+        label: function( target ) {
+            
+            console.log( target );
+            
+        },
+        
         sort: function( data ) {
             
             return this.__data__.sort( function( a, b ) {  } );
@@ -182,6 +180,7 @@
                 max: max,
                 delta: max - min
             }
+            
         },
         
         /**
@@ -214,6 +213,14 @@
             return values.reduce( function( a, b ) { return a + b; } );
         },
         
+        processSVGShapeElement: function( shape ) {
+            
+            shape.element.addEventListener( 'mouseenter',   this.handleMouseEnter.bind( this ), true );
+            shape.element.addEventListener( 'mouseleave',   this.handleMouseLeave.bind( this ), true );
+            shape.element.addEventListener( 'mouseup',      this.handleMouseUp.bind( this ), true );
+            
+        },
+        
         /**
          *
          * Handle point enter
@@ -241,10 +248,19 @@
          */
         
         handleMouseUp: function( e ) {
-            this.openDialog( e );
+            
+            // TODO : show label
+            this.label( e.target );
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
+            
         }
         
     });
+    
+    Graph.DIALOG =  '<div class="graph-dialog">' +
+                        '<h4>{{label}}</h4>' +
+                    '</div>';
+    
+    
     
 } )( phi.dom );

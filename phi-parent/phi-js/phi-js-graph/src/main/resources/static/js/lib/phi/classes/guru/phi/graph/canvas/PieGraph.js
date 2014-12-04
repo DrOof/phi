@@ -37,63 +37,82 @@
         
         __init__ : function( node, options ) {
             
+            this.__poly__ = new phi.dom.Template( PieGraph.POLY );
+            
         },
         
         render: function( data ) {
             
             var sigma = this.resolveSigmaX( data );
+            var box = this.resolveCanvasDimensions();
             
-            var d = this.resolveCanvasDimensions();
-            this.renderCircle( d.cx, d.cy );
-            
+            // TODO : calculate the sum and shift from there... doh...
+            var p1, p2;
             for ( var i = 0; i < data.length; i++ ) {
-                this.renderPoint( data[i], sigma, d );
+                
+                p1 = data[i];
+                p2 = data[i+1] ? data[i+1] : data[0];
+                
+                this.renderPoint( p1, p2, sigma, box, i );
+                
             }
             
         },
         
-        renderPoint: function( point, sigma, d ) {
+        renderPoint: function( p1, p2, sigma, box, i ) {
             
-            var v = this.resolveValueX( point );
-            var a = ( ( v / sigma ) * 360 );
+            var v1 = this.resolveValueX( p1 );
+            var a1 = ( ( v1 / sigma ) );
             
-            var d = this.resolveCanvasDimensions();
-            var R = Math.min( d.width, d.height ) / 2;
-            var x = Math.cos( a ) * R;
-            var y = Math.sin( a ) * R;
+            var v2 = this.resolveValueX( p2 );
+            var a2 = ( ( v2 / sigma ) );
             
-            // this.renderPointCircle( point, x + d.cx, y + d.cy );
-            this.renderPointLine( d.cx, d.cy, x + d.cx, y + d.cy );
+            this.renderPointShape( p1, box, v1, a1, v2, a2, i );
             
         },
         
-        renderCircle: function( cx, cy ) {
+        renderPointShape: function( p1, box, v1, a1, v2, a2, i ) {
             
-            var d = this.resolveCanvasDimensions();
-            var R = Math.min( d.width, d.height ) / 2;
-            // draw a circle in the background
-            this.__canvas__.appendChild( new phi.dom.svg.SVGShapeElement( 'circle', { cx : cx, cy : cy, r : R, stroke: '#09f', fill : 'none' } ) );
-        },
-        
-        renderPointCircle: function( point, x, y ) {
-            
-            // draw a circle at the position of the point
-            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, fill : '#09f', point : point, id : phi.uuid() } );
-            circle.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
-            circle.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
-            circle.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
-            
-            this.__canvas__.appendChild( circle );
-            
-        },
-        
-        renderPointLine: function( x1, y1, x2, y2 ) {
-            
+            /*
             // draw a line from the center of the __canvas__ to the position of the point
-            this.__canvas__.appendChild( new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } ) );
+            
+            */
+            
+            var R = Math.min( box.width, box.height ) / 2;
+            
+            var x1 = Math.round( box.cx ), 
+                y1 = Math.round( box.cy ), 
+                x2 = Math.round( ( Math.cos( 360 * a1 ) * R ) + box.cx ),
+                y2 = Math.round( ( Math.sin( 360 * a1 ) * R ) + box.cy ),
+                x3 = Math.round( ( Math.cos( 360 * a2 ) * R ) + box.cx ),
+                y3 = Math.round( ( Math.sin( 360 * a2 ) * R ) + box.cy );
+            
+            /*
+            var line = new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, class : 'graph-point' } );
+            this.processSVGShapeElement( line );
+            
+            this.__canvas__.appendChild( line );
+            */
+            
+            var shape = new phi.dom.svg.SVGShapeElement( 'path' );
+            this.processSVGShapeElement( shape );
+            
+            // fix poly
+            
+            shape.attr( { point : p1 } );
+            shape.attr( { class : 'graph-point graph-point-' + i } );
+            shape.attr( { d : this.__poly__.parse( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, v1 : v1, v2 : v2, rx : R, ry : R } ) } );
+            
+            this.__canvas__.appendChild( shape );
             
         }
         
     });
+    
+    PieGraph.POLY = 'M {{x1}} {{y1}}' + // move to center
+                    'L {{x2}} {{y2}}' + // line to value
+                    'L {{x3}} {{y3}}' + // arc to next value
+                    'L {{x1}} {{y1}}' + // line to center
+                    'Z'; // close
     
 } )( phi.dom );

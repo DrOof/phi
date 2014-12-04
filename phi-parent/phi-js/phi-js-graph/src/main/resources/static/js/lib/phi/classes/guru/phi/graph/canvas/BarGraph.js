@@ -68,9 +68,7 @@
         renderPointRect: function( point, x, y, w, h ) {
             
             var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, class : 'graph-point', stroke : 'none', point : point, id : phi.uuid() } );
-            rect.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
-            rect.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
-            rect.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
+            this.processSVGShapeElement( rect );
             
             this.__canvas__.appendChild( rect );
             

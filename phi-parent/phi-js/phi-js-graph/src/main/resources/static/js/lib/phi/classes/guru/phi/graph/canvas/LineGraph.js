@@ -86,9 +86,7 @@
         renderPointCircle: function( point, x, y ) {
             
             var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, class : 'graph-point', stroke: 'none', point : point, id : 'phi-circle-' + phi.uuid() } );
-            circle.element.addEventListener( 'mouseenter', this.handleMouseEnter.bind( this ), true );
-            circle.element.addEventListener( 'mouseleave', this.handleMouseLeave.bind( this ), true );
-            circle.element.addEventListener( 'mouseup', this.handleMouseUp.bind( this ), true );
+            this.processSVGShapeElement( circle );
             
             this.__canvas__.appendChild( circle );
             

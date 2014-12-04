@@ -23,17 +23,20 @@
         
         .graph-dialog  {
             
+            padding: 10px;
+            margin: -10px 0 0;
+            
             border: 1px solid #f0f0f0;
             background: #ffffff;
             
             position: absolute;
             left: 0;
             top: 0;
-            padding: 10px;
             
         }
         
         .graph-point {
+            stroke : #07d;
             fill: #09f;
         }
         
@@ -113,7 +116,6 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/PieGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/BarGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/LineGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/GraphDialog.js"></script>
         
         <script type="application/javascript">
             
@@ -121,11 +123,9 @@
                 return Math.round( Math.random() * x );
             };
             
-            
-            
             /* start generate random data */
             var data = [];
-            var size = 20;
+            var size = 5;
             
             for ( var i = 0; i < size; i++) {
                 data.push( {
@@ -135,6 +135,8 @@
                 } );
             }
             /* end generate random data */
+            
+            var data = [ { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 } ];
             
             
             
@@ -149,7 +151,7 @@
             
             
             
-            /* start bar graph */
+            /* start bar graph * /
             var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
             bar.set( data );
             
@@ -160,7 +162,7 @@
             
             
             
-            /* start line graph */
+            /* start line graph * /
             var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' } } );
             line.set( data );
             
