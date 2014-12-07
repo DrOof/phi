@@ -37,9 +37,21 @@
         
         .graph-point {
             position: relative;
-            stroke : #07d;
-            fill: #09f;
+            stroke: #ffffff;
+            fill: #f0f0f0;
         }
+        
+        .graph-point-0 { fill: #09f; }
+        .graph-point-1 { fill: #09e; }
+        .graph-point-2 { fill: #09d; }
+        .graph-point-3 { fill: #09c; }
+        .graph-point-4 { fill: #09b; }
+        .graph-point-5 { fill: #09a; }
+        .graph-point-6 { fill: #089; }
+        .graph-point-7 { fill: #088; }
+        .graph-point-8 { fill: #087; }
+        .graph-point-9 { fill: #086; }
+        
         
         .graph-point:hover {
             fill: #07d;
@@ -127,13 +139,13 @@
             
             /* start generate random data */
             var data = [];
-            var size = 5;
+            var size = 10;
             
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
-                    a : rand( 100 ),
-                    b : rand( 100 )
+                    a : 50 + rand( 50 ),
+                    b : 50 + rand( 50 )
                 } );
             }
             /* end generate random data */

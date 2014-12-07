@@ -48,18 +48,19 @@
             
             // TODO : calculate the sum and shift from there... doh...
             var a = 0, a0 = 0, 
+                A = Math.PI * 2;
                 S = this.resolveSigmaX( data ), 
                 R = Math.min( box.width, box.height ) / 2;
                 
             var point, v;
-            for ( var i = 0; i < data.length; i++ ) {
+            for ( var n = 0; n < data.length; n++ ) {
                 
-                point = data[i];
+                point = data[n];
                 v = this.resolveValueX( point );
                 
-                a += ( v / S );
+                a += ( ( v / S ) * A );
                 
-                this.renderPoint( point, box, R, a, a0 );
+                this.renderPoint( point, box, R, n, a, a0 );
                 
                 a0 = a;
                 
@@ -67,81 +68,41 @@
             
         },
         
-        renderPoint: function( point, box, R, a, a0 ) {
+        renderPoint: function( point, box, R, n, a, a0 ) {
             
             var x1 = box.cx, 
                 y1 = box.cy;
             
-            var x2 = ( Math.cos( a0 * 360 ) * R ) + x1, 
-                y2 = ( Math.sin( a0 * 360 ) * R ) + y1;
+            var x2 = ( Math.cos( a0 ) * R ) + x1, 
+                y2 = ( Math.sin( a0 ) * R ) + y1;
             
-            var x3 = ( Math.cos( a * 360 ) * R ) + x1, 
-                y3 = ( Math.sin( a * 360 ) * R ) + y1;
+            var x3 = ( Math.cos( a ) * R ) + x1, 
+                y3 = ( Math.sin( a ) * R ) + y1;
             
-            var x4 = x1, 
-                y4 = y1;
-            
-            this.renderPointShape( point, x1, y1, x2, y2, x3, y3, x4, y4 );
+            this.renderPointShape( point, R, n, x1, y1, x2, y2, x3, y3 );
             
         },
         
-        renderPointShape: function( point, x1, y1, x2, y2, x3, y3, x4, y4 ) {
+        renderPointShape: function( point, R, n, x1, y1, x2, y2, x3, y3 ) {
             
             var shape = new phi.dom.svg.SVGShapeElement( 'path' );
-            shape.attr( { 'class' : 'graph-point' } )
-            shape.attr( { 'd' : this.__path__.parse( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, x4 : x4, y4: y4  } ) } );
             
-            this.__canvas__.appendChild( shape );
-            
-        }
-        
-        /*
-        renderPoint: function( p1, p2, sigma, box, i, angle ) {
-            
-            var v1 = this.resolveValueX( p1 );
-            angle += v1;
-            var a1 = ( ( angle / sigma ) );
-            
-            var v2 = this.resolveValueX( p2 );
-            var a2 = ( ( angle + v2 / sigma ) );
-            
-            this.renderPointShape( p1, box, v1, a1, v2, a2, i );
-            
-            return angle;
-            
-        },
-        
-        renderPointShape: function( p1, box, v1, a1, v2, a2, i ) {
-            
-            var R = Math.min( box.width, box.height ) / 2;
-            
-            var x1 = Math.round( box.cx ), 
-                y1 = Math.round( box.cy ), 
-                x2 = Math.round( ( Math.cos( 2 * Math.PI * a1 ) * R ) + box.cx ),
-                y2 = Math.round( ( Math.sin( 2 * Math.PI * a1 ) * R ) + box.cy ),
-                x3 = Math.round( ( Math.cos( 2 * Math.PI * a2 ) * R ) + box.cx ),
-                y3 = Math.round( ( Math.sin( 2 * Math.PI * a2 ) * R ) + box.cy );
-            
-            var shape = new phi.dom.svg.SVGShapeElement( 'path' );
             this.processSVGShapeElement( shape );
             
-            // fix poly
-            
-            shape.attr( { point : p1 } );
-            shape.attr( { class : 'graph-point graph-point-' + i } );
-            shape.attr( { d : this.__path__.parse( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, v1 : v1, v2 : v2, rx : R, ry : R } ) } );
+            shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point } );
+            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3  } ) } );
             
             this.__canvas__.appendChild( shape );
             
         }
-        */
         
     });
     
-    PieGraph.PATH = 'M {{x1}} {{y1}}' + // move to center
-                    'L {{x2}} {{y2}}' + // line to value
-                    'L {{x3}} {{y3}}' + // arc to next value
-                    'L {{x4}} {{y4}}' + // line to center
+    PieGraph.PATH = 'M{{x1}},{{y1}}' + // move to center
+                    'L{{x2}},{{y2}}' + // line to value
+                    'A{{R}},{{R}} 0 0,1 {{x3}},{{y3}}' + // arc to next value // A rx ry x-axis-rotation large-arc-flag sweep-flag x y3
                     'Z'; // close
-    
+                    
+                    // a150,150 0 0,0 -37,-97
+                    
 } )( phi.dom );

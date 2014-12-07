@@ -53,13 +53,13 @@
             var p0 = null;
             var p1 = null;
             var point = null;
-            for ( var i = 0; i < data.length; i++ ) {
+            for ( var n = 0; n < data.length; n++ ) {
                 
-                point = data[i];
+                point = data[n];
                 
                 p0 = this.resolvePosition( point, rx, ry, d );
                 
-                this.renderPointCircle( point, p0.x, p0.y );
+                this.renderPointCircle( point, p0.x, p0.y, n );
                 if ( p0 && p1 ) {
                     this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y );
                 }
@@ -83,10 +83,13 @@
             
         },
         
-        renderPointCircle: function( point, x, y ) {
+        renderPointCircle: function( point, x, y, n ) {
             
-            var circle = new phi.dom.svg.SVGShapeElement( 'circle', { cx : x, cy : y, r : 5, class : 'graph-point', stroke: 'none', point : point, id : 'phi-circle-' + phi.uuid() } );
+            var circle = new phi.dom.svg.SVGShapeElement( 'circle' );
             this.processSVGShapeElement( circle );
+            
+            circle.attr( { cx : x, cy : y, r : 5 } );
+            circle.attr( { class : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( circle );
             

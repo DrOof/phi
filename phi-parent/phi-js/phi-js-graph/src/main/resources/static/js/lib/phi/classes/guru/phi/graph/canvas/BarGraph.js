@@ -45,30 +45,33 @@
             var rx = this.resolveRangeX();
             var d = this.resolveCanvasDimensions();
             
-            for ( var i = 0; i < data.length; i++ ) {
-                this.renderPoint( data[i], rx, values, d, i );
+            for ( var n = 0; n < data.length; n++ ) {
+                this.renderPoint( data[n], rx, values, d, n );
             }
             
         },
         
-        renderPoint: function( point, rx, values, d, i ) {
+        renderPoint: function( point, rx, values, d, n ) {
             
             var s = ( d.width / values.length ); 
             
             var v = this.resolveValueX( point );
             var w = 30;
             var h = ( d.height / rx.max ) * v;
-            var x = ( s * i )+ ( s / 2 );
+            var x = ( s * n )+ ( s / 2 );
             var y = d.height - h;
             
-            this.renderPointRect( point, x, y, w, h );
+            this.renderPointRect( point, x, y, w, h, n );
             
         },
         
-        renderPointRect: function( point, x, y, w, h ) {
+        renderPointRect: function( point, x, y, w, h, n ) {
             
-            var rect = new phi.dom.svg.SVGShapeElement( 'rect', { x : x - ( w / 2 ), y : y, width : w, height : h, class : 'graph-point', stroke : 'none', point : point, id : phi.uuid() } );
+            var rect = new phi.dom.svg.SVGShapeElement( 'rect' );
             this.processSVGShapeElement( rect );
+            
+            rect.attr( { x : x - ( w / 2 ), y : y, width : w, height : h } );
+            rect.attr( { class : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( rect );
             
