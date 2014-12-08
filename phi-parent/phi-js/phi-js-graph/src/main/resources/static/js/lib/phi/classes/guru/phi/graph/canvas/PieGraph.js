@@ -31,6 +31,11 @@
     
     var graph = phi.graph = phi.graph || {};
     
+    var cos = Math.cos;
+    var sin = Math.sin;
+    var min = Math.min;
+    var PI  = Math.PI;
+    
     var PieGraph = phi.graph.PieGraph = phi({
         
         __extends__ : phi.graph.Graph,
@@ -48,9 +53,9 @@
             
             // TODO : calculate the sum and shift from there... doh...
             var a = 0, a0 = 0, 
-                A = Math.PI * 2;
+                A = PI * 2;
                 S = this.resolveSigmaX( data ), 
-                R = Math.min( box.width, box.height ) / 2;
+                R = min( box.width, box.height ) / 2;
                 
             var point, v;
             for ( var n = 0; n < data.length; n++ ) {
@@ -73,11 +78,11 @@
             var x1 = box.cx, 
                 y1 = box.cy;
             
-            var x2 = ( Math.cos( a0 ) * R ) + x1, 
-                y2 = ( Math.sin( a0 ) * R ) + y1;
+            var x2 = ( cos( a0 ) * R ) + x1, 
+                y2 = ( sin( a0 ) * R ) + y1;
             
-            var x3 = ( Math.cos( a ) * R ) + x1, 
-                y3 = ( Math.sin( a ) * R ) + y1;
+            var x3 = ( cos( a ) * R ) + x1, 
+                y3 = ( sin( a ) * R ) + y1;
             
             this.renderPointShape( point, R, n, x1, y1, x2, y2, x3, y3 );
             

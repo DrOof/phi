@@ -129,8 +129,11 @@
         },
         
         resolveSortOrder: function( data, name ) {
-            
             return this.__data__.sort( function( a, b ) { return a[name] - b[name]; } );
+        },
+        
+        // FIXME : implement color range and remove from CSS
+        resolveColorRange: function( color, shift ) {
             
         },
         

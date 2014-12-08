@@ -12,6 +12,10 @@
             line-height: 1.5em;
         }
         
+        .graph-content {
+            margin: 10px;
+        }
+        
         .graph {
             
             height: 400px;
@@ -36,30 +40,41 @@
         }
         
         .graph-point {
+            
+            cursor: pointer;
+            
+            stroke: #fff;
+            fill: #09f;
+            
             position: relative;
-            stroke: #ffffff;
-            fill: #f0f0f0;
+            z-index: 100;
+            
         }
         
-        .graph-point-0 { fill: #09f; }
-        .graph-point-1 { fill: #09e; }
-        .graph-point-2 { fill: #09d; }
-        .graph-point-3 { fill: #09c; }
-        .graph-point-4 { fill: #09b; }
-        .graph-point-5 { fill: #09a; }
-        .graph-point-6 { fill: #089; }
-        .graph-point-7 { fill: #088; }
-        .graph-point-8 { fill: #087; }
-        .graph-point-9 { fill: #086; }
-        
+        /* FIXME : implement color range and remove from CSS */
+        .graph-point-0  { fill: #09f; }
+        .graph-point-1  { fill: #09e; }
+        .graph-point-2  { fill: #09d; }
+        .graph-point-3  { fill: #09c; }
+        .graph-point-4  { fill: #09b; }
+        .graph-point-5  { fill: #09a; }
+        .graph-point-6  { fill: #089; }
+        .graph-point-7  { fill: #088; }
+        .graph-point-8  { fill: #087; }
+        .graph-point-9  { fill: #086; }
+        .graph-point-10 { fill: #085; }
+        .graph-point-11 { fill: #084; }
+        .graph-point-12 { fill: #083; }
+        .graph-point-13 { fill: #082; }
+        .graph-point-14 { fill: #081; }
+        .graph-point-15 { fill: #080; }
+        .graph-point-16 { fill: #08f; }
+        .graph-point-17 { fill: #08e; }
+        .graph-point-18 { fill: #08d; }
+        .graph-point-19 { fill: #08c; }
         
         .graph-point:hover {
-            fill: #07d;
-            z-index: 10;
-        }
-        
-        .demo {
-            margin: 10px;
+            fill: #fff;
         }
         
         </style>
@@ -68,7 +83,7 @@
     <body>
         
         <div class="grid">
-            <header class="demo">
+            <header class="graph-content">
                 <h1>Graphs</h1>
                 <p>
                     This graph was render in <time id="graph-render-time"></time> milliseconds.
@@ -76,7 +91,7 @@
             </header>
             <div class="column">
                 <div class="column phi a">
-                    <section class="demo">
+                    <section class="graph-content">
                         <h2>Pie Graph</h2>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -84,19 +99,19 @@
                     </section>
                 </div>
                 <div class="column phi b">
-                    <section class="demo">
+                    <section class="graph-content">
                         <div id="pie-graph" class="graph"></div>
                     </section>
                 </div>
             </div>
             <div class="column">
                 <div class="column phi b">
-                    <section class="demo">
+                    <section class="graph-content">
                         <div id="bar-graph" class="graph"></div>
                     </section>
                 </div>
                 <div class="column phi a">
-                    <section class="demo">
+                    <section class="graph-content">
                         <h2>Bar Graph</h2>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -106,7 +121,7 @@
             </div>
             <div class="column">
                 <div class="column phi a">
-                    <section class="demo">
+                    <section class="graph-content">
                         <h2>Line Graph</h2>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -139,13 +154,13 @@
             
             /* start generate random data */
             var data = [];
-            var size = 10;
+            var size = 20;
             
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
-                    a : 50 + rand( 50 ),
-                    b : 50 + rand( 50 )
+                    a : 10 + rand( 90 ),
+                    b : 10 + rand( 90 )
                 } );
             }
             /* end generate random data */
