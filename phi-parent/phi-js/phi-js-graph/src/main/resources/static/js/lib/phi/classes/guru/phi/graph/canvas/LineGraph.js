@@ -43,6 +43,8 @@
         
         render: function( data ) {
             
+            this.clear();
+            
             data = this.resolveSortOrder( data, this.__options__.x.name );
             
             var rx = this.resolveRangeX( data );

@@ -153,25 +153,27 @@
             };
             
             /* start generate random data */
-            var data = [];
-            var size = 20;
-            
-            for ( var i = 0; i < size; i++) {
-                data.push( {
-                    label : phi.uuid(),
-                    a : 10 + rand( 90 ),
-                    b : 10 + rand( 90 )
-                } );
+            var generateData = function( size ) {
+                var data = [];
+                for ( var i = 0; i < size; i++) {
+                    data.push( {
+                        label : phi.uuid(),
+                        a : 1 + rand( 99 ),
+                        b : 10 * i
+                    } );
+                }
+                
+                return data;
             }
-            /* end generate random data */
             
-            // var data = [ { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 }, { a : 2 } ];
+            var data = generateData( 20 );
+            /* end generate random data */
             
             
             
             /* start pie graph */
             var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
-            pie.set( data );
+            pie.set( generateData( 5 ) );
             
             // pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
             // pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
@@ -182,7 +184,7 @@
             
             /* start bar graph */
             var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
-            bar.set( data );
+            bar.set( generateData( 10 ) );
             
             // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
             // bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
@@ -192,8 +194,8 @@
             
             
             /* start line graph */
-            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { x : { name : 'a' }, y : { name : 'b' } } );
-            line.set( data );
+            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { x : { name : 'b' }, y : { name : 'a' } } );
+            line.set( generateData( 50 ) );
             
             // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
             // line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );

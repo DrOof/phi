@@ -138,9 +138,7 @@
         },
         
         add: function( data ) {
-            
-            this.set( this.__data__.join( data ) );
-            
+            this.set( this.__data__.concat( data ) );
         },
         
         set: function( data ) {
@@ -148,6 +146,22 @@
             this.__data__ = data;
             this.render( data );
             this.dispatchEvent( { type : 'dataupdate' } );
+            
+        },
+        
+        clear: function() {
+            
+            /**
+             *
+             * Empty the canvas
+             *
+             */
+            
+            var element = this.__canvas__.element;
+            
+            while ( element.lastChild ) {
+                element.removeChild( element.lastChild );
+            }
             
         },
         
