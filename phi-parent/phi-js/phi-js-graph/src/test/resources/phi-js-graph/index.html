@@ -174,8 +174,8 @@
             
             
             /* start pie graph */
-            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { 'axis-x-name' : 'a', 'point-color' : 'ff0000', 'point-color-shift' : 16 } );
-            pie.set( generateData( 20 ) );
+            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { 'axis-x-name' : 'a', 'point-color' : 'ff0000', 'point-color-shift' : 32 } );
+            pie.set( generateData( 10 ) );
             
             // pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
             // pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
@@ -183,7 +183,7 @@
             /* end pie graph */
             
             /* start bar graph */
-            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a', 'point-color' : 'dd0000', 'point-color-shift' : 16 } );
+            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a', 'point-color' : '109900', 'point-color-shift' : 10 } );
             bar.set( generateData( 20 ) );
             
             // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );

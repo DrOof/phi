@@ -80,8 +80,8 @@
             
             var cx = box.cx, cy = box.cy;
             
-            var x1 = ( cos( a1 ) * ( R - 100 ) ) + cx,
-                y1 = ( sin( a1 ) * ( R - 100 ) ) + cy;
+            var x1 = ( cos( a1 ) * ( R - 120 ) ) + cx,
+                y1 = ( sin( a1 ) * ( R - 120 ) ) + cy;
             
             var x2 = ( cos( a1 ) * R ) + cx, 
                 y2 = ( sin( a1 ) * R ) + cy;
@@ -89,8 +89,8 @@
             var x3 = ( cos( a ) * R ) + cx,
                 y3 = ( sin( a ) * R ) + cy;
             
-            var x4 = ( cos( a ) * ( R - 100 ) ) + cx, 
-                y4 = ( sin( a ) * ( R - 100 ) ) + cy;
+            var x4 = ( cos( a ) * ( R - 120 ) ) + cx, 
+                y4 = ( sin( a ) * ( R - 120 ) ) + cy;
             
             this.renderPointShape( point, R, n, large, x1, y1, x2, y2, x3, y3, x4, y4, c );
             
@@ -103,7 +103,7 @@
             this.processSVGShapeElement( shape );
             
             shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point, fill : c } );
-            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, x4 : x4, y4 : y4, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
+            shape.attr( { 'd' : this.__path__.parse( { R : R, R1: R - 120, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, x4 : x4, y4 : y4, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
             
             this.__canvas__.appendChild( shape );
             
@@ -111,6 +111,7 @@
         
     });
     
-    PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} L{{x4}},{{y4}} Z';
+    // PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} L{{x4}},{{y4}} Z';
+    PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} L{{x4}},{{y4}} A{{R1}},{{R1}} 0 {{large-arc-flag}},0 {{x1}},{{y1}} Z';
                     
 } )( phi.dom );
