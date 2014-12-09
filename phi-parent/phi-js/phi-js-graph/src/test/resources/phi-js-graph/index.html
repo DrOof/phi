@@ -171,8 +171,9 @@
             
             
             
+            
             /* start pie graph */
-            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { x : { name : 'a' } } );
+            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { 'axis-x-name' : 'a' } );
             pie.set( generateData( 5 ) );
             
             // pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
@@ -183,7 +184,7 @@
             
             
             /* start bar graph */
-            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { x : { name : 'a' } } );
+            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a' } );
             bar.set( generateData( 10 ) );
             
             // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
@@ -193,8 +194,9 @@
             
             
             
+            
             /* start line graph */
-            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { x : { name : 'b' }, y : { name : 'a' } } );
+            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b' } );
             line.set( generateData( 50 ) );
             
             // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );

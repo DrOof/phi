@@ -41,7 +41,7 @@
         
         render: function( data ) {
             
-            var values = this.resolveValuesByName( this.__options__.x.name );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             var rx = this.resolveRangeX();
             var d = this.resolveCanvasDimensions();
             

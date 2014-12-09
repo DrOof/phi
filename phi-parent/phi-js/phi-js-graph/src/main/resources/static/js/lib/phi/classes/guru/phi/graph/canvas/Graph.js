@@ -37,7 +37,9 @@
         
         /**
          *
-         * 
+         * @constructor
+         * @param node
+         * @paran options 
          *
          */
         
@@ -47,7 +49,7 @@
             this.__options__    = options;
             
             this.__canvas__     = this.createCanvas( node );
-            this.__label__     = this.createLabel( node );
+            this.__label__      = this.createLabel( node );
             this.__data__       = [];
             
         },
@@ -77,38 +79,38 @@
         
         resolveSigmaX: function() {
             
-            var values = this.resolveValuesByName( this.__options__.x.name );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             return this.__sigma__( values );
             
         },
         
         resolveSigmaY: function() {
             
-            var values = this.resolveValuesByName( this.__options__.y.name );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
             return this.__sigma__( values );
             
         },
         
         resolveRangeX: function() {
             
-            var values = this.resolveValuesByName( this.__options__.x.name );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             return this.__range__( values );
             
         },
         
         resolveRangeY: function() {
             
-            var values = this.resolveValuesByName( this.__options__.y.name );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
             return this.__range__( values );
             
         },
         
         resolveValueX: function( point ) {
-            return point[ this.__options__.x.name ];
+            return point[ this.__options__[ 'axis-x-name' ] ];
         },
         
         resolveValueY: function( point ) {
-            return point[ this.__options__.y.name ];
+            return point[ this.__options__[ 'axis-y-name' ] ];
         },
         
         resolveValuesByName : function( name ) {
@@ -128,7 +130,7 @@
             }
         },
         
-        resolveSortOrder: function( data, name ) {
+        resolveSortOrderByName: function( data, name ) {
             return this.__data__.sort( function( a, b ) { return a[name] - b[name]; } );
         },
         
@@ -137,9 +139,21 @@
             
         },
         
+        /**
+         *
+         * Add data
+         *
+         */
+        
         add: function( data ) {
             this.set( this.__data__.concat( data ) );
         },
+        
+        /**
+         *
+         * Set data
+         *
+         */
         
         set: function( data ) {
             
@@ -148,14 +162,14 @@
             this.dispatchEvent( { type : 'dataupdate' } );
             
         },
+            
+        /**
+         *
+         * Empty the canvas
+         *
+         */
         
         clear: function() {
-            
-            /**
-             *
-             * Empty the canvas
-             *
-             */
             
             var element = this.__canvas__.element;
             
@@ -175,17 +189,17 @@
             
         },
         
-        label: function( target ) {
-            
-            console.log( target );
-            
-        },
-        
         sort: function( data ) {
             
             return this.__data__.sort( function( a, b ) {  } );
             
         },
+        
+        /**
+         *
+         * Range
+         *
+         */
         
         __range__: function( values ) {
             
@@ -274,10 +288,8 @@
         
     });
     
-    Graph.DIALOG =  '<div class="graph-dialog">' +
+    Graph.LABEL =   '<div class="graph-point-label">' +
                         '<h4>{{label}}</h4>' +
                     '</div>';
-    
-    
     
 } )( phi.dom );

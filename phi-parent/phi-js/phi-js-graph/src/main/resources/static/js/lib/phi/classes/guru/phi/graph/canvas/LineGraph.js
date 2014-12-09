@@ -45,7 +45,7 @@
             
             this.clear();
             
-            data = this.resolveSortOrder( data, this.__options__.x.name );
+            data = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
             
             var rx = this.resolveRangeX( data );
             var ry = this.resolveRangeY( data );

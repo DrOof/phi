@@ -57,7 +57,7 @@
                 S = this.resolveSigmaX( data ), 
                 R = min( box.width, box.height ) / 2;
                 
-            var point, v;
+            var point, v, large;
             for ( var n = 0; n < data.length; n++ ) {
                 
                 point = data[n];
@@ -65,7 +65,9 @@
                 
                 a += ( ( v / S ) * A );
                 
-                this.renderPoint( point, box, R, n, a, a0 );
+                large = ( v / S * 360 ) > 180;
+                
+                this.renderPoint( point, box, R, n, large, a, a0 );
                 
                 a0 = a;
                 
@@ -73,7 +75,7 @@
             
         },
         
-        renderPoint: function( point, box, R, n, a, a0 ) {
+        renderPoint: function( point, box, R, n, large, a, a0 ) {
             
             var x1 = box.cx, 
                 y1 = box.cy;
@@ -84,18 +86,18 @@
             var x3 = ( cos( a ) * R ) + x1, 
                 y3 = ( sin( a ) * R ) + y1;
             
-            this.renderPointShape( point, R, n, x1, y1, x2, y2, x3, y3 );
+            this.renderPointShape( point, R, n, large, x1, y1, x2, y2, x3, y3 );
             
         },
         
-        renderPointShape: function( point, R, n, x1, y1, x2, y2, x3, y3 ) {
+        renderPointShape: function( point, R, n, large, x1, y1, x2, y2, x3, y3 ) {
             
             var shape = new phi.dom.svg.SVGShapeElement( 'path' );
             
             this.processSVGShapeElement( shape );
             
             shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point } );
-            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3  } ) } );
+            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
             
             this.__canvas__.appendChild( shape );
             
@@ -103,11 +105,6 @@
         
     });
     
-    PieGraph.PATH = 'M{{x1}},{{y1}}' + // move to center
-                    'L{{x2}},{{y2}}' + // line to value
-                    'A{{R}},{{R}} 0 0,1 {{x3}},{{y3}}' + // arc to next value // A rx ry x-axis-rotation large-arc-flag sweep-flag x y3
-                    'Z'; // close
-                    
-                    // a150,150 0 0,0 -37,-97
+    PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} Z';
                     
 } )( phi.dom );
