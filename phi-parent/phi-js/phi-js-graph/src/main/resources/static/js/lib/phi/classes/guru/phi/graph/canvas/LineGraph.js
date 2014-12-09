@@ -46,6 +46,7 @@
             this.clear();
             
             data = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
+            var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
             var rx = this.resolveRangeX( data );
             var ry = this.resolveRangeY( data );
@@ -61,7 +62,7 @@
                 
                 p0 = this.resolvePosition( point, rx, ry, d );
                 
-                this.renderPointCircle( point, p0.x, p0.y, n );
+                this.renderPointCircle( point, p0.x, p0.y, n, colors[n] );
                 if ( p0 && p1 ) {
                     this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y );
                 }
@@ -85,12 +86,12 @@
             
         },
         
-        renderPointCircle: function( point, x, y, n ) {
+        renderPointCircle: function( point, x, y, n, c ) {
             
             var circle = new phi.dom.svg.SVGShapeElement( 'circle' );
             this.processSVGShapeElement( circle );
             
-            circle.attr( { cx : x, cy : y, r : 5 } );
+            circle.attr( { cx : x, cy : y, r : 5, fill : c } );
             circle.attr( { class : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( circle );

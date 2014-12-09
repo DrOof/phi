@@ -42,16 +42,17 @@
         render: function( data ) {
             
             var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
+            var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             var rx = this.resolveRangeX();
             var d = this.resolveCanvasDimensions();
             
             for ( var n = 0; n < data.length; n++ ) {
-                this.renderPoint( data[n], rx, values, d, n );
+                this.renderPoint( data[n], rx, values, d, n, colors[n] );
             }
             
         },
         
-        renderPoint: function( point, rx, values, d, n ) {
+        renderPoint: function( point, rx, values, d, n, c ) {
             
             var s = ( d.width / values.length ); 
             
@@ -61,16 +62,16 @@
             var x = ( s * n )+ ( s / 2 );
             var y = d.height - h;
             
-            this.renderPointRect( point, x, y, w, h, n );
+            this.renderPointRect( point, x, y, w, h, n, c );
             
         },
         
-        renderPointRect: function( point, x, y, w, h, n ) {
+        renderPointRect: function( point, x, y, w, h, n, c ) {
             
             var rect = new phi.dom.svg.SVGShapeElement( 'rect' );
             this.processSVGShapeElement( rect );
             
-            rect.attr( { x : x - ( w / 2 ), y : y, width : w, height : h } );
+            rect.attr( { x : x - ( w / 2 ), y : y, width : w, height : h, fill : c } );
             rect.attr( { class : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( rect );

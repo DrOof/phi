@@ -134,8 +134,17 @@
             return this.__data__.sort( function( a, b ) { return a[name] - b[name]; } );
         },
         
-        // FIXME : implement color range and remove from CSS
         resolveColorRange: function( color, shift ) {
+            
+            // inspect rgb from css.
+            var c = parseInt( color, 16 );
+            var colors = [];
+            for ( var i = this.__data__.length - 1; i >= 0; i-- ) {
+                colors.push( '#' + c.toString( 16 ) );
+                c = parseInt( c + shift );
+            }
+            
+            return colors;
             
         },
         

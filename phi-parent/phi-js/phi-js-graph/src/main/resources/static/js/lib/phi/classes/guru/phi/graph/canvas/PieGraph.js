@@ -49,10 +49,11 @@
         
         render: function( data ) {
             
+            var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             var box = this.resolveCanvasDimensions();
             
             // TODO : calculate the sum and shift from there... doh...
-            var a = 0, a0 = 0, 
+            var a = 0, a1 = 0, 
                 A = PI * 2;
                 S = this.resolveSigmaX( data ), 
                 R = min( box.width, box.height ) / 2;
@@ -67,37 +68,42 @@
                 
                 large = ( v / S * 360 ) > 180;
                 
-                this.renderPoint( point, box, R, n, large, a, a0 );
+                this.renderPoint( point, box, R, n, large, a, a1, colors[n] );
                 
-                a0 = a;
+                a1 = a;
                 
             }
             
         },
         
-        renderPoint: function( point, box, R, n, large, a, a0 ) {
+        renderPoint: function( point, box, R, n, large, a, a1, c ) {
             
-            var x1 = box.cx, 
-                y1 = box.cy;
+            var cx = box.cx, cy = box.cy;
             
-            var x2 = ( cos( a0 ) * R ) + x1, 
-                y2 = ( sin( a0 ) * R ) + y1;
+            var x1 = ( cos( a1 ) * ( R - 100 ) ) + cx,
+                y1 = ( sin( a1 ) * ( R - 100 ) ) + cy;
             
-            var x3 = ( cos( a ) * R ) + x1, 
-                y3 = ( sin( a ) * R ) + y1;
+            var x2 = ( cos( a1 ) * R ) + cx, 
+                y2 = ( sin( a1 ) * R ) + cy;
             
-            this.renderPointShape( point, R, n, large, x1, y1, x2, y2, x3, y3 );
+            var x3 = ( cos( a ) * R ) + cx,
+                y3 = ( sin( a ) * R ) + cy;
+            
+            var x4 = ( cos( a ) * ( R - 100 ) ) + cx, 
+                y4 = ( sin( a ) * ( R - 100 ) ) + cy;
+            
+            this.renderPointShape( point, R, n, large, x1, y1, x2, y2, x3, y3, x4, y4, c );
             
         },
         
-        renderPointShape: function( point, R, n, large, x1, y1, x2, y2, x3, y3 ) {
+        renderPointShape: function( point, R, n, large, x1, y1, x2, y2, x3, y3, x4, y4, c ) {
             
             var shape = new phi.dom.svg.SVGShapeElement( 'path' );
             
             this.processSVGShapeElement( shape );
             
-            shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point } );
-            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
+            shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point, fill : c } );
+            shape.attr( { 'd' : this.__path__.parse( { R : R, x1 : x1, y1 : y1, x2 : x2, y2 : y2, x3 : x3, y3 : y3, x4 : x4, y4 : y4, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
             
             this.__canvas__.appendChild( shape );
             
@@ -105,6 +111,6 @@
         
     });
     
-    PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} Z';
+    PieGraph.PATH = 'M{{x1}},{{y1}} L{{x2}},{{y2}} A{{R}},{{R}} 0 {{large-arc-flag}},{{sweep-flag}} {{x3}},{{y3}} L{{x4}},{{y4}} Z';
                     
 } )( phi.dom );

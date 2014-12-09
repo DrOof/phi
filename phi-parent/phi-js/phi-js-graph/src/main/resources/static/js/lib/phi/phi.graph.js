@@ -38,7 +38,7 @@
         },
         
         createGraph: function( className, node, options ) {
-            return new phi.graph[className]( node, options );
+            return new phi.graph[ className ]( node, options );
         }
         
     });
