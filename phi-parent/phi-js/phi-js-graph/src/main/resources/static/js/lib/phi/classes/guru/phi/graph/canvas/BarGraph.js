@@ -43,23 +43,24 @@
             
             var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
-            var rx = this.resolveRangeX();
+            var range = this.resolveRangeX();
             var d = this.resolveCanvasDimensions();
             
             for ( var n = 0; n < data.length; n++ ) {
-                this.renderPoint( data[n], rx, values, d, n, colors[n] );
+                this.renderPoint( data[n], range, values, d, n, colors[n] );
             }
             
         },
         
-        renderPoint: function( point, rx, values, d, n, c ) {
+        renderPoint: function( point, range, values, d, n, c ) {
             
+            // step
             var s = ( d.width / values.length ); 
             
             var v = this.resolveValueX( point );
-            var w = 30;
-            var h = ( d.height / rx.max ) * v;
-            var x = ( s * n )+ ( s / 2 );
+            var w = 30; // FIXME : add as an option
+            var h = ( d.height / range.max ) * v;
+            var x = ( s * n ) + ( s / 2 );
             var y = d.height - h;
             
             this.renderPointRect( point, x, y, w, h, n, c );

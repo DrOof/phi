@@ -198,6 +198,14 @@
             
         },
         
+        renderX: function( data ) {
+            
+        },
+        
+        renderY: function( data ) {
+            
+        },
+        
         sort: function( data ) {
             
             return this.__data__.sort( function( a, b ) {  } );
@@ -288,17 +296,11 @@
          */
         
         handleMouseUp: function( e ) {
-            
-            // TODO : show label
-            this.label( e.target );
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
-            
         }
         
     });
     
-    Graph.LABEL =   '<div class="graph-point-label">' +
-                        '<h4>{{label}}</h4>' +
-                    '</div>';
+    
     
 } )( phi.dom );

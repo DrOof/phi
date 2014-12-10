@@ -64,7 +64,7 @@
                 
                 this.renderPointCircle( point, p0.x, p0.y, n, colors[n] );
                 if ( p0 && p1 ) {
-                    this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y );
+                    this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y, colors[n] );
                 }
                 
                 // shift p0 to p1
@@ -86,21 +86,23 @@
             
         },
         
-        renderPointCircle: function( point, x, y, n, c ) {
+        renderPointCircle: function( point, x, y, n, color ) {
             
             var circle = new phi.dom.svg.SVGShapeElement( 'circle' );
             this.processSVGShapeElement( circle );
             
-            circle.attr( { cx : x, cy : y, r : 5, fill : c } );
+            circle.attr( { cx : x, cy : y, r : 5, fill : color } );
             circle.attr( { class : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( circle );
             
         },
         
-        renderPointToPointLine: function( x1, y1, x2, y2 ) {
+        renderPointToPointLine: function( x1, y1, x2, y2, color ) {
             
-            var line = new phi.dom.svg.SVGShapeElement( 'line', { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : '#09f' } );
+            var line = new phi.dom.svg.SVGShapeElement( 'line' )
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : color } );
+            
             this.__canvas__.appendChild( line );
             
         }

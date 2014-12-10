@@ -3,137 +3,133 @@
     <head>
         
         <link rel="stylesheet" href="/phi-js/static/css/grid.css" media="screen" />
-        
-        <style>
-        
-        html, body {
-            font-size: 18px;
-            font-family: sans-serif;
-            line-height: 1.5em;
-        }
-        
-        .graph-content {
-            margin: 10px;
-        }
-        
-        .graph {
-            
-            height: 400px;
-            background: #f0f0f0;
-            
-            position: relative;
-            
-        }
-        
-        .graph-dialog  {
-            
-            padding: 10px;
-            margin: -10px 0 0;
-            
-            border: 1px solid #f0f0f0;
-            background: #ffffff;
-            
-            position: absolute;
-            left: 0;
-            top: 0;
-            
-        }
-        
-        .graph-point {
-            
-            cursor: pointer;
-            
-            stroke: #fff;
-            /* fill: #09f; */
-            
-            position: relative;
-            z-index: 100;
-            
-        }
-        
-        /* FIXME : implement color range and remove from CSS 
-        .graph-point-0  { fill: #09f; }
-        .graph-point-1  { fill: #09e; }
-        .graph-point-2  { fill: #09d; }
-        .graph-point-3  { fill: #09c; }
-        .graph-point-4  { fill: #09b; }
-        .graph-point-5  { fill: #09a; }
-        .graph-point-6  { fill: #089; }
-        .graph-point-7  { fill: #088; }
-        .graph-point-8  { fill: #087; }
-        .graph-point-9  { fill: #086; }
-        .graph-point-10 { fill: #085; }
-        .graph-point-11 { fill: #084; }
-        .graph-point-12 { fill: #083; }
-        .graph-point-13 { fill: #082; }
-        .graph-point-14 { fill: #081; }
-        .graph-point-15 { fill: #080; }
-        .graph-point-16 { fill: #08f; }
-        .graph-point-17 { fill: #08e; }
-        .graph-point-18 { fill: #08d; }
-        .graph-point-19 { fill: #08c; }
-        /* implement */
-        
-        .graph-point:hover {
-            fill: #fff;
-        }
-        
-        </style>
+        <link rel="stylesheet" href="/phi-js/static/css/form.css" media="screen" />
+        <link rel="stylesheet" href="static/css/graph.css" media="screen" />
         
     </head>
     <body>
-        
         <div class="grid">
-            <header class="graph-content">
-                <h1>Graphs</h1>
-                <p>
-                    This graph was render in <time id="graph-render-time"></time> milliseconds.
-                </p>
-            </header>
-            <div class="column">
-                <div class="column phi a">
-                    <section class="graph-content">
-                        <h2>Pie Graph</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </section>
-                </div>
-                <div class="column phi b">
-                    <section class="graph-content">
-                        <div id="pie-graph" class="graph"></div>
-                    </section>
-                </div>
+            <div class="column phi a">
+                <section class="graph-content">
+                    <div id="pie-graph" class="graph pie-graph"></div>
+                    <form action="#pie-graph" method="get" class="graph-options">
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-x-name</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-name" value="a" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color" value="#ff0000" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color-shift</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color-shift" value="16" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <ul class="field-action-list">
+                                <li>
+                                    <button class="button" type="submit">Apply</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="column phi b">
+                <section class="graph-content">
+                    <div id="bar-graph" class="graph bad-graph"></div>
+                    <form action="#bar-graph" method="get" class="graph-options">
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-x-name</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-name" value="a" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color" value="#ff0000" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color-shift</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color-shift" value="16" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <ul class="field-action-list">
+                                <li>
+                                    <button class="button" type="submit">Apply</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </section>
             </div>
             <div class="column">
-                <div class="column phi b">
-                    <section class="graph-content">
-                        <div id="bar-graph" class="graph"></div>
-                    </section>
-                </div>
-                <div class="column phi a">
-                    <section class="graph-content">
-                        <h2>Bar Graph</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </section>
-                </div>
-            </div>
-            <div class="column">
-                <div class="column phi a">
-                    <section class="graph-content">
-                        <h2>Line Graph</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </section>
-                </div>
-                <div class="column phi b">
-                    <section class="demo">
-                        <div id="line-graph" class="graph"></div>
-                    </section>
-                </div>
+                <section class="graph-content">
+                    <div id="line-graph" class="graph line-graph"></div>
+                    <form action="#line-graph" method="get" class="graph-options">
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-x-name</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-name" value="a" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-name</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-name" value="a" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color" value="#ff0000" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-color-shift</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-color-shift" value="16" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <ul class="field-action-list">
+                                <li>
+                                    <button class="button" type="submit">Apply</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
         
@@ -146,63 +142,9 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/PieGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/BarGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/LineGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/Label.js"></script>
         
-        <script type="application/javascript">
-            
-            var rand = function( x ) {
-                return Math.round( Math.random() * x );
-            };
-            
-            /* start generate random data */
-            var generateData = function( size ) {
-                var data = [];
-                for ( var i = 0; i < size; i++) {
-                    data.push( {
-                        label : phi.uuid(),
-                        a : 1 + rand( 99 ),
-                        b : 10 * i
-                    } );
-                }
-                
-                return data;
-            }
-            
-            var data = generateData( 20 );
-            /* end generate random data */
-            
-            
-            
-            
-            /* start pie graph */
-            var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'pie-graph' ), { 'axis-x-name' : 'a', 'point-color' : 'ff0000', 'point-color-shift' : 32 } );
-            pie.set( generateData( 10 ) );
-            
-            // pie.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
-            // pie.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
-            // pie.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
-            /* end pie graph */
-            
-            /* start bar graph */
-            var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a', 'point-color' : '109900', 'point-color-shift' : 10 } );
-            bar.set( generateData( 20 ) );
-            
-            // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
-            // bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
-            // bar.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
-            /* end bar graph */
-            
-            /* start line graph */
-            var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 4 } );
-            line.set( generateData( 50 ) );
-            
-            // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
-            // line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
-            // line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
-            /* end line graph */
-            
-            
-            
-        </script>
+        <script type="application/javascript" src="static/js/graph.js"></script>
         
     </body>
 </html>
