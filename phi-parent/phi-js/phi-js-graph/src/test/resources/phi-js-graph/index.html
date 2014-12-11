@@ -38,6 +38,14 @@
                             </div>
                         </div>
                         <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">point-radius-inside</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="point-radius-inside" value="16" />
+                            </div>
+                        </div>
+                        <div class="field">
                             <ul class="field-action-list">
                                 <li>
                                     <button class="button" type="submit">Apply</button>
@@ -76,49 +84,11 @@
                             </div>
                         </div>
                         <div class="field">
-                            <ul class="field-action-list">
-                                <li>
-                                    <button class="button" type="submit">Apply</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                </section>
-            </div>
-            <div class="column">
-                <section class="graph-content">
-                    <div id="line-graph" class="graph line-graph"></div>
-                    <form action="#line-graph" method="get" class="graph-options">
-                        <div class="field">
                             <div class="column phi a">
-                                <label class="field-label">axis-x-name</label>
+                                <label class="field-label">point-width</label>
                             </div>
                             <div class="column phi b">
-                                <input class="field-text" type="text" name="axis-x-name" value="a" />
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="column phi a">
-                                <label class="field-label">axis-y-name</label>
-                            </div>
-                            <div class="column phi b">
-                                <input class="field-text" type="text" name="axis-y-name" value="a" />
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="column phi a">
-                                <label class="field-label">point-color</label>
-                            </div>
-                            <div class="column phi b">
-                                <input class="field-text" type="text" name="point-color" value="#ff0000" />
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="column phi a">
-                                <label class="field-label">point-color-shift</label>
-                            </div>
-                            <div class="column phi b">
-                                <input class="field-text" type="text" name="point-color-shift" value="16" />
+                                <input class="field-text" type="text" name="point-width" value="20" />
                             </div>
                         </div>
                         <div class="field">
@@ -130,6 +100,100 @@
                         </div>
                     </form>
                 </section>
+            </div>
+            <div class="column">
+                <div class="column two a">
+                    <section class="graph-content">
+                        <div id="line-graph" class="graph line-graph"></div>
+                        <form action="#line-graph" method="get" class="graph-options">
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">axis-x-name</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="axis-x-name" value="a" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">axis-y-name</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="axis-y-name" value="a" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">point-color</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="point-color" value="#ff0000" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">point-color-shift</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="point-color-shift" value="16" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <ul class="field-action-list">
+                                    <li>
+                                        <button class="button" type="submit">Apply</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div class="column two a">
+                    <section class="graph-content">
+                        <div id="scatter-graph" class="graph scatter-graph"></div>
+                        <form action="#scatter-graph" method="get" class="graph-options">
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">axis-x-name</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="axis-x-name" value="a" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">axis-y-name</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="axis-y-name" value="a" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">point-color</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="point-color" value="#ff0000" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="column phi a">
+                                    <label class="field-label">point-color-shift</label>
+                                </div>
+                                <div class="column phi b">
+                                    <input class="field-text" type="text" name="point-color-shift" value="16" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <ul class="field-action-list">
+                                    <li>
+                                        <button class="button" type="submit">Apply</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </section>
+                </div>
             </div>
         </div>
         
@@ -142,6 +206,7 @@
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/PieGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/BarGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/LineGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/canvas/ScatterGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/Label.js"></script>
         
         <script type="application/javascript" src="static/js/graph.js"></script>
