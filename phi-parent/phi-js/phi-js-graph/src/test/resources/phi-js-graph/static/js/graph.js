@@ -45,10 +45,10 @@ bar.set( generateData( 20 ) );
 var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : '109900', 'point-color-shift' : 16 } );
 line.set( generateData( 20 ) );
 
-var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : '109900', 'point-color-shift' : 16 } );
-scatter.set( generateData( 50 ) );
-
 // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
 // line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
 // line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
 /* end line graph */
+
+var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 0 } );
+scatter.set( generateData( 50 ) );
