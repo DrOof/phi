@@ -29,7 +29,7 @@ var generateScatterData = function( size ) {
     for ( var i = 0; i < size; i++) {
         data.push( {
             label : phi.uuid(),
-            a : - exp( ( i ) + rand( 20 ), 0, 1, 0 ),
+            a : - exp( ( i ) + rand( 50 ), 5, 0, 0 ),
             b : i
         } );
     }
