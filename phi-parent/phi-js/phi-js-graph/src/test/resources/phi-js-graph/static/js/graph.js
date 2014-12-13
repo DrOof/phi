@@ -3,6 +3,10 @@ var rand = function( x ) {
     return Math.round( Math.random() * x );
 };
 
+var Fx = function( x, a, b, c ) {
+    return ( a * ( x * x ) ) + ( b * x ) + c;
+}
+
 /* start generate random data */
 var generateData = function( size ) {
     var data = [];
@@ -17,8 +21,19 @@ var generateData = function( size ) {
     return data;
 }
 
-var data = generateData( 20 );
-/* end generate random data */
+var generateScatterData = function( size ) {
+    var data = [];
+    for ( var i = 0; i < size; i++) {
+        data.push( {
+            label : phi.uuid(),
+            a : - Fx( ( i ) + rand( 20 ), 0, 1, 0 ),
+            b : i
+        } );
+    }
+    
+    return data;
+}
+
 
 
 
@@ -51,4 +66,4 @@ line.set( generateData( 20 ) );
 /* end line graph */
 
 var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 0 } );
-scatter.set( generateData( 50 ) );
+scatter.set( generateScatterData( 100 ) );
