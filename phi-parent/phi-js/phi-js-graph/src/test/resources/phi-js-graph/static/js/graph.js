@@ -3,10 +3,6 @@ var rand = function( x ) {
     return Math.round( Math.random() * x );
 };
 
-var Fx = function( x, a, b, c ) {
-    return ( a * ( x * x ) ) + ( b * x ) + c;
-}
-
 /* start generate random data */
 var generateData = function( size ) {
     var data = [];
@@ -21,12 +17,19 @@ var generateData = function( size ) {
     return data;
 }
 
+
+
+
+
+var exp = phi.graph.Graph.EXP_BEST_FIT;
+var lin = phi.graph.Graph.LIN_BEST_FIT;
+
 var generateScatterData = function( size ) {
     var data = [];
     for ( var i = 0; i < size; i++) {
         data.push( {
             label : phi.uuid(),
-            a : - Fx( ( i ) + rand( 20 ), 0, 1, 0 ),
+            a : - exp( ( i ) + rand( 20 ), 0, 1, 0 ),
             b : i
         } );
     }
@@ -65,5 +68,5 @@ line.set( generateData( 20 ) );
 // line.addEventListener( 'pointselect', function( e ) { console.log( e ) } );
 /* end line graph */
 
-var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 0 } );
+var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 0, 'point-best-fit' : 'linear' } );
 scatter.set( generateScatterData( 100 ) );
