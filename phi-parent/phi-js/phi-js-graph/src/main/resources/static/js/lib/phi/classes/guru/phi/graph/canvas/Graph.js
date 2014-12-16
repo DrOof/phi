@@ -301,7 +301,4 @@
         
     });
     
-    Graph.LIN_BEST_FIT = function( x, a, b ) { return ( a * x ) + ( b ) };
-    Graph.EXP_BEST_FIT = function( x, a, b, c ) { return ( a * x * x ) + ( b * x ) + ( c ) };
-    
 } )( phi.dom );

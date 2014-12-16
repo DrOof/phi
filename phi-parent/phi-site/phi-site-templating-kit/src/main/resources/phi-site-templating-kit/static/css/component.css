@@ -135,6 +135,37 @@
 
 
 
+.graph-content {
+    margin: 20px 10px;
+}
+
+.graph {
+    
+    margin: 0 0 20px;
+    height: 400px;
+    background: #f0f0f0;
+    
+    position: relative;
+    
+}
+
+.graph-point {
+    
+    cursor: pointer;
+    
+    stroke: #fff;
+    /* fill: #09f; */
+    
+    position: relative;
+    z-index: 100;
+    
+}
+
+.graph-point:hover {
+    fill: #fff;
+}
+
+
 
 .overview-link {
     margin: 20px;

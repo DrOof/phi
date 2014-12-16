@@ -29,6 +29,11 @@
 
 ( function( dom ) {
     
+    /* simple random number */
+    var rand = function( x ) {
+        return Math.round( Math.random() * x );
+    };
+    
     var graph = phi.graph = phi.graph || {};
     
     var GraphFactory = graph.GraphFactory = phi({
@@ -39,12 +44,40 @@
         
         createGraph: function( className, node, options ) {
             return new phi.graph[ className ]( node, options );
+        },
+        
+        /* start generate random data */
+        generateData : function( size ) {
+            var data = [];
+            for ( var i = 0; i < size; i++) {
+                data.push( {
+                    label : phi.uuid(),
+                    a : 1 + rand( 99 ),
+                    b : 10 * i
+                } );
+            }
+    
+            return data;
+        },
+        
+        generateScatterData : function( size ) {
+            var data = [];
+            for ( var i = 0; i < size; i++) {
+                data.push( {
+                    label : phi.uuid(),
+                    a : - GraphFactory.EXP_BEST_FIT( ( i ) + rand( 50 ), 5, 0, 0 ),
+                    b : i
+                } );
+            }
+    
+            return data;
         }
         
     });
     
+    GraphFactory.LIN_BEST_FIT = function( x, a, b ) { return ( a * x ) + ( b ) };
+    GraphFactory.EXP_BEST_FIT = function( x, a, b, c ) { return ( a * x * x ) + ( b * x ) + ( c ) };
+    
     var factory = graph.factory = new GraphFactory();
-    
-    
     
 } )( phi.dom );
