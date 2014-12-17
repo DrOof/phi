@@ -48,8 +48,8 @@
             data = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
-            var rx = this.resolveRangeX( data );
-            var ry = this.resolveRangeY( data );
+            var rx = this.stretchRangeToFit( this.resolveRangeX( data ) );
+            var ry = this.stretchRangeToFit(  this.resolveRangeY( data ) );
             
             var d = this.resolveCanvasDimensions();
             
@@ -122,20 +122,16 @@
          * 
          */
         
-        renderAxisX: function( d, rx ) {
+        renderAxisX: function( d, range ) {
             
             var p = [ 40, 40, 40, 40 ];
-            
-            var interval = this.resolveAxisFactor( rx );
-            // start at less than...
-            // end at more than max..
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' );
             line.attr( { x1 : p[3], y1: p[0] + h, x2 : p[3] + w, y2 : p[0] + h } );
-            line.attr( { class : 'graph-axis graph-axis-x' } );
+            line.attr( { 'class' : 'graph-axis graph-axis-x' } );
             
             this.__canvas__.appendChild( line );
             
@@ -147,22 +143,32 @@
          * 
          */
         
-        renderAxisY: function( d, ry ) {
+        renderAxisY: function( d, range ) {
             
             var p = [ 40, 40, 40, 40 ];
-            
-            var interval = this.resolveAxisFactor( ry );
-            // start at less than...
-            // end at more than max..
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' );
             line.attr( { x1 : p[3], y1: p[0], x2 : p[3], y2 : h + p[0] } );
-            line.attr( { class : 'graph-axis graph-axis-y' } );
+            line.attr( { 'class' : 'graph-axis graph-axis-y' } );
             
             this.__canvas__.appendChild( line );
+            
+        },
+        
+        stretchRangeToFit : function( range ) {
+            
+            var interval = this.resolveAxisFactor( range.delta );
+            var min = Math.floor( range.min / interval ) * interval, 
+                max = Math.ceil( range.max / interval ) * interval;
+            
+            return {
+                min : min,
+                max : max,
+                delta : max - min
+            }
             
         },
         
@@ -172,34 +178,30 @@
          * 
          */
         
-        resolveAxisFactor : function( range ) {
+        resolveAxisFactor : function( delta, exponent, closest, factor ) {
             
-            var factors = [ 1, 2, 5 ];
-            var exponent = 1;
+            var optimum = 10;
+            var proper = [ 1, 2, 5 ];
             
-            var optimum = 10, closest = Infinity, factor, last, proximity, delta = range.delta;
+            exponent = ( exponent ) ? exponent : 1;
+            closest = ( closest ) ? closest : Infinity;
             
-            // what is the best factor that comes closest to the optimum?
-            while ( true ) {
+            var f, proximity;
+            for ( var i = 0; i < proper.length; i++ ) {
                 
-                for ( var i = 0; i < factors.length; i++ ) {
-                    
-                    factor = factors[ i ] * exponent;
-                    proximity = this.resolveAxisFactorProximity( optimum, delta, factor );
-                    if ( proximity < closest ) {
-                        closest = proximity;
-                        last = factor;
-                    } else {
-                        return last;
-                    }
-                    
+                f = proper[ i ] * exponent;
+                proximity = this.resolveAxisFactorProximity( optimum, delta, f );
+                
+                if ( proximity < closest ) {
+                    closest = proximity;
+                    factor = f;
+                } else {
+                    return factor;
                 }
-                
-                exponent *= 10;
                 
             }
             
-            return undefined;
+            return this.resolveAxisFactor( delta, exponent * 10, closest, factor );
             
         },
         

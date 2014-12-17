@@ -75,7 +75,7 @@
             this.processSVGShapeElement( rect );
             
             rect.attr( { x : x - ( w / 2 ), y : y, width : w, height : h, fill : c } );
-            rect.attr( { class : 'graph-point graph-point-' + n, point : point } );
+            rect.attr( { 'class' : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( rect );
             
