@@ -26,4 +26,4 @@ line.set( phi.graph.factory.generateData( 20 ) );
 /* end line graph */
 
 var scatter = phi.graph.factory.createGraph( 'ScatterGraph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : 'ff0000', 'point-color-shift' : 2, 'point-best-fit' : 'linear' } );
-scatter.set( phi.graph.factory.generateScatterData( 100 ) );
+scatter.set( phi.graph.factory.generateScatterData( 20 ) );

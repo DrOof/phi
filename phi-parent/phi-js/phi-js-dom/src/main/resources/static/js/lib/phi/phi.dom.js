@@ -54,9 +54,17 @@
      */
     
     var svg = dom.svg = {
-        shape: function() {
-            
+        
+        /**
+         *
+         * Shorthand for shape element constructor
+         *
+         */
+        
+        shape: function( element, attribute ) {
+            return new SVGShapeElement( element, attribute );
         }
+        
     };
     
     var SVGNS = 'http://www.w3.org/2000/svg';

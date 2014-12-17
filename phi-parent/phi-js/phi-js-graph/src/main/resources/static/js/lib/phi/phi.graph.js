@@ -66,7 +66,7 @@
                 data.push( {
                     label : phi.uuid(),
                     a : i,
-                    b : - GraphFactory.EXP_BEST_FIT( i , -1, 99, 0 ) + + rand( 1 )
+                    b : - GraphFactory.EXP_BEST_FIT( i , -1, size - 1, 0 )
                 } );
             }
     

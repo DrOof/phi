@@ -46,6 +46,7 @@
             var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             var range = this.resolveRangeX();
+            
             var d = this.resolveCanvasDimensions();
             
             for ( var n = 0; n < data.length; n++ ) {
@@ -57,19 +58,20 @@
         renderPoint: function( point, range, values, d, n, c ) {
             
             // step
-            var s = ( d.width / values.length ); 
+            var p = [ 40, 40, 40, 40 ];
+            var s = ( ( d.width - p[1] - p[3] ) / values.length ); 
             
             var v = this.resolveValueX( point );
             var w = 50; // FIXME : add as an option
-            var h = ( d.height / range.max ) * v;
-            var x = ( s * n ) + ( s / 2 );
-            var y = d.height - h;
+            var h = ( ( d.height - p[0] - p[2] ) / range.max ) * v;
+            var x = ( ( s * n ) + ( s / 2 ) ) + p[1];
+            var y = d.height - h - p[3];
             
-            this.renderPointRect( point, x, y, w, h, n, c );
+            this.renderPointShape( point, x, y, w, h, n, c );
             
         },
         
-        renderPointRect: function( point, x, y, w, h, n, c ) {
+        renderPointShape: function( point, x, y, w, h, n, c ) {
             
             var rect = new phi.dom.svg.SVGShapeElement( 'rect' );
             this.processSVGShapeElement( rect );
