@@ -109,7 +109,7 @@
             
             var p = [ 40, 40, 40, 40 ];
             
-            var interval = this.resolveAxisFactor( rx );
+            var interval = this.resolveAxisInterval( rx );
             // start at less than...
             // end at more than max..
             
@@ -136,7 +136,7 @@
             
             var p = [ 40, 40, 40, 40 ];
             
-            var interval = this.resolveAxisFactor( ry );
+            var interval = this.resolveAxisInterval( ry );
             // start at less than...
             // end at more than max..
             
@@ -157,22 +157,22 @@
          * 
          */
         
-        resolveAxisFactor : function( delta, exponent, closest, factor ) {
+        resolveAxisInterval : function( delta, exponent, closest, factor ) {
             
-            var optimum = 10;
+            var optimal = 10;
             var proper = [ 1, 2, 5 ];
             
-            exponent = ( exponent ) ? exponent : 1;
-            closest = ( closest ) ? closest : Infinity;
+            exponent = exponent || 1;
+            closest  = closest || Infinity;
             
-            var f, proximity;
+            var f, p;
             for ( var i = 0; i < proper.length; i++ ) {
                 
                 f = proper[ i ] * exponent;
-                proximity = this.resolveAxisFactorProximity( optimum, delta, f );
+                p = this.resolveAxisIntervalProximity( optimal, delta / f );
                 
-                if ( proximity < closest ) {
-                    closest = proximity;
+                if ( p < closest ) {
+                    closest = p;
                     factor = f;
                 } else {
                     return factor;
@@ -180,17 +180,17 @@
                 
             }
             
-            return this.resolveAxisFactor( delta, exponent * 10, closest, factor );
+            return this.resolveAxisInterval( delta, exponent * 10, closest, factor );
             
         },
         
-        resolveAxisFactorProximity : function( optimum, delta, factor ) {
-            return Math.abs( optimum - ( delta / factor ) );
+        resolveAxisIntervalProximity : function( optimal, real ) {
+            return Math.abs( optimal - real );
         },
         
         stretchRangeToFit : function( range ) {
             
-            var interval = this.resolveAxisFactor( range.delta );
+            var interval = this.resolveAxisInterval( range.delta );
             var min = Math.floor( range.min / interval ) * interval, 
                 max = Math.ceil( range.max / interval ) * interval;
             
