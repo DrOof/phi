@@ -1,0 +1,39 @@
+.graph {
+    
+    margin: 0 0 20px;
+    height: 400px;
+    background: #f0f0f0;
+    
+    position: relative;
+    
+}
+
+.graph-point {
+    
+    cursor: pointer;
+    
+    stroke: #fff;
+    
+    position: relative;
+    z-index: 100;
+    
+}
+
+.graph-point:hover {
+    fill: #fff;
+}
+
+.graph-axis {
+    stroke: #d0d0d0;
+    stroke-width: 1px;
+}
+
+.graph-axis-interval {
+    stroke: #d0d0d0;
+    stroke-width: 1px;
+}
+
+.graph-axis-interval-text {
+    fill: #a0a0a0;
+    font-size: 10px;
+}
