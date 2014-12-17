@@ -35,6 +35,16 @@ html, body {
 }
 
 .graph-axis {
-    stroke: #fff;
-    stroke-width: 2px;
+    stroke: #d0d0d0;
+    stroke-width: 1px;
+}
+
+.graph-axis-interval {
+    stroke: #d0d0d0;
+    stroke-width: 1px;
+}
+
+.graph-axis-interval-text {
+    color: #d0d0d0;
+    font-size: 10px;
 }

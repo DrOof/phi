@@ -45,23 +45,29 @@
         
         render: function( data ) {
             
-            data = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
+            var sorted = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
-            var rx = this.stretchRangeToFit( this.resolveRangeX( data ) );
-            var ry = this.stretchRangeToFit(  this.resolveRangeY( data ) );
+            var rx = this.resolveRangeX( sorted );
+            var ry = this.resolveRangeY( sorted );
+            
+            var ix = this.resolveAxisInterval( rx.delta );
+            var iy = this.resolveAxisInterval( ry.delta );
+            
+            rx = this.stretchRangeToFit( rx, ix );
+            ry = this.stretchRangeToFit( ry, iy );
             
             var d = this.resolveCanvasDimensions();
             
-            this.renderAxisX( d, rx );
-            this.renderAxisY( d, ry );
+            this.renderAxisX( d, rx, ix );
+            this.renderAxisY( d, ry, iy );
             
             var p0 = null;
             var p1 = null;
             var point = null;
-            for ( var n = 0; n < data.length; n++ ) {
+            for ( var n = 0; n < sorted.length; n++ ) {
                 
-                point = data[n];
+                point = sorted[n];
                 
                 p0 = this.resolvePointPosition( point, rx, ry, d );
                 
@@ -122,7 +128,7 @@
          * 
          */
         
-        renderAxisX: function( d, range ) {
+        renderAxisX: function( d, range, i ) {
             
             var p = [ 40, 40, 40, 40 ];
             
@@ -135,6 +141,40 @@
             
             this.__canvas__.appendChild( line );
             
+            var l = range.delta / i;
+            var s = w / l;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisXInterval( p, w, h, l, s, i, n );
+            }
+            
+        },
+        
+        /**
+         *
+         * FIXME : refactor
+         *
+         */
+        
+        renderAxisXInterval: function( p, w, h, l, s, i, n ) {
+            
+            var x1 = p[3] + ( n * s ),
+                y1 = p[0] + h,
+                x2 = x1,
+                y2 = y1 + 10;
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var text = new phi.dom.svg.SVGShapeElement( 'text' );
+            text.attr( { x : x1, y : y1, innerHTML : ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n } );
+            
+            this.__canvas__.appendChild( text );
+            
         },
         
         /**
@@ -143,7 +183,7 @@
          * 
          */
         
-        renderAxisY: function( d, range ) {
+        renderAxisY: function( d, range, i ) {
             
             var p = [ 40, 40, 40, 40 ];
             
@@ -156,13 +196,47 @@
             
             this.__canvas__.appendChild( line );
             
+            var l = range.delta / i;
+            var s = h / l;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisYInterval( p, w, h, l, s, i, n );
+            }
+            
         },
         
-        stretchRangeToFit : function( range ) {
+        /**
+         *
+         * FIXME : refactor
+         *
+         */
+        
+        renderAxisYInterval: function( p, w, h, l, s, i, n ) {
             
-            var interval = this.resolveAxisInterval( range.delta );
-            var min = Math.floor( range.min / interval ) * interval, 
-                max = Math.ceil( range.max / interval ) * interval;
+            var x1 = p[3],
+                y1 = p[0] + h - ( n * s ),
+                x2 = x1 - 10,
+                y2 = y1;
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var text = new phi.dom.svg.SVGShapeElement( 'text' );
+            text.attr( { x : x1, y : y1, innerHTML : ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n } );
+            
+            this.__canvas__.appendChild( text );
+            
+            
+        },
+        
+        stretchRangeToFit : function( range, i ) {
+            
+            var min = Math.floor( range.min / i ) * i, 
+                max = Math.ceil( range.max / i ) * i;
             
             return {
                 min : min,

@@ -52,8 +52,8 @@
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
-                    a : 1 + rand( 99 ),
-                    b : 10 * i
+                    a : 10 * i,
+                    b : 1 + rand( 5 ),
                 } );
             }
     

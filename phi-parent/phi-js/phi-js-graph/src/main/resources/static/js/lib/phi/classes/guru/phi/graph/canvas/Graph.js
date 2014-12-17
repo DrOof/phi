@@ -64,6 +64,12 @@
             
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         createCanvas: function( node ) {
             
             var w = node.offsetWidth;
@@ -79,13 +85,24 @@
             
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         createLabel: function( node ) {
             
-            var dialog = new phi.dom.Template( Graph.DIALOG );
-            
-            return dialog;
+            var label = new phi.dom.Template( Graph.LABEL );
+            return label;
             
         },
+        
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
         
         resolveSigmaX: function() {
             
@@ -94,12 +111,24 @@
             
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         resolveSigmaY: function() {
             
             var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
             return this.__sigma__( values );
             
         },
+        
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
         
         resolveRangeX: function() {
             
@@ -108,6 +137,12 @@
             
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         resolveRangeY: function() {
             
             var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
@@ -115,17 +150,41 @@
             
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         resolveValueX: function( point ) {
             return point[ this.__options__[ 'axis-x-name' ] ];
         },
+        
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
         
         resolveValueY: function( point ) {
             return point[ this.__options__[ 'axis-y-name' ] ];
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         resolveValuesByName : function( name ) {
             return this.__data__.map( function( a ) { return a[ name ] } );
         },
+        
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
         
         resolveCanvasDimensions: function() {
             
@@ -140,9 +199,21 @@
             }
         },
         
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
+        
         resolveSortOrderByName: function( data, name ) {
-            return this.__data__.sort( function( a, b ) { return a[name] - b[name]; } );
+            return data.sort( function( a, b ) { return a[name] - b[name]; } );
         },
+        
+        /**
+         *
+         * TODO : write JavaDoc
+         *
+         */
         
         resolveColorRange: function( color, shift ) {
             
