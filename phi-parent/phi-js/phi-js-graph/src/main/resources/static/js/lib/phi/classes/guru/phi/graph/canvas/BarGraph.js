@@ -37,7 +37,9 @@
         
         __applies__ : phi.graph.Renderable,
         
-        __init__ : function( node ) {
+        __init__ : function( node, options ) {
+            
+            this.__options__ = phi.extend( BarGraph.DEFAULTS, options );
             
         },
         
@@ -62,7 +64,7 @@
             var s = ( ( d.width - p[1] - p[3] ) / values.length ); 
             
             var v = this.resolveValueX( point );
-            var w = 50; // FIXME : add as an option
+            var w = this.__options__[ 'point-width' ]; // FIXME : add as an option
             var h = ( ( d.height - p[0] - p[2] ) / range.max ) * v;
             var x = ( ( s * n ) + ( s / 2 ) ) + p[1];
             var y = d.height - h - p[3];
@@ -84,5 +86,13 @@
         }
         
     });
+    
+    BarGraph.DEFAULTS = {
+        'axis-x-name'       : undefined,
+        'axis-x-interval'   : 10,
+        'point-color'       : '#ff0099',
+        'point-color-shift' : 0,
+        'point-width'       : 50
+    };
     
 } )( phi.dom );

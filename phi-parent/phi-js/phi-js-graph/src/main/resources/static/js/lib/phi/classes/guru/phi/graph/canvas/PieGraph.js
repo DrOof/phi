@@ -45,6 +45,7 @@
         
         __init__ : function( node, options ) {
             
+            this.__options__ = phi.extend( PieGraph.DEFAULTS, options );
             this.__path__ = new phi.dom.Template( PieGraph.PATH );
             
         },
@@ -123,6 +124,13 @@
         }
         
     });
+    
+    PieGraph.DEFAULTS = {
+        'axis-x-name'           : undefined,
+        'point-color'           : '#ff0099',
+        'point-color-shift'     : 0,
+        'point-radius-inside'   : 0
+    };
     
     PieGraph.PATH = 'M{{p1.x}},{{p1.y}} L{{p2.x}},{{p2.y}} A{{Ro}},{{Ro}} 0 {{large-arc-flag}},{{sweep-flag}} {{p3.x}},{{p3.y}} L{{p4.x}},{{p4.y}} A{{Ri}},{{Ri}} 0 {{large-arc-flag}},0 {{p1.x}},{{p1.y}} Z';
                     

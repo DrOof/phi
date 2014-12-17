@@ -153,17 +153,20 @@
      */
 
      phi.extend = function( target ) {
+         
         var object;
         var l = arguments.length;
-        for ( var i = 1; i < l; i++ ) {
+        for ( var i = 0; i < l; i++ ) {
             object = arguments[ i ];
-            for ( var j in object ) {
-                if ( typeof j === 'string' ) {
-                    target[ j ] = object[ j ];
+            for ( var property in object ) {
+                if ( typeof property === 'string' ) {
+                    target[ property ] = object[ property ];
                 }
             }
         }
-        return object;
+        
+        return target;
+        
     };
         
     /**

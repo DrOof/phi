@@ -39,7 +39,7 @@
         
         __init__ : function( node, options ) {
             
-            // console.log( options );
+            this.__options__ = phi.extend( ScatterGraph.DEFAULTS, options );
             
         },
         
@@ -203,5 +203,14 @@
         },
         
     });
+    
+    ScatterGraph.DEFAULTS = {
+        'axis-x-name'       : undefined,
+        'axis-x-interval'   : 10,
+        'axis-y-name'       : undefined,
+        'axis-y-interval'   : 10,
+        'point-color'       : '#ff0099',
+        'point-color-shift' : 0
+    };
     
 } )( phi.dom );

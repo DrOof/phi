@@ -56,7 +56,7 @@
         __init__ : function( node, options ) {
             
             this.__node__       = node;
-            this.__options__    = options;
+            this.__options      = options;
             
             this.__canvas__     = this.createCanvas( node );
             this.__label__      = this.createLabel( node );
