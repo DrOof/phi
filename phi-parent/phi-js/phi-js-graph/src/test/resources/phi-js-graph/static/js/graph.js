@@ -8,7 +8,7 @@ pie.set( phi.graph.factory.generateData( 10 ) );
 /* end pie graph */
 
 /* start bar graph */
-var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a', 'point-color' : '109900', 'point-color-shift' : 20 } );
+var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'b', 'point-color' : '109900', 'point-color-shift' : 20 } );
 bar.set( phi.graph.factory.generateData( 10 ) );
 
 // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );

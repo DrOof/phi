@@ -47,13 +47,21 @@
             
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
-            var rx = this.stretchRangeToFit( this.resolveRangeX( data ) );
-            var ry = this.stretchRangeToFit( this.resolveRangeY( data ) );
+            
+            var rx = this.resolveRangeX( data );
+            var ry = this.resolveRangeY( data );
+            
+            var ix = this.resolveAxisInterval( rx.delta );
+            var iy = this.resolveAxisInterval( ry.delta );
+            
+            rx = this.stretchRangeToFit( rx, ix );
+            ry = this.stretchRangeToFit( ry, iy );
             
             var d = this.resolveCanvasDimensions();
             
-            this.renderAxisX( d, rx );
-            this.renderAxisY( d, ry );
+            this.renderAxisX( d, rx, ix );
+            this.renderAxisY( d, ry, iy );
+            
             
             var p0 = null;
             var point = null;
@@ -105,13 +113,9 @@
          * 
          */
         
-        renderAxisX: function( d, rx ) {
+        renderAxisX: function( d, range, i ) {
             
             var p = [ 40, 40, 40, 40 ];
-            
-            var interval = this.resolveAxisInterval( rx );
-            // start at less than...
-            // end at more than max..
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -120,9 +124,42 @@
             line.attr( { x1 : p[3], y1: p[0] + h, x2 : p[3] + w, y2 : p[0] + h } );
             line.attr( { 'class' : 'graph-axis graph-axis-x' } );
             
+            this.__canvas__.appendChild( line );
             
+            var l = range.delta / i;
+            var s = w / l;
+            var m = range.min;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisXInterval( p, w, h, l, s, i, n, m );
+            }
+            
+        },
+        
+        /**
+         *
+         * FIXME : refactor
+         *
+         */
+        
+        renderAxisXInterval: function( p, w, h, l, s, i, n, m ) {
+            
+            var x1 = p[3] + ( n * s ),
+                y1 = p[0] + h,
+                x2 = x1,
+                y2 = y1 + 10;
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
             
             this.__canvas__.appendChild( line );
+            
+            var text = new phi.dom.svg.SVGShapeElement( 'text' );
+            text.attr( { x : x2, y : y2 + 15, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'middle' } );
+            
+            this.__canvas__.appendChild( text );
             
         },
         
@@ -132,13 +169,9 @@
          * 
          */
         
-        renderAxisY: function( d, ry ) {
+        renderAxisY: function( d, range, i ) {
             
             var p = [ 40, 40, 40, 40 ];
-            
-            var interval = this.resolveAxisInterval( ry );
-            // start at less than...
-            // end at more than max..
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -148,6 +181,54 @@
             line.attr( { 'class' : 'graph-axis graph-axis-y' } );
             
             this.__canvas__.appendChild( line );
+            
+            var l = range.delta / i;
+            var s = h / l;
+            var m = range.min;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisYInterval( p, w, h, l, s, i, n, m );
+            }
+            
+        },
+        
+        /**
+         *
+         * FIXME : refactor
+         *
+         */
+        
+        renderAxisYInterval: function( p, w, h, l, s, i, n, m ) {
+            
+            var x1 = p[3],
+                y1 = p[0] + h - ( n * s ),
+                x2 = x1 - 10,
+                y2 = y1;
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var text = new phi.dom.svg.SVGShapeElement( 'text' );
+            text.attr( { x : x2 - 15, y : y2 + 3, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'right' } );
+            
+            this.__canvas__.appendChild( text );
+            
+        },
+        
+        stretchRangeToFit : function( range, i ) {
+            
+            var min = Math.floor( range.min / i ) * i, 
+                max = Math.ceil( range.max / i ) * i;
+            
+            return {
+                min : min,
+                max : max,
+                delta : max - min
+            }
             
         },
         
@@ -186,21 +267,7 @@
         
         resolveAxisIntervalProximity : function( optimal, real ) {
             return Math.abs( optimal - real );
-        },
-        
-        stretchRangeToFit : function( range ) {
-            
-            var interval = this.resolveAxisInterval( range.delta );
-            var min = Math.floor( range.min / interval ) * interval, 
-                max = Math.ceil( range.max / interval ) * interval;
-            
-            return {
-                min : min,
-                max : max,
-                delta : max - min
-            }
-            
-        },
+        }
         
     });
     

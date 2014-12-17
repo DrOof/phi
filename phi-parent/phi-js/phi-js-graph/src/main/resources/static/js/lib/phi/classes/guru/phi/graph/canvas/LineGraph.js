@@ -48,8 +48,8 @@
             var sorted = this.resolveSortOrderByName( data, this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
-            var rx = this.resolveRangeX( sorted );
-            var ry = this.resolveRangeY( sorted );
+            var rx = this.resolveRangeX( data );
+            var ry = this.resolveRangeY( data );
             
             var ix = this.resolveAxisInterval( rx.delta );
             var iy = this.resolveAxisInterval( ry.delta );
@@ -143,9 +143,10 @@
             
             var l = range.delta / i;
             var s = w / l;
+            var m = range.min;
             
             for ( var n = 0; n < l+1; n++) {
-                this.renderAxisXInterval( p, w, h, l, s, i, n );
+                this.renderAxisXInterval( p, w, h, l, s, i, n, m );
             }
             
         },
@@ -156,7 +157,7 @@
          *
          */
         
-        renderAxisXInterval: function( p, w, h, l, s, i, n ) {
+        renderAxisXInterval: function( p, w, h, l, s, i, n, m ) {
             
             var x1 = p[3] + ( n * s ),
                 y1 = p[0] + h,
@@ -170,8 +171,8 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x1, y : y1, innerHTML : ( n * i ) } );
-            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n } );
+            text.attr( { x : x2, y : y2 + 15, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'middle' } );
             
             this.__canvas__.appendChild( text );
             
@@ -198,9 +199,10 @@
             
             var l = range.delta / i;
             var s = h / l;
+            var m = range.min;
             
             for ( var n = 0; n < l+1; n++) {
-                this.renderAxisYInterval( p, w, h, l, s, i, n );
+                this.renderAxisYInterval( p, w, h, l, s, i, n, m );
             }
             
         },
@@ -211,7 +213,7 @@
          *
          */
         
-        renderAxisYInterval: function( p, w, h, l, s, i, n ) {
+        renderAxisYInterval: function( p, w, h, l, s, i, n, m ) {
             
             var x1 = p[3],
                 y1 = p[0] + h - ( n * s ),
@@ -225,11 +227,10 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x1, y : y1, innerHTML : ( n * i ) } );
-            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n } );
+            text.attr( { x : x2 - 15, y : y2 + 3, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'right' } );
             
             this.__canvas__.appendChild( text );
-            
             
         },
         

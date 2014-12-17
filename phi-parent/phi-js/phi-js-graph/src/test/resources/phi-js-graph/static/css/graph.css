@@ -45,6 +45,6 @@ html, body {
 }
 
 .graph-axis-interval-text {
-    color: #d0d0d0;
+    fill: #a0a0a0;
     font-size: 10px;
 }
