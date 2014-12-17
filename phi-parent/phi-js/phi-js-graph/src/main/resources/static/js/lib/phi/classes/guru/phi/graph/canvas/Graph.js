@@ -31,6 +31,16 @@
     
     var graph = phi.graph = phi.graph || {};
     
+    var Renderable = phi.graph.Renderable = phi.aspect( {
+        
+        render: {
+            before : function() {
+                this.clear();
+            } 
+        }
+        
+    } );
+    
     var Graph = phi.graph.Graph = phi({
         
         __extends__ : phi.EventTarget,
@@ -195,14 +205,6 @@
              * Implement this method to render a graph.
              *
              */
-            
-        },
-        
-        renderX: function( data ) {
-            
-        },
-        
-        renderY: function( data ) {
             
         },
         

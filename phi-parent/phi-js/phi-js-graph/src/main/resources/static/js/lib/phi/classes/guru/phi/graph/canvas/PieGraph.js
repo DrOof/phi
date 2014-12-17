@@ -41,6 +41,8 @@
         
         __extends__ : phi.graph.Graph,
         
+        __applies__ : phi.graph.Renderable,
+        
         __init__ : function( node, options ) {
             
             this.__path__ = new phi.dom.Template( PieGraph.PATH );
@@ -101,7 +103,10 @@
         },
         
         resolveRadius: function( box ) {
-            return min( box.width, box.height ) / 2;
+            var p = [ 40, 40, 40, 40 ];
+            var w = box.width - p[1] - p[3];
+            var h = box.height - p[0] - p[2];
+            return min( w, h ) / 2;
         },
         
         renderPointShape: function( point, n, Ro, Ri, p1, p2, p3, p4, color, large ) {

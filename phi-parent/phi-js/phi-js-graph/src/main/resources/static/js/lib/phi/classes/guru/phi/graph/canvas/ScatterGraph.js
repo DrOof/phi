@@ -35,6 +35,8 @@
         
         __extends__ : phi.graph.Graph,
         
+        __applies__ : phi.graph.Renderable,
+        
         __init__ : function( node, options ) {
             
             // console.log( options );
@@ -43,8 +45,6 @@
         
         render: function( data ) {
             
-            this.clear();
-            
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
             var rx = this.resolveRangeX( data );
@@ -52,13 +52,16 @@
             
             var d = this.resolveCanvasDimensions();
             
+            this.renderAxisX( d, rx );
+            this.renderAxisY( d, ry );
+            
             var p0 = null;
             var point = null;
             for ( var n = 0; n < data.length; n++ ) {
                 
                 point = data[n];
                 
-                p0 = this.resolvePosition( point, rx, ry, d );
+                p0 = this.resolvePointPosition( point, rx, ry, d );
                 
                 this.renderPointCircle( point, p0.x, p0.y, n, colors[n] );
                 
@@ -66,13 +69,19 @@
             
         },
         
-        resolvePosition: function( point, rx, ry, d ) {
+        resolvePointPosition: function( point, rx, ry, d ) {
+            
+            // top, right, bottom, left
+            var p = [ 40, 40, 40, 40 ];
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
             
             var vx = this.resolveValueX( point );
             var vy = this.resolveValueY( point );
             
-            var x = ( d.width / rx.delta ) * ( vx - rx.min );
-            var y = ( d.height / ry.delta ) * ( vy - ry.min );
+            var x = ( w / rx.delta ) * ( vx - rx.min ) + p[3];
+            var y = ( h / ry.delta ) * ( vy - ry.min ) + p[0];
             
             return { x : x, y: y };
             
@@ -88,6 +97,99 @@
             
             this.__canvas__.appendChild( circle );
             
+        },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
+        
+        renderAxisX: function( d, rx ) {
+            
+            var p = [ 40, 40, 40, 40 ];
+            
+            var interval = this.resolveAxisFactor( rx );
+            // start at less than...
+            // end at more than max..
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : p[3], y1: p[0] + h, x2 : p[3] + w, y2 : p[0] + h } );
+            line.attr( { class : 'graph-axis graph-axis-x' } );
+            
+            
+            
+            this.__canvas__.appendChild( line );
+            
+        },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
+        
+        renderAxisY: function( d, ry ) {
+            
+            var p = [ 40, 40, 40, 40 ];
+            
+            var interval = this.resolveAxisFactor( ry );
+            // start at less than...
+            // end at more than max..
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : p[3], y1: p[0], x2 : p[3], y2 : h + p[0] } );
+            line.attr( { class : 'graph-axis graph-axis-y' } );
+            
+            this.__canvas__.appendChild( line );
+            
+        },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
+        
+        resolveAxisFactor : function( range ) {
+            
+            var factors = [ 1, 2, 5 ];
+            var exponent = 1;
+            
+            var optimum = 10, closest = Infinity, factor, last, proximity, delta = range.delta;
+            
+            // what is the best factor that comes closest to the optimum?
+            while ( true ) {
+                
+                for ( var i = 0; i < factors.length; i++ ) {
+                    
+                    factor = factors[ i ] * exponent;
+                    proximity = this.resolveAxisFactorProximity( optimum, delta, factor );
+                    if ( proximity < closest ) {
+                        closest = proximity;
+                        last = factor;
+                    } else {
+                        return last;
+                    }
+                    
+                }
+                
+                exponent *= 10;
+                
+            }
+            
+            return undefined;
+            
+        },
+        
+        resolveAxisFactorProximity : function( optimum, delta, factor ) {
+            return Math.abs( optimum - ( delta / factor ) );
         }
         
     });

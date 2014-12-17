@@ -35,6 +35,8 @@
         
         __extends__ : phi.graph.Graph,
         
+        __applies__ : phi.graph.Renderable,
+        
         __init__ : function( node ) {
             
         },
@@ -58,7 +60,7 @@
             var s = ( d.width / values.length ); 
             
             var v = this.resolveValueX( point );
-            var w = 30; // FIXME : add as an option
+            var w = 50; // FIXME : add as an option
             var h = ( d.height / range.max ) * v;
             var x = ( s * n ) + ( s / 2 );
             var y = d.height - h;

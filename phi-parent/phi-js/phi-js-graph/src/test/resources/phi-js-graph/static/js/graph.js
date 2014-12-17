@@ -9,7 +9,7 @@ pie.set( phi.graph.factory.generateData( 10 ) );
 
 /* start bar graph */
 var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-x-name' : 'a', 'point-color' : '109900', 'point-color-shift' : 10 } );
-bar.set( phi.graph.factory.generateData( 20 ) );
+bar.set( phi.graph.factory.generateData( 10 ) );
 
 // bar.addEventListener( 'pointenter', function( e ) { console.log( e ) } );
 // bar.addEventListener( 'pointleave', function( e ) { console.log( e ) } );
@@ -18,7 +18,7 @@ bar.set( phi.graph.factory.generateData( 20 ) );
 
 /* start line graph */
 var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'a', 'axis-y-name' : 'b', 'point-color' : '109900', 'point-color-shift' : 16 } );
-line.set( phi.graph.factory.generateData( 20 ) );
+line.set( phi.graph.factory.generateData( 100 ) );
 
 // line.addEventListener( 'pointenter', function( e ) { console.log( e.explicitOriginalTarget ) } );
 // line.addEventListener( 'pointleave', function( e ) { console.log( e.explicitOriginalTarget ) } );
