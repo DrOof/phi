@@ -25,6 +25,7 @@
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/media/engine/DefaultEngine.js"></script>
 <!-- TODO : add stylesheet and classes dynamically by adding to the document -->
 
+<link rel="stylesheet" href="${contextPath}/static/css/graph.css" />
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.graph.js"></script>
 
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/ui/Label.js"></script>
