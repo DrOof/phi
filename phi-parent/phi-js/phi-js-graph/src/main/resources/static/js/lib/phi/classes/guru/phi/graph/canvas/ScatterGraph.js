@@ -139,6 +139,7 @@
         /**
          *
          * FIXME : refactor
+         * FIXME : deal with large numbers on intervals
          *
          */
         
@@ -147,7 +148,7 @@
             var x1 = p[3] + ( n * s ),
                 y1 = p[0] + h,
                 x2 = x1,
-                y2 = y1 + 10;
+                y2 = p[0];
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' );
             line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
@@ -156,8 +157,8 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x2, y : y2 + 15, innerHTML : m + ( n * i ) } );
-            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'middle' } );
+            text.attr( { x : x2, y : y1 + 20, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-x-interval-text' } );
             
             this.__canvas__.appendChild( text );
             
@@ -195,6 +196,7 @@
         /**
          *
          * FIXME : refactor
+         * FIXME : deal with large numbers on intervals
          *
          */
         
@@ -202,7 +204,7 @@
             
             var x1 = p[3],
                 y1 = p[0] + h - ( n * s ),
-                x2 = x1 - 10,
+                x2 = p[3] + w,
                 y2 = y1;
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' );
@@ -212,8 +214,8 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x2 - 15, y : y2 + 3, innerHTML : m + ( n * i ) } );
-            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-interval-text-' + n, 'text-anchor' : 'right' } );
+            text.attr( { x : x1 - 20, y : y2 + 3, innerHTML : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-y-interval-text' } );
             
             this.__canvas__.appendChild( text );
             

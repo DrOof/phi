@@ -29,11 +29,23 @@
 }
 
 .graph-axis-interval {
-    stroke: #d0d0d0;
+    stroke: #e0e0e0;
     stroke-width: 1px;
+    stroke-style: dotted;
+    stroke-dasharray: 5, 2;
 }
 
 .graph-axis-interval-text {
+    fill: #a0a0a0;
+    font-size: 10px;
+}
+
+.graph-axis-x-interval-text {
+    text-anchor: middle;
+}
+
+.graph-axis-y-interval-text {
+    text-anchor: middle;
     fill: #a0a0a0;
     font-size: 10px;
 }
