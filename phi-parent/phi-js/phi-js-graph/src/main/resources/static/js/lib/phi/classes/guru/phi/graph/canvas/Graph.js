@@ -72,8 +72,8 @@
         
         createCanvas: function( node ) {
             
-            var w = node.offsetWidth;
-            var h = node.offsetHeight;
+            var w = node.clientWidth;
+            var h = node.clientHeight;
             
             var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
             
@@ -188,8 +188,8 @@
         
         resolveCanvasDimensions: function() {
             
-            var w = this.__canvas__.element.offsetWidth;
-            var h = this.__canvas__.element.offsetHeight;
+            var w = this.__canvas__.element.clientWidth;
+            var h = this.__canvas__.element.clientHeight;
             
             return {
                 width : w,

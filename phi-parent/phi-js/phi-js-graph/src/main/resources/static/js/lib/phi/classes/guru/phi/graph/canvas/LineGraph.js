@@ -172,7 +172,7 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x2, y : y1 + 20, innerHTML : m + ( n * i ) } );
+            text.attr( { x : x2, y : y1 + 20, textContent : m + ( n * i ) } );
             text.attr( { 'class' : 'graph-axis-interval-text graph-axis-x-interval-text' } );
             
             this.__canvas__.appendChild( text );
@@ -229,7 +229,7 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x1 - 20, y : y2 + 3, innerHTML : m + ( n * i ) } );
+            text.attr( { x : x1 - 20, y : y2 + 3, textContent : m + ( n * i ) } );
             text.attr( { 'class' : 'graph-axis-interval-text graph-axis-y-interval-text' } );
             
             this.__canvas__.appendChild( text );
