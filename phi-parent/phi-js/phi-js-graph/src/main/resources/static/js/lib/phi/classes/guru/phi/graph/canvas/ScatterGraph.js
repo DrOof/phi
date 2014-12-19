@@ -101,7 +101,7 @@
             this.processSVGShapeElement( circle );
             
             circle.attr( { cx : x, cy : y, r : 5, fill : color } );
-            circle.attr( { class : 'graph-point graph-point-' + n, point : point } );
+            circle.attr( { 'class' : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( circle );
             
@@ -274,12 +274,10 @@
     });
     
     ScatterGraph.DEFAULTS = {
-        'axis-x-name'       : undefined,
-        'axis-x-interval'   : 10,
-        'axis-y-name'       : undefined,
-        'axis-y-interval'   : 10,
-        'point-color'       : '#ff0099',
-        'point-color-shift' : 0
+        'axis-x-name'       : undefined, 'axis-x-interval'   : 10,
+        'axis-y-name'       : undefined, 'axis-y-interval'   : 10,
+        'point-color'       : '#ff0099', 'point-color-shift' : 0,
+        'point-size'        : '20'
     };
     
 } )( phi.dom );

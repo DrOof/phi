@@ -45,7 +45,7 @@
             
             var __canvas__ = this.__canvas__ = document.createElement( 'video' );
             
-            __canvas__.className = 'player-__canvas__';
+            __canvas__.className = 'player-canvas';
             
             __canvas__.addEventListener( 'pause', this.handleCanvasEvent.bind( this ), true );
             __canvas__.addEventListener( 'playing', this.handleCanvasEvent.bind( this ), true );
