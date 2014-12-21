@@ -47,10 +47,23 @@
             
             var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
-            var range = this.resolveRangeX();
+            
+            var range = this.resolveRangeX( data );
+            var interval = this.resolveAxisInterval( range.delta );
+            
+            range = this.stretchRangeToFit( range, interval );
             
             var d = this.resolveCanvasDimensions();
-            var interval = this.resolveAxisInterval( range.delta );
+            
+            
+            
+            /**
+            var rx = this.resolveRangeX( data );
+            var ix = this.resolveAxisInterval( rx.delta );
+            
+            rx = this.stretchRangeToFit( rx, ix );
+            
+            */
             
             this.renderAxisY( d, range, interval );
             
@@ -177,6 +190,19 @@
             }
             
             return this.resolveAxisInterval( delta, exponent * 10, closest, factor );
+            
+        },
+        
+        stretchRangeToFit : function( range, i ) {
+            
+            var min = Math.floor( range.min / i ) * i, 
+                max = Math.ceil( range.max / i ) * i;
+            
+            return {
+                min : min,
+                max : max,
+                delta : max - min
+            }
             
         },
         
