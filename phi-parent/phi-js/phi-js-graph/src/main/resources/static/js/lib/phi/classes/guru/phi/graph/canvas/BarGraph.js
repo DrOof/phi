@@ -50,6 +50,11 @@
             var range = this.resolveRangeX();
             
             var d = this.resolveCanvasDimensions();
+            var interval = this.resolveAxisInterval( range.delta );
+            
+            this.renderAxisY( d, range, interval );
+            
+            var d = this.resolveCanvasDimensions();
             
             for ( var n = 0; n < data.length; n++ ) {
                 this.renderPoint( data[n], range, values, d, n, colors[n] );
@@ -60,14 +65,14 @@
         renderPoint: function( point, range, values, d, n, c ) {
             
             // step
-            var p = [ 40, 40, 40, 40 ];
+            var p = [ 40, 40, 40, 80 ];
             var s = ( ( d.width - p[1] - p[3] ) / values.length ); 
             
             var v = this.resolveValueX( point );
             var w = this.__options__[ 'point-width' ]; // FIXME : add as an option
             var h = ( ( d.height - p[0] - p[2] ) / range.max ) * v;
-            var x = ( ( s * n ) + ( s / 2 ) ) + p[1];
-            var y = d.height - h - p[3];
+            var x = ( ( s * n ) + ( s / 2 ) ) + p[3];
+            var y = d.height - h - p[2];
             
             this.renderPointShape( point, x, y, w, h, n, c );
             
@@ -83,6 +88,100 @@
             
             this.__canvas__.appendChild( rect );
             
+        },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
+        
+        renderAxisY: function( d, range, i ) {
+            
+            var p = [ 40, 40, 40, 40 ];
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : p[3], y1: p[0], x2 : p[3], y2 : h + p[0] } );
+            line.attr( { 'class' : 'graph-axis graph-axis-y' } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var l = range.delta / i;
+            var s = h / l;
+            var m = range.min;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisYInterval( p, w, h, l, s, i, n, m );
+            }
+            
+        },
+        
+        /**
+         *
+         * FIXME : refactor
+         * FIXME : deal with large numbers on intervals
+         *
+         */
+        
+        renderAxisYInterval: function( p, w, h, l, s, i, n, m ) {
+            
+            var x1 = p[3],
+                y1 = p[0] + h - ( n * s ),
+                x2 = p[3] + w,
+                y2 = y1;
+            
+            var line = new phi.dom.svg.SVGShapeElement( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var text = new phi.dom.svg.SVGShapeElement( 'text' );
+            text.attr( { x : x1 - 20, y : y2 + 3, textContent : m + ( n * i ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-y-interval-text' } );
+            
+            this.__canvas__.appendChild( text );
+            
+        },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
+        
+        resolveAxisInterval : function( delta, exponent, closest, factor ) {
+            
+            var optimal = 10;
+            var proper = [ 1, 2, 5 ];
+            
+            exponent = exponent || 1;
+            closest  = closest || Infinity;
+            
+            var f, p;
+            for ( var i = 0; i < proper.length; i++ ) {
+                
+                f = proper[ i ] * exponent;
+                p = this.resolveAxisIntervalProximity( optimal, delta / f );
+                
+                if ( p < closest ) {
+                    closest = p;
+                    factor = f;
+                } else {
+                    return factor;
+                }
+                
+            }
+            
+            return this.resolveAxisInterval( delta, exponent * 10, closest, factor );
+            
+        },
+        
+        resolveAxisIntervalProximity : function( optimal, real ) {
+            return Math.abs( optimal - real );
         }
         
     });

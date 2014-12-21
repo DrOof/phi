@@ -89,7 +89,7 @@
             this.processSVGShapeElement( circle );
             
             circle.attr( { cx : x, cy : y, r : 5, fill : color } );
-            circle.attr( { class : 'graph-point graph-point-' + n, point : point } );
+            circle.attr( { 'class' : 'graph-point graph-point-' + n, point : point } );
             
             this.__canvas__.appendChild( circle );
             
