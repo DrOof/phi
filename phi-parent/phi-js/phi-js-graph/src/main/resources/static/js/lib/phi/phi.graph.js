@@ -52,8 +52,8 @@
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
-                    a : ( 10 * i ),
-                    b : 1 + rand( 99 ),
+                    x : ( 10 * i ),
+                    y : 1 + rand( 99 ),
                 } );
             }
     
@@ -65,8 +65,8 @@
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
-                    a : i,
-                    b : GraphFactory.EXP_BEST_FIT( i, -1, 0, 400 )
+                    x : i,
+                    y : GraphFactory.EXP_BEST_FIT( i, -1, 0, 400 )
                 } );
             }
     

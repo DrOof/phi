@@ -45,10 +45,10 @@
         
         render: function( data ) {
             
-            var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
+            var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
-            var range = this.resolveRangeX( data );
+            var range = this.resolveRangeY( data );
             var interval = this.resolveAxisInterval( range.delta );
             
             range = this.stretchRangeToFit( range, interval );
@@ -71,7 +71,7 @@
             var p = [ 40, 40, 40, 80 ];
             var s = ( ( d.width - p[1] - p[3] ) / values.length ); 
             
-            var v = this.resolveValueX( point );
+            var v = this.resolveValueY( point );
             var w = this.__options__[ 'point-width' ]; // FIXME : add as an option
             var h = ( ( d.height - p[0] - p[2] ) / range.max ) * v;
             var x = ( ( s * n ) + ( s / 2 ) ) + p[3];

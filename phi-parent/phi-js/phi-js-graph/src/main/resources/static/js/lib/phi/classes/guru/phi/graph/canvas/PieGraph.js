@@ -56,7 +56,7 @@
             var box = this.resolveCanvasDimensions();
             
             // TODO : calculate the sum and shift from there... doh...
-            var sigma = this.resolveSigmaX( data ), 
+            var sigma = this.resolveSigmaY( data ), 
                 radius = this.resolveRadius( box );
                 
             var a = 0, point, large, d, color;
@@ -66,7 +66,7 @@
                 point = data[ n ];
                 color = colors[ n ];
                 
-                d = ( this.resolveValueX( point ) / sigma ) * PI2;
+                d = ( this.resolveValueY( point ) / sigma ) * PI2;
                 large = d > PI;
                 
                 a += d;
@@ -126,7 +126,7 @@
     });
     
     PieGraph.DEFAULTS = {
-        'axis-x-name'           : undefined,
+        'axis-y-name'           : undefined,
         'point-color'           : '#ff0099',
         'point-color-shift'     : 0,
         'point-radius-inside'   : 0
