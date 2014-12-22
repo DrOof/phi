@@ -236,14 +236,13 @@
             
         },
         
-        stretchRangeToFit : function( range, i ) {
+        stretchRangeToFit : function( range, interval ) {
             
-            var min = Math.floor( range.min / i ) * i, 
-                max = Math.ceil( range.max / i ) * i;
+            var min = Math.floor( range.min / interval ) * interval, 
+                max = Math.ceil( range.max / interval ) * interval;
             
             return {
-                min : min,
-                max : max,
+                min : min, max : max,
                 delta : max - min
             }
             
