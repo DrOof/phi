@@ -103,7 +103,7 @@
                 data.push( {
                     label : phi.uuid(),
                     x : i,
-                    y : fn( i, -1, 0, 400 )
+                    y : fn( i, 1, 0, 10 )
                 } );
             }
     

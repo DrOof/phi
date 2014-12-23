@@ -1,6 +1,6 @@
 /* start pie graph */
 var pie = phi.graph.factory.createGraph( phi.graph.PieGraph, document.getElementById( 'pie-graph' ), { 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 32 } );
-pie.set( phi.graph.factory.generateData( 10 ) );
+pie.set( phi.graph.factory.generateDataByFunction( 10, phi.graph.GraphFactory.EXP_BEST_FIT ) );
 
 /* start bar graph */
 var bar = phi.graph.factory.createGraph( phi.graph.BarGraph, document.getElementById( 'bar-graph' ), { 'axis-y-name' : 'y', 'point-width' : 100, 'point-color' : '109900', 'point-color-shift' : 20 } );
