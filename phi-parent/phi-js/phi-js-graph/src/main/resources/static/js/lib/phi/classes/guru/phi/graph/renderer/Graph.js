@@ -32,13 +32,11 @@
     var graph = phi.graph = phi.graph || {};
     
     var Renderable = phi.graph.Renderable = phi.aspect( {
-        
         render: {
             before : function() {
                 this.clear();
             } 
         }
-        
     } );
     
     var Graph = phi.graph.Graph = phi({

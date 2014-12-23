@@ -53,7 +53,7 @@
     var nodes = document.querySelectorAll( '.scatter-graph' );
     var options = { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 0, 'point-best-fit' : 'linear' };
     for ( var i = nodes.length - 1; i >= 0; i--) {
-        phi.graph.factory.createGraph( 'ScatterGraph', nodes[i], options ).set( phi.graph.factory.generateScatterData( 100 ) );
+        phi.graph.factory.createGraph( 'ScatterGraph', nodes[i], options ).set( phi.graph.factory.generateDataByFunction( 100 ), phi.graph.GraphFactory.EXP_BEST_FIT );
     }
     
 } )( phi );

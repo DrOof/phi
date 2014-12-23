@@ -42,11 +42,42 @@
             this.__graphs__ = [];
         },
         
-        createGraph: function( className, node, options ) {
-            return new phi.graph[ className ]( node, options );
+        createGraph: function( graphClass, node, options ) {
+            
+            /* deprecated string as graphClass */
+            graphClass = this.findGraphClassBySimpleName( graphClass );
+            
+            var graph = new graphClass( node, options );
+            this.__graphs__.push( graph );
+            
+            return graph;
+            
         },
         
-        /* start generate random data */
+        /**
+         *
+         * Find the graph class by simple name.
+         * 
+         * @deprecated
+         *
+         */
+        
+        findGraphClassBySimpleName: function( graphClass ) {
+            
+            if ( typeof graphClass === 'string' ) {
+                graphClass = phi.graph[ graphClass ];
+            }
+            
+            return graphClass;
+            
+        },
+        
+        /**
+         *
+         * Generate random data.
+         *
+         */
+        
         generateData : function( size ) {
             var data = [];
             for ( var i = 0; i < size; i++) {
@@ -60,13 +91,19 @@
             return data;
         },
         
-        generateScatterData : function( size ) {
+        /**
+         *
+         * Generate exponentional data.
+         *
+         */
+        
+        generateDataByFunction : function( size, fn ) {
             var data = [];
             for ( var i = 0; i < size; i++) {
                 data.push( {
                     label : phi.uuid(),
                     x : i,
-                    y : GraphFactory.EXP_BEST_FIT( i, -1, 0, 400 )
+                    y : fn( i, -1, 0, 400 )
                 } );
             }
     
