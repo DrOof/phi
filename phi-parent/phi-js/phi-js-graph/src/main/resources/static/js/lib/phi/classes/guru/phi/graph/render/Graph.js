@@ -250,6 +250,12 @@
             this.dispatchEvent( { type : 'dataupdate' } );
             
         },
+        
+        options: function( options ) {
+            
+            phi.extend( this.__options__, options );
+            
+        },
             
         /**
          *

@@ -39,7 +39,7 @@
     var GraphFactory = graph.GraphFactory = phi({
         
         __init__ : function() {
-            this.__graphs__ = [];
+            this.__graphs__ = {};
         },
         
         createGraph: function( graphClass, node, options ) {
@@ -48,10 +48,16 @@
             graphClass = this.findGraphClassBySimpleName( graphClass );
             
             var graph = new graphClass( node, options );
-            this.__graphs__.push( graph );
+            var name = node.getAttribute( 'id' ) || phi.uuid();
+            
+            this.__graphs__[ name ] = graph;
             
             return graph;
             
+        },
+        
+        findGraphById: function( id ) {
+            return this.__graphs__[ id ];
         },
         
         /**
