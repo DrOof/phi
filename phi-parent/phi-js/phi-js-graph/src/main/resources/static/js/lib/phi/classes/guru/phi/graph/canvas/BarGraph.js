@@ -54,27 +54,30 @@
             range = this.stretchRangeToFit( range, interval );
             
             var d = this.resolveCanvasDimensions();
+            var p = [ 40, 40, 40, 80 ];
             
-            this.renderAxisY( d, range, interval );
+            var w = this.resolvePointWidth( d, p, data.length, this.__options__[ 'point-width' ] );
             
-            var d = this.resolveCanvasDimensions();
+            this.renderAxisY( d, p, range, interval );
             
             for ( var n = 0; n < data.length; n++ ) {
-                this.renderPoint( data[n], range, values, d, n, colors[n] );
+                this.renderPoint( data[n], range, values, d, p, w, n, colors[n] );
             }
             
         },
         
-        renderPoint: function( point, range, values, d, n, c ) {
+        renderPoint: function( point, range, values, d, p, w, n, c ) {
             
             // step
-            var p = [ 40, 40, 40, 80 ];
+            
             var s = ( ( d.width - p[1] - p[3] ) / values.length ); 
             
             var v = this.resolveValueY( point );
-            var w = this.__options__[ 'point-width' ]; // FIXME : add as an option
+            
+            // w = width divided by number of points
+            
             var h = ( ( d.height - p[0] - p[2] ) / range.max ) * v;
-            var x = ( ( s * n ) + ( s / 2 ) ) + p[3];
+            var x = ( ( s * n ) ) + ( s / 2 ) + p[3];
             var y = d.height - h - p[2];
             
             this.renderPointShape( point, x, y, w, h, n, c );
@@ -99,9 +102,7 @@
          * 
          */
         
-        renderAxisY: function( d, range, i ) {
-            
-            var p = [ 40, 40, 40, 40 ];
+        renderAxisY: function( d, p, range, i ) {
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -114,7 +115,7 @@
             
             var l = range.delta / i;
             var s = h / l;
-            var m = range.min;
+            var m = 0; // range.min;
             
             for ( var n = 0; n < l+1; n++) {
                 this.renderAxisYInterval( p, w, h, l, s, i, n, m );
@@ -148,6 +149,11 @@
             
             this.__canvas__.appendChild( text );
             
+        },
+        
+        resolvePointWidth : function( d, p, s, option ) {
+            var max = ( d.width - p[1] - p[3] ) / s;
+            return option === 'auto' ? max : ( option > max ? max : option );
         },
         
         /**
@@ -216,9 +222,10 @@
     BarGraph.DEFAULTS = {
         'axis-x-name'       : undefined,
         'axis-x-interval'   : 10,
+        'point-width'       : 'auto',
         'point-color'       : '#ff0099',
         'point-color-shift' : 0,
-        'point-width'       : 50
+        'canvas-padding'    : [ 40, 40, 40, 40 ]
     };
     
 } )( phi.dom );

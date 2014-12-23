@@ -3,8 +3,8 @@ var pie = phi.graph.factory.createGraph( 'PieGraph', document.getElementById( 'p
 pie.set( phi.graph.factory.generateData( 10 ) );
 
 /* start bar graph */
-var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-y-name' : 'y', 'point-color' : '109900', 'point-color-shift' : 20 } );
-bar.set( phi.graph.factory.generateData( 10 ) );
+var bar = phi.graph.factory.createGraph( 'BarGraph', document.getElementById( 'bar-graph' ), { 'axis-y-name' : 'y', 'point-width' : 100, 'point-color' : '109900', 'point-color-shift' : 20 } );
+bar.set( phi.graph.factory.generateData( 2 ) );
 
 /* start line graph */
 var line = phi.graph.factory.createGraph( 'LineGraph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : '109900', 'point-color-shift' : 16 } );
