@@ -83,7 +83,7 @@
                 cy = box.cy;
             
             var Ro = radius, 
-                Ri = radius - 100;
+                Ri = radius - this.__options__[ 'point-width' ];
             
             var p1 = this.resolvePathPosition( a1,  Ri,  cx,  cy ),
                 p2 = this.resolvePathPosition( a1,  Ro,  cx,  cy ),
@@ -127,9 +127,9 @@
     
     PieGraph.DEFAULTS = {
         'axis-y-name'           : undefined,
+        'point-width'           : 100,
         'point-color'           : '#ff0099',
-        'point-color-shift'     : 0,
-        'point-radius-inside'   : 0
+        'point-color-shift'     : 0
     };
     
     PieGraph.PATH = 'M{{p1.x}},{{p1.y}} L{{p2.x}},{{p2.y}} A{{Ro}},{{Ro}} 0 {{large-arc-flag}},{{sweep-flag}} {{p3.x}},{{p3.y}} L{{p4.x}},{{p4.y}} A{{Ri}},{{Ri}} 0 {{large-arc-flag}},0 {{p1.x}},{{p1.y}} Z';

@@ -220,7 +220,7 @@
             var colors = [];
             for ( var i = this.__data__.length - 1; i >= 0; i-- ) {
                 colors.push( '#' + c.toString( 16 ) );
-                c = parseInt( c + shift );
+                c = parseInt( c + parseInt( shift ) );
             }
             
             return colors;

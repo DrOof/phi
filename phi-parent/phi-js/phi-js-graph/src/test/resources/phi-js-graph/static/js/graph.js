@@ -31,7 +31,13 @@ scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactor
             var graph = phi.graph.factory.findGraphById( id.replace( '#', '' ) );
             
             // serialize form
-            console.log( jQuery( e.target ).serialize() );
+            var field, options = {};
+            for (var i = 0; i < e.target.length; i++) {
+                field = e.target[i];
+                options[ field.name ] = field.value;
+            }
+            
+            graph.options( options );
             graph.set( phi.graph.factory.generateDataByFunction( 5, phi.graph.GraphFactory.EXP_BEST_FIT ) );
             
         
