@@ -273,6 +273,10 @@
             
         },
         
+        refresh: function() {
+            this.render( this.__data__ );
+        },
+        
         render: function( data ) {
             
             /**
@@ -284,9 +288,7 @@
         },
         
         sort: function( data ) {
-            
-            return this.__data__.sort( function( a, b ) {  } );
-            
+            return data.sort( function( a, b ) {  } );  
         },
         
         /**

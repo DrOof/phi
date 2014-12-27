@@ -83,7 +83,7 @@
                 cy = box.cy;
             
             var Ro = radius, 
-                Ri = radius - this.__options__[ 'point-width' ];
+                Ri = radius - this.resolvePointWidth();
             
             var p1 = this.resolvePathPosition( a1,  Ri,  cx,  cy ),
                 p2 = this.resolvePathPosition( a1,  Ro,  cx,  cy ),
@@ -101,6 +101,12 @@
                 y : ( sin( a ) * ( R ) ) + cy
             }
             
+        },
+        
+        resolvePointWidth: function() {
+            var w = this.__options__[ 'point-width' ];
+            var Ri = this.resolveRadius( this.resolveCanvasDimensions() ) - 10;
+            return ( w === 'auto' || w > Ri ) ? Ri : w;
         },
         
         resolveRadius: function( box ) {
