@@ -133,7 +133,7 @@
     
     PieGraph.DEFAULTS = {
         'axis-y-name'           : undefined,
-        'point-width'           : 100,
+        'point-width'           : 'auto',
         'point-color'           : '#ff0099',
         'point-color-shift'     : 0
     };
