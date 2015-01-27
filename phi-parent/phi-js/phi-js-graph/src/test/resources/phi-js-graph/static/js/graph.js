@@ -1,3 +1,5 @@
+// var t = new Date().getTime();
+
 /* start pie graph */
 var pie = phi.graph.factory.createGraph( phi.graph.PieGraph, document.getElementById( 'pie-graph' ), { 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 32 } );
 pie.set( phi.graph.factory.generateDataByFunction( 10, phi.graph.GraphFactory.EXP_BEST_FIT ) );
@@ -12,6 +14,8 @@ line.set( phi.graph.factory.generateData( 20 ) );
 
 var scatter = phi.graph.factory.createGraph( phi.graph.ScatterGraph, document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 2, 'point-best-fit' : 'linear' } );
 scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactory.EXP_BEST_FIT ) );
+
+// console.log( (new Date().getTime()) - t );
 
 ( function( phi ) {
     
@@ -31,18 +35,17 @@ scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactor
             var graph = phi.graph.factory.findGraphById( id.replace( '#', '' ) );
             
             // serialize form
-            var control, options = {};
-            for (var i = 0; i < e.target.length; i++) {
-                control = e.target[i];
-                if ( control.name ) {
-                    options[ control.name ] = control.value;    
+            var option, options = {};
+            for ( var i = 0; i < e.target.length; i++ ) {
+                option = e.target[i];
+                if ( option.name ) {
+                    options[ option.name ] = option.value;
                 }
             }
             
             graph.options( options );
             graph.refresh();
             
-        
         }
     
     });
@@ -53,4 +56,3 @@ scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactor
     }
     
 } )( phi );
-
