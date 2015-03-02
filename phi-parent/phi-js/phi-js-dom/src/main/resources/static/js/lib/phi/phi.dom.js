@@ -89,8 +89,26 @@
         },
         
         appendChild: function( child ) {
-            this.element.appendChild( child.element )   
+            
+            if ( child instanceof SVGShapeElement ) {
+                this.appendShapeChild( child );
+            }
+            
+            if ( child instanceof SVGElement ) {
+                this.appendNativeChild( child );
+            }
+            
+        },
+        
+        appendShapeChild: function( child ) {
+            this.element.appendChild( child.element );
+        },
+        
+        appendNativeChild: function( child ) {
+            this.element.appendChild( child );
         }
+        
+        
     
     });
     
