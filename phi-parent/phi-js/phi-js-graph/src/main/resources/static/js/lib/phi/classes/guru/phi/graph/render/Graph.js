@@ -90,10 +90,10 @@
          */
         
         createLabel: function( node ) {
-            
+
             var label = new phi.dom.Template( Graph.LABEL );
             return label;
-            
+
         },
         
         /**

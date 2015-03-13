@@ -80,7 +80,7 @@
         resolvePointPosition: function( point, rx, ry, d ) {
             
             // top, right, bottom, left
-            var p = [ 40, 40, 40, 40 ];
+            var p = this.__options__[ 'canvas-padding' ];
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -115,7 +115,7 @@
         
         renderAxisX: function( d, range, i ) {
             
-            var p = [ 40, 40, 40, 40 ];
+            var p = this.__options__[ 'canvas-padding' ];
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -172,7 +172,7 @@
         
         renderAxisY: function( d, range, i ) {
             
-            var p = [ 40, 40, 40, 40 ];
+            var p = this.__options__[ 'canvas-padding' ];
             
             var w = d.width - p[1] - p[3];
             var h = d.height - p[0] - p[2];
@@ -273,10 +273,17 @@
     });
     
     ScatterGraph.DEFAULTS = {
-        'axis-x-name'       : undefined, 'axis-x-interval'   : 10,
-        'axis-y-name'       : undefined, 'axis-y-interval'   : 10,
-        'point-color'       : '#ff0099', 'point-color-shift' : 0,
-        'point-size'        : '20'
+        'axis-x-name'       : undefined, 
+        'axis-x-interval'   : 10,
+        'axis-y-name'       : undefined, 
+        'axis-y-interval'   : 10,
+        'point-color'       : '#ff0099', 
+        'point-color-shift' : 0,
+        'point-size'        : '20',
+        'canvas-padding'    : [ 40, 40, 40, 40 ]
     };
+    
+    graph.factory.registerGraph( 'scatter-graph', ScatterGraph );
+    graph.factory.registerGraph( 'ScatterGraph', ScatterGraph );
     
 } )( phi.dom );

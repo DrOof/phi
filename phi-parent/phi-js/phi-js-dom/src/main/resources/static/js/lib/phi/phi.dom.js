@@ -112,8 +112,51 @@
     
     });
     
+    /**
+     *
+     * A basic template parser to create new Nodes as a string
+     *
+     */
     
-    
+    var Template = phi.dom.Template = phi({
+        
+        __init__: function( html ) {
+            this.set( html );
+        },
+        
+        parse: function( data, parent, html ) {
+            
+            var html = html || this.get();
+            var a = ( parent ) ? parent + '.' : '';
+            var b = ( parent ) ? parent + '\\.' : '';
+            
+            for ( var name in data ) {
+                
+                if ( typeof name === 'string' ) {
+                    
+                    var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
+                    
+                    if (typeof data[name] === 'object') {
+                        html = this.parse( data[ name ], a + name, html );
+                    } else {
+                        html = html.replace( property, data[ name ] );
+                    }
+                }
+            }
+            
+            return html;
+            
+        },
+        
+        set: function( html ) {
+            this.html = html;
+        },
+        
+        get: function() {
+            return this.html;
+        }
+        
+    });
     
     /**
      *
@@ -321,52 +364,6 @@
             this.relations[ key ] = fn;
         }
 
-    });
-    
-    /**
-     *
-     * A basic template parser to create new Nodes as a string
-     *
-     */
-    
-    var Template = phi.dom.Template = phi({
-        
-        __init__: function( html ) {
-            this.set( html );
-        },
-        
-        parse: function( data, parent, html ) {
-            
-            var html = html || this.get();
-            var a = ( parent ) ? parent + '.' : '';
-            var b = ( parent ) ? parent + '\\.' : '';
-            
-            for ( var name in data ) {
-                
-                if ( typeof name === 'string' ) {
-                    
-                    var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
-                    
-                    if (typeof data[name] === 'object') {
-                        html = this.parse( data[ name ], a + name, html );
-                    } else {
-                        html = html.replace( property, data[ name ] );
-                    }
-                }
-            }
-            
-            return html;
-            
-        },
-        
-        set: function( html ) {
-            this.html = html;
-        },
-        
-        get: function() {
-            return this.html;
-        }
-        
     });
     
     /*

@@ -54,7 +54,7 @@
             range = this.stretchRangeToFit( range, interval );
             
             var d = this.resolveCanvasDimensions();
-            var p = [ 40, 40, 40, 80 ];
+            var p = this.__options__[ 'canvas-padding' ];
             
             var w = this.resolvePointWidth( d, p, data.length, this.__options__[ 'point-width' ] );
             
@@ -220,12 +220,15 @@
     });
     
     BarGraph.DEFAULTS = {
-        'axis-x-name'       : undefined,
-        'axis-x-interval'   : 10,
+        'axis-y-name'       : undefined,
+        'axis-y-interval'   : 10,
         'point-width'       : 'auto',
         'point-color'       : '#ff0099',
         'point-color-shift' : 0,
         'canvas-padding'    : [ 40, 40, 40, 40 ]
     };
+    
+    graph.factory.registerGraph( 'bar-graph', BarGraph );
+    graph.factory.registerGraph( 'BarGraph', BarGraph );
     
 } )( phi.dom );
