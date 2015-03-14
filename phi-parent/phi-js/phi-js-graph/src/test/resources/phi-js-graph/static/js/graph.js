@@ -32,7 +32,7 @@ scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactor
             
             // serialize options and create a new graph
             var id = e.target.getAttribute( 'action' );
-            var graph = phi.graph.factory.findGraphById( id.replace( '#', '' ) );
+            var graph = phi.graph.factory.getGraphById( id.replace( '#', '' ) );
             
             // serialize form
             var option, options = {};

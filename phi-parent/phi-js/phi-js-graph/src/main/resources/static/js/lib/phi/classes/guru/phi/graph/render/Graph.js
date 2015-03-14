@@ -402,8 +402,8 @@
         
         __init__ : function( values, min, max ) {
 
-            this.min = ( min !== 'auto' && min !== undefined ) ? min : this.resolveMinValue( values );
-            this.max = ( max !== 'auto' && max !== undefined ) ? max : this.resolveMaxValue( values );
+            this.min = ( min !== 'auto' && min !== undefined && min !== '' ) ? min : this.resolveMinValue( values );
+            this.max = ( max !== 'auto' && max !== undefined && max !== '' ) ? max : this.resolveMaxValue( values );
 
             this.delta = this.max - this.min;
 
