@@ -45,7 +45,7 @@
         
         __init__ : function( node, options ) {
             
-            this.__options__ = phi.extend( PieGraph.DEFAULTS, options );
+            this.__options__ = phi.extend( {}, PieGraph.DEFAULTS, options );
             this.__path__ = new phi.dom.Template( PieGraph.PATH );
             
         },
@@ -134,7 +134,7 @@
     PieGraph.DEFAULTS = {
         'axis-y-name'           : undefined,
         'point-width'           : 'auto',
-        'point-color'           : '#ff0099',
+        'point-color'           : 'ff0099',
         'point-color-shift'     : 0,
         'canvas-padding'        : [ 40, 40, 40, 40 ]
     };

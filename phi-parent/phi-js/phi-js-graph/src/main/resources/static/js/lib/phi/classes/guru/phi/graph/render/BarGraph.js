@@ -39,7 +39,7 @@
         
         __init__ : function( node, options ) {
             
-            this.__options__ = phi.extend( BarGraph.DEFAULTS, options );
+            this.__options__ = phi.extend( {}, BarGraph.DEFAULTS, options );
             
         },
         
@@ -220,10 +220,14 @@
     });
     
     BarGraph.DEFAULTS = {
-        'axis-y-name'       : undefined,
-        'axis-y-interval'   : 10,
+        'axis-x-name'       : undefined,
+        'axis-x-interval'   : 10,
+        'axis-x-date'       : 'none',
+        'axis-x-format'     : '',
+        'axis-x-min'        : 'auto',
+        'axis-x-max'        : 'auto',
         'point-width'       : 'auto',
-        'point-color'       : '#ff0099',
+        'point-color'       : 'ff0099',
         'point-color-shift' : 0,
         'canvas-padding'    : [ 40, 40, 40, 40 ]
     };

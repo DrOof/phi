@@ -54,14 +54,14 @@
         __init__ : function( node, options ) {
             
             this.__node__       = node;
-            this.__options      = options;
+            this.__options__    = options;
             
             this.__canvas__     = this.createCanvas( node );
             this.__label__      = this.createLabel( node );
             this.__data__       = [];
-            
+
         },
-        
+
         /**
          *
          * TODO : write JavaDoc
@@ -90,12 +90,12 @@
          */
         
         createLabel: function( node ) {
-
+            
             var label = new phi.dom.Template( Graph.LABEL );
             return label;
-
+            
         },
-        
+
         /**
          *
          * TODO : write JavaDoc
@@ -129,10 +129,7 @@
          */
         
         resolveRangeX: function() {
-            
-            var values = this.resolveValuesByName( this.__options__[ 'axis-x-name' ] );
-            return this.__range__( values );
-            
+            return new ValueRange( this.resolveValuesByName( this.__options__[ 'axis-x-name' ] ), this.__options__[ 'axis-x-min' ], this.__options__[ 'axis-x-max' ] );s
         },
         
         /**
@@ -142,10 +139,7 @@
          */
         
         resolveRangeY: function() {
-            
-            var values = this.resolveValuesByName( this.__options__[ 'axis-y-name' ] );
-            return this.__range__( values );
-            
+            return new ValueRange( this.resolveValuesByName( this.__options__[ 'axis-y-name' ] ), this.__options__[ 'axis-y-min' ], this.__options__[ 'axis-y-max' ] );s
         },
         
         /**
@@ -214,7 +208,7 @@
          */
         
         resolveColorRange: function( color, shift ) {
-            
+
             // inspect rgb from css.
             var c = parseInt( color, 16 );
             var colors = [];
@@ -222,9 +216,9 @@
                 colors.push( '#' + c.toString( 16 ) );
                 c = parseInt( c + parseInt( shift ) );
             }
-            
+
             return colors;
-            
+
         },
         
         /**
@@ -286,7 +280,33 @@
              */
             
         },
-        
+
+        format: function( value, type, format ) {
+            
+            var type = type || 'none';
+            var format = format || '';
+
+            var result;
+            switch ( type ) {
+                
+                case 'date' : {
+                    result = new phi.dom.DateFormat( format ).format( new Date( value ) );
+                    break;
+                }
+                
+                case 'number' : 
+                case 'text' : 
+                default : {
+                    result = value;
+                    break;
+                }
+
+            }
+
+            return result;
+
+        },
+
         sort: function( data ) {
             return data.sort( function( a, b ) {  } );  
         },
@@ -297,17 +317,8 @@
          *
          */
         
-        __range__: function( values ) {
-            
-            var min = this.__min__( values );
-            var max = this.__max__( values );
-            
-            return {
-                min: min,
-                max: max,
-                delta: max - min
-            }
-            
+        __range__: function( values, min, max ) {
+            return new ValueRange( values, min, max );
         },
         
         /**
@@ -377,7 +388,35 @@
         handleMouseUp: function( e ) {
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
         }
-        
+
     });
+
+
+    /**
+     *
+     * Value range
+     *
+     */
+    
+    var ValueRange = phi({
+        
+        __init__ : function( values, min, max ) {
+
+            this.min = ( min !== 'auto' && min !== undefined ) ? min : this.resolveMinValue( values );
+            this.max = ( max !== 'auto' && max !== undefined ) ? max : this.resolveMaxValue( values );
+
+            this.delta = this.max - this.min;
+
+        },
+        
+        resolveMinValue: function( values ) {
+            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
+        },
+        
+        resolveMaxValue: function( values ) {
+            return values.reduce( function( a, b ) { return Math.max( a, b ) } );
+        }
+        
+    })
     
 } )( phi.dom );

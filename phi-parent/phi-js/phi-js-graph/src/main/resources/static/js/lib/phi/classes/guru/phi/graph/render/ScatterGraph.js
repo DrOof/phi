@@ -39,7 +39,7 @@
         
         __init__ : function( node, options ) {
             
-            this.__options__ = phi.extend( ScatterGraph.DEFAULTS, options );
+            this.__options__ = phi.extend( {}, ScatterGraph.DEFAULTS, options );
             
         },
         
@@ -273,14 +273,21 @@
     });
     
     ScatterGraph.DEFAULTS = {
-        'axis-x-name'       : undefined, 
-        'axis-x-interval'   : 10,
-        'axis-y-name'       : undefined, 
-        'axis-y-interval'   : 10,
-        'point-color'       : '#ff0099', 
-        'point-color-shift' : 0,
-        'point-size'        : '20',
-        'canvas-padding'    : [ 40, 40, 40, 40 ]
+        'axis-x-name'           : undefined,
+        'axis-x-type'           : 'none',
+        'axis-x-format'         : '',
+        'axis-x-interval'       : 10,
+        'axis-x-min'            : 'auto',
+        'axis-x-max'            : 'auto',
+        'axis-y-name'           : undefined,
+        'axis-y-interval'       : 10,
+        'axis-y-type'           : 'none',
+        'axis-y-format'         : '',
+        'axis-y-min'            : 'auto',
+        'axis-y-max'            : 'auto',
+        'point-color'           : 'ff0099',
+        'point-color-shift'     : 0,
+        'canvas-padding'        : [ 40, 40, 40, 40 ]
     };
     
     graph.factory.registerGraph( 'scatter-graph', ScatterGraph );

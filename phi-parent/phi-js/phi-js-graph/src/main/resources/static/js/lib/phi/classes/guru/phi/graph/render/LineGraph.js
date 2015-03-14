@@ -38,9 +38,7 @@
         __applies__ : phi.graph.Renderable,
         
         __init__ : function( node, options ) {
-            
-            this.__options__ = phi.extend( LineGraph.DEFAULTS, options );
-            
+            this.__options__ = phi.extend( {}, LineGraph.DEFAULTS, options );
         },
         
         render: function( data ) {
@@ -67,11 +65,9 @@
             var point = null;
             for ( var n = 0; n < sorted.length; n++ ) {
                 
-                point = sorted[n];
+                p0 = this.resolvePointPosition( sorted[n], rx, ry, d );
                 
-                p0 = this.resolvePointPosition( point, rx, ry, d );
-                
-                this.renderPointCircle( point, p0.x, p0.y, n, colors[n] );
+                this.renderPointCircle( sorted[n], p0.x, p0.y, n, colors[n] );
                 if ( p0 && p1 ) {
                     this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y, colors[n] );
                 }
@@ -80,6 +76,8 @@
                 p1 = p0;
                 
             }
+            
+            this.dispatchEvent( 'graphupdate' );
             
         },
         
@@ -172,7 +170,7 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x2, y : y1 + 20, textContent : m + ( n * i ) } );
+            text.attr( { x : x2, y : y1 + 20, textContent : this.format( m + ( n * i ), this.__options__[ 'axis-x-type' ], this.__options__[ 'axis-x-format' ] ) } );
             text.attr( { 'class' : 'graph-axis-interval-text graph-axis-x-interval-text' } );
             
             this.__canvas__.appendChild( text );
@@ -229,12 +227,18 @@
             this.__canvas__.appendChild( line );
             
             var text = new phi.dom.svg.SVGShapeElement( 'text' );
-            text.attr( { x : x1 - 20, y : y2 + 3, textContent : m + ( n * i ) } );
+            text.attr( { x : x1 - 20, y : y2 + 3, textContent : this.format( m + ( n * i ), this.__options__[ 'axis-y-type' ], this.__options__[ 'axis-y-format' ] ) } );
             text.attr( { 'class' : 'graph-axis-interval-text graph-axis-y-interval-text' } );
             
             this.__canvas__.appendChild( text );
             
         },
+        
+        /**
+         *
+         * FIXME : Refactor code.
+         * 
+         */
         
         stretchRangeToFit : function( range, interval ) {
             
@@ -280,7 +284,7 @@
             return this.resolveAxisInterval( delta, exponent * 10, closest, factor );
             
         },
-        
+
         resolveAxisIntervalProximity : function( optimal, real ) {
             return Math.abs( optimal - real );
         }
@@ -288,13 +292,21 @@
     });
     
     LineGraph.DEFAULTS = {
-        'axis-x-name'       : undefined,
-        'axis-x-interval'   : 10,
-        'axis-y-name'       : undefined,
-        'axis-y-interval'   : 10,
-        'point-color'       : '#ff0099',
-        'point-color-shift' : 0,
-        'canvas-padding'    : [ 40, 40, 40, 40 ]
+        'axis-x-name'           : undefined,
+        'axis-x-type'           : 'none',
+        'axis-x-format'         : '',
+        'axis-x-interval'       : 10,
+        'axis-x-min'            : 'auto',
+        'axis-x-max'            : 'auto',
+        'axis-y-name'           : undefined,
+        'axis-y-interval'       : 10,
+        'axis-y-type'           : 'none',
+        'axis-y-format'         : '',
+        'axis-y-min'            : 'auto',
+        'axis-y-max'            : 'auto',
+        'point-color'           : 'ff0099',
+        'point-color-shift'     : 0,
+        'canvas-padding'        : [ 40, 40, 40, 40 ]
     };
     
     graph.factory.registerGraph( 'line-graph', LineGraph );

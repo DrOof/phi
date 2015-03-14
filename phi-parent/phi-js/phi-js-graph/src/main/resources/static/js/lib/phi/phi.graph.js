@@ -62,21 +62,15 @@
          */
         
         createGraph: function( type, node, options, data ) {
-
-            /* deprecated string as graphClass */
+            
             var clazz = this.__registered__[ type ];
 
             var graph = new clazz( node, options );
             var id = node.getAttribute( 'id' );
             
-            var name;
-            if ( id ) {
-                name = id;
-            } else {
-                name = 'graph-' + phi.uuid();
-                node.setAttribute( 'id', name );
-            }
-
+            var name =  ( id ) ? id : 'graph-' + phi.uuid();
+            node.setAttribute( 'id', name );
+            
             if ( data ) {
                 graph.set( data );
             }
@@ -97,7 +91,7 @@
 
             var node = e.target;
 
-            var graph = this.findGraphById( node.id );
+            var graph = this.getGraphById( node.id );
             
             if ( !graph ) {
 
@@ -111,10 +105,10 @@
 
         },
 
-        findGraphById: function( id ) {
+        getGraphById: function( id ) {
             return this.__graphs__[ id ];
         },
-        
+
         /**
          *
          * Generate random data.
@@ -133,6 +127,7 @@
     
             return data;
         },
+
         
         /**
          *
@@ -152,7 +147,7 @@
     
             return data;
         }
-        
+
     });
     
     GraphFactory.LIN_BEST_FIT = function( x, a, b ) { return ( a * x ) + ( b ) };
