@@ -60,24 +60,28 @@
             this.renderAxisX( d, rx, ix );
             this.renderAxisY( d, ry, iy );
             
-            var p0 = null;
-            var p1 = null;
-            var point = null;
+            var p0, p1, point;
             for ( var n = 0; n < sorted.length; n++ ) {
                 
-                p0 = this.resolvePointPosition( sorted[n], rx, ry, d );
+                point = sorted[n];
                 
-                this.renderPointCircle( sorted[n], p0.x, p0.y, n, colors[n] );
+                p0 = this.resolvePointPosition( point, rx, ry, d );
+
                 if ( p0 && p1 ) {
                     this.renderPointToPointLine( p0.x, p0.y, p1.x, p1.y, colors[n] );
                 }
-                
-                // shift p0 to p1
+
                 p1 = p0;
                 
             }
             
-            this.dispatchEvent( 'graphupdate' );
+            for ( var n = 0; n < sorted.length; n++ ) {
+
+                point = sorted[n];
+                p0 = this.resolvePointPosition( point, rx, ry, d );
+                this.renderPointCircle( point, p0.x, p0.y, n, colors[n] );
+
+            }
             
         },
         
@@ -96,7 +100,7 @@
         renderPointToPointLine: function( x1, y1, x2, y2, color ) {
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' )
-            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, stroke : color } );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, 'class' : 'graph-point-line', stroke : color } );
             
             this.__canvas__.appendChild( line );
             
@@ -114,12 +118,12 @@
             var vy = this.resolveValueY( point );
             
             var x = ( w / rx.delta ) * ( vx - rx.min ) + p[3];
-            var y = ( h / ry.delta ) * ( vy - ry.min ) + p[0];
+            var y = - ( h / ry.delta ) * ( vy - ry.min ) + p[0] + h; 
             
             return { x : x, y: y };
             
         },
-        
+
         /**
          *
          * FIXME : Refactor code.
@@ -304,7 +308,7 @@
         'axis-y-format'         : '',
         'axis-y-min'            : 'auto',
         'axis-y-max'            : 'auto',
-        'point-color'           : 'ff0099',
+        'point-color'           : '#ff0099',
         'point-color-shift'     : 0,
         'canvas-padding'        : [ 40, 40, 40, 40 ]
     };

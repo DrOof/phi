@@ -46,7 +46,20 @@
         return params;
         
     };
-    
+
+    phi.dom.calculateOffset = function( element ) {
+
+        var doc = element.ownerDocument, docElem = doc.documentElement,
+            box = ( typeof element.getBoundingClientRect !== undefined ) ? element.getBoundingClientRect() : { top : 0, left : 0},
+            top = box.top  + ( window.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
+            left = box.left + ( window.pageXOffset || docElem.scrollLeft ) - ( docElem.clientLeft || 0 );
+
+        return {
+            top : top,
+            left : left
+        };
+    };
+
     /**
      *
      * SVGShapeElement
@@ -645,5 +658,4 @@
 
     });
 
-    
 })(phi, jQuery);

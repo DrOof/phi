@@ -49,3 +49,35 @@
     fill: #a0a0a0;
     font-size: 10px;
 }
+
+.graph-tooltip {
+
+    position: absolute;
+    display: none;
+    font-size: 10px;
+    
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    color: #666666;
+
+}
+
+.graph-tooltip.active {
+    display: block;
+}
+
+.graph-tooltip-title {
+
+    font-size: 10px;
+    padding: 5px 10px;
+    margin: 0;
+
+    background: #d0d0d0;
+    color: #ffffff;
+}
+
+.graph-tooltip-content {
+    padding: 5px 10px;
+    line-height: 1.5em;
+    margin: 0;
+}

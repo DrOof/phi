@@ -114,7 +114,7 @@
          * Generate random data.
          *
          */
-        
+
         generateData : function( size ) {
             var data = [];
             for ( var i = 0; i < size; i++) {
@@ -128,7 +128,6 @@
             return data;
         },
 
-        
         /**
          *
          * Generate exponentional data.

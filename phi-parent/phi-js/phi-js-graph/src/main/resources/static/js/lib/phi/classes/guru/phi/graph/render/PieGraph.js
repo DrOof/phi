@@ -55,9 +55,8 @@
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             var box = this.resolveCanvasDimensions();
             
-            // TODO : calculate the sum and shift from there... doh...
-            var sigma = this.resolveSigmaY( data ), 
-                radius = this.resolveRadius( box );
+            var range = this.resolveRangeY( data );
+            var radius = this.resolveRadius( box );
                 
             var a = 0, point, large, d, color;
             
@@ -66,7 +65,7 @@
                 point = data[ n ];
                 color = colors[ n ];
                 
-                d = ( this.resolveValueY( point ) / sigma ) * PI2;
+                d = ( this.resolveValueY( point ) / range.sigma ) * PI2;
                 large = d > PI;
                 
                 a += d;

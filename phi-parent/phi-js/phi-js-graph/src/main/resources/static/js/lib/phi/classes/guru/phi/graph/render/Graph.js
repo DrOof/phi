@@ -57,9 +57,12 @@
             this.__options__    = options;
             
             this.__canvas__     = this.createCanvas( node );
-            this.__label__      = this.createLabel( node );
+            this.__tooltip__      = this.createTooltip();
             this.__data__       = [];
 
+            this.addEventListener( 'pointenter',  this.__tooltip__.handlePointEnter.bind(   this.__tooltip__ ) );
+            this.addEventListener( 'pointleave',  this.__tooltip__.handlePointLeave.bind(   this.__tooltip__ ) );
+            this.addEventListener( 'pointselect', this.__tooltip__.handlePointSelect.bind(  this.__tooltip__ ) );
         },
 
         /**
@@ -69,16 +72,16 @@
          */
         
         createCanvas: function( node ) {
-            
+
             var w = node.clientWidth;
             var h = node.clientHeight;
-            
+
             var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
-            
+
             // calculate viewbox
-            canvas.attr( { viewBox : '0 0 {{w}} {{h}}'.replace( '{{w}}', w ).replace( '{{h}}', h ) } );
+            canvas.attr( { viewBox : new phi.dom.Template( '0 0 {{w}} {{h}}' ).parse( { w : w, h : h } ) } );
             node.appendChild( canvas.element );
-            
+
             return canvas;
             
         },
@@ -89,10 +92,10 @@
          *
          */
         
-        createLabel: function( node ) {
+        createTooltip: function( node ) {
             
-            var label = new phi.dom.Template( Graph.LABEL );
-            return label;
+            var tooltip = new phi.graph.Tooltip( this.__options__[ 'point-label' ] );
+            return tooltip;
             
         },
 
@@ -307,6 +310,11 @@
 
         },
 
+        label: function( point ) {
+            return new phi.dom.Template( this.__options__[ 'point-label' ] ).parse( point.getAttribute( 'point' ) );
+        },
+        
+
         sort: function( data ) {
             return data.sort( function( a, b ) {  } );  
         },
@@ -319,26 +327,6 @@
         
         __range__: function( values, min, max ) {
             return new ValueRange( values, min, max );
-        },
-        
-        /**
-         *
-         * TODO : replace with functional js ( oliver steele )
-         *
-         */
-        
-        __min__: function( values ) {
-            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
-        },
-        
-        /**
-         *
-         * TODO : replace with functional js ( oliver steele )
-         *
-         */
-        
-        __max__: function( values ) {
-            return values.reduce( function( a, b ) { return Math.max( a, b ) } );
         },
         
         /**
@@ -389,6 +377,7 @@
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
         }
 
+
     });
 
 
@@ -401,20 +390,27 @@
     var ValueRange = phi({
         
         __init__ : function( values, min, max ) {
+            
+            this.__values__ = values;
 
-            this.min = ( min !== 'auto' && min !== undefined && min !== '' ) ? min : this.resolveMinValue( values );
-            this.max = ( max !== 'auto' && max !== undefined && max !== '' ) ? max : this.resolveMaxValue( values );
+            this.min = ( min !== 'auto' && min !== undefined ) ? min : this.resolveMinValue( values );
+            this.max = ( max !== 'auto' && max !== undefined ) ? max : this.resolveMaxValue( values );
 
+            this.sigma = this.resolveSigma( values );
             this.delta = this.max - this.min;
 
         },
         
         resolveMinValue: function( values ) {
-            return values.reduce( function( a, b ) { return Math.min( a, b ) } );
+            return ( values || this.__values__ ).reduce( function( a, b ) { return Math.min( a, b ) } );
         },
         
         resolveMaxValue: function( values ) {
-            return values.reduce( function( a, b ) { return Math.max( a, b ) } );
+            return ( values || this.__values__ ).reduce( function( a, b ) { return Math.max( a, b ) } );
+        },
+        
+        resolveSigma: function( values ) {
+            return ( values || this.__values__ ).reduce( function( a, b ) { return a + b; } );
         }
         
     })
