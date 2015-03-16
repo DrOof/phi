@@ -54,7 +54,7 @@
         __init__ : function( node, options ) {
 
             this.__node__       = node;
-            this.__options__    = options;
+            this.__options__    = phi.extend( {}, Graph.DEFAUTS, options );
 
             this.__canvas__     = this.createCanvas( node );
             this.__tooltip__    = this.createTooltip();
@@ -319,16 +319,6 @@
             return data.sort( function( a, b ) {  } );  
         },
         
-        /**
-         *
-         * TODO : replace with functional js ( oliver steele )
-         *
-         */
-        
-        __sigma__: function( values ) {
-            return values.reduce( function( a, b ) { return a + b; } );
-        },
-        
         processSVGShapeElement: function( shape ) {
             
             shape.element.addEventListener( 'mouseenter',   this.handleMouseEnter.bind( this ), true );
@@ -369,5 +359,30 @@
 
 
     });
+    
+    Graph.DEFAULTS = {
+
+        'axis-x-name'           : undefined,
+        'axis-x-interval'       : undefined,
+        'axis-x-type'           : undefined,
+        'axis-x-format'         : undefined,
+        'axis-x-min'            : undefined,
+        'axis-x-max'            : undefined,
+        'axis-x-visible'        : 'visible',
+
+        'axis-y-name'           : undefined,
+        'axis-y-interval'       : undefined,
+        'axis-y-type'           : undefined,
+        'axis-y-format'         : undefined,
+        'axis-y-min'            : undefined,
+        'axis-y-max'            : undefined,
+        'axis-y-visible'        : 'visible',
+
+        'point-color'           : undefined,
+        'point-color-shift'     : undefined,
+
+        'canvas-padding'        : [ 40, 40, 40, 40 ]
+
+    }
     
 } )( phi.dom );
