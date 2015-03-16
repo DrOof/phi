@@ -304,22 +304,22 @@
 
         'axis-x-name'           : undefined,
         'axis-x-interval'       : undefined,
-        'axis-x-type'           : 'none',
-        'axis-x-format'         : '',
-        'axis-x-min'            : 'auto',
-        'axis-x-max'            : 'auto',
+        'axis-x-type'           : undefined,
+        'axis-x-format'         : undefined,
+        'axis-x-min'            : undefined,
+        'axis-x-max'            : undefined,
         'axis-x-visible'        : 'visible',
 
         'axis-y-name'           : undefined,
         'axis-y-interval'       : undefined,
-        'axis-y-type'           : 'none',
-        'axis-y-format'         : '',
-        'axis-y-min'            : 'auto',
-        'axis-y-max'            : 'auto',
+        'axis-y-type'           : undefined,
+        'axis-y-format'         : undefined,
+        'axis-y-min'            : undefined,
+        'axis-y-max'            : undefined,
         'axis-y-visible'        : 'visible',
 
-        'point-color'           : '#ff0099',
-        'point-color-shift'     : 0,
+        'point-color'           : undefined,
+        'point-color-shift'     : undefined,
 
         'canvas-padding'        : [ 40, 40, 40, 40 ]
 

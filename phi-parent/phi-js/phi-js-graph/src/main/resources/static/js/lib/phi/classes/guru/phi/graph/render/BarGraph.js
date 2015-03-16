@@ -49,7 +49,7 @@
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
             
             var range = this.resolveRangeY( data );
-            var interval = this.resolveAxisInterval( range.delta );
+            var interval = this.__options__[ 'axis-y-interval' ] || this.resolveAxisInterval( range.delta );
             
             range = this.stretchRangeToFit( range, interval );
             
@@ -223,15 +223,15 @@
     
     BarGraph.DEFAULTS = {
         'axis-y-name'       : undefined,
-        'axis-y-interval'   : 10,
-        'axis-y-date'       : 'none',
-        'axis-y-format'     : '',
-        'axis-y-min'        : 'auto',
-        'axis-y-max'        : 'auto',
+        'axis-y-interval'   : undefined,
+        'axis-y-type'       : undefined,
+        'axis-y-format'     : undefined,
+        'axis-y-min'        : undefined,
+        'axis-y-max'        : undefined,
         'axis-y-visible'    : 'visible',
         'point-width'       : 'auto',
-        'point-color'       : 'ff0099',
-        'point-color-shift' : 0,
+        'point-color'       : undefined,
+        'point-color-shift' : undefined,
         'canvas-padding'    : [ 40, 40, 40, 40 ]
     };
     

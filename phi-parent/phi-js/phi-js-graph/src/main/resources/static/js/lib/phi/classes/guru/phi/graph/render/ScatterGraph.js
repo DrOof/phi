@@ -51,8 +51,8 @@
             var rx = this.resolveRangeX( data );
             var ry = this.resolveRangeY( data );
             
-            var ix = this.resolveAxisInterval( rx.delta );
-            var iy = this.resolveAxisInterval( ry.delta );
+            var ix = this.__options__[ 'axis-x-interval' ] || this.resolveAxisInterval( rx.delta );
+            var iy = this.__options__[ 'axis-y-interval' ] || this.resolveAxisInterval( ry.delta );
             
             rx = this.stretchRangeToFit( rx, ix );
             ry = this.stretchRangeToFit( ry, iy );
@@ -277,23 +277,28 @@
     });
     
     ScatterGraph.DEFAULTS = {
+        
         'axis-x-name'           : undefined,
-        'axis-x-type'           : 'none',
-        'axis-x-format'         : '',
-        'axis-x-interval'       : 10,
-        'axis-x-min'            : 'auto',
-        'axis-x-max'            : 'auto',
+        'axis-x-interval'       : undefined,
+        'axis-x-type'           : undefined,
+        'axis-x-format'         : undefined,
+        'axis-x-min'            : undefined,
+        'axis-x-max'            : undefined,
         'axis-x-visible'        : 'visible',
+
         'axis-y-name'           : undefined,
-        'axis-y-interval'       : 10,
-        'axis-y-type'           : 'none',
-        'axis-y-format'         : '',
-        'axis-y-min'            : 'auto',
-        'axis-y-max'            : 'auto',
+        'axis-y-interval'       : undefined,
+        'axis-y-type'           : undefined,
+        'axis-y-format'         : undefined,
+        'axis-y-min'            : undefined,
+        'axis-y-max'            : undefined,
         'axis-y-visible'        : 'visible',
-        'point-color'           : 'ff0099',
-        'point-color-shift'     : 0,
+
+        'point-color'           : undefined,
+        'point-color-shift'     : undefined,
+
         'canvas-padding'        : [ 40, 40, 40, 40 ]
+
     };
     
     graph.factory.registerGraph( 'scatter-graph', ScatterGraph );
