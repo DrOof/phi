@@ -67,6 +67,6 @@
     });
 
     // NOTE: Why not set the graph-tooltip class directly in the template? 
-    Tooltip.TEMPLATE =  '<div class="graph-tooltip"><h5 class="graph-tooltip-title">Tooltip</h5><div class="graph-tooltip-content">{{x}}, {{y}}</div></div>';
+    Tooltip.TEMPLATE =  '<div class="graph-tooltip"><h5 class="graph-tooltip-title">{{label}}</h5><div class="graph-tooltip-content">{{y}}</div></div>';
 
 })( phi );
