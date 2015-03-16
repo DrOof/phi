@@ -52,12 +52,12 @@
          */
         
         __init__ : function( node, options ) {
-            
+
             this.__node__       = node;
             this.__options__    = options;
-            
+
             this.__canvas__     = this.createCanvas( node );
-            this.__tooltip__      = this.createTooltip();
+            this.__tooltip__    = this.createTooltip();
             this.__data__       = [];
 
             this.addEventListener( 'pointenter',  this.__tooltip__.handlePointEnter.bind(   this.__tooltip__ ) );
@@ -92,7 +92,7 @@
          *
          */
         
-        createTooltip: function( node ) {
+        createTooltip: function( template ) {
             
             var tooltip = new phi.graph.Tooltip( this.__options__[ 'point-label' ] );
             return tooltip;
@@ -132,7 +132,7 @@
          */
         
         resolveRangeX: function() {
-            return new ValueRange( this.resolveValuesByName( this.__options__[ 'axis-x-name' ] ), this.__options__[ 'axis-x-min' ], this.__options__[ 'axis-x-max' ] );s
+            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-x-name' ] ), this.__options__[ 'axis-x-min' ], this.__options__[ 'axis-x-max' ] );s
         },
         
         /**
@@ -142,7 +142,7 @@
          */
         
         resolveRangeY: function() {
-            return new ValueRange( this.resolveValuesByName( this.__options__[ 'axis-y-name' ] ), this.__options__[ 'axis-y-min' ], this.__options__[ 'axis-y-max' ] );s
+            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-y-name' ] ), this.__options__[ 'axis-y-min' ], this.__options__[ 'axis-y-max' ] );s
         },
         
         /**
@@ -321,16 +321,6 @@
         
         /**
          *
-         * Range
-         *
-         */
-        
-        __range__: function( values, min, max ) {
-            return new ValueRange( values, min, max );
-        },
-        
-        /**
-         *
          * TODO : replace with functional js ( oliver steele )
          *
          */
@@ -379,40 +369,5 @@
 
 
     });
-
-
-    /**
-     *
-     * Value range
-     *
-     */
-    
-    var ValueRange = phi({
-        
-        __init__ : function( values, min, max ) {
-            
-            this.__values__ = values;
-
-            this.min = ( min !== 'auto' && min !== undefined ) ? min : this.resolveMinValue( values );
-            this.max = ( max !== 'auto' && max !== undefined ) ? max : this.resolveMaxValue( values );
-
-            this.sigma = this.resolveSigma( values );
-            this.delta = this.max - this.min;
-
-        },
-        
-        resolveMinValue: function( values ) {
-            return ( values || this.__values__ ).reduce( function( a, b ) { return Math.min( a, b ) } );
-        },
-        
-        resolveMaxValue: function( values ) {
-            return ( values || this.__values__ ).reduce( function( a, b ) { return Math.max( a, b ) } );
-        },
-        
-        resolveSigma: function( values ) {
-            return ( values || this.__values__ ).reduce( function( a, b ) { return a + b; } );
-        }
-        
-    })
     
 } )( phi.dom );

@@ -7,63 +7,66 @@
         __extends__ : phi.EventTarget,
         
         __init__ : function( template ) {
-
-            // NOTE: use spaces for tabs. ;)
             this.__template__ = new phi.dom.Template( template || Tooltip.TEMPLATE );
-
-            // NOTE : use __privateVariable__ as a rule
-            this.__node__ = this.createNode();
-            document.body.appendChild( this.__node__ );
-
         },
 
-        createNode: function(  ) {
+        createNode: function( parent, html ) {
+
+            var canvas, node;
+
+            canvas = document.createElement( 'div' );
+            canvas.innerHTML = html;
+
+            node = canvas.firstChild;
+
+            // TODO : perhaps append to graph itself to keep self contained.
+            parent.appendChild( node );
             
-            var node = document.createElement( 'div' );
-            node.className = 'graph-tooltip';
-            
-            return node;
+            return node;;
 
         },
+        
+        destroyNode: function( parent, child ) {
+            parent.removeChild( child );
+        },
 
-        // NOTE : use convention handleEventName? 
         handlePointEnter: function( e ) {
 
-            // use spaces around method arguments ( arg1, arg2 )
-            var target =  e.explicitOriginalTarget,
-                label = target.getAttribute( 'label' );
+            var target      = e.explicitOriginalTarget;
+            var node        = this.createNode( e.target.__node__, this.__template__.parse( target.point ) );
+            var box         = phi.dom.getOffsetBoundingBox( target );
 
-                // NOTE : this may not always work.
-            var x = target.getAttribute( 'x' ),
-                y = target.getAttribute( 'y' ),
+            var style       = node.currentStyle || window.getComputedStyle( node );
 
-                offset = phi.dom.calculateOffset( target );
+            node.style.top  = ( box.top  - ( node.clientHeight    ) ) - parseInt( style[ 'margin-bottom' ] ) + 'px';
+            node.style.left = ( box.left - ( node.clientWidth / 2 ) ) + ( box.width / 2 )                    + 'px';
 
-                var node = this.__node__;
-                node.innerHTML = this.__template__.parse( target.point );
-
-                // Show the tooltip
-                node.className             += ' active';
-                node.style.top              = ( offset.top - ( node.clientHeight / 2 ) ) + 'px';
-                node.style.left             = ( offset.left + 15 ) + 'px'
-
+            this.__active__ = node;
 
         },
 
         handlePointLeave: function( e ) {
-
-            var target = e.explicitOriginalTarget;
-            this.__node__.className = this.__node__.className.replace( ' active', '' );
-
+            this.destroyNode( e.target.__node__, this.__active__ );
         },
 
         handlePointSelect: function( e ) {
+
+            /*
+            var target = e.explicitOriginalTarget;
+            var node = this.createNode( this.__template__.parse( target.point ) );
+            var offset = phi.dom.calculateOffset( target );
+            
+            node.style.top =    ( offset.top    - ( node.clientHeight    ) - 10 ) + 'px';
+            node.style.left =   ( offset.left   - ( node.clientWidth / 2 ) + 20 ) + 'px'
+
+            this.__active__ = node;
+            */
 
         }
 
     });
 
     // NOTE: Why not set the graph-tooltip class directly in the template? 
-    Tooltip.TEMPLATE =  '<h5 class="graph-tooltip-title">{{label}}</h5><div class="graph-tooltip-content">{{x}}, {{y}}</div>';
+    Tooltip.TEMPLATE =  '<div class="graph-tooltip"><h5 class="graph-tooltip-title">Tooltip</h5><div class="graph-tooltip-content">{{x}}, {{y}}</div></div>';
 
 })( phi );

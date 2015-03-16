@@ -58,7 +58,9 @@
             
             var w = this.resolvePointWidth( d, p, data.length, this.__options__[ 'point-width' ] );
             
-            this.renderAxisY( d, p, range, interval );
+            if ( this.__options__[ 'axis-y-visible' ] ) {
+                this.renderAxisY( d, p, range, interval );
+            }
             
             for ( var n = 0; n < data.length; n++ ) {
                 this.renderPoint( data[n], range, values, d, p, w, n, colors[n] );
@@ -220,12 +222,13 @@
     });
     
     BarGraph.DEFAULTS = {
-        'axis-x-name'       : undefined,
-        'axis-x-interval'   : 10,
-        'axis-x-date'       : 'none',
-        'axis-x-format'     : '',
-        'axis-x-min'        : 'auto',
-        'axis-x-max'        : 'auto',
+        'axis-y-name'       : undefined,
+        'axis-y-interval'   : 10,
+        'axis-y-date'       : 'none',
+        'axis-y-format'     : '',
+        'axis-y-min'        : 'auto',
+        'axis-y-max'        : 'auto',
+        'axis-y-visible'    : 'visible',
         'point-width'       : 'auto',
         'point-color'       : 'ff0099',
         'point-color-shift' : 0,
@@ -233,6 +236,5 @@
     };
     
     graph.factory.registerGraph( 'bar-graph', BarGraph );
-    graph.factory.registerGraph( 'BarGraph', BarGraph );
     
 } )( phi.dom );

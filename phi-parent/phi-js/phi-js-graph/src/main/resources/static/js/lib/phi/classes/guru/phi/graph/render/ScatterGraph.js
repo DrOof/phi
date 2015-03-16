@@ -59,9 +59,13 @@
             
             var d = this.resolveCanvasDimensions();
             
-            this.renderAxisX( d, rx, ix );
-            this.renderAxisY( d, ry, iy );
+            if ( this.__options__[ 'axis-x-visible' ]) {
+                this.renderAxisX( d, rx, ix );
+            }
             
+            if ( this.__options__[ 'axis-y-visible' ]) {
+                this.renderAxisY( d, ry, iy );
+            }
             
             var p0 = null;
             var point = null;
@@ -279,18 +283,19 @@
         'axis-x-interval'       : 10,
         'axis-x-min'            : 'auto',
         'axis-x-max'            : 'auto',
+        'axis-x-visible'        : 'visible',
         'axis-y-name'           : undefined,
         'axis-y-interval'       : 10,
         'axis-y-type'           : 'none',
         'axis-y-format'         : '',
         'axis-y-min'            : 'auto',
         'axis-y-max'            : 'auto',
+        'axis-y-visible'        : 'visible',
         'point-color'           : 'ff0099',
         'point-color-shift'     : 0,
         'canvas-padding'        : [ 40, 40, 40, 40 ]
     };
     
     graph.factory.registerGraph( 'scatter-graph', ScatterGraph );
-    graph.factory.registerGraph( 'ScatterGraph', ScatterGraph );
     
 } )( phi.dom );

@@ -49,16 +49,21 @@
             var rx = this.resolveRangeX( data );
             var ry = this.resolveRangeY( data );
             
-            var ix = this.resolveAxisInterval( rx.delta );
-            var iy = this.resolveAxisInterval( ry.delta );
+            var ix = this.__options__[ 'axis-x-interval' ] || this.resolveAxisInterval( rx.delta );
+            var iy = this.__options__[ 'axis-y-interval' ] || this.resolveAxisInterval( ry.delta );
             
             rx = this.stretchRangeToFit( rx, ix );
             ry = this.stretchRangeToFit( ry, iy );
             
             var d = this.resolveCanvasDimensions();
             
-            this.renderAxisX( d, rx, ix );
-            this.renderAxisY( d, ry, iy );
+            if ( this.__options__[ 'axis-x-visible' ] ) {
+                this.renderAxisX( d, rx, ix );
+            }
+            
+            if ( this.__options__[ 'axis-y-visible' ]) {
+                this.renderAxisY( d, ry, iy );
+            }
             
             var p0, p1, point;
             for ( var n = 0; n < sorted.length; n++ ) {
@@ -100,7 +105,7 @@
         renderPointToPointLine: function( x1, y1, x2, y2, color ) {
             
             var line = new phi.dom.svg.SVGShapeElement( 'line' )
-            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, 'class' : 'graph-point-line', stroke : color } );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2 : y2, 'class' : 'graph-point-line' } );
             
             this.__canvas__.appendChild( line );
             
@@ -263,13 +268,13 @@
          */
         
         resolveAxisInterval : function( delta, exponent, closest, factor ) {
-            
+
             var optimal = 10;
             var proper = [ 1, 2, 5 ];
-            
+
             exponent = exponent || 1;
             closest  = closest || Infinity;
-            
+
             var f, p;
             for ( var i = 0; i < proper.length; i++ ) {
                 
@@ -296,24 +301,30 @@
     });
     
     LineGraph.DEFAULTS = {
+
         'axis-x-name'           : undefined,
+        'axis-x-interval'       : undefined,
         'axis-x-type'           : 'none',
         'axis-x-format'         : '',
-        'axis-x-interval'       : 10,
         'axis-x-min'            : 'auto',
         'axis-x-max'            : 'auto',
+        'axis-x-visible'        : 'visible',
+
         'axis-y-name'           : undefined,
-        'axis-y-interval'       : 10,
+        'axis-y-interval'       : undefined,
         'axis-y-type'           : 'none',
         'axis-y-format'         : '',
         'axis-y-min'            : 'auto',
         'axis-y-max'            : 'auto',
+        'axis-y-visible'        : 'visible',
+
         'point-color'           : '#ff0099',
         'point-color-shift'     : 0,
+
         'canvas-padding'        : [ 40, 40, 40, 40 ]
+
     };
     
     graph.factory.registerGraph( 'line-graph', LineGraph );
-    graph.factory.registerGraph( 'LineGraph', LineGraph );
     
 } )( phi.dom );

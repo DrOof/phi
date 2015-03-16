@@ -47,17 +47,25 @@
         
     };
 
-    phi.dom.calculateOffset = function( element ) {
+    /**
+     *
+     * Get bounding box relative to offset parent.
+     *
+     */
 
-        var doc = element.ownerDocument, docElem = doc.documentElement,
-            box = ( typeof element.getBoundingClientRect !== undefined ) ? element.getBoundingClientRect() : { top : 0, left : 0},
-            top = box.top  + ( window.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
-            left = box.left + ( window.pageXOffset || docElem.scrollLeft ) - ( docElem.clientLeft || 0 );
+    phi.dom.getOffsetBoundingBox = function( element ) {
 
-        return {
-            top : top,
-            left : left
-        };
+        // get client rect from offset parent
+        var box         = phi.extend( {}, element.getBoundingClientRect() );
+        var offset      = element.offsetParent.getBoundingClientRect();
+        var whitelist   = { top : 1, left : 1, bottom : -1, right : -1 };
+        
+        for ( var p in whitelist ) {
+            box[ p ] = ( box[ p ] - ( offset[ p ] ) ) * whitelist[ p ];
+        }
+
+        return box;
+
     };
 
     /**
@@ -657,5 +665,142 @@
         }
 
     });
+    
+    /**
+     *
+     * DateFormat
+     *
+     */
+
+    var DateFormat = phi.dom.DateFormat = phi({
+
+        __init__ : function( format ) {
+            this.__format__ = format;
+        },
+
+        /**
+         *
+         * Formats a date
+         *
+         */
+
+        format: function( date, format ) {
+
+            format = format || this.__format__;
+            
+            var result = format, value, patterns = DateFormat.PATTERNS;
+            for ( var key in patterns ) {
+                result = result.replace( key, this.completePartial( patterns[ key ][ 0 ].apply( date ), key.length ) );
+            }
+
+            return result;
+
+        },
+
+        /**
+         *
+         * Parses a formatted date
+         *
+         */
+
+        parse: function( date, format ) {
+
+            format = format || this.__format__;
+
+            var result = new Date();
+            var patterns = DateFormat.PATTERNS;
+            var pattern, match;
+            for ( var key in patterns ) {
+                pattern = new RegExp( key );
+                match = format.match( pattern );
+                if ( match ) {
+                    patterns[ key ][ 1 ].call( result, date.substr( match.index, key.length ) );    
+                }
+            }
+            
+            return result;
+
+        },
+
+        completePartial: function( value, length ) {
+            return '0000'.substr( 0, length - ( ('' + value).length ) ) + value;
+        }
+
+    });
+    
+    DateFormat.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    
+    var DATE = Date.prototype;
+    DateFormat.PATTERNS = {
+        'YYYY'  :   [ 
+                        DATE.getFullYear, 
+                        DATE.setFullYear  
+                    ],
+        'MMMM'  : 
+                    [ 
+                        function() { var m = DATE.getMonth.apply( this, arguments ); return DateFormat.MONTHS[ m ] }, 
+                        function() { var m = DateFormat.MONTHS.indexOf( arguments[0] ); DATE.setMonth.apply( this, m ) }
+                    ],
+        'MMM'  : 
+                    [ 
+                        function() { var m = DATE.getMonth.apply( this, arguments ); return DateFormat.MONTHS[ m ].substr( 0, 3 ) }, 
+                        function() { var m = DateFormat.MONTHS.indexOf( arguments[0] ); DATE.setMonth.apply( this, m ) }
+                    ],
+        'MM'    :   [ 
+                        DATE.getMonth,
+                        DATE.setMonth
+                    ],
+        'DD'    :   
+                    [ 
+                        DATE.getDate,
+                        DATE.setDate
+                    ],
+        'hh'    :   [ 
+                        DATE.getHours,
+                        DATE.setHours
+                    ],
+        'mm'    :   [ 
+                        DATE.getMinutes,
+                        DATE.setMinutes
+                    ],
+        'ss'    :   [ 
+                        DATE.getSeconds,
+                        DATE.setSeconds
+                    ]
+    };
+    
+    /**
+     *
+     * NumberFormat
+     *
+     */
+    
+    var NumberFormat = phi.dom.NumberFormat = phi({
+        
+        __init__ : function( format ) {
+            this.__format__ = format;
+        },
+
+        /**
+         *
+         * Parses a formatted number
+         *
+         */
+
+        parse: function( number, format ) {
+            
+        },
+        
+        /**
+         *
+         * Formats a number
+         *
+         */
+
+        format: function( number, format ) {
+            
+        }
+
+    })
 
 })(phi, jQuery);

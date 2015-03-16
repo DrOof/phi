@@ -141,6 +141,5 @@
     PieGraph.PATH = 'M{{p1.x}},{{p1.y}} L{{p2.x}},{{p2.y}} A{{Ro}},{{Ro}} 0 {{large-arc-flag}},{{sweep-flag}} {{p3.x}},{{p3.y}} L{{p4.x}},{{p4.y}} A{{Ri}},{{Ri}} 0 {{large-arc-flag}},0 {{p1.x}},{{p1.y}} Z';
     
     graph.factory.registerGraph( 'pie-graph', PieGraph );
-    graph.factory.registerGraph( 'PieGraph', PieGraph );
                     
 } )( phi.dom );
