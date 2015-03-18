@@ -36,3 +36,20 @@
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/PointLineGraph.js"></script>
 
 <script type="text/javascript" src="${contextPath}/phi-site-templating-kit/static/js/app/init.js"></script>
+
+<style>
+
+    /**
+     *
+     * Repeat graph create animations.
+     *
+     */
+     
+    .graph {
+        -webkit-animation: graph 0.01s;
+           -moz-animation: graph 0.01s;
+            -ms-animation: graph 0.01s;
+             -o-animation: graph 0.01s;
+                animation: graph 0.01s;
+    }
+</style>
