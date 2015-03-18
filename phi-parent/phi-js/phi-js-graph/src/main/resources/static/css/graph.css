@@ -1,8 +1,8 @@
-@-webkit-keyframes graph { 100% { opacity: 1; } }
-   @-moz-keyframes graph { 100% { opacity: 1; } }
-    @-ms-keyframes graph { 100% { opacity: 1; } }
-     @-o-keyframes graph { 100% { opacity: 1; } }
-        @keyframes graph { 100% { opacity: 1; } }
+@-webkit-keyframes graph { from { opacity: 0; }  to { opacity: 1; } }
+   @-moz-keyframes graph { from { opacity: 0; }  to { opacity: 1; } }
+    @-ms-keyframes graph { from { opacity: 0; }  to { opacity: 1; } }
+     @-o-keyframes graph { from { opacity: 0; }  to { opacity: 1; } }
+        @keyframes graph { from { opacity: 0; }  to { opacity: 1; } }
         
 /* start graph */
 .graph {
