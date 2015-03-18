@@ -43,7 +43,8 @@
             this.__graphs__ = {};
             this.__registered__ = {};
             this.__relations__ = new phi.dom.AnimationRelations( /graph/ );
-            
+            this.__relations__.add( 'create', this.handleGraphCreate.bind( this ) );
+
         },
         
         registerGraph: function( type, clazz ) {
@@ -151,11 +152,6 @@
     GraphFactory.LIN_BEST_FIT = function( x, a, b ) { return ( a * x ) + ( b ) };
     GraphFactory.EXP_BEST_FIT = function( x, a, b, c ) { return ( a * x * x ) + ( b * x ) + ( c ) };
 
-    // TODO : remove jQuery ready event.
-    var factory = graph.factory = new GraphFactory();
-    
-    phi.dom.ready( function() {
-        factory.__relations__.add( 'create', factory.handleGraphCreate.bind( factory ) );
-    } );
+    graph.factory = new GraphFactory();
 
 } )( phi.dom );
