@@ -1,3 +1,9 @@
+@-webkit-keyframes graph { 100% { opacity: 1; } }
+   @-moz-keyframes graph { 100% { opacity: 1; } }
+    @-ms-keyframes graph { 100% { opacity: 1; } }
+     @-o-keyframes graph { 100% { opacity: 1; } }
+        @keyframes graph { 100% { opacity: 1; } }
+        
 /* start graph */
 .graph {
 
@@ -7,19 +13,13 @@
     margin: 0 0 20px;
     position: relative;
 
-    -webkit-animation: graph 0.001s;
-       -moz-animation: graph 0.001s;
-        -ms-animation: graph 0.001s;
-         -o-animation: graph 0.001s;
-            animation: graph 0.001s;
+    -webkit-animation: graph 0.01s;
+       -moz-animation: graph 0.01s;
+        -ms-animation: graph 0.01s;
+         -o-animation: graph 0.01s;
+            animation: graph 0.01s;
 
 }
-
-@-webkit-keyframes graph { 100% { opacity: 1; } }
-   @-moz-keyframes graph { 100% { opacity: 1; } }
-    @-ms-keyframes graph { 100% { opacity: 1; } }
-     @-o-keyframes graph { 100% { opacity: 1; } }
-        @keyframes graph { 100% { opacity: 1; } }
 /* end graph */
 
 
