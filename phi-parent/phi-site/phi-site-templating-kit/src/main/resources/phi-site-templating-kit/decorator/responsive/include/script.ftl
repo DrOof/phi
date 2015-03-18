@@ -27,12 +27,13 @@
 
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.graph.js"></script>
 
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/ui/Label.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/ui/Tooltip.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/ui/ValueRange.js"></script>
 
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/Graph.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/PieGraph.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/BarGraph.js"></script>
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/LineGraph.js"></script>
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/ScatterGraph.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/PointGraph.js"></script>
+<script type="text/javascript" src="${contextPath}/static/js/lib/phi/classes/guru/phi/graph/render/PointLineGraph.js"></script>
 
 <script type="text/javascript" src="${contextPath}/phi-site-templating-kit/static/js/app/init.js"></script>

@@ -85,6 +85,6 @@
 
     });
 
-    Tooltip.TEMPLATE =  '<div class="graph-point-info">{{x}}, {{y}}</div>';
+    Tooltip.TEMPLATE =  '<div class="graph-point-info"><h5 class="graph-point-info-title">Info</h5><div class="graph-point-info-content">{{x}}, {{y}}</div></div>';
 
 })( phi );

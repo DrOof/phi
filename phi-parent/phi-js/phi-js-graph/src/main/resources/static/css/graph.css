@@ -1,3 +1,148 @@
+/* start graph */
+.graph {
+    
+    display: block;
+    height: 400px;
+        
+    margin: 0 0 20px;
+    position: relative;
+
+    -webkit-animation: graph 0.001s;
+       -moz-animation: graph 0.001s;
+        -ms-animation: graph 0.001s;
+         -o-animation: graph 0.001s;
+            animation: graph 0.001s;
+
+}
+
+@-webkit-keyframes graph { 100% { opacity: 1; } }
+   @-moz-keyframes graph { 100% { opacity: 1; } }
+    @-ms-keyframes graph { 100% { opacity: 1; } }
+     @-o-keyframes graph { 100% { opacity: 1; } }
+        @keyframes graph { 100% { opacity: 1; } }
+/* end graph */
+
+
+
+
+
+/* start graph point */
+.graph-point {
+    cursor: pointer;
+    stroke: none;
+    fill: #d0d0d0;
+}
+
+.graph-point:hover {
+    stroke: none;
+    fill: #d0d0d0;
+}
+
+.graph-point-line {
+    stroke: #f0f0f0;
+}
+
+.graph-point-outside-y-range {
+    fill: #ff9999;
+}
+
+.graph-point-outside-x-range {
+    fill: #f0f0f0;
+}
+/* end graph point */
+
+
+
+
+/* start graph axis */
+.graph-axis {
+    stroke: #f0f0f0;
+    stroke-width: 1px;
+}
+
+.graph-axis-interval {
+    stroke: #f0f0f0;
+    stroke-width: 1px;
+    stroke-style: dotted;
+    stroke-dasharray: 5, 2;
+}
+
+.graph-axis-interval-text {
+    fill: #d0d0d0;
+    font-size: 10px;
+}
+
+.graph-axis-x-interval-text {
+    text-anchor: middle;
+    font-size: 10px;
+}
+
+.graph-axis-y-interval-text {
+    text-anchor: end;
+    font-size: 10px;
+}
+/* end graph axis */
+
+
+
+
+
+/* start graph tooltip */
+.graph-point-info {
+
+    position: absolute;
+    z-index: 100;
+
+    font-size: 10px;
+    
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    color: #d0d0d0;
+    
+    margin: 0 0 20px;
+
+}
+
+.graph-point-info:after {
+    content: "";
+    
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    
+    margin: 0 0 0 -10px;
+    
+    border-top: 10px solid #f0f0f0;
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent;
+
+}
+
+.graph-point-info-title {
+
+    font-size: 10px;
+    padding: 0px 10px;
+    margin: 0;
+
+    background: #f0f0f0;
+    color: #d0d0d0;
+}
+
+.graph-point-info-content {
+    text-align: center;
+    padding: 0px 10px;
+    margin: 0;
+}
+/* end graph tooltip */
+
+
+
+
+
+
+
+
 .graph {
     
     margin: 0 0 20px;
