@@ -74,7 +74,7 @@
      *
      */
     
-    var svg = dom.svg = {
+    var svg = phi.svg = {
         
         /**
          *

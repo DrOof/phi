@@ -40,7 +40,7 @@
 
 ( function( phi ) {
     
-    var nodes = document.querySelectorAll( '.line-graph' );
+    var nodes = document.querySelectorAll( '.point-line-graph' );
     var options = { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : '109900', 'point-color-shift' : 16 };
     for ( var i = nodes.length - 1; i >= 0; i--) {
         phi.graph.factory.createGraph( 'LineGraph', nodes[i], options ).set( phi.graph.factory.generateData( 50 ) );
@@ -50,7 +50,7 @@
 
 ( function( phi ) {
     
-    var nodes = document.querySelectorAll( '.scatter-graph' );
+    var nodes = document.querySelectorAll( '.point-graph' );
     var options = { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 0, 'point-best-fit' : 'linear' };
     for ( var i = nodes.length - 1; i >= 0; i--) {
         phi.graph.factory.createGraph( 'ScatterGraph', nodes[i], options ).set( phi.graph.factory.generateDataByFunction( 100 ), phi.graph.GraphFactory.EXP_BEST_FIT );

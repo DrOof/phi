@@ -49,7 +49,15 @@
             this.__path__ = new phi.dom.Template( PieGraph.PATH );
             
         },
-        
+
+        /**
+         *
+         * Render
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         render: function( data ) {
             
             var colors = this.resolveColorRange( this.__options__[ 'point-color' ], this.__options__[ 'point-color-shift' ] );
@@ -75,7 +83,15 @@
             }
             
         },
-        
+
+        /**
+         *
+         * Render point
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         renderPoint: function( point, n, box, radius, a, a1, color, large ) {
             
             var cx = box.cx, 
@@ -92,7 +108,15 @@
             this.renderPointShape( point, n, Ro, Ri, p1, p2, p3, p4, color, large );
             
         },
-        
+
+        /**
+         *
+         * Resolve path position
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         resolvePathPosition : function( a, R, cx, cy ) {
             
             return {
@@ -101,35 +125,60 @@
             }
             
         },
-        
+
+        /**
+         *
+         * Resolve point width
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         resolvePointWidth: function() {
             var w = this.__options__[ 'point-width' ];
             var Ri = this.resolveRadius( this.resolveCanvasDimensions() ) - 10;
             return ( w === 'auto' || w > Ri ) ? Ri : w;
         },
-        
+
+        /**
+         *
+         * Resolve radius
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         resolveRadius: function( box ) {
             var p = this.__options__[ 'canvas-padding' ];
             var w = box.width - p[1] - p[3];
             var h = box.height - p[0] - p[2];
             return min( w, h ) / 2;
         },
-        
+
+        /**
+         *
+         * Render point shape
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
         renderPointShape: function( point, n, Ro, Ri, p1, p2, p3, p4, color, large ) {
-            
-            var shape = new phi.dom.svg.SVGShapeElement( 'path' );
-            
+
+            var shape = phi.svg.shape( 'path' );
+
             this.processSVGShapeElement( shape );
-            
+
             shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point, fill : color } );
             shape.attr( { 'd' : this.__path__.parse( { Ro : Ro, Ri: Ri, p1 : p1, p2 : p2, p3 : p3, p4 : p4, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
-            
+
             this.__canvas__.appendChild( shape );
-            
+
         }
-        
+
     });
-    
+
+    PieGraph.PATH = 'M{{p1.x}},{{p1.y}} L{{p2.x}},{{p2.y}} A{{Ro}},{{Ro}} 0 {{large-arc-flag}},{{sweep-flag}} {{p3.x}},{{p3.y}} L{{p4.x}},{{p4.y}} A{{Ri}},{{Ri}} 0 {{large-arc-flag}},0 {{p1.x}},{{p1.y}} Z';
     PieGraph.DEFAULTS = {
         'axis-y-name'           : undefined,
         'point-width'           : 'auto',
@@ -137,9 +186,7 @@
         'point-color-shift'     : 0,
         'canvas-padding'        : [ 40, 40, 40, 40 ]
     };
-    
-    PieGraph.PATH = 'M{{p1.x}},{{p1.y}} L{{p2.x}},{{p2.y}} A{{Ro}},{{Ro}} 0 {{large-arc-flag}},{{sweep-flag}} {{p3.x}},{{p3.y}} L{{p4.x}},{{p4.y}} A{{Ri}},{{Ri}} 0 {{large-arc-flag}},0 {{p1.x}},{{p1.y}} Z';
-    
+
     graph.factory.registerGraph( 'pie-graph', PieGraph );
-                    
+
 } )( phi.dom );

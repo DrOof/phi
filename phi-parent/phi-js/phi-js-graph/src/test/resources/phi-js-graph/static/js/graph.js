@@ -9,10 +9,10 @@ var bar = phi.graph.factory.createGraph( 'bar-graph', document.getElementById( '
 bar.set( phi.graph.factory.generateData( 10 ) );
 
 /* start line graph */
-var line = phi.graph.factory.createGraph( 'line-graph', document.getElementById( 'line-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : '109900', 'point-color-shift' : 16 } );
+var line = phi.graph.factory.createGraph( 'point-line-graph', document.getElementById( 'point-line-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : '109900', 'point-color-shift' : 16 } );
 line.set( phi.graph.factory.generateData( 20 ) );
 
-var scatter = phi.graph.factory.createGraph( 'scatter-graph', document.getElementById( 'scatter-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 2, 'point-best-fit' : 'linear' } );
+var scatter = phi.graph.factory.createGraph( 'point-graph', document.getElementById( 'point-graph' ), { 'axis-x-name' : 'x', 'axis-y-name' : 'y', 'point-color' : 'ff0000', 'point-color-shift' : 2, 'point-best-fit' : 'linear' } );
 scatter.set( phi.graph.factory.generateDataByFunction( 20, phi.graph.GraphFactory.EXP_BEST_FIT ) );
 
 // console.log( (new Date().getTime()) - t );

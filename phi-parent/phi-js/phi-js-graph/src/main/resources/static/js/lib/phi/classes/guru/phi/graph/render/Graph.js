@@ -54,15 +54,18 @@
         __init__ : function( node, options ) {
 
             this.__node__       = node;
-            this.__options__    = phi.extend( {}, Graph.DEFAUTS, options );
+            this.__options__    = options;
 
-            this.__canvas__     = this.createCanvas( node );
+            this.__canvas__ = this.createCanvas( this.__node__ );
             this.__tooltip__    = this.createTooltip();
             this.__data__       = [];
 
             this.addEventListener( 'pointenter',  this.__tooltip__.handlePointEnter.bind(   this.__tooltip__ ) );
             this.addEventListener( 'pointleave',  this.__tooltip__.handlePointLeave.bind(   this.__tooltip__ ) );
             this.addEventListener( 'pointselect', this.__tooltip__.handlePointSelect.bind(  this.__tooltip__ ) );
+            
+            window.addEventListener( 'resize', this.handleResize.bind( this ) );
+            
         },
 
         /**
@@ -70,16 +73,17 @@
          * TODO : write JavaDoc
          *
          */
-        
+
         createCanvas: function( node ) {
 
             var w = node.clientWidth;
             var h = node.clientHeight;
 
-            var canvas = new phi.dom.svg.SVGShapeElement( 'svg', { width : '100%', height: '100%' } );
+            var canvas = phi.svg.shape( 'svg', { width : '100%', height: '100%' } );
 
             // calculate viewbox
             canvas.attr( { viewBox : new phi.dom.Template( '0 0 {{w}} {{h}}' ).parse( { w : w, h : h } ) } );
+            canvas.attr( { preserveAspectRatio : 'xMinYMin slice' } );
             node.appendChild( canvas.element );
 
             return canvas;
@@ -94,7 +98,7 @@
         
         createTooltip: function( template ) {
             
-            var tooltip = new phi.graph.Tooltip( this.__options__[ 'point-label' ] );
+            var tooltip = new phi.graph.Tooltip( this.__options__[ 'point-info' ] );
             return tooltip;
             
         },
@@ -132,7 +136,7 @@
          */
         
         resolveRangeX: function() {
-            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-x-name' ] ), this.__options__[ 'axis-x-min' ], this.__options__[ 'axis-x-max' ] );s
+            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-x-name' ] ), this.__options__[ 'axis-x-min' ], this.__options__[ 'axis-x-max' ] );
         },
         
         /**
@@ -142,7 +146,7 @@
          */
         
         resolveRangeY: function() {
-            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-y-name' ] ), this.__options__[ 'axis-y-min' ], this.__options__[ 'axis-y-max' ] );s
+            return new phi.graph.ValueRange( this.resolveValuesByName( this.__options__[ 'axis-y-name' ] ), this.__options__[ 'axis-y-min' ], this.__options__[ 'axis-y-max' ] );
         },
         
         /**
@@ -283,11 +287,17 @@
              */
             
         },
+        
+        /**
+         *
+         * TODO : refactor
+         *
+         */
 
         format: function( value, type, format ) {
             
-            var type = type || 'none';
-            var format = format || '';
+            var type    = type || 'none';
+            var format  = format || '';
 
             var result;
             switch ( type ) {
@@ -311,12 +321,22 @@
         },
 
         label: function( point ) {
-            return new phi.dom.Template( this.__options__[ 'point-label' ] ).parse( point.getAttribute( 'point' ) );
+            return new phi.dom.Template( this.__options__[ 'point-info' ] ).parse( point.getAttribute( 'point' ) );
         },
         
 
         sort: function( data ) {
             return data.sort( function( a, b ) {  } );  
+        },
+        
+        /**
+         *
+         * TODO : replace with functional js ( oliver steele )
+         *
+         */
+        
+        __sigma__: function( values ) {
+            return values.reduce( function( a, b ) { return a + b; } );
         },
         
         processSVGShapeElement: function( shape ) {
@@ -355,8 +375,198 @@
         
         handleMouseUp: function( e ) {
             this.dispatchEvent( { type : 'pointselect', explicitOriginalTarget : e.target } );
-        }
+        },
+        
+        handleResize: function( e ) {
+            this.render( this.__data__ );
+        },
 
+        /**
+         *
+         * Render axis x
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        renderAxisX: function( d, range, i ) {
+            
+            var p = this.__options__[ 'canvas-padding' ];
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
+            
+            var line = phi.svg.shape( 'line' );
+            line.attr( { x1 : p[3], y1: p[0] + h, x2 : p[3] + w, y2 : p[0] + h } );
+            line.attr( { 'class' : 'graph-axis graph-axis-x' } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var l = range.delta / i;
+            var s = w / l;
+            var m = range.min;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisXInterval( p, w, h, l, s, i, n, m );
+            }
+            
+        },
+
+        /**
+         *
+         * Render axis x interval
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        renderAxisXInterval: function( p, w, h, l, s, i, n, m ) {
+            
+            var x1 = p[3] + ( n * s ),
+                y1 = p[0] + h,
+                x2 = x1,
+                y2 = p[0];
+            
+            var line = phi.svg.shape( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var text = phi.svg.shape( 'text' );
+            text.attr( { x : x2, y : y1 + 20, textContent : this.format( m + ( n * i ), this.__options__[ 'axis-x-type' ], this.__options__[ 'axis-x-format' ] ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-x-interval-text' } );
+            
+            this.__canvas__.appendChild( text );
+            
+        },
+
+        /**
+         *
+         * Render axis y
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        renderAxisY: function( d, range, i ) {
+            
+            var p = this.__options__[ 'canvas-padding' ];
+            
+            var w = d.width - p[1] - p[3];
+            var h = d.height - p[0] - p[2];
+            
+            var line = phi.svg.shape( 'line' );
+            line.attr( { x1 : p[3], y1: p[0], x2 : p[3], y2 : h + p[0] } );
+            line.attr( { 'class' : 'graph-axis graph-axis-y' } );
+            
+            this.__canvas__.appendChild( line );
+            
+            var l = range.delta / i;
+            var s = h / l;
+            var m = range.min;
+            
+            for ( var n = 0; n < l+1; n++) {
+                this.renderAxisYInterval( p, w, h, l, s, i, n, m );
+            }
+            
+        },
+
+        /**
+         *
+         * Render axis y interval
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        renderAxisYInterval: function( p, w, h, l, s, i, n, m ) {
+
+            var x1 = p[3],
+                y1 = p[0] + h - ( n * s ),
+                x2 = p[3] + w,
+                y2 = y1;
+
+            var line = phi.svg.shape( 'line' );
+            line.attr( { x1 : x1, y1 : y1, x2 : x2, y2: y2 } );
+            line.attr( { 'class' : 'graph-axis-interval graph-axis-interval-' + n } );
+
+            this.__canvas__.appendChild( line );
+
+            var text = phi.svg.shape( 'text' );
+            text.attr( { x : x1 - 20, y : y2 + 3, textContent : this.format( m + ( n * i ), this.__options__[ 'axis-y-type' ], this.__options__[ 'axis-y-format' ] ) } );
+            text.attr( { 'class' : 'graph-axis-interval-text graph-axis-y-interval-text' } );
+
+            this.__canvas__.appendChild( text );
+
+        },
+
+        /**
+         *
+         * Stretch range to fit
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        stretchRangeToFit : function( range, interval ) {
+
+            var min = Math.floor( range.min / interval ) * interval, 
+                max = Math.ceil( range.max / interval ) * interval;
+            
+            return {
+                min : min, max : max,
+                delta : max - min
+            }
+            
+        },
+
+        /**
+         *
+         * Resolve axis interval
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        resolveAxisInterval : function( delta, exponent, closest, factor ) {
+
+            var optimal = 10;
+            var proper = [ 1, 2, 5 ];
+
+            exponent = exponent || 1;
+            closest  = closest || Infinity;
+
+            var f, p;
+            for ( var i = 0; i < proper.length; i++ ) {
+                
+                f = proper[ i ] * exponent;
+                p = this.resolveAxisIntervalProximity( optimal, delta / f );
+                
+                if ( p < closest ) {
+                    closest = p;
+                    factor = f;
+                } else {
+                    return factor;
+                }
+                
+            }
+            
+            return this.resolveAxisInterval( delta, exponent * 10, closest, factor );
+            
+        },
+
+        /**
+         *
+         * Resolve axis interval proximity
+         * FIXME : refactor
+         * TODO : write JSDoc
+         *
+         */
+
+        resolveAxisIntervalProximity : function( optimal, real ) {
+            return Math.abs( optimal - real );
+        }
 
     });
     

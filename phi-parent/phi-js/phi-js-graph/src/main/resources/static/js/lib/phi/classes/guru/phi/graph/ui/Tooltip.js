@@ -10,30 +10,46 @@
             this.__template__ = new phi.dom.Template( template || Tooltip.TEMPLATE );
         },
 
-        createNode: function( parent, html ) {
+        /**
+         *
+         * Create node
+         * TODO : add JSDoc
+         *
+         */
 
-            var canvas, node;
+        __create_node__: function( parent, html ) {
 
-            canvas = document.createElement( 'div' );
-            canvas.innerHTML = html;
+            var canvas = document.createElement( 'div' );
+                canvas.innerHTML = html;
 
-            node = canvas.firstChild;
-
-            // TODO : perhaps append to graph itself to keep self contained.
-            parent.appendChild( node );
+            var node = canvas.firstChild;
+                parent.appendChild( node );
             
             return node;;
 
         },
-        
-        destroyNode: function( parent, child ) {
+
+        /**
+         *
+         * Create node
+         * TODO : add JSDoc
+         *
+         */
+
+        __remove_node__: function( parent, child ) {
             parent.removeChild( child );
         },
+
+        /**
+         *
+         * Handle point enter
+         *
+         */
 
         handlePointEnter: function( e ) {
 
             var target      = e.explicitOriginalTarget;
-            var node        = this.createNode( e.target.__node__, this.__template__.parse( target.point ) );
+            var node        = this.__create_node__( e.target.__node__, this.__template__.parse( target.point ) );
             var box         = phi.dom.getOffsetBoundingBox( target );
 
             var style       = node.currentStyle || window.getComputedStyle( node );
@@ -45,28 +61,30 @@
 
         },
 
+        /**
+         *
+         * Handle point leave
+         * TODO : add JSDoc
+         *
+         */
+
         handlePointLeave: function( e ) {
-            this.destroyNode( e.target.__node__, this.__active__ );
+            this.__remove_node__( e.target.__node__, this.__active__ );
         },
+        
+        /**
+         *
+         * Handle point select
+         * TODO : add JSDoc
+         *
+         */
 
         handlePointSelect: function( e ) {
-
-            /*
-            var target = e.explicitOriginalTarget;
-            var node = this.createNode( this.__template__.parse( target.point ) );
-            var offset = phi.dom.calculateOffset( target );
-            
-            node.style.top =    ( offset.top    - ( node.clientHeight    ) - 10 ) + 'px';
-            node.style.left =   ( offset.left   - ( node.clientWidth / 2 ) + 20 ) + 'px'
-
-            this.__active__ = node;
-            */
 
         }
 
     });
 
-    // NOTE: Why not set the graph-tooltip class directly in the template? 
-    Tooltip.TEMPLATE =  '<div class="graph-tooltip"><h5 class="graph-tooltip-title">{{label}}</h5><div class="graph-tooltip-content">{{y}}</div></div>';
+    Tooltip.TEMPLATE =  '<div class="graph-point-info">{{x}}, {{y}}</div>';
 
 })( phi );
