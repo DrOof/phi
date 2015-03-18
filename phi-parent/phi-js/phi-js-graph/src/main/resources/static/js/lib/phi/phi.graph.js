@@ -63,6 +63,8 @@
         
         createGraph: function( type, node, options, data ) {
             
+            console.log( type );
+            
             var clazz = this.__registered__[ type ];
 
             var graph = new clazz( node, options );

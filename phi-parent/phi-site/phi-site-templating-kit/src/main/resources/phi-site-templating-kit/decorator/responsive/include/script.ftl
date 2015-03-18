@@ -3,7 +3,6 @@
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.core.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.dom.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.form.js"></script>
-<script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.graph.js"></script>
 <script type="text/javascript" src="${contextPath}/static/js/lib/phi/phi.dialog.js"></script>
 
 <link rel="stylesheet" href="${contextPath}/static/css/slider.css" />

@@ -239,7 +239,7 @@
     var AnimationRelations = phi.dom.AnimationRelations = phi({
         
         __init__ : function( prefix, scope ) {
-            
+
             this.prefix = prefix || '';
             this.relations = {};
             
@@ -250,11 +250,11 @@
         },
         
         handleAnimationStart: function( e ) {
-            
+
             if ( this.prefix.test( e.animationName ) ) {
                 
                 var rel = e.target.getAttribute( 'rel' );
-            
+                
                 if ( rel ) {
                 
                     var relations = rel.split( ' ' );
@@ -266,7 +266,7 @@
                         
                         if ( this.prefix.exec( r ) ) {
                         
-                            var key = r.replace( this.prefix, '' ).replace( ':', '' );
+                            var key = r.replace( this.prefix, '' ).replace( '-', '' );
                             
                             if ( key ) {
             
