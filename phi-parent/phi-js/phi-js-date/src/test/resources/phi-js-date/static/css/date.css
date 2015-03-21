@@ -1,0 +1,9 @@
+.phi-calendar {
+	display: none;
+	background: red;
+	padding: 100px;
+}
+
+.phi-calendar.active {
+	display: inline-block;
+}
