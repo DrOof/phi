@@ -128,7 +128,7 @@
                 
                     if ( this.prefix.exec( r ) ) {
                 
-                        var action = r.replace( this.prefix, '' ).replace( ':', '' );
+                        var action = r.replace( this.prefix, '' ).replace( '-', '' );
                 
                         if ( action ) {
                     

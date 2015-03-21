@@ -45,10 +45,60 @@
             this.__node__       = node;
             this.__options__    = phi.extend( {}, Calendar.DEFAULTS, options );
             // this.__nodeForm__   = new form.Form(node);
-            this.__calendar__   = {};
+            this.__calendar__   = null;
+            this.__id__ = this.__options__['id'] || phi.uuid();
 
-            this.buildCalendar( this.__options__ );
-            this.createEventListeners( this.__node__, this.__calendar__ );
+            this.build( );
+
+            this.__relations__ = new phi.dom.LinkRelations( new RegExp('calendar' + this.__id__) , this.__calendar__ );
+            
+            this.createEventListeners( );
+
+        },
+
+        /**
+        *
+        *
+        **/
+        
+        createEventListeners: function ( ) {
+            this.__node__.addEventListener( 'focus', this.handleFocus.bind(this), true );
+            this.__node__.addEventListener( 'blur',  this.handleBlur.bind(this),  true );
+
+            this.__relations__.add('prev', this.handleCalendarPrefClick.bind( this ) );
+            this.__relations__.add('next', this.handleCalendarNextClick.bind( this ) );
+            this.__relations__.add('date', this.handleCalendarDayClick.bind( this ) );
+        },
+
+
+        /**
+        *
+        *
+        *
+        */
+
+        handleCalendarPrefClick: function ( e ) {
+            console.log(e)
+        },
+
+        /**
+        *
+        *
+        *
+        */
+
+        handleCalendarNextClick: function ( e ) {
+
+        },
+
+        /**
+        *
+        *
+        *
+        */
+
+        handleCalendarDayClick: function ( e ) {
+
         },
 
         /**
@@ -56,18 +106,40 @@
         *
         */        
 
-        buildCalendar: function ( options ) {
+        build: function ( options ) {
+
             this.__calendar__ = document.createElement('div');
-            this.__calendar__.setAttribute('class', 'phi-calendar');
+            this.__calendar__.setAttribute('class', this.__options__['root-class']);
+            this.__calendar__.setAttribute('id', this.__id__);
+
+            var calendarHeader = this.buildHeader();
 
             var calendarTable = '<table>';
-            calendarTable += this.buildCalendarHead();
-            calendarTable += this.buildCalendarBody();
+            calendarTable += this.buildTableHead();
+            calendarTable += this.buildTableBody();
             calendarTable += '</table>';
 
-            this.__calendar__.innerHTML = calendarTable;
+            this.__calendar__.innerHTML = calendarHeader + calendarTable;
 
             document.body.appendChild( this.__calendar__ );
+        
+        },
+
+
+        /**
+        *
+        *
+        *
+        */
+        
+        buildHeader: function () {
+
+            return new phi.dom.Template( Calendar.HEADER_TEMPLATE ).parse( {
+                month: 'Hello',
+                year: 2015,
+                id: this.__id__
+            } );
+
         },
 
         /**
@@ -76,7 +148,7 @@
         *
         */
         
-        buildCalendarHead: function () {
+        buildTableHead: function () {
 
             // TODO: add option for changing the start day in week
 
@@ -98,13 +170,12 @@
         *
         */
         
-        buildCalendarBody: function () {
+        buildTableBody: function () {
 
             // TODO: take the date from options
             var date = this.__options__['date'];
             var daysInMonth = this.getNumberOfDaysInMonth( date );
             var blankDays = daysInMonth % 7 + 1;
-
 
             var tbody = '<tbody>';
 
@@ -114,7 +185,7 @@
                     tbody += '<tr>';
                 }
 
-                tbody += '<td><a>' + i + '</a></td>';
+                tbody += '<td><a href="#" rel="calendar-link">' + i + '</a></td>';
 
 
                 if( i % 7 === 0) {
@@ -144,21 +215,13 @@
             var html = '';
 
             for (var i = 1; i <= days; i++) {
-                html += '<td>&nbsp;<td>';
+                html += '<td>&nbsp;</td>';
             }
 
             return html;
         },
 
-        /**
-        *
-        *
-        **/
         
-        createEventListeners: function ( node, calendar ) {
-            node.addEventListener( 'focus',        this.handleFocus.bind(this), true );
-            node.addEventListener( 'blur',         this.handleBlur.bind(this), true );
-        },
 
         /**
          *
@@ -214,7 +277,11 @@
         UP        : 38
     };
 
+    Calendar.HEADER_TEMPLATE = '<div><a href="#" rel="calendar{{id}}-prev" class="calendar-header-prev"> < </a><span class="calendar-header-month">{{month}}</span> <span class="calendar-header-year">{{year}}</span><a href="#" rel="calendar{{id}}-next" class="calendar-header-next"> > </a></div>'
+
     Calendar.DEFAULTS = {
+        'id'           : undefined,
+        'root-class'   : 'calendar',
         'days-in-week' : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
         'date'         : new Date()
     };

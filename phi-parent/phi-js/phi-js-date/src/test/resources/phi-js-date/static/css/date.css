@@ -1,8 +1,8 @@
-.phi-calendar {
+.calendar {
 	display: none;
 	background: #eee;
 }
 
-.phi-calendar.active {
+.calendar.active {
 	display: inline-block;
 }
