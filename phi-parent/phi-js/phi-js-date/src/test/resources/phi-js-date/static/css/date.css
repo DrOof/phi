@@ -1,7 +1,6 @@
 .phi-calendar {
 	display: none;
-	background: red;
-	padding: 100px;
+	background: #eee;
 }
 
 .phi-calendar.active {

@@ -60,7 +60,94 @@
             this.__calendar__ = document.createElement('div');
             this.__calendar__.setAttribute('class', 'phi-calendar');
 
+            var calendarTable = '<table>';
+            calendarTable += this.buildCalendarHead();
+            calendarTable += this.buildCalendarBody();
+            calendarTable += '</table>';
+
+            this.__calendar__.innerHTML = calendarTable;
+
             document.body.appendChild( this.__calendar__ );
+        },
+
+        /**
+        *
+        * 
+        *
+        */
+        
+        buildCalendarHead: function () {
+
+            // TODO: add option for changing the start day in week
+
+            var thead = '<thead><tr>';
+
+
+            for (var i = 0; i < this.__options__['days-in-week'].length; i++ ) {
+                thead += '<th><span>' + this.__options__['days-in-week'][i] + '</span></th>';
+            }
+            thead += '</tr></thead>';
+
+            return thead;
+
+        },
+
+        /**
+        *
+        * 
+        *
+        */
+        
+        buildCalendarBody: function () {
+
+            // TODO: take the date from options
+            var date = this.__options__['date'];
+            var daysInMonth = this.getNumberOfDaysInMonth( date );
+            var blankDays = daysInMonth % 7 + 1;
+
+
+            var tbody = '<tbody>';
+
+            for( var i = 1; i<= daysInMonth; i++ ) {
+
+                if( i % 7 === 1 ) {
+                    tbody += '<tr>';
+                }
+
+                tbody += '<td><a>' + i + '</a></td>';
+
+
+                if( i % 7 === 0) {
+                    tbody += '</tr>';
+                }
+
+            }
+
+            if ( /\/tr>$/.test( tbody ) === false ) {
+                tbody += this.appendBlankDays( blankDays );
+                tbody += '</tr>';
+            }
+
+            tbody += '<tbody>';
+
+            return tbody;
+        },
+
+        /**
+        *
+        *
+        *
+        */
+        
+        appendBlankDays: function ( days ) {
+            
+            var html = '';
+
+            for (var i = 1; i <= days; i++) {
+                html += '<td>&nbsp;<td>';
+            }
+
+            return html;
         },
 
         /**
@@ -94,6 +181,17 @@
         
         handleBlur: function ( e ) {
             // this.dispatchEvent( { type : 'inputblur',  explicitOriginalTarget : e.target } );
+        },
+
+        /**
+        *
+        *
+        *
+        */
+        
+        getNumberOfDaysInMonth: function ( date ) {
+            date.setMonth( date.getMonth() + 1);
+            return (new Date( date.getFullYear(), date.getMonth(), 0 ) ).getDate();
         }
     } );
 
@@ -117,7 +215,8 @@
     };
 
     Calendar.DEFAULTS = {
-
+        'days-in-week' : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        'date'         : new Date()
     };
     
     
