@@ -78,7 +78,7 @@
 
         var parent  = element.parentElement;
 
-        var result = parent.querySelectorAll( selector );
+        var results = parent.querySelectorAll( selector );
         var match = false; // Array.prototype.some.apply( matches, function( m ) { console.log( m ); } );
 
         for ( var i = results.length - 1; i >= 0; i--) {
