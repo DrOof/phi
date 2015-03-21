@@ -227,19 +227,12 @@
             if ( rel ) {
                 var relations = rel.split(' ');
                 var r = '';
-                for (var i = relations.length - 1; i >= 0; i--){
-                
+                for ( var i = relations.length - 1; i >= 0; i--) {
                     r = relations[i];
-                
                     if ( this.prefix.exec( r ) ) {
-                
                         var action = r.replace( this.prefix, '' ).replace( '-', '' );
-                
-                        if ( action ) {
-                    
-                            if ( this.relations[ action ] ) {
-                                this.relations[ action ](e);
-                            }
+                        if ( action && this.relations[ action ] ) {
+                            this.relations[ action ]( e );
                         }
                     }
                 };    
