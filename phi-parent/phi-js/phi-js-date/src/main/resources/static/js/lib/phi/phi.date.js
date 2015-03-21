@@ -48,14 +48,22 @@
             this.__options__['first-day'] = ( this.__options__['first-day'] < 1 || this.__options__['first-day'] > 7 ) ? 7 : this.__options__['first-day'];
             this.__options__['days-in-week'] = this.__options__['days-in-week'].slice( this.__options__['first-day'] - 1 ).concat( this.__options__['days-in-week'].slice( 0, this.__options__['first-day'] - 1 ) );
 
-            this.__calendar__ = null
 
+            this.__calendar__ = null
             this.__id__ = this.__options__['id'] || phi.uuid();
             this.__date__ = this.__options__['date'];
+            this.__renderDate__ = new Date( this.__date__.getTime() );
 
+            this.__templates__ = {
+                head : new phi.dom.Template( Calendar.TEMPLATES.HEAD ),
+                day  : new phi.dom.Template( Calendar.TEMPLATES.DAY ),
+                headerDay  : new phi.dom.Template( Calendar.TEMPLATES.HEADER_DAY )
+            };
+
+            this.setInputDate( this.__date__ );
             this.build( );
 
-            this.__relations__ = new phi.dom.LinkRelations( new RegExp('calendar' + this.__id__) , this.__calendar__ );
+            this.__relations__ = new phi.dom.LinkRelations( new RegExp('calendar') , this.__calendar__ );
             
             this.createEventListeners( );
 
@@ -68,8 +76,9 @@
         
         createEventListeners: function ( ) {
 
-            this.__node__.addEventListener( 'focus', this.handleFocus.bind(this), true );
-            this.__node__.addEventListener( 'blur',  this.handleBlur.bind(this),  true );
+            this.__node__.addEventListener( 'focus', this.handleFocus.bind( this ), true );
+            this.__node__.addEventListener( 'blur',  this.handleBlur.bind( this ),  true );
+            this.__node__.addEventListener( 'keydown',  this.handleKeyDown.bind( this ),  true );
 
             this.__relations__.add('prev', this.handleCalendarPrevClick.bind( this ) );
             this.__relations__.add('next', this.handleCalendarNextClick.bind( this ) );
@@ -85,7 +94,11 @@
         */
 
         handleCalendarPrevClick: function ( e ) {
-            var node = e.target;
+
+            this.__renderDate__.setMonth( this.__renderDate__.getMonth() - 1 );
+
+            this.render();
+
         },
 
         /**
@@ -95,7 +108,11 @@
         */
 
         handleCalendarNextClick: function ( e ) {
-            var node = e.target;
+            
+            this.__renderDate__.setMonth( this.__renderDate__.getMonth() + 1 );
+
+            this.render();
+
         },
 
         /**
@@ -114,9 +131,118 @@
 
             this.__date__ = new Date( year, month, day );
 
-            this.__node__.value = this.__date__.getDate() + '/' + ( this.__date__.getMonth() + 1 ) + '/' + this.__date__.getFullYear();
+            this.setInputDate( this.__date__ ); 
 
+            this.render();
             this.hide();
+
+        },
+
+         /**
+         *
+         * Handle input focus
+         *
+         */
+
+        handleFocus: function( e ) {
+
+            this.show();
+            // this.dispatchEvent( { type : 'inputfocus', explicitOriginalTarget : e.target } );
+        },
+
+        /**
+        *
+        * Handle input blur
+        *
+        */
+        
+        handleBlur: function ( e ) {
+            // this.dispatchEvent( { type : 'inputblur',  explicitOriginalTarget : e.target } );
+        },
+
+        /**
+        *
+        * Handle input keydown
+        *
+        */
+        
+        handleKeyDown: function ( e ) {
+
+            e.preventDefault();
+
+            if( e.which ===  Calendar.KEY_CODE.LEFT ) {
+                this.prevDay();
+            }
+
+            if( e.which ===  Calendar.KEY_CODE.RIGHT ) {
+                this.nextDay();
+            }
+
+            if( e.which ===  Calendar.KEY_CODE.UP ) {
+                this.nextYear();
+            }
+
+            if( e.which ===  Calendar.KEY_CODE.DOWN ) {
+                this.prevMonth();
+            }
+
+        },
+
+        /**
+        *
+        *
+        *
+        */
+
+        prevDay: function ( ) {
+
+            this.__date__.setDate( this.__date__.getDate() - 1 );
+            this.__renderDate__ = new Date( this.__date__.getTime() );
+            this.setInputDate( this.__date__ );
+
+            this.render();
+            
+        },
+
+
+        /**
+        *
+        *
+        *
+        */
+        
+        nextDay: function ( ) {
+
+            this.__date__.setDate( this.__date__.getDate() + 1 );
+            this.__renderDate__ = new Date( this.__date__.getTime() );
+            this.setInputDate( this.__date__ );
+
+            this.render();
+
+        },
+        /**
+        *
+        *
+        *
+        */
+
+        prevMonth: function ( ) {
+
+            this.__renderDate__.setMonth( this.__renderDate__.getMonth() - 1 );
+            this.render();
+        },
+
+
+        /**
+        *
+        *
+        *
+        */
+        
+        nextYear: function ( ) {
+
+            this.__renderDate__.setMonth( this.__renderDate__.getMonth() + 1 );
+            this.render();
 
         },
 
@@ -144,14 +270,10 @@
         
         render: function () {
 
-            var calendarHeader = this.buildHeader();
+            var head = this.buildHead(),
+                body = this.buildBody();
 
-            var calendarTable = '<table>';
-            calendarTable += this.buildTableHead();
-            calendarTable += this.buildTableBody();
-            calendarTable += '</table>';
-
-            this.__calendar__.innerHTML = calendarHeader + calendarTable;
+            this.__calendar__.innerHTML = head + body;
 
         },        
 
@@ -161,35 +283,15 @@
         *
         */
         
-        buildHeader: function () {
-            var id = this.__id__;
+        buildHead: function () {
 
-            return new phi.dom.Template( Calendar.HEADER_TEMPLATE ).parse( {
-                month: Calendar.MONTHS[ this.__date__.getMonth() ],
-                year: this.__date__.getFullYear(),
-                id: this.__id__
+            return this.__templates__.head.parse( {
+                month: Calendar.MONTHS[ this.__renderDate__.getMonth() ],
+                year: this.__renderDate__.getFullYear()
             } );
 
         },
 
-        /**
-        *
-        * 
-        *
-        */
-        
-        buildTableHead: function () {
-
-            var thead = '<thead><tr>';
-
-            for (var i = 0; i < this.__options__[ 'days-in-week' ].length; i++ ) {
-                thead += '<th><span>' + this.__options__[ 'days-in-week' ][ i ] + '</span></th>';
-            }
-            thead += '</tr></thead>';
-
-            return thead;
-
-        },
 
         /**
         *
@@ -197,82 +299,65 @@
         *
         */
         
-        buildTableBody: function () {
+        buildBody: function () {
 
-            var daysInMonth = this.getNumberOfDaysInMonth( this.__date__ );
-            var blankDays = daysInMonth % 7 + 1;
+            var i, firstDay, daysInMonth, clazz, header = '', body = '',
+                date = new Date(this.__renderDate__.getTime());
 
-            var tbody = '<tbody>';
+            // Get the first day of the month            
+            date.setDate(1);
+            firstDay = date.getDay() === 0 ? 7 : date.getDay();
+            firstDay = ( 7 - this.__options__['first-day'] + firstDay ) % 7;
 
-            for ( var i = 1; i <= daysInMonth; i++ ) {
+            // Calendar header
+            for ( i = 0; i < this.__options__[ 'days-in-week' ].length; i++ ) {
 
-                if( i % 7 === 1 ) {
-                    tbody += '<tr>';
-                }
-
-                tbody += '<td><a href="#" ' +
-                         'data-day="'    + i + '"' + 
-                         'data-month="'  + this.__date__.getMonth() + '"' + 
-                         'data-year="'   + this.__date__.getFullYear() + '"' + 
-                         'rel="calendar' + this.__id__ + '-date">' 
-                         + i + '</a></td>';
-
-
-                if( i % 7 === 0) {
-                    tbody += '</tr>';
-                }
-
-            }
-
-            if ( /\/tr>$/.test( tbody ) === false ) {
-                tbody += this.appendBlankDays( blankDays );
-                tbody += '</tr>';
-            }
-
-            tbody += '<tbody>';
-
-            return tbody;
-        },
-
-        /**
-        *
-        *
-        *
-        */
-        
-        appendBlankDays: function ( days ) {
+                header += this.__templates__.headerDay.parse( {
+                    day: this.__options__[ 'days-in-week' ][ i ]
+                } );
             
-            var html = '';
-
-            for (var i = 1; i <= days; i++) {
-                html += '<td>&nbsp;</td>';
             }
 
-            return html;
-        },
+            header = '<div class="calendar-header">' + header + '</div>';
 
-        
 
-        /**
-         *
-         * Handle input focus
-         *
-         */
+            // Calendar body
+            daysInMonth = this.getNumberOfDaysInMonth( this.__renderDate__ );
 
-        handleFocus: function( e ) {
+            // Empty days
+            for( i = 0 ; i < firstDay; i++ ) {
+                body += Calendar.TEMPLATES.DAY_EMPTY;
+            }
 
-            this.show();
-            // this.dispatchEvent( { type : 'inputfocus', explicitOriginalTarget : e.target } );
+            // Days
+            for ( i = 1; i <= daysInMonth; i++ ) {
+
+                clazz = this.isSelectedDate( new Date( this.__renderDate__.getFullYear(), this.__renderDate__.getMonth(), i ) ) ? 'active' : '';
+
+                body += this.__templates__.day.parse({ 
+                            year  : this.__renderDate__.getFullYear(),
+                            month : this.__renderDate__.getMonth(),
+                            day   : i,
+                            class : clazz
+                        });
+
+            }
+
+            body = '<div class="calendar-body">' + body + '</div>';
+
+            return header + body;
         },
 
         /**
         *
-        * Handle input blur
+        *
         *
         */
         
-        handleBlur: function ( e ) {
-            // this.dispatchEvent( { type : 'inputblur',  explicitOriginalTarget : e.target } );
+        setInputDate: function ( date ) {
+
+            this.__node__.value = date.getDate() + '/' + ( date.getMonth() + 1 ) + '/' + date.getFullYear();
+
         },
 
         /**
@@ -288,6 +373,20 @@
             date.setMonth( date.getMonth() + 1);
             return (new Date( date.getFullYear(), date.getMonth(), 0 ) ).getDate();
         },
+
+        /**
+        *
+        *
+        *
+        */
+
+        isSelectedDate: function ( date ) {
+            
+            return this.__date__.getFullYear() === date.getFullYear() &&
+                   this.__date__.getMonth()    === date.getMonth() &&
+                   this.__date__.getDate()     === date.getDate();
+        },
+       
 
         /**
         *
@@ -330,14 +429,20 @@
         UP        : 38
     };
 
-    Calendar.HEADER_TEMPLATE = '<div><a href="#" rel="calendar{{id}}-prev" class="calendar-header-prev"> < </a><span class="calendar-header-month">{{month}}</span> <span class="calendar-header-year">{{year}}</span><a href="#" rel="calendar{{id}}-next" class="calendar-header-next"> > </a></div>'
+    Calendar.TEMPLATES = {
+        HEAD       : '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a><span class="calendar-head-month">{{month}}</span> <span class="calendar-head-year">{{year}}</span><a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>',
+        HEADER_DAY : '<span class="calendar-block calendar-header-item">{{day}}</span>',
+        DAY        : '<a href="#" class="calendar-block calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a>',
+        DAY_EMPTY  : '<span class="calendar-block"></span>'
+    };
+
     Calendar.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
     Calendar.DEFAULTS = {
         'id'           : undefined,
         'root-class'   : 'calendar',
-        'days-in-week' : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-        'first-day'    : 7, // Start with Sunday
-        'date'         : new Date()
+        'days-in-week' : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        'first-day'    : 1, // Start with Sunday
+        'date'         : new Date( )
     };
     
     

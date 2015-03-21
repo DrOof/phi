@@ -1,8 +1,0 @@
-.calendar {
-	display: none;
-	background: #eee;
-}
-
-.calendar.active {
-	display: inline-block;
-}
