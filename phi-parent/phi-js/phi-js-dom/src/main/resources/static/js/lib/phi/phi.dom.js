@@ -76,19 +76,16 @@
 
     phi.dom.getClosestBySelector = function( element, selector ) {
 
-        var parent  = element.parentElement;
+        var parent      = element.parentElement;
+        var results     = parent.querySelectorAll( selector );
+        var match       = false;
 
-        var results = parent.querySelectorAll( selector );
-        var match = false; // Array.prototype.some.apply( matches, function( m ) { console.log( m ); } );
-
-        for ( var i = results.length - 1; i >= 0; i--) {
-            match = results[ i ].contains( element );
-            if ( match ) {
-                break;
-            }
+        for ( var r in = results ) {
+            match  = results[ r ].contains( element );
+            if ( match ) { return element; }
         }
 
-        return match ? element : phi.dom.getClosestBySelector( parent, selector );
+        return phi.dom.getClosestBySelector( parent, selector );
 
     };
 
@@ -268,36 +265,20 @@
         handleAnimationStart: function( e ) {
 
             if ( this.prefix.test( e.animationName ) ) {
-                
                 var rel = e.target.getAttribute( 'rel' );
-                
                 if ( rel ) {
-                
                     var relations = rel.split( ' ' );
                     var r;
-                
                     for ( var i =  relations.length - 1; i >= 0; i-- ) {
-                    
                         r = relations[ i ];
-                        
                         if ( this.prefix.exec( r ) ) {
-                        
                             var key = r.replace( this.prefix, '' ).replace( '-', '' );
-                            
-                            if ( key ) {
-            
-                                if ( this.relations[ key ] ) {
-                                    this.relations[ key ](e);
-                                }
-                            
+                            if ( key && this.relations[ key ] ) {
+                                this.relations[ key ](e);
                             }
-                        
                         }
-                    
                     }
-                
                 }
-                
             }
             
         },
