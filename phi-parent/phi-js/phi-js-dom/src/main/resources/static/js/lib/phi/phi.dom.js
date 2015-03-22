@@ -80,8 +80,8 @@
         var results     = parent.querySelectorAll( selector );
         var match       = false;
 
-        for ( var r in = results ) {
-            match  = results[ r ].contains( element );
+        for ( var r in results ) {
+            match = results[ r ].contains( element );
             if ( match ) { return element; }
         }
 
