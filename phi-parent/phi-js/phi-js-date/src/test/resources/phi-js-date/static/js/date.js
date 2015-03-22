@@ -1,0 +1,1 @@
+var cal = new phi.date.Calendar(document.getElementById('calendar'), {});

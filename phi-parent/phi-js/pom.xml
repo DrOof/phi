@@ -57,6 +57,8 @@
                             <baseResource>${project.basedir}/phi-js-slider/src/test/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-grid/src/main/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-grid/src/test/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-date/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-date/src/test/resources</baseResource>
                         </resourceBases>
                     </webAppConfig>
                 </configuration>
