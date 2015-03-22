@@ -7,3 +7,7 @@ html, body {
 .graph-content {
     margin: 20px 10px;
 }
+
+.point-line-graph {
+    xheight: 200px;
+}

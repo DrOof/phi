@@ -4,9 +4,9 @@
         
         <link rel="stylesheet" href="/phi-js/static/css/grid.css" media="screen" />
         <link rel="stylesheet" href="/phi-js/static/css/form.css" media="screen" />
-        <link rel="stylesheet" href="static/css/graph.css" media="screen" />
-        
         <link rel="stylesheet" href="/phi-js/static/css/graph.css" media="screen" />
+        
+        <link rel="stylesheet" href="static/css/graph.css" media="screen" />
         
     </head>
     <body>
@@ -97,6 +97,22 @@
                         </div>
                         <div class="field">
                             <div class="column phi a">
+                                <label class="field-label">axis-y-min</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-min" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-max</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-max" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
                                 <label class="field-label">point-width</label>
                             </div>
                             <div class="column phi b">
@@ -132,8 +148,8 @@
             <div class="column two a">
                 <section class="graph-content">
                     <h2>Line Graph</h2>
-                    <div id="line-graph" class="graph line-graph"></div>
-                    <form action="#line-graph" method="get" class="graph-options">
+                    <div id="point-line-graph" class="graph point-line-graph"></div>
+                    <form action="#point-line-graph" method="get" class="graph-options">
                         <div class="field">
                             <div class="column phi a">
                                 <label class="field-label">data-source</label>
@@ -160,6 +176,22 @@
                         </div>
                         <div class="field">
                             <div class="column phi a">
+                                <label class="field-label">axis-x-min</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-min" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-x-max</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-max" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
                                 <label class="field-label">axis-y-name</label>
                             </div>
                             <div class="column phi b">
@@ -172,6 +204,22 @@
                             </div>
                             <div class="column phi b">
                                 <input class="field-text" type="text" name="axis-y-interval" value="10" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-min</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-min" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-max</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-max" value="auto" />
                             </div>
                         </div>
                         <div class="field">
@@ -203,8 +251,8 @@
             <div class="column two a">
                 <section class="graph-content">
                     <h2>Scatter Graph</h2>
-                    <div id="scatter-graph" class="graph scatter-graph"></div>
-                    <form action="#scatter-graph" method="get" class="graph-options">
+                    <div id="point-graph" class="graph point-graph"></div>
+                    <form action="#point-graph" method="get" class="graph-options">
                         <div class="field">
                             <div class="column phi a">
                                 <label class="field-label">data-source</label>
@@ -231,6 +279,22 @@
                         </div>
                         <div class="field">
                             <div class="column phi a">
+                                <label class="field-label">axis-x-min</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-min" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-x-max</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-x-max" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
                                 <label class="field-label">axis-y-name</label>
                             </div>
                             <div class="column phi b">
@@ -243,6 +307,22 @@
                             </div>
                             <div class="column phi b">
                                 <input class="field-text" type="text" name="axis-y-interval" value="10" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-min</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-min" value="auto" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="column phi a">
+                                <label class="field-label">axis-y-max</label>
+                            </div>
+                            <div class="column phi b">
+                                <input class="field-text" type="text" name="axis-y-max" value="auto" />
                             </div>
                         </div>
                         <div class="field">
@@ -273,17 +353,28 @@
             </div>
         </div>
         
+        <div class="a">
+            <div class="b">
+                <div class="c">
+                    <div class="d" id="test-node-d">TEST</div>
+                </div>
+            </div>
+        </div>
+        
         <script type="application/javascript" src="/phi-js/static/js/lib/jquery/jquery-2.1.1.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dom.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dialog.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.graph.js"></script>
+
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/Tooltip.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/ValueRange.js"></script>
+
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/Graph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/PieGraph.js"></script>
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/BarGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/LineGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/ScatterGraph.js"></script>
-        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/ui/Label.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/PointGraph.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/classes/guru/phi/graph/render/PointLineGraph.js"></script>
         
         <script type="application/javascript" src="static/js/graph.js"></script>
         

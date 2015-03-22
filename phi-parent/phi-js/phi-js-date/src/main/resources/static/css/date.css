@@ -1,3 +1,118 @@
 .calendar {
-    
+    display: none;
+    background: #F7F7F7;
+    position: absolute;
+    width: 350px;
+    color: #525252;
+    font-family: SANS-SERIF;
+    padding: 15px 0;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+    top: 24px;
+    left: 5px;
+}
+
+.calendar.active {
+    display: inline-block;
+}
+
+.calendar-block {
+    display: inline-block;
+    width: 14.28%;
+}
+
+.calendar-head {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #515151;
+    font-weight: bold;
+    position: relative;  
+    height: 20px;
+    line-height: 20px;
+}
+
+.calendar-head-select {
+    background: none;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: #515151;
+    cursor: pointer;
+}
+.calendar-head-prev {
+    text-decoration: none;
+    color: #444;
+    position: absolute;
+    left: 14px;
+    top: -2px;
+}
+
+.calendar-head-next {
+    text-decoration: none;
+    color: #444;
+    position: absolute;
+    right: 14px;
+    top: -2px;
+}
+
+.calendar-header-item {
+    text-align: center;
+}
+
+.calendar-day-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-day-list li {
+    display: inline-block;
+    width: 14.28%;
+    text-align: center;
+    margin-top: 7px;
+}
+
+.calendar-day {
+    text-decoration: none;
+    color: #525252;
+    text-align: center;
+    height: 42px;
+    width: 42px;
+    line-height: 44px;
+    display: inline-block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+
+.calendar-day:HOVER {
+  background: #B9D8F9;
+
+}
+
+.calendar-day.current {
+  background: #F9E0B9;
+  color: #525252;
+}
+
+.calendar-day.active {
+  background: #B9D8F9;
+  color: #127DFE;
+}
+
+.calendar-footer {
+    text-align: right;
+    padding: 0 10px;
+}
+
+.calendar-footer-today {
+    background: #F0DCDC;
+    padding: 5px;
+    border-radius: 4px;
+    color: #888;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.calendar-footer-today:HOVER {
+    border: 1px solid #888;
 }

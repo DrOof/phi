@@ -46,14 +46,56 @@
         return params;
         
     };
+
+    /**
+     *
+     * Get bounding box relative to offset parent.
+     *
+     */
+
+    phi.dom.getOffsetBoundingBox = function( element ) {
+
+        // get client rect from offset parent
+        var box         = phi.extend( {}, element.getBoundingClientRect() );
+        var offset      = element.offsetParent.getBoundingClientRect();
+        var whitelist   = { top : 1, left : 1, bottom : -1, right : -1 };
+        
+        for ( var p in whitelist ) {
+            box[ p ] = ( box[ p ] - ( offset[ p ] ) ) * whitelist[ p ];
+        }
+
+        return box;
+
+    };
     
+    /**
+     *
+     * Get closest by selector
+     *
+     */
+
+    phi.dom.getClosestBySelector = function( element, selector ) {
+
+        var parent      = element.parentElement;
+        var results     = parent.querySelectorAll( selector );
+        var match       = false;
+
+        for ( var r in results ) {
+            match = results[ r ].contains( element );
+            if ( match ) { return element; }
+        }
+
+        return phi.dom.getClosestBySelector( parent, selector );
+
+    };
+
     /**
      *
      * SVGShapeElement
      *
      */
     
-    var svg = dom.svg = {
+    var svg = phi.svg = {
         
         /**
          *
@@ -89,218 +131,23 @@
         },
         
         appendChild: function( child ) {
-            this.element.appendChild( child.element )   
-        }
-    
-    });
-    
-    
-    
-    
-    /**
-     *
-     * Observes links
-     *
-     */
-
-    var LinkRelations = phi.dom.LinkRelations = phi({
-
-        __init__: function( prefix, scope ) {
             
-            dom( scope || document ).bind( 'click', this.handleClick.bind( this ) );
+            if ( child instanceof SVGShapeElement ) {
+                this.appendShapeChild( child );
+            }
             
-            this.prefix = prefix || '';
-            this.relations = {};
-            
-        },
-
-        handleClick: function( e ) {
-            
-            var link  = dom( e.target ).closest( 'a' ),
-                rel   = link.attr( 'rel' );
-                
-            if ( rel ) {
-                var relations = rel.split(' ');
-                var r = '';
-                for (var i = relations.length - 1; i >= 0; i--){
-                
-                    r = relations[i];
-                
-                    if ( this.prefix.exec( r ) ) {
-                
-                        var action = r.replace( this.prefix, '' ).replace( ':', '' );
-                
-                        if ( action ) {
-                    
-                            if ( this.relations[ action ] ) {
-                                this.relations[ action ](e);
-                            }
-                        }
-                    }
-                };    
+            if ( child instanceof SVGElement ) {
+                this.appendNativeChild( child );
             }
             
         },
         
-        add: function( key, fn ) {
-            this.relations[ key ] = fn;
-        }
-
-    });
-    
-    /**
-     *
-     * Observes animation
-     *
-     */
-    
-    var AnimationRelations = phi.dom.AnimationRelations = phi({
-        
-        __init__ : function( prefix, scope ) {
-            
-            this.prefix = prefix || '';
-            this.relations = {};
-            
-            document.addEventListener( 'animationstart', this.handleAnimationStart.bind( this ) );
-            document.addEventListener( 'MSAnimationStart', this.handleAnimationStart.bind( this ) );
-            document.addEventListener( 'webkitAnimationStart', this.handleAnimationStart.bind( this ) );
-            
+        appendShapeChild: function( child ) {
+            this.element.appendChild( child.element );
         },
         
-        handleAnimationStart: function( e ) {
-            
-            if ( this.prefix.test( e.animationName ) ) {
-                
-                var rel = e.target.getAttribute( 'rel' );
-            
-                if ( rel ) {
-                
-                    var relations = rel.split( ' ' );
-                    var r;
-                
-                    for ( var i =  relations.length - 1; i >= 0; i-- ) {
-                    
-                        r = relations[ i ];
-                        
-                        if ( this.prefix.exec( r ) ) {
-                        
-                            var key = r.replace( this.prefix, '' ).replace( ':', '' );
-                            
-                            if ( key ) {
-            
-                                if ( this.relations[ key ] ) {
-                                    this.relations[ key ](e);
-                                }
-                            
-                            }
-                        
-                        }
-                    
-                    }
-                
-                }
-                
-            }
-            
-        },
-        
-        add: function( key, fn ) {
-            this.relations[ key ] = fn;
-        }
-        
-    });
-    
-    /**
-     *
-     * Observer field changes
-     *
-     */
-    
-    var FieldRelations = phi.dom.FieldRelations = phi({
-
-        __init__: function( prefix, scope ) {
-            
-            dom( scope || document ).bind( 'change', this.handleChange.bind( this ) );
-            
-            this.prefix = prefix || '';
-            this.relations = {};
-            
-        },
-
-        handleChange: function( e ) {
-            
-            var field  = dom( e.target ).closest( 'input, textarea, select' ),  
-                rel = field.attr( 'data-relation' );
-                
-                if ( rel ) {
-                    var relations = rel.split(' ');
-                    var r = '';
-                    for (var i = relations.length - 1; i >= 0; i--){
-                
-                        r = relations[i];
-                
-                        if ( this.prefix.exec( r ) ) {
-                
-                            var action = r.replace( this.prefix, '' ).replace( ':', '' );
-                
-                            if ( action ) {
-                    
-                                if ( this.relations[ action ] ) {
-                                    this.relations[ action ](e);
-                                }
-                            }
-                        }
-                    };    
-                }
-            
-        },
-        
-        add: function( key, fn ) {
-            this.relations[ key ] = fn;
-        }
-
-    });
-    
-    /**
-     *
-     * Observer hash changes
-     *
-     */
-    
-    var HashRelations = phi.dom.HashRelations = phi({
-
-        __init__: function( prefix ) {
-            
-            dom( window ).bind( 'hashchange ready', this.handleHashChange.bind( this ) );
-            
-            this.prefix = prefix || '';
-            this.relations = {};
-            
-        },
-
-        handleHashChange: function( e ) {
-            
-            var rel = window.location.hash.replace( '#', '' );
-            
-            if ( rel ) {
-                
-                if ( this.prefix.exec( rel ) ) {
-                    
-                    var action = rel.replace( this.prefix, '' ).replace( /.*:|\?.*/g, '' );
-                    
-                    if ( action ) {
-            
-                        if ( this.relations[ action ] ) {
-                            this.relations[ action ]( e );
-                        }
-                    }
-                }  
-            }
-            
-        },
-        
-        add: function( key, fn ) {
-            this.relations[ key ] = fn;
+        appendNativeChild: function( child ) {
+            this.element.appendChild( child );
         }
 
     });
@@ -351,8 +198,332 @@
         
     });
     
-    /*
+    /**
      *
+     * Observes links
+     *
+     */
+
+    var LinkRelations = phi.dom.LinkRelations = phi({
+
+        __init__: function( prefix, scope ) {
+            
+            ( scope || document ).addEventListener( 'click', this.handleClick.bind( this ), true );
+
+            this.prefix = prefix || '';
+            this.relations = {};
+
+        },
+
+        handleClick: function( e ) {
+
+            // TODO : replace with 
+            var link  = phi.dom.getClosestBySelector( e.target, 'a' ),
+                rel   = link.getAttribute( 'rel' );
+                
+            if ( rel ) {
+                var relations = rel.split(' ');
+                var r = '';
+                for ( var i = relations.length - 1; i >= 0; i--) {
+                    r = relations[i];
+                    if ( this.prefix.exec( r ) ) {
+                        var action = r.replace( this.prefix, '' ).replace( '-', '' );
+                        if ( action && this.relations[ action ] ) {
+                            this.relations[ action ]( e );
+                        }
+                    }
+                };    
+            }
+            
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
+
+    });
+    
+    /**
+     *
+     * Observes animation
+     *
+     */
+    
+    var AnimationRelations = phi.dom.AnimationRelations = phi({
+        
+        __init__ : function( prefix, scope ) {
+
+            this.prefix = prefix || '';
+            this.relations = {};
+            
+            ( scope || document ).addEventListener( 'animationstart', this.handleAnimationStart.bind( this ) );
+            ( scope || document ).addEventListener( 'MSAnimationStart', this.handleAnimationStart.bind( this ) );
+            ( scope || document ).addEventListener( 'webkitAnimationStart', this.handleAnimationStart.bind( this ) );
+            
+        },
+        
+        handleAnimationStart: function( e ) {
+
+            if ( this.prefix.test( e.animationName ) ) {
+                var rel = e.target.getAttribute( 'rel' );
+                if ( rel ) {
+                    var relations = rel.split( ' ' );
+                    var r;
+                    for ( var i =  relations.length - 1; i >= 0; i-- ) {
+                        r = relations[ i ];
+                        if ( this.prefix.exec( r ) ) {
+                            var key = r.replace( this.prefix, '' ).replace( '-', '' );
+                            if ( key && this.relations[ key ] ) {
+                                this.relations[ key ](e);
+                            }
+                        }
+                    }
+                }
+            }
+            
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
+        
+    });
+    
+    /**
+     *
+     * Observer field changes
+     *
+     */
+    
+    var FieldRelations = phi.dom.FieldRelations = phi({
+
+        __init__: function( prefix, scope ) {
+            
+            dom( scope || document ).bind( 'change', this.handleChange.bind( this ) );
+            
+            this.prefix = prefix || '';
+            this.relations = {};
+            
+        },
+
+        handleChange: function( e ) {
+            
+            var field  = dom( e.target ).closest( 'input, textarea, select' ),  
+                rel = field.attr( 'data-relation' );
+                
+                if ( rel ) {
+                    var relations = rel.split(' ');
+                    var r = '';
+                    for (var i = relations.length - 1; i >= 0; i--){
+                
+                        r = relations[i];
+                
+                        if ( this.prefix.exec( r ) ) {
+                
+                            var action = r.replace( this.prefix, '' ).replace( '-', '' );
+                
+                            if ( action ) {
+                    
+                                if ( this.relations[ action ] ) {
+                                    this.relations[ action ](e);
+                                }
+                            }
+                        }
+                    };    
+                }
+            
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
+
+    });
+    
+    /**
+     *
+     * Observer hash changes
+     *
+     */
+    
+    var HashRelations = phi.dom.HashRelations = phi({
+
+        __init__: function( prefix ) {
+            
+            window.addEventListener( 'hashchange ready', this.handleHashChange.bind( this ), true );
+            
+            this.prefix = prefix || '';
+            this.relations = {};
+            
+        },
+
+        handleHashChange: function( e ) {
+            
+            var rel = window.location.hash.replace( '#', '' );
+            
+            if ( rel ) {
+                
+                if ( this.prefix.exec( rel ) ) {
+                    
+                    var action = rel.replace( this.prefix, '' ).replace( /.*:|\?.*/g, '' );
+                    
+                    if ( action ) {
+            
+                        if ( this.relations[ action ] ) {
+                            this.relations[ action ]( e );
+                        }
+                    }
+                }  
+            }
+            
+        },
+        
+        add: function( key, fn ) {
+            this.relations[ key ] = fn;
+        }
+
+    });
+    
+    /**
+     *
+     * DateFormat
+     *
+     */
+
+    var DateFormat = phi.dom.DateFormat = phi({
+
+        __init__ : function( format ) {
+            this.__format__ = format;
+        },
+
+        /**
+         *
+         * Formats a date
+         *
+         */
+
+        format: function( date, format ) {
+
+            format = format || this.__format__;
+            
+            var result = format, value, patterns = DateFormat.PATTERNS;
+            for ( var key in patterns ) {
+                result = result.replace( key, this.completePartial( patterns[ key ][ 0 ].apply( date ), key.length ) );
+            }
+
+            return result;
+
+        },
+
+        /**
+         *
+         * Parses a formatted date
+         *
+         */
+
+        parse: function( date, format ) {
+
+            format = format || this.__format__;
+
+            var result = new Date();
+            var patterns = DateFormat.PATTERNS;
+            var pattern, match;
+            for ( var key in patterns ) {
+                pattern = new RegExp( key );
+                match = format.match( pattern );
+                if ( match ) {
+                    patterns[ key ][ 1 ].call( result, date.substr( match.index, key.length ) );    
+                }
+            }
+            
+            return result;
+
+        },
+
+        completePartial: function( value, length ) {
+            return '0000'.substr( 0, length - ( ('' + value).length ) ) + value;
+        }
+
+    });
+    
+    DateFormat.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    
+    var DATE = Date.prototype;
+    DateFormat.PATTERNS = {
+        'YYYY'  :   [ 
+                        DATE.getFullYear, 
+                        DATE.setFullYear  
+                    ],
+        'MMMM'  : 
+                    [ 
+                        function() { var m = DATE.getMonth.apply( this, arguments ); return DateFormat.MONTHS[ m ] }, 
+                        function() { var m = DateFormat.MONTHS.indexOf( arguments[0] ); DATE.setMonth.apply( this, m ) }
+                    ],
+        'MMM'  : 
+                    [ 
+                        function() { var m = DATE.getMonth.apply( this, arguments ); return DateFormat.MONTHS[ m ].substr( 0, 3 ) }, 
+                        function() { var m = DateFormat.MONTHS.indexOf( arguments[0] ); DATE.setMonth.apply( this, m ) }
+                    ],
+        'MM'    :   [ 
+                        DATE.getMonth,
+                        DATE.setMonth
+                    ],
+        'DD'    :   
+                    [ 
+                        DATE.getDate,
+                        DATE.setDate
+                    ],
+        'hh'    :   [ 
+                        DATE.getHours,
+                        DATE.setHours
+                    ],
+        'mm'    :   [ 
+                        DATE.getMinutes,
+                        DATE.setMinutes
+                    ],
+        'ss'    :   [ 
+                        DATE.getSeconds,
+                        DATE.setSeconds
+                    ]
+    };
+    
+    /**
+     *
+     * NumberFormat
+     *
+     */
+    
+    var NumberFormat = phi.dom.NumberFormat = phi({
+        
+        __init__ : function( format ) {
+            this.__format__ = format;
+        },
+
+        /**
+         *
+         * Parses a formatted number
+         *
+         */
+
+        parse: function( number, format ) {
+            
+        },
+        
+        /**
+         *
+         * Formats a number
+         *
+         */
+
+        format: function( number, format ) {
+            
+        }
+
+    })
+    
+    /**
+     *
+     * TODO : remove jQuery
      * A progress bar.
      *
      */
@@ -381,7 +552,8 @@
     
     /**
      *
-     * Dragger
+     * TODO : remove jQuery
+     * A progress bar.
      *
      */
 
@@ -558,6 +730,7 @@
 
     /**
      *
+     * TODO : remove jQuery
      * Relative Dragger
      *
      */
@@ -630,5 +803,4 @@
 
     });
 
-    
 })(phi, jQuery);

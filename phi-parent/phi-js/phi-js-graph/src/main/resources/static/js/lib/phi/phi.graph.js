@@ -39,16 +39,41 @@
     var GraphFactory = graph.GraphFactory = phi({
         
         __init__ : function() {
+
             this.__graphs__ = {};
+            this.__registered__ = {};
+            this.__relations__ = new phi.dom.AnimationRelations( /graph/ );
+            this.__relations__.add( 'create', this.handleGraphCreate.bind( this ) );
+
         },
         
-        createGraph: function( graphClass, node, options ) {
+        registerGraph: function( type, clazz ) {
+            this.__registered__[ type ] = clazz;
+        },
+        
+        unregisterGraph: function( type ) {
+            delete this.__registered__[ type ];
+        },
+        
+        /**
+         *
+         * Create graph
+         *
+         */
+        
+        createGraph: function( type, node, options, data ) {
             
-            /* deprecated string as graphClass */
-            graphClass = this.findGraphClassBySimpleName( graphClass );
+            var clazz = this.__registered__[ type ];
+
+            var graph = new clazz( node, options );
+            var id = node.getAttribute( 'id' );
             
-            var graph = new graphClass( node, options );
-            var name = node.getAttribute( 'id' ) || phi.uuid();
+            var name =  ( id ) ? id : 'graph-' + phi.uuid();
+            node.setAttribute( 'id', name );
+            
+            if ( data ) {
+                graph.set( data );
+            }
             
             this.__graphs__[ name ] = graph;
             
@@ -56,34 +81,40 @@
             
         },
         
-        findGraphById: function( id ) {
-            return this.__graphs__[ id ];
-        },
-        
         /**
          *
-         * Find the graph class by simple name.
-         * 
-         * @deprecated
+         * Handle graph create
          *
          */
-        
-        findGraphClassBySimpleName: function( graphClass ) {
+
+        handleGraphCreate: function( e ) {
+
+            var node = e.target;
+
+            var graph = this.getGraphById( node.id );
             
-            if ( typeof graphClass === 'string' ) {
-                graphClass = phi.graph[ graphClass ];
+            if ( !graph ) {
+
+                var type = node.getAttribute( 'type' );
+                var options = JSON.parse( node.getAttribute( 'options' ) );
+                var data = JSON.parse( node.getAttribute( 'data' ) );
+
+                this.createGraph( type, node, options, data );
+
             }
-            
-            return graphClass;
-            
+
         },
-        
+
+        getGraphById: function( id ) {
+            return this.__graphs__[ id ];
+        },
+
         /**
          *
          * Generate random data.
          *
          */
-        
+
         generateData : function( size ) {
             var data = [];
             for ( var i = 0; i < size; i++) {
@@ -96,7 +127,7 @@
     
             return data;
         },
-        
+
         /**
          *
          * Generate exponentional data.
@@ -115,12 +146,12 @@
     
             return data;
         }
-        
+
     });
     
     GraphFactory.LIN_BEST_FIT = function( x, a, b ) { return ( a * x ) + ( b ) };
     GraphFactory.EXP_BEST_FIT = function( x, a, b, c ) { return ( a * x * x ) + ( b * x ) + ( c ) };
-    
-    var factory = graph.factory = new GraphFactory();
-    
+
+    graph.factory = new GraphFactory();
+
 } )( phi.dom );
