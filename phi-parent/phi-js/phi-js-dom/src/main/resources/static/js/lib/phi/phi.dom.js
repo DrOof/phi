@@ -28,9 +28,26 @@
  */
 
 (function( phi, dom ) {
-    
+
+    // TODO : remove dependency on jQuery.
     phi.dom = dom;
-    
+
+    /**
+     *
+     * Short hand to create a node
+     *
+     */
+
+    phi.dom.node = function( element, attribute ) {
+        return new phi.dom.Node( element, attribute );
+    }
+
+    /**
+     *
+     * Get parameters from url
+     *
+     */
+
     phi.dom.getParameters = function( url ) {
         
         var pairs = url.split('?')[1].split('&');
@@ -38,7 +55,7 @@
         
         var params = {};
         
-        for (var i = pairs.length - 1; i >= 0; i--) {
+        for ( var i = pairs.length - 1; i >= 0; i-- ) {
             pair = pairs[i].split('=');
             params[ pair[ 0 ] ] = pair[ 1 ];
         }
@@ -67,7 +84,7 @@
         return box;
 
     };
-    
+
     /**
      *
      * Get closest by selector
@@ -91,7 +108,89 @@
 
     /**
      *
-     * SVGShapeElement
+     * Node
+     *
+     */
+
+    var __Node__ = phi.dom.Node = phi({
+
+        /**
+         *
+         * Create an element or decorate it.
+         *
+         */
+
+        __init__ : function( element, attributes ) {
+
+            this.node = ( typeof element === 'string' ) ? document.createElement( element ) : element;
+            this.attr( attributes || {} );
+
+        },
+
+        /**
+         *
+         * Set element attributes.
+         *
+         */
+
+        attr: function( attributes ) {
+
+            for ( var key in attributes ) {
+                this.element[key] = attributes[ key ];
+                this.element.setAttribute( key, attributes[ key ] );
+            }
+
+            return this;
+
+        },
+
+        /**
+         *
+         * Append a child
+         *
+         */
+
+        append : function( child ) {
+
+            if ( child instanceof phi.dom.Node ) {
+                this.__append_node_child__( child );
+            }
+
+            if ( child instanceof Node ) {
+                this.__append_native_child__( child );
+            }
+
+        },
+
+        /**
+         *
+         * @deprecated
+         *
+         */
+
+        __append_node_child__: function( child ) {
+            this.node.appendChild( child.node );
+        },
+
+        __append_native_child__: function( child ) {
+            this.node.appendChild( child );
+        },
+
+        /**
+         *
+         * Get bounding box
+         *
+         */
+
+        getBoundingBox: function() {
+            return phi.dom.getOffsetBoundingBox( this.node );
+        }
+
+    })
+
+    /**
+     *
+     * Shape
      *
      */
     
@@ -104,53 +203,94 @@
          */
         
         shape: function( element, attribute ) {
-            return new SVGShapeElement( element, attribute );
+            return new Shape( element, attribute );
         }
         
     };
     
-    var SVGNS = 'http://www.w3.org/2000/svg';
-    var SVGShapeElement = svg.SVGShapeElement = phi({
+    /**
+     *
+     * Shape
+     *
+     */
+
+    var Shape = svg.Shape = phi({
     
         __init__ : function( element, attributes ) {
         
-            this.element = ( typeof element === 'string' ) ? document.createElementNS( SVGNS, element ) : element;
+            this.element = ( typeof element === 'string' ) ? document.createElementNS( Shape.SVGNS, element ) : element;
             this.attr( attributes || {} )
         
         },
-    
+
+        /**
+         *
+         * Set attributes
+         *
+         */
+
         attr: function( attributes ) {
             
-            for( var key in attributes ) {
-                
-                this.element[key] = attributes[ key ];
+            for ( var key in attributes ) {
+                this.element[ key ] = attributes[ key ];
                 this.element.setAttribute( key, attributes[ key ] );
-                
             }
-        
+
+            return this;
+
         },
-        
-        appendChild: function( child ) {
-            
-            if ( child instanceof SVGShapeElement ) {
-                this.appendShapeChild( child );
+
+        /**
+         *
+         * Append a child
+         *
+         */
+
+        append: function( child ) {
+
+            if ( child instanceof Shape ) {
+                this.__append_shape_child__( child );
             }
-            
+
             if ( child instanceof SVGElement ) {
-                this.appendNativeChild( child );
+                this.__append_native_child__( child );
             }
-            
+
+            return this;
+
         },
-        
-        appendShapeChild: function( child ) {
+
+        /**
+         *
+         * @deprecated
+         *
+         */
+
+        appendChild: function( child ) {
+            return this.append( child )
+        },
+
+        __append_shape_child__: function( child ) {
             this.element.appendChild( child.element );
         },
-        
-        appendNativeChild: function( child ) {
+
+        __append_native_child__: function( child ) {
             this.element.appendChild( child );
+        },
+
+        /**
+         *
+         * Get bounding box
+         *
+         */
+
+        getBoundingBox: function() {
+            return phi.dom.getOffsetBoundingBox( this.element );
         }
 
     });
+    
+    Shape.SVGNS = 'http://www.w3.org/2000/svg';
     
     /**
      *

@@ -167,7 +167,7 @@
 
             var shape = phi.svg.shape( 'path' );
 
-            this.processSVGShapeElement( shape );
+            this.processShape( shape );
 
             shape.attr( { 'class' : 'graph-point graph-point-' + n, 'point' : point, fill : color } );
             shape.attr( { 'd' : this.__path__.parse( { Ro : Ro, Ri: Ri, p1 : p1, p2 : p2, p3 : p3, p4 : p4, 'large-arc-flag' : large ? 1 : 0, 'sweep-flag' : 1 } ) } );
