@@ -183,4 +183,257 @@
                     '<time class="player-controls-remaining-time"></time>' +
                 '</div>';
     
+    /**
+     *
+     * TODO : remove jQuery
+     * A progress bar.
+     *
+     */
+
+    var Dragger = phi.dom.Dragger = phi( {
+
+        __extends__ : phi.EventTarget,
+
+        __init__: function( node, draggable, options ) {
+
+            this.__node__ = dom( node || document );
+            this.draggable = draggable;
+
+            var options = options || {};
+
+            this.constrain    = ( options.constrain === false ) ? false : true;
+            this.allowX     = ( options.allowX === false ) ? false : true;
+            this.allowY     = ( options.allowY === false ) ? false : true;
+
+            this.__node__.bind( 'mousedown', this.handleMouseDown.bind( this ) );
+            this.__node__.bind( 'touchstart', this.handleTouchStart.bind( this ));
+            this.__node__.bind( 'touchmove', this.handleTouchMove.bind( this ));
+            this.__node__.bind( 'touchend', this.handleTouchEnd.bind( this ));
+
+        },
+
+        isDragging: function() {
+            return !!this.dragging;
+        },
+
+        grab: function( target ) {
+
+            this.dragging = dom( target ).closest( this.draggable, this.__node__ );
+            this.dragging.addClass( 'dragging' );
+
+            this.dispatchEvent( { type : 'dragstart', target : this }  );
+
+        },
+
+        release: function( target ) {
+
+            this.dispatchEvent( { type : 'dragend', target : this }  );
+
+            this.dragging.removeClass( 'dragging' );
+            this.dragging = null;
+
+        },
+
+        /* read only */
+        value: function( x, y ) {
+            return { x: this.valueX( x ), y: this.valueY( y ) };
+        },
+
+        /* get or set valueX */
+        valueX: function( x ) {
+
+            if ( x ) {
+                this.move( x, 0 );
+            }
+
+            var left = 0;
+            if ( this.isDragging() ) {
+                left = parseInt( this.dragging.css( 'left' ) );
+            }
+
+            return left;
+
+        },
+
+        /* get or set valueY */
+        valueY: function( y ) {
+
+            if ( y ) {
+                this.move( 0, y );
+            }
+
+            var top = 0;
+            if ( this.isDragging() ) {
+                 top = parseInt( this.dragging.css( 'top' ) );
+            }
+
+            return top;
+
+        },
+
+        drag: function( e ) {
+
+            var x, y, w, h, left, top;
+
+            x = e.pageX - this.__node__.offset().left;
+            y = e.pageY - this.__node__.offset().top;
+
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
+
+            this.move( x, y );
+
+            this.dispatchEvent( { type : 'dragmove', target : this }  );
+
+        },
+
+        move: function( x, y ) {
+
+
+
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
+
+            if ( this.constrain ) {
+                x = (x > w) ? w : ((x < 0) ? 0 : x);
+                y = (y > h) ? h : ((y < 0) ? 0 : y);
+            }
+
+            var css = {};
+            if ( this.allowX ) {
+                css['left'] = x;
+            }
+
+            if ( this.allowY ) {
+                css['top'] = y;
+            }
+
+            if ( this.isDragging() ) {
+                this.dragging.css( css );    
+            }
+
+
+        },
+
+        handleMouseDown: function( e ) { e.preventDefault();
+
+            if ( !dom( e.target ).closest( 'a' ).length && dom( e.target ).closest( this.draggable ).length ) {
+                dom( document ).bind( 'mouseup.dragger mouseleave.dragger', this.handleMouseUp.bind( this ) );
+                dom( document ).bind( 'mousemove.dragger', this.handleMouseMove.bind( this ) );
+                this.grab( e.target );
+                this.drag( e );
+            }
+
+        },
+
+        handleMouseMove: function( e ) { e.preventDefault();
+            this.drag( e );
+        },
+
+        handleMouseUp: function( e ) { e.preventDefault();
+            dom( document ).unbind( 'mousemove.dragger mouseup.dragger mouseleave.dragger' );
+            this.release( e.target );
+        },
+
+        handleTouchStart: function( e ) { e.preventDefault();
+
+            var e = e.originalEvent.touches[0];
+
+            if ( !dom( e.target ).closest( 'a' ).length && dom( e.target ).closest( this.draggable ).length ) {
+                this.grab( e );
+            }
+
+        },
+
+        handleTouchMove: function( e ) { e.preventDefault();
+
+            var e = e.originalEvent.touches[0];
+            this.drag( e );
+
+        },
+
+        handleTouchEnd: function( e ) { e.preventDefault();
+
+            var e = e.originalEvent.touches[0];
+            this.release(e);
+
+        }
+
+    });
+
+    /**
+     *
+     * TODO : remove jQuery
+     * Relative Dragger
+     *
+     */
+
+    var RelativeDragger = phi.dom.RelativeDragger = phi({
+
+        __extends__: Dragger,
+
+        drag: function( e ) {
+
+            var x, y, w, h, l, t, left, top;
+
+            x = e.pageX - this.__node__.offset().left;
+            y = e.pageY - this.__node__.offset().top;
+
+            w = this.__node__.outerWidth();
+            h = this.__node__.outerHeight();
+
+            x = parseFloat( 100 * x / w );
+            y = parseFloat( 100 * y / h );
+
+            this.move( x, y );
+
+            this.dispatchEvent( { type : 'dragmove', target : this }  );
+
+        },
+
+        move: function( x, y ) {
+
+            if ( this.constrain ) {
+                x = ( x > 100 ) ? 100 : ( ( x < 0 ) ? 0 : x );
+                y = ( y > 100 ) ? 100 : ( ( y < 0 ) ? 0 : y );
+            }
+
+            var css = {};
+            if ( this.allowX ) {
+                css['left'] = x + '%';
+            }
+
+            if ( this.allowY ) {
+                css['top'] = y + '%';
+            }
+
+            if ( this.isDragging() ) {
+                this.dragging.css( css );    
+            }
+
+
+        },
+
+        valueX: function( x ) {
+
+            if ( x !== undefined ) {
+                this.move( x, 0 );
+            } else {
+                return parseFloat( this.dragging.css( 'left' ) ) / this.__node__.outerWidth() * 100;
+            }
+
+        },
+
+        valueY: function( y ) {
+
+            if ( y !== undefined ) {
+                this.move( 0, y );
+            } else {
+                return  parseFloat( this.dragging.css( 'top' ) ) / this.__node__.height() * 100;
+            }
+
+        }
+
+    });
+    
 } )( phi.dom );
