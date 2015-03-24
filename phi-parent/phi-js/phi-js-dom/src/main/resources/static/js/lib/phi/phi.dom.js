@@ -159,6 +159,10 @@
             if ( child instanceof Node ) {
                 this.__append_native_child__( child );
             }
+            
+            if ( child instanceof Element ) {
+                this.__append_native_child__( child );
+            }
 
         },
 
