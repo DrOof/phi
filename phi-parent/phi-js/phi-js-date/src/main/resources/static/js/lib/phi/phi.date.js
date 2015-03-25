@@ -186,7 +186,10 @@
             this.__selected_date__ = new Date( year, month, day );
             this.__active_date__ = new Date( year, month, 1);
 
-            if( this.isFunction ( this.__options__['date-select'] )) {
+            // TODO : this is exactly what the EventTarget is designed for ;)
+            // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
+            if ( this.isFunction ( this.__options__['date-select'] )) {
+                
                 this.__options__['date-select']( this.__selected_date__ );
             }
 
@@ -240,11 +243,13 @@
 
             this.__date__ = this.isDate( this.__selected_date__ ) ? new Date( this.__selected_date__.getTime() ) : null;
 
-            if( this.isFunction ( this.__options__['date-submit'] )) {
+            // TODO : this is exactly what the EventTarget is designed for ;)
+            // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
+            if ( this.isFunction ( this.__options__['date-submit'] ) ) {
                 this.__options__['date-submit']( this.__date__ );
             }
 
-            if( this.isDate( this.__date__ ) ) {
+            if ( this.isDate( this.__date__ ) ) {
                 this.__active_date__ = new Date( this.__date__.getTime() );
                 this.render();
             }
@@ -262,6 +267,8 @@
             
             this.__selected_date__ = this.isDate( this.__date__ ) ? new Date( this.__date__.getTime() ) : null;
 
+            // TODO : this is exactly what the EventTarget is designed for ;)
+            // eg. this.dispatchEvent( { type : 'datecancel', target : this } );
             if( this.isFunction ( this.__options__['date-cancel'] )) {
                 this.__options__['date-cancel']( this.__selected_date__ );
             }
@@ -282,7 +289,9 @@
             this.__selected_date__ = null;
             this.__active_date__   = new Date( );
 
-            if( this.isFunction ( this.__options__['date-clear'] )) {
+            // TODO : this is exactly what the EventTarget is designed for ;)
+            // eg. this.dispatchEvent( { type : 'dateclear', target : this } );
+            if ( this.isFunction ( this.__options__['date-clear'] ) ) {
                 this.__options__['date-clear']( );
             }
 
@@ -524,7 +533,7 @@
             }
 
             // Next Month days
-            for( i = 1 ; i <= daysInNextMonth; i++ ) {
+            for ( i = 1 ; i <= daysInNextMonth; i++ ) {
                 body += this.__templates__.dayOtherMonth.parse({ 
                             year  : nextMonth.getFullYear(),
                             month : nextMonth.getMonth(),
@@ -670,10 +679,10 @@
         'days-in-week' : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         'first-day'    : 7, // Start with Sunday
         'date'         : undefined,
-        'date-submit'  : undefined,
-        'date-select'  : undefined,
-        'date-clear'   : undefined,
-        'date-cancel'  : undefined
+        'date-submit'  : undefined, // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
+        'date-select'  : undefined, // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
+        'date-clear'   : undefined, // eg. this.dispatchEvent( { type : 'dateclear', target : this } );
+        'date-cancel'  : undefined  // eg. this.dispatchEvent( { type : 'datecancel', target : this } );
 
     };
     
