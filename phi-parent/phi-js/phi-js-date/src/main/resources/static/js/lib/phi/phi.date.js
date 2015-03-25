@@ -184,6 +184,7 @@
             var day   = parseInt( node.getAttribute( 'data-day' ), 10 );
 
             this.__selected_date__ = new Date( year, month, day );
+            this.__active_date__ = new Date( year, month, 1);
 
             if( this.isFunction ( this.__options__['date-select'] )) {
                 this.__options__['date-select']( this.__selected_date__ );
@@ -471,6 +472,7 @@
         buildBody: function () {
 
             var i, dayOffset, daysInMonth, clazz, header = '', body = '', footer = '',
+                daysRenderedInPrevMonth, daysInPrevMonth, daysInNextMonth, daysInMonth,
                 previousMonth = new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth() - 1, 1 ),
                 nextMonth = new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth() + 1, 1 ),
                 date = new Date(this.__active_date__.getTime());
@@ -494,7 +496,8 @@
             // Calendar body
             daysInMonth = this.getNumberOfDaysInMonth( new Date( this.__active_date__ ) );
             daysInPrevMonth = this.getNumberOfDaysInMonth( previousMonth )
-            daysInNextMonth = 7 - ( ( daysInMonth + dayOffset) % 7 );
+            daysRenderedInPrevMonth = daysInPrevMonth - (daysInPrevMonth - ( dayOffset || 7 ) );
+            daysInNextMonth = 42 - ( daysInMonth + daysRenderedInPrevMonth); // 7 - ( ( daysInMonth + dayOffset) % 7 );
 
             // Prev Month days
             for( i = daysInPrevMonth - ( dayOffset || 7 ) + 1 ; i <= daysInPrevMonth; i++ ) {
@@ -658,7 +661,7 @@
         HEAD_TEMPLATE            : '<div class="calendar-head"><a href="javascript://" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="javascript://" rel="calendar-next" class="calendar-head-next"> > </a></div>',
         HEADER_DAY_TEMPLATE      : '<span class="calendar-header-day">{{day}}</span>',
         DAY_TEMPLATE             : '<li><a href="javascript://" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>',
-        DAY_OTHER_MONTH_TEMPLATE : '<li><a href="javascript://" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-dateOffset">{{day}}</a></li>',
+        DAY_OTHER_MONTH_TEMPLATE : '<li><a href="javascript://" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>',
         SELECT_TEMPLATE          : '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>',
         SELECT_OPTION_TEMPLATE   : '<option value="{{value}}" {{selected}}>{{text}}</option>',
         FOOTER_TEMPLATE          : '<div class="calendar-footer"><a href="javascript://" class="calendar-footer-button" rel="calendar-submit">Submit</a>  <a href="javascript://" class="calendar-footer-button" rel="calendar-cancel">Cancel</a> <a href="javascript://" class="calendar-footer-button" rel="calendar-clear">Clear</a>  <a href="javascript://" class="calendar-footer-button" rel="calendar-today">Today</a></div>'

@@ -87,7 +87,13 @@
     width: 42px;
     line-height: 44px;
     display: inline-block;
-    cursor: default;
+}
+
+.calendar-day-other:hover {
+    background: #eee;
+}
+.calendar-day-other.active {
+    background: #eee;
 }
 
 .calendar-day:hover {

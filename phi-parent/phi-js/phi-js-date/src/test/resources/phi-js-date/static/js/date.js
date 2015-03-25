@@ -1,4 +1,4 @@
-cal = new phi.date.Calendar(document.getElementById('calendar'), {
+var cal = new phi.date.Calendar(document.getElementById('calendar'), {
 	'date-select': function ( date ) {
 		console.log('select', date);
 	},
