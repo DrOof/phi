@@ -1,14 +1,10 @@
 .calendar {
-    display: none;
     background: #F7F7F7;
-    position: absolute;
     width: 350px;
     color: #525252;
     font-family: SANS-SERIF;
     padding: 15px 0;
-    box-shadow: 0 0 10px rgba(0,0,0, 0.5);
-    top: 24px;
-    left: 5px;
+    border: 1px solid #dadada;
 }
 
 .calendar.active {
@@ -54,10 +50,11 @@
     top: -2px;
 }
 
-.calendar-header-item {
+.calendar-header-day {
     text-align: center;
+    display: inline-block;
+    width: 14.28%;    
 }
-
 .calendar-day-list {
     list-style: none;
     padding: 0;
@@ -79,14 +76,22 @@
     width: 42px;
     line-height: 44px;
     display: inline-block;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
 }
 
-.calendar-day:HOVER {
-  background: #B9D8F9;
 
+.calendar-day-other {
+    text-decoration: none;
+    color: #999;
+    text-align: center;
+    height: 42px;
+    width: 42px;
+    line-height: 44px;
+    display: inline-block;
+    cursor: default;
+}
+
+.calendar-day:hover {
+  background: #B9D8F9;
 }
 
 .calendar-day.current {
@@ -102,17 +107,19 @@
 .calendar-footer {
     text-align: right;
     padding: 0 10px;
+    margin-top: 10px;
 }
 
-.calendar-footer-today {
+.calendar-footer-button {
     background: #F0DCDC;
     padding: 5px;
     border-radius: 4px;
     color: #888;
     text-decoration: none;
     border: 1px solid transparent;
+    margin: 0px 15px;
 }
 
-.calendar-footer-today:HOVER {
+.calendar-footer-button:hover {
     border: 1px solid #888;
 }
