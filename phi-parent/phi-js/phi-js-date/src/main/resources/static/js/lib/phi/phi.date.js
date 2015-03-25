@@ -596,6 +596,18 @@
         },
 
         /**
+        * @method getFormattedDate
+        *
+        * @description 
+        * Method for retrieving the date in given format
+        *
+        * @return {String}
+        */
+        getFormattedDate: function ( format ) {
+            return this.isDate( this.__date__ ) ? new phi.dom.DateFormat( format ).format( this.__date__ ) : null;
+        },
+
+        /**
         * @method isDate
         * @param {*} value
         *
