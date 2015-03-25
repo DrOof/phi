@@ -186,7 +186,7 @@
             this.__selected_date__ = new Date( year, month, day );
             this.__active_date__ = new Date( year, month, 1);
 
-            // TODO : this is exactly what the EventTarget is designed for ;)
+            // FIXME : this is exactly what the EventTarget is designed for ;)
             // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
             if ( this.isFunction ( this.__options__['date-select'] )) {
                 
@@ -243,7 +243,7 @@
 
             this.__date__ = this.isDate( this.__selected_date__ ) ? new Date( this.__selected_date__.getTime() ) : null;
 
-            // TODO : this is exactly what the EventTarget is designed for ;)
+            // FIXME : this is exactly what the EventTarget is designed for ;)
             // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
             if ( this.isFunction ( this.__options__['date-submit'] ) ) {
                 this.__options__['date-submit']( this.__date__ );
@@ -267,7 +267,7 @@
             
             this.__selected_date__ = this.isDate( this.__date__ ) ? new Date( this.__date__.getTime() ) : null;
 
-            // TODO : this is exactly what the EventTarget is designed for ;)
+            // FIXME : this is exactly what the EventTarget is designed for ;)
             // eg. this.dispatchEvent( { type : 'datecancel', target : this } );
             if( this.isFunction ( this.__options__['date-cancel'] )) {
                 this.__options__['date-cancel']( this.__selected_date__ );
@@ -289,7 +289,7 @@
             this.__selected_date__ = null;
             this.__active_date__   = new Date( );
 
-            // TODO : this is exactly what the EventTarget is designed for ;)
+            // FIXME : this is exactly what the EventTarget is designed for ;)
             // eg. this.dispatchEvent( { type : 'dateclear', target : this } );
             if ( this.isFunction ( this.__options__['date-clear'] ) ) {
                 this.__options__['date-clear']( );
@@ -664,6 +664,7 @@
     Calendar.KEY_TAB       = 9;
     Calendar.KEY_UP        = 38;
 
+    // FIXME : can't say Calender = {}. That completely overrides the object. ;)
     Calendar.HEAD_TEMPLATE            = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
     Calendar.HEADER_DAY_TEMPLATE      = '<span class="calendar-header-day">{{day}}</span>';
     Calendar.DAY_TEMPLATE             = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
