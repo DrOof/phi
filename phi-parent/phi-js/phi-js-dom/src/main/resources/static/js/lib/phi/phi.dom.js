@@ -93,16 +93,23 @@
 
     phi.dom.getClosestBySelector = function( element, selector ) {
 
-        var parent      = element.parentElement;
-        var results     = parent.querySelectorAll( selector );
-        var match       = false;
+        var parent = element.parentElement;
+        
+        if ( parent ) {
 
-        for ( var r in results ) {
-            match = results[ r ].contains( element );
-            if ( match ) { return element; }
+            var results     = parent.querySelectorAll( selector );
+            var match       = false;
+
+            var result;
+            for ( var i in results ) {
+                result = results[ i ];
+                if ( result && result.contains && result.contains( element ) ) { return element; }
+            }
+            
+            return phi.dom.getClosestBySelector( parent, selector );
         }
 
-        return phi.dom.getClosestBySelector( parent, selector );
+        return undefined;
 
     };
 
@@ -362,23 +369,24 @@
         handleClick: function( e ) {
 
             // TODO : replace with 
-            var link  = phi.dom.getClosestBySelector( e.target, 'a' ),
-                rel   = link.getAttribute( 'rel' );
-                
-            if ( rel ) {
-                var relations = rel.split(' ');
-                var r = '';
-                for ( var i = relations.length - 1; i >= 0; i--) {
-                    r = relations[i];
-                    if ( this.prefix.exec( r ) ) {
-                        var action = r.replace( this.prefix, '' ).replace( '-', '' );
-                        if ( action && this.relations[ action ] ) {
-                            this.relations[ action ]( e );
-                        }
-                    }
-                };    
-            }
+            var link  = phi.dom.getClosestBySelector( e.target, 'a' );
             
+            if ( link ) {
+                rel   = link.getAttribute( 'rel' );
+                if ( rel ) {
+                    var relations = rel.split(' ');
+                    var r = '';
+                    for ( var i = relations.length - 1; i >= 0; i--) {
+                        r = relations[i];
+                        if ( this.prefix.exec( r ) ) {
+                            var action = r.replace( this.prefix, '' ).replace( '-', '' );
+                            if ( action && this.relations[ action ] ) {
+                                this.relations[ action ]( e );
+                            }
+                        }
+                    };    
+                }
+            }
         },
         
         add: function( key, fn ) {

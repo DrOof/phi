@@ -45,24 +45,17 @@
             this.__node__       = node;
             this.__options__    = phi.extend( {}, Calendar.DEFAULTS, options );
 
-            this.__options__['first-day'] = ( this.__options__['first-day'] < 1 || this.__options__['first-day'] > 7 ) ? 7 : this.__options__['first-day'];
-            this.__options__['days-in-week'] = this.__options__['days-in-week'].slice( this.__options__['first-day'] - 1 ).concat( this.__options__['days-in-week'].slice( 0, this.__options__['first-day'] - 1 ) );
+            this.__options__['first-day']       = ( this.__options__['first-day'] < 1 || this.__options__['first-day'] > 7 ) ? 7 : this.__options__['first-day'];
+            this.__options__['days-in-week']    = this.__options__['days-in-week'].slice( this.__options__['first-day'] - 1 ).concat( this.__options__['days-in-week'].slice( 0, this.__options__['first-day'] - 1 ) );
 
-
-            this.__calendar__ = null
-            this.__id__ = this.__options__['id'] || phi.uuid();
-            
             // The date that is selected when 'Select' button is clicked
-            this.__date__ = this.isDate( this.__options__['date'] ) ? this.__options__['date'] : null;
+            this.__date__ = this.__options__[ 'date' ] ||  new Date();
 
             // The date to store the clicked day
-            this.__selected_date__ = ( this.__date__ !== null ) ? new Date( this.__date__.getTime() ) : null;
-            
-            // The active month in the calendar
-            this.__active_date__ = ( this.__date__ !== null ) ? new Date( this.__date__.getTime() ) : new Date();
+            this.__active__ = this.__date__;
 
-            // Today's date
-            this.__current_date__ = new Date( );
+            // The active month in the calendar
+            this.__start__ = this.__date__;
 
             this.__templates__ = {
                 head          : new phi.dom.Template( Calendar.HEAD_TEMPLATE ),
@@ -73,13 +66,9 @@
                 selectOption  : new phi.dom.Template( Calendar.SELECT_OPTION_TEMPLATE )
             };
 
-            // this.setInputDate( this.__selected_date__ );
-            this.build( );
+            this.build();
 
-            this.__linkRelations__  = new phi.dom.LinkRelations( /calendar/ , this.__calendar__ );
-            this.__fieldRelations__ = new phi.dom.FieldRelations( /calendar/ , this.__calendar__ );
-            
-            this.createEventListeners( );
+            this.createEventListeners();
 
         },
 
@@ -91,17 +80,22 @@
         */
         createEventListeners: function ( ) {
 
-            this.__linkRelations__.add('prev', this.handleCalendarPrevClick.bind( this ) );
-            this.__linkRelations__.add('next', this.handleCalendarNextClick.bind( this ) );
-            this.__linkRelations__.add('date', this.handleCalendarDayClick.bind( this ) );
-            this.__linkRelations__.add('dateOffset', this.handleCalendarDayOffsetClick.bind( this ) );
-            this.__linkRelations__.add('today', this.handleCalendarTodayClick.bind( this ) );
-            this.__linkRelations__.add('submit', this.handleCalendarSubmitClick.bind( this ) );
-            this.__linkRelations__.add('cancel', this.handleCalendarCancelClick.bind( this ) );
-            this.__linkRelations__.add('clear', this.handleCalendarClearClick.bind( this ) );
-        
-            this.__fieldRelations__.add('year',  this.handleYearChange.bind( this ) );
-            this.__fieldRelations__.add('month', this.handleMonthChange.bind( this ) );
+            this.__links__  = new phi.dom.LinkRelations( /calendar/ , this.__node__ );
+
+            this.__links__.add( 'prev', this.handlePreviousDateSelect.bind( this ) );
+            this.__links__.add( 'next', this.handleNextDateSelect.bind( this ) );
+
+            this.__links__.add( 'date', this.handleDateSelect.bind( this ) );
+            this.__links__.add( 'today', this.handleTodaySelect.bind( this ) );
+
+            this.__links__.add( 'cancel', this.handleCancel.bind( this ) );
+            this.__links__.add( 'done', this.handleDone.bind( this ) );
+            this.__links__.add( 'clear', this.handleClear.bind( this ) );
+
+            this.__fields__ = new phi.dom.FieldRelations( /calendar/ , this.__node__ );
+            this.__fields__.add( 'year',  this.handleYearChange.bind( this ) );
+            this.__fields__.add( 'month', this.handleMonthChange.bind( this ) );
+
         },
 
         /**
@@ -114,10 +108,8 @@
         handleYearChange: function ( e ) {
 
             var target = e.target;
-
-            this.__active_date__.setYear( target[ target.selectedIndex ].value );
-
-            this.render();
+            this.__start__.setYear( target[ target.selectedIndex ].value );
+            this.build();
 
         },
 
@@ -131,51 +123,47 @@
         handleMonthChange: function ( e ) {
 
             var target = e.target;
-
-            this.__active_date__.setMonth( target[ target.selectedIndex ].value );
-
-            this.render();
+            this.__start__.setMonth( target[ target.selectedIndex ].value );
+            this.build();
 
         },
 
         /**
-        * @method handleCalendarPrevClick
+        * @method handlePreviousDateSelect
         * @param {object} e - Event object
         *
         * @description
         * Handles click of the previous button
         */
-        handleCalendarPrevClick: function ( e ) {
+        handlePreviousDateSelect: function ( e ) {
 
-            this.__active_date__.setMonth( this.__active_date__.getMonth() - 1 );
-
-            this.render();
+            this.__start__.setMonth( this.__start__.getMonth() - 1 );
+            this.build();
 
         },
 
         /**
-        * @method handleCalendarNextClick
+        * @method handleNextDateSelect
         * @param {object} e - Event object
         *
         * @description
         * Handles click of the next button
         */
-        handleCalendarNextClick: function ( e ) {
+        handleNextDateSelect: function ( e ) {
             
-            this.__active_date__.setMonth( this.__active_date__.getMonth() + 1 );
-
-            this.render();
+            this.__start__.setMonth( this.__start__.getMonth() + 1 );
+            this.build();
 
         },
 
         /**
-        * @method handleCalendarDayClick
+        * @method handleDateSelect
         * @param {object} e - Event object
         *
         * @description
         * Handles click of the day
         */
-        handleCalendarDayClick: function ( e ) {
+        handleDateSelect: function ( e ) {
 
             var node = e.target;
 
@@ -183,17 +171,11 @@
             var month = parseInt( node.getAttribute( 'data-month' ), 10 );
             var day   = parseInt( node.getAttribute( 'data-day' ), 10 );
 
-            this.__selected_date__ = new Date( year, month, day );
-            this.__active_date__ = new Date( year, month, 1);
+            this.__active__ = new Date( year, month, day );
+            this.__start__ = new Date( year, month, 1 );
 
-            // FIXME : this is exactly what the EventTarget is designed for ;)
-            // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
-            if ( this.isFunction ( this.__options__['date-select'] )) {
-                
-                this.__options__['date-select']( this.__selected_date__ );
-            }
-
-            this.render();
+            this.dispatchEvent( { type : 'dateselect', target : this } );
+            this.build();
 
         },
 
@@ -212,90 +194,73 @@
             var month = parseInt( node.getAttribute( 'data-month' ), 10 );
             var day   = parseInt( node.getAttribute( 'data-day' ), 10 );
 
-            this.__selected_date__ = new Date( year, month, day );
+            this.__active__ = new Date( year, month, day );
 
-            this.render();
+            this.build();
+
         },
 
         /**
-        * @method handleCalendarTodayClick
+        * @method handleTodaySelect
         * @param {object} e - Event object
         *
         * @description
         * Handles click of Today button
         */ 
-        handleCalendarTodayClick: function ( e ) {
+        handleTodaySelect: function ( e ) {
            
-            this.__selected_date__ = new Date( );
-            this.__active_date__   = new Date( );
+            this.__active__ = new Date();
+            this.__start__ = new Date();
 
-            this.render();
-        },
-
-        /**
-        * @method handleCalendarSubmitClick
-        * @param {object} e - Event object
-        *
-        * @description
-        * Handles click of Select button
-        */ 
-        handleCalendarSubmitClick: function ( e ) {
-
-            this.__date__ = this.isDate( this.__selected_date__ ) ? new Date( this.__selected_date__.getTime() ) : null;
-
-            // FIXME : this is exactly what the EventTarget is designed for ;)
-            // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
-            if ( this.isFunction ( this.__options__['date-submit'] ) ) {
-                this.__options__['date-submit']( this.__date__ );
-            }
-
-            if ( this.isDate( this.__date__ ) ) {
-                this.__active_date__ = new Date( this.__date__.getTime() );
-                this.render();
-            }
+            this.dispatchEvent( { type : 'dateselect', target : this } );
+            this.build();
 
         },
 
         /**
-        * @method handleCalendarCancelClick
+        * @method handleCancel
         * @param {object} e - Event object
         *
         * @description
         * Handles click of Cancel button
         */ 
-        handleCalendarCancelClick: function ( e ) {
-            
-            this.__selected_date__ = this.isDate( this.__date__ ) ? new Date( this.__date__.getTime() ) : null;
+        handleDone: function ( e ) {
 
-            // FIXME : this is exactly what the EventTarget is designed for ;)
-            // eg. this.dispatchEvent( { type : 'datecancel', target : this } );
-            if( this.isFunction ( this.__options__['date-cancel'] )) {
-                this.__options__['date-cancel']( this.__selected_date__ );
-            }
+            this.dispatchEvent( { type : 'dateselect', target : this } );
+            this.build();
 
-            this.render();
         },
 
         /**
-        * @method handleCalendarClearClick
+        * @method handleCancel
+        * @param {object} e - Event object
+        *
+        * @description
+        * Handles click of Cancel button
+        */ 
+        handleCancel: function ( e ) {
+            
+            this.__active__ = this.__date__;
+            this.dispatchEvent( { type : 'datecancel', target : this } );
+            this.build();
+
+        },
+
+        /**
+        * @method handleClear
         * @param {object} e - Event object
         *
         * @description
         * Handles click of Clear button
         */ 
-        handleCalendarClearClick: function ( e ) {
+        handleClear: function ( e ) {
 
-            this.__date__ = null;
-            this.__selected_date__ = null;
-            this.__active_date__   = new Date( );
+            this.__active__ = null;
+            this.__start__ = new Date();
 
-            // FIXME : this is exactly what the EventTarget is designed for ;)
-            // eg. this.dispatchEvent( { type : 'dateclear', target : this } );
-            if ( this.isFunction ( this.__options__['date-clear'] ) ) {
-                this.__options__['date-clear']( );
-            }
+            this.dispatchEvent( { type : 'dateclear', target : this } );
+            this.build();
 
-            this.render();
         },
 
 
@@ -335,10 +300,10 @@
         */
         prevDay: function ( ) {
 
-            this.__selected_date__.setDate( this.__selected_date__.getDate() - 1 );
-            this.__active_date__ = new Date( this.__selected_date__.getFullYear(), this.__selected_date__.getMonth(), 1 );
+            this.__active__.setDate( this.__active__.getDate() - 1 );
+            this.__start__ = new Date( this.__active__.getFullYear(), this.__active__.getMonth(), 1 );
 
-            this.render();
+            this.build();
             
         },
 
@@ -351,10 +316,10 @@
         */
         nextDay: function ( ) {
 
-            this.__selected_date__.setDate( this.__selected_date__.getDate() + 1 );
-            this.__active_date__ = new Date( this.__selected_date__.getFullYear(), this.__selected_date__.getMonth(), 1 );
+            this.__active__.setDate( this.__active__.getDate() + 1 );
+            this.__start__ = new Date( this.__active__.getFullYear(), this.__active__.getMonth(), 1 );
 
-            this.render();
+            this.build();
 
         },
 
@@ -366,8 +331,8 @@
         */
         prevMonth: function ( ) {
 
-            this.__active_date__.setMonth( this.__active_date__.getMonth() - 1 );
-            this.render();
+            this.__start__.setMonth( this.__start__.getMonth() - 1 );
+            this.build();
         },
 
 
@@ -379,8 +344,8 @@
         */
         nextMonth: function ( ) {
 
-            this.__active_date__.setMonth( this.__active_date__.getMonth() + 1 );
-            this.render();
+            this.__start__.setMonth( this.__start__.getMonth() + 1 );
+            this.build();
 
         },
 
@@ -390,15 +355,8 @@
         * @description
         * Method for building the calendar component
         */        
-        build: function ( ) {
-
-            this.__calendar__ = document.createElement( 'div' );
-            this.__calendar__.setAttribute( 'class', this.__options__[ 'root-class' ] );
-            this.__calendar__.setAttribute( 'id', this.__id__);
-
-            this.__node__.appendChild( this.__calendar__ );
-
-            this.render();        
+        build: function () {
+            this.__node__.innerHTML = this.render();
         },
 
         /**
@@ -407,24 +365,19 @@
         * @description
         * Method for rendering the calendar component
         */   
-        render: function () {
-
-            var head = this.buildHead(),
-                body = this.buildBody();
-
-            this.__calendar__.innerHTML = head + body;
-
-        },        
+        render: function ( canvas ) {
+            return new phi.dom.Template( Calendar.CALENDAR_TEMPLATE ).parse( { head : this.renderHead(), body : this.renderBody() });
+        },
 
         /**
-        * @method buildHead
+        * @method renderHead
         *
         * @description
         * Method for building the head of the calendar component
         *
         * @return {String}
         */  
-        buildHead: function () {
+        renderHead: function () {
 
             var i, months = '', monthsSelect = '', years = '', yearsSelect = '';
 
@@ -433,7 +386,7 @@
 
                 months += this.__templates__.selectOption.parse( {
                     value    : i,
-                    selected : this.__active_date__.getMonth() === i ? 'selected="selected"' : '',
+                    selected : this.__start__.getMonth() === i ? 'selected="selected"' : '',
                     text     : Calendar.MONTHS[ i ]
                 } );
             }
@@ -445,11 +398,11 @@
             } );
 
             // Create Years select
-            for ( i = this.__active_date__.getFullYear() - 30; i <= this.__active_date__.getFullYear() + 30; i++ ) {
+            for ( i = this.__start__.getFullYear() - 30; i <= this.__start__.getFullYear() + 30; i++ ) {
 
                 years += this.__templates__.selectOption.parse( {
                     value    : i,
-                    selected : this.__active_date__.getFullYear() === i ? 'selected="selected"' : '',
+                    selected : this.__start__.getFullYear() === i ? 'selected="selected"' : '',
                     text     : i
                 } );
             }
@@ -471,20 +424,20 @@
 
 
         /**
-        * @method buildBody
+        * @method renderBody
         *
         * @description
         * Method for building the body of the calendar component
         *
         * @return {String} 
         */ 
-        buildBody: function () {
+        renderBody: function () {
 
             var i, dayOffset, daysInMonth, clazz, header = '', body = '', footer = '',
                 daysRenderedInPrevMonth, daysInPrevMonth, daysInNextMonth, daysInMonth,
-                previousMonth = new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth() - 1, 1 ),
-                nextMonth = new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth() + 1, 1 ),
-                date = new Date(this.__active_date__.getTime());
+                previousMonth = new Date( this.__start__.getFullYear(), this.__start__.getMonth() - 1, 1 ),
+                nextMonth = new Date( this.__start__.getFullYear(), this.__start__.getMonth() + 1, 1 ),
+                date = new Date(this.__start__.getTime());
 
             // Get the first day of the month            
             date.setDate(1);
@@ -500,10 +453,10 @@
             
             }
 
-            header = '<div class="calendar-header">' + header + '</div>';
+            header = '<div class="calendar-header"><ul class="calendar-day-list">' + header + '</ul></div>';
 
             // Calendar body
-            daysInMonth = this.getNumberOfDaysInMonth( new Date( this.__active_date__ ) );
+            daysInMonth = this.getNumberOfDaysInMonth( new Date( this.__start__ ) );
             daysInPrevMonth = this.getNumberOfDaysInMonth( previousMonth )
             daysRenderedInPrevMonth = daysInPrevMonth - (daysInPrevMonth - ( dayOffset || 7 ) );
             daysInNextMonth = 42 - ( daysInMonth + daysRenderedInPrevMonth); // 7 - ( ( daysInMonth + dayOffset) % 7 );
@@ -521,11 +474,11 @@
             // Days
             for ( i = 1; i <= daysInMonth; i++ ) {
 
-                clazz = this.isSelectedDate( new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth(), i ) ) ? 'active' : '';
-                clazz += this.isCurrentDate( new Date( this.__active_date__.getFullYear(), this.__active_date__.getMonth(), i ) ) ? ' current' : '';
+                clazz = this.isSelectedDate( new Date( this.__start__.getFullYear(), this.__start__.getMonth(), i ) ) ? 'active' : '';
+                clazz += this.isCurrentDate( new Date( this.__start__.getFullYear(), this.__start__.getMonth(), i ) ) ? ' current' : '';
                 body += this.__templates__.day.parse({ 
-                            year  : this.__active_date__.getFullYear(),
-                            month : this.__active_date__.getMonth(),
+                            year  : this.__start__.getFullYear(),
+                            month : this.__start__.getMonth(),
                             day   : i,
                             class : clazz
                         });
@@ -584,10 +537,10 @@
         */
         isSelectedDate: function ( date ) {
             
-            return this.isDate(this.__selected_date__) &&
-                   this.__selected_date__.getFullYear() === date.getFullYear() &&
-                   this.__selected_date__.getMonth()    === date.getMonth() &&
-                   this.__selected_date__.getDate()     === date.getDate();
+            return this.isDate(this.__active__) &&
+                   this.__active__.getFullYear() === date.getFullYear() &&
+                   this.__active__.getMonth()    === date.getMonth() &&
+                   this.__active__.getDate()     === date.getDate();
         },
 
         /**
@@ -600,11 +553,17 @@
         * @return {Boolean}
         */
         isCurrentDate: function ( date ) {
-            
+
+            var current = new Date();
             return this.isDate( date ) &&
-                   this.__current_date__.getFullYear() === date.getFullYear() &&
-                   this.__current_date__.getMonth()    === date.getMonth() &&
-                   this.__current_date__.getDate()     === date.getDate();
+                   current.getFullYear() === date.getFullYear() &&
+                   current.getMonth()    === date.getMonth() &&
+                   current.getDate()     === date.getDate();
+
+        },
+        
+        getActive: function() {
+            return this.__active__;
         },
 
         /**
@@ -615,8 +574,9 @@
         *
         * @return {String}
         */
-        getFormattedDate: function ( format ) {
-            return this.isDate( this.__date__ ) ? new phi.dom.DateFormat( format ).format( this.__date__ ) : null;
+        getFormattedActive: function( format ) {
+            // take format from options
+            return new phi.dom.DateFormat( this.__options__[ 'date-format' ] ).format( this.__active__ );
         },
 
         /**
@@ -629,62 +589,27 @@
         * @return {Boolean}
         */
         isDate: function ( value ) {
-            return Object.prototype.toString.call( value ) === '[object Date]';
-        },
-
-        /**
-        * @method isFunction
-        * @param {*} value
-        *
-        * @description 
-        * Method for determing if the variable passed is function
-        *
-        * @return {Boolean}
-        */
-        isFunction: function ( value ) {
-            return typeof value === 'function';
+            return value instanceof Date;
         }
 
     } );
 
-    Calendar.KEY_BACKSPACE              = 8;
-    Calendar.KEY_COMMA                  = 188;
-    Calendar.KEY_DELETE                 = 46;
-    Calendar.KEY_DOWN                   = 40;
-    Calendar.KEY_END                    = 35;
-    Calendar.KEY_ENTER                  = 13;
-    Calendar.KEY_ESCAPE                 = 27;
-    Calendar.KEY_HOME                   = 36;
-    Calendar.KEY_LEFT                   = 37;
-    Calendar.KEY_PAGE_DOWN              = 34;
-    Calendar.KEY_PAGE_UP                = 33;
-    Calendar.KEY_PERIOD                 = 190;
-    Calendar.KEY_RIGHT                  = 39;
-    Calendar.KEY_SPACE                  = 32;
-    Calendar.KEY_TAB                    = 9;
-    Calendar.KEY_UP                     = 38;
-
     // FIXME : can't say Calender = {}. That completely overrides the object. ;)
+    Calendar.CALENDAR_TEMPLATE          = '<div class="calendar">{{head}}{{body}}</div>';
     Calendar.HEAD_TEMPLATE              = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
-    Calendar.HEADER_DAY_TEMPLATE        = '<span class="calendar-header-day">{{day}}</span>';
+    Calendar.HEADER_DAY_TEMPLATE        = '<li><span class="calendar-day">{{day}}</span></li>';
     Calendar.DAY_TEMPLATE               = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
     Calendar.DAY_OTHER_MONTH_TEMPLATE   = '<li><a href="#" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
     Calendar.SELECT_TEMPLATE            = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
     Calendar.SELECT_OPTION_TEMPLATE     = '<option value="{{value}}" {{selected}}>{{text}}</option>';
-    Calendar.FOOTER_TEMPLATE            = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-cancel">Done</a></li></ul></div>';
+    Calendar.FOOTER_TEMPLATE            = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-done">Done</a></li></ul></div>';
 
     Calendar.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
     Calendar.DEFAULTS = {
-        'id'           : undefined,
-        'root-class'   : 'calendar',
-        'days-in-week' : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        'date-format'  : 'YYYY-MM-DDThh:mm:ssZ',
+        'days-in-week' : [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],
         'first-day'    : 7, // Start with Sunday
-        'date'         : undefined,
-        'date-submit'  : undefined, // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
-        'date-select'  : undefined, // eg. this.dispatchEvent( { type : 'dateselect', target : this } );
-        'date-clear'   : undefined, // eg. this.dispatchEvent( { type : 'dateclear', target : this } );
-        'date-cancel'  : undefined  // eg. this.dispatchEvent( { type : 'datecancel', target : this } );
-
+        'date'         : undefined
     };
     
 })( phi, phi.dom );
