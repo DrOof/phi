@@ -647,31 +647,31 @@
 
     } );
 
-    Calendar.KEY_BACKSPACE = 8;
-    Calendar.KEY_COMMA     = 188;
-    Calendar.KEY_DELETE    = 46;
-    Calendar.KEY_DOWN      = 40;
-    Calendar.KEY_END       = 35;
-    Calendar.KEY_ENTER     = 13;
-    Calendar.KEY_ESCAPE    = 27;
-    Calendar.KEY_HOME      = 36;
-    Calendar.KEY_LEFT      = 37;
-    Calendar.KEY_PAGE_DOWN = 34;
-    Calendar.KEY_PAGE_UP   = 33;
-    Calendar.KEY_PERIOD    = 190;
-    Calendar.KEY_RIGHT     = 39;
-    Calendar.KEY_SPACE     = 32;
-    Calendar.KEY_TAB       = 9;
-    Calendar.KEY_UP        = 38;
+    Calendar.KEY_BACKSPACE              = 8;
+    Calendar.KEY_COMMA                  = 188;
+    Calendar.KEY_DELETE                 = 46;
+    Calendar.KEY_DOWN                   = 40;
+    Calendar.KEY_END                    = 35;
+    Calendar.KEY_ENTER                  = 13;
+    Calendar.KEY_ESCAPE                 = 27;
+    Calendar.KEY_HOME                   = 36;
+    Calendar.KEY_LEFT                   = 37;
+    Calendar.KEY_PAGE_DOWN              = 34;
+    Calendar.KEY_PAGE_UP                = 33;
+    Calendar.KEY_PERIOD                 = 190;
+    Calendar.KEY_RIGHT                  = 39;
+    Calendar.KEY_SPACE                  = 32;
+    Calendar.KEY_TAB                    = 9;
+    Calendar.KEY_UP                     = 38;
 
     // FIXME : can't say Calender = {}. That completely overrides the object. ;)
-    Calendar.HEAD_TEMPLATE            = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
-    Calendar.HEADER_DAY_TEMPLATE      = '<span class="calendar-header-day">{{day}}</span>';
-    Calendar.DAY_TEMPLATE             = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
-    Calendar.DAY_OTHER_MONTH_TEMPLATE = '<li><a href="#" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
-    Calendar.SELECT_TEMPLATE          = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
-    Calendar.SELECT_OPTION_TEMPLATE   = '<option value="{{value}}" {{selected}}>{{text}}</option>';
-    Calendar.FOOTER_TEMPLATE          = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-cancel">Done</a></li></ul></div>';
+    Calendar.HEAD_TEMPLATE              = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
+    Calendar.HEADER_DAY_TEMPLATE        = '<span class="calendar-header-day">{{day}}</span>';
+    Calendar.DAY_TEMPLATE               = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
+    Calendar.DAY_OTHER_MONTH_TEMPLATE   = '<li><a href="#" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
+    Calendar.SELECT_TEMPLATE            = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
+    Calendar.SELECT_OPTION_TEMPLATE     = '<option value="{{value}}" {{selected}}>{{text}}</option>';
+    Calendar.FOOTER_TEMPLATE            = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-cancel">Done</a></li></ul></div>';
 
     Calendar.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
     Calendar.DEFAULTS = {
