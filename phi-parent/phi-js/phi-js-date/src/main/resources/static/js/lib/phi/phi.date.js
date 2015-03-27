@@ -59,11 +59,11 @@
 
             this.__templates__ = {
                 head          : new phi.dom.Template( Calendar.HEAD_TEMPLATE ),
-                day           : new phi.dom.Template( Calendar.DAY_TEMPLATE ),
-                dayOtherMonth : new phi.dom.Template( Calendar.DAY_OTHER_MONTH_TEMPLATE ),
-                headerDay     : new phi.dom.Template( Calendar.HEADER_DAY_TEMPLATE ),
-                select        : new phi.dom.Template( Calendar.SELECT_TEMPLATE ),
-                selectOption  : new phi.dom.Template( Calendar.SELECT_OPTION_TEMPLATE )
+                select        : new phi.dom.Template( Calendar.HEAD_SELECT_TEMPLATE ),
+                selectOption  : new phi.dom.Template( Calendar.HEAD_SELECT_OPTION_TEMPLATE ),
+                day           : new phi.dom.Template( Calendar.BODY_DAY_TEMPLATE ),
+                dayOtherMonth : new phi.dom.Template( Calendar.BODY_OTHER_DAY_TEMPLATE ),
+                headerDay     : new phi.dom.Template( Calendar.HEADER_DAY_TEMPLATE )
             };
 
             this.build();
@@ -263,35 +263,6 @@
 
         },
 
-
-        /**
-        *
-        * Handle input keydown
-        *
-        */
-        
-        // handleKeyDown: function ( e ) {
-
-        //     e.preventDefault();
-
-        //     if( e.which ===  Calendar.KEY_CODE.LEFT ) {
-        //         this.prevDay();
-        //     }
-
-        //     if( e.which ===  Calendar.KEY_CODE.RIGHT ) {
-        //         this.nextDay();
-        //     }
-
-        //     if( e.which ===  Calendar.KEY_CODE.UP ) {
-        //         this.nextMonth();
-        //     }
-
-        //     if( e.which ===  Calendar.KEY_CODE.DOWN ) {
-        //         this.prevMonth();
-        //     }
-
-        // },
-
         /**
         * @method prevDay
         *
@@ -366,7 +337,7 @@
         * Method for rendering the calendar component
         */   
         render: function ( canvas ) {
-            return new phi.dom.Template( Calendar.CALENDAR_TEMPLATE ).parse( { head : this.renderHead(), body : this.renderBody() });
+            return new phi.dom.Template( Calendar.ROOT_TEMPLATE ).parse( { head : this.renderHead(), body : this.renderBody() });
         },
 
         /**
@@ -453,7 +424,7 @@
             
             }
 
-            header = '<div class="calendar-header"><ul class="calendar-day-list">' + header + '</ul></div>';
+            header = new phi.dom.Template( Calendar.HEADER_TEMPLATE ).parse( { header : header } );
 
             // Calendar body
             daysInMonth = this.getNumberOfDaysInMonth( new Date( this.__start__ ) );
@@ -495,7 +466,7 @@
                         });
             }
 
-            body = '<div class="calendar-body"><ul class="calendar-day-list">' + body + '</ul></div>';
+            body = new phi.dom.Template( Calendar.BODY_TEMPLATE ).parse( { body : body } );
 
             // Calendar footer
             footer = Calendar.FOOTER_TEMPLATE
@@ -594,22 +565,27 @@
 
     } );
 
-    // FIXME : can't say Calender = {}. That completely overrides the object. ;)
-    Calendar.CALENDAR_TEMPLATE          = '<div class="calendar">{{head}}{{body}}</div>';
-    Calendar.HEAD_TEMPLATE              = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
-    Calendar.HEADER_DAY_TEMPLATE        = '<li><span class="calendar-day">{{day}}</span></li>';
-    Calendar.DAY_TEMPLATE               = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
-    Calendar.DAY_OTHER_MONTH_TEMPLATE   = '<li><a href="#" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
-    Calendar.SELECT_TEMPLATE            = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
-    Calendar.SELECT_OPTION_TEMPLATE     = '<option value="{{value}}" {{selected}}>{{text}}</option>';
-    Calendar.FOOTER_TEMPLATE            = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-done">Done</a></li></ul></div>';
+    Calendar.ROOT_TEMPLATE                  = '<div class="calendar">{{head}}{{body}}</div>';
+    
+    Calendar.HEAD_TEMPLATE                  = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
+    Calendar.HEAD_SELECT_TEMPLATE           = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
+    Calendar.HEAD_SELECT_OPTION_TEMPLATE    = '<option value="{{value}}" {{selected}}>{{text}}</option>';
+    
+    Calendar.HEADER_TEMPLATE                = '<div class="calendar-header"><ul class="calendar-day-list">{{header}}</ul></div>'
+    Calendar.HEADER_DAY_TEMPLATE            = '<li><span class="calendar-day">{{day}}</span></li>';
+    
+    Calendar.BODY_TEMPLATE                  = '<div class="calendar-body"><ul class="calendar-day-list">{{body}}</ul></div>';
+    Calendar.BODY_DAY_TEMPLATE              = '<li><a href="#" class="calendar-day {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
+    Calendar.BODY_OTHER_DAY_TEMPLATE        = '<li><a href="#" class="calendar-day-other {{class}}" data-day="{{day}}" data-month="{{month}}" data-year="{{year}}" rel="calendar-date">{{day}}</a></li>';
+    
+    Calendar.FOOTER_TEMPLATE                = '<div class="calendar-footer"><ul class="calendar-footer-action-list"><li><a href="#" class="calendar-footer-button" rel="calendar-clear">Clear</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-today">Today</a></li><li><a href="#" class="calendar-footer-button" rel="calendar-done">Done</a></li></ul></div>';
 
-    Calendar.MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
-    Calendar.DEFAULTS = {
+    Calendar.MONTHS                         = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    Calendar.DEFAULTS                       = {
         'date-format'  : 'YYYY-MM-DDThh:mm:ssZ',
         'days-in-week' : [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],
         'first-day'    : 7, // Start with Sunday
         'date'         : undefined
     };
-    
+
 })( phi, phi.dom );
