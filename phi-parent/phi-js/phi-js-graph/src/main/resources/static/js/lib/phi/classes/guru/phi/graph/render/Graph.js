@@ -339,7 +339,7 @@
             return values.reduce( function( a, b ) { return a + b; } );
         },
         
-        processSVGShapeElement: function( shape ) {
+        processShape: function( shape ) {
             
             shape.element.addEventListener( 'mouseenter',   this.handleMouseEnter.bind( this ), true );
             shape.element.addEventListener( 'mouseleave',   this.handleMouseLeave.bind( this ), true );

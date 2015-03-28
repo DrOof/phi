@@ -50,7 +50,7 @@
 
             var target      = e.explicitOriginalTarget;
             var node        = this.__create_node__( e.target.__node__, this.__template__.parse( target.point ) );
-            var box         = phi.dom.getOffsetBoundingBox( target );
+            var box         = new phi.svg.Shape( target ).getBoundingBox();
 
             var style       = node.currentStyle || window.getComputedStyle( node );
 

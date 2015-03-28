@@ -105,8 +105,8 @@
 
         renderPointShape: function( point, x, y, w, h, n, c ) {
 
-            var shape = new phi.svg.SVGShapeElement( 'rect' );
-            this.processSVGShapeElement( shape );
+            var shape = new phi.svg.Shape( 'rect' );
+            this.processShape( shape );
 
             shape.attr( { x : x - ( w / 2 ), y : y, width : w, height : h, fill : c } );
             shape.attr( { 'class' : 'graph-point graph-point-' + n, point : point } );

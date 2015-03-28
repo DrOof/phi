@@ -99,7 +99,7 @@
         renderPointShape: function( point, x, y, n, color ) {
 
             var shape = phi.svg.shape( 'circle' );
-            this.processSVGShapeElement( shape );
+            this.processShape( shape );
 
             var inrx = new phi.graph.ValueRange( this.__options__[ 'axis-x-range' ] || [ -Infinity, Infinity ] ).isWithinRange( point[ this.__options__[ 'axis-x-name' ] ] );
             var inry = new phi.graph.ValueRange( this.__options__[ 'axis-y-range' ] || [ -Infinity, Infinity ] ).isWithinRange( point[ this.__options__[ 'axis-y-name' ] ] );
