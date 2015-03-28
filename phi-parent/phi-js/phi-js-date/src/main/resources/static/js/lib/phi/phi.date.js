@@ -567,7 +567,7 @@
 
     Calendar.ROOT_TEMPLATE                  = '<div class="calendar">{{head}}{{body}}</div>';
     
-    Calendar.HEAD_TEMPLATE                  = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"> < </a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"> > </a></div>';
+    Calendar.HEAD_TEMPLATE                  = '<div class="calendar-head"><a href="#" rel="calendar-prev" class="calendar-head-prev"><i class="fa fa-chevron-left"></i></a> {{month}} {{year}} <a href="#" rel="calendar-next" class="calendar-head-next"><i class="fa fa-chevron-right"></i></a></div>';
     Calendar.HEAD_SELECT_TEMPLATE           = '<select class="{{class}}" data-relation="calendar-{{relation}}">{{options}}</select>';
     Calendar.HEAD_SELECT_OPTION_TEMPLATE    = '<option value="{{value}}" {{selected}}>{{text}}</option>';
     
