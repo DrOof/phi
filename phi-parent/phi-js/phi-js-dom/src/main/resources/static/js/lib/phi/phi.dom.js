@@ -307,6 +307,21 @@
      *
      * A basic template parser to create new Nodes as a string
      *
+     * To parse a value:
+     * {{object.property}}
+     *
+     * To loop through an array
+     * {{list array as object}}
+     *     {{object.property}}
+     * {{/list}}
+     *
+     * To use a conditional
+     * {{if object.property}}
+     *     {{object.property}}
+     * {{else}}
+     *     Empty
+     * {{/if}}
+     *
      */
     
     var Template = phi.dom.Template = phi({
@@ -315,6 +330,13 @@
             this.set( html );
         },
         
+        /**
+         *
+         * Parse object through HTML
+         * TODO : Parse String instead of Object.
+         *
+         */
+
         parse: function( data, parent, html ) {
             
             var html = html || this.get();
@@ -327,9 +349,11 @@
                     
                     var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
                     
-                    if (typeof data[name] === 'object') {
+                    if ( typeof data[ name ] === 'object' ) {
                         html = this.parse( data[ name ], a + name, html );
-                    } else {
+                    } 
+                    
+                    else {
                         html = html.replace( property, data[ name ] );
                     }
                 }
@@ -338,13 +362,25 @@
             return html;
             
         },
-        
+
+        /**
+         *
+         * Set HTML
+         *
+         */
+
         set: function( html ) {
-            this.html = html;
+            this.__html__ = html;
         },
-        
+
+        /**
+         *
+         * Get HTML
+         *
+         */
+
         get: function() {
-            return this.html;
+            return this.__html__;
         }
         
     });
