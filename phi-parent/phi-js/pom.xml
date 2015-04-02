@@ -20,7 +20,7 @@
         <module>phi-js-dom</module>
         <module>phi-js-form</module>
         <module>phi-js-date</module>
-        <module>phi-js-tabs</module>
+        <module>phi-js-ui</module>
         <module>phi-js-graph</module>
         <module>phi-js-media</module>
         <module>phi-js-dialog</module>
@@ -48,8 +48,8 @@
                             <baseResource>${project.basedir}/phi-js-form/src/test/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-date/src/main/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-date/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-tabs/src/main/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-tabs/src/test/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-ui/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-ui/src/test/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-graph/src/main/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-graph/src/test/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-media/src/main/resources</baseResource>

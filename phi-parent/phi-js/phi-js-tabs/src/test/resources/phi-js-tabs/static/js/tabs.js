@@ -1,1 +1,0 @@
-var tab = new phi.tabs.Tabs(document.getElementById('tabs'));
