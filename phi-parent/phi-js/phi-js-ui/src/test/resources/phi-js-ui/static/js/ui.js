@@ -1,0 +1,1 @@
+var tabs = new phi.ui.Tabs( document.getElementById('tabs') );
