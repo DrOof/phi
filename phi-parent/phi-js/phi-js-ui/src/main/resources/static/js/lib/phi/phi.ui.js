@@ -46,12 +46,10 @@
         __init__: function( node ) {
 
             this.__node__       = node;
-            this.__tab_links__  = this.__node__.querySelectorAll( '.tabs-list-link' );
-            this.__panels__     = this.__node__.querySelectorAll( '.tabs-panel' );
+            this.__tab_links__  = this.__node__.querySelectorAll( '.tabs-nav-link' );
+            this.__panels__     = this.__node__.querySelectorAll( '.tabs-content-panel' );
 
-            this.__panels__[0].setAttribute( 'class', this.__panels__[0].getAttribute( 'class' ).replace(/\s*active/, '') + ' active' );
-            this.__tab_links__[0].setAttribute( 'class', this.__tab_links__[0].getAttribute( 'class' ).replace(/\s*active/, '') + ' active' );
-
+            this.selectTab( 0 );
             this.__links__ = this.createLinkRelations();
 
         },
@@ -68,7 +66,7 @@
         createLinkRelations: function ( ) {
 
             var links  = new phi.dom.LinkRelations( /tabs/ , this.__node__ );
-            links.add( 'panel', this.handleTab.bind( this ) );
+            links.add( 'panel', this.handleTabSelect.bind( this ) );
             
             return links;
 
@@ -80,20 +78,31 @@
          *
          */
 
-        handleTab: function ( e ) { e.preventDefault();
+        handleTabSelect: function ( e ) { e.preventDefault();
             
-            var tab = parseInt( e.target.getAttribute( 'data-tab' ) , 10 ) - 1;
+            var n = parseInt( e.target.getAttribute( 'data-tab' ) , 10 ) - 1;
+            this.selectTab( n );
+
+        },
+
+        /**
+         *
+         * TODO : Write JSDoc
+         *
+         */
+
+        selectTab: function( n ) {
 
             var panel, link;
             for ( var i = 0; i < this.__panels__.length; i++ ) {
 
-                panel = this.__panels__[i];
-                link = this.__tab_links__[i];
+                panel = this.__panels__[ i ];
+                link = this.__tab_links__[ i ];
 
                 panel.className = panel.className.replace( /\s*active/, '' );
                 link.className = link.className.replace( /\s*active/, '' );
 
-                if ( tab === i ) { 
+                if ( n === i ) { 
                     panel.className += ' active';
                     link.className += ' active';
                 }
