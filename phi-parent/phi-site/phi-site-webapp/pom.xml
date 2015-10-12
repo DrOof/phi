@@ -7,7 +7,6 @@
         <groupId>guru.phi</groupId>
         <artifactId>phi-site</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     
     <artifactId>phi-site-webapp</artifactId>
