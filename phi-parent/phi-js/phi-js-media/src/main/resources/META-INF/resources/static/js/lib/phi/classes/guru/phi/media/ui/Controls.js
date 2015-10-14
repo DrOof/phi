@@ -166,16 +166,16 @@
                         '<var class="player-volume-fill"></var>' +
                         '<span class="player-volume-handle"></span>' +
                     '</span>' +
-                    '<a href="#" class="player-control player-controls-play" rel="player:play">' + 
+                    '<a href="#" class="player-control player-controls-play" rel="player-play">' + 
                         '<i class="fa fa-play"></i>' + 
                     '</a>' +
-                    '<a href="#" class="player-control player-controls-pause" rel="player:pause">' + 
+                    '<a href="#" class="player-control player-controls-pause" rel="player-pause">' + 
                         '<i class="fa fa-pause"></i>' + 
                     '</a>' +
-                    '<a href="#" class="player-control player-controls-mute" rel="player:muted">' + 
+                    '<a href="#" class="player-control player-controls-mute" rel="player-muted">' + 
                         '<i class="fa fa-volume-off"></i>' + 
                     '</a>' +
-                    '<a href="#" class="player-control player-controls-unmute" rel="player:muted">' + 
+                    '<a href="#" class="player-control player-controls-unmute" rel="player-muted">' + 
                         '<i class="fa fa-volume-up"></i>' + 
                     '</a>' +
                     '<time class="player-controls-duration"></time>' +

@@ -30,7 +30,7 @@
         <developerConnection />
         <url />
     </scm>
-        
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -72,7 +72,7 @@
                         <resourceBases>
                             <baseResource>../phi-site-webapp/target/phi-site-webapp-${project.version}</baseResource>
                             <baseResource>../phi-site-templating-kit/src/main/resources</baseResource>
-                            <baseResource>../../phi-js/phi-js-jquery/src/main/resources</baseResource>
+                            <!-- baseResource>../../phi-js/phi-js-jquery/src/main/resources</baseResource>
                             <baseResource>../../phi-js/phi-js-core/src/main/resources</baseResource>
                             <baseResource>../../phi-js/phi-js-dom/src/main/resources</baseResource>
                             <baseResource>../../phi-js/phi-js-form/src/main/resources</baseResource>
@@ -80,7 +80,7 @@
                             <baseResource>../../phi-js/phi-js-media/src/main/resources</baseResource>
                             <baseResource>../../phi-js/phi-js-slider/src/main/resources</baseResource>
                             <baseResource>../../phi-js/phi-js-dialog/src/main/resources</baseResource>
-                            <baseResource>../../phi-js/phi-js-jquery/src/main/resources</baseResource>
+                            <baseResource>../../phi-js/phi-js-jquery/src/main/resources</baseResource -->
                         </resourceBases>
                     </webAppConfig>
                 </configuration>
@@ -116,14 +116,14 @@
                         <configuration>
                             <webResources>
                                 <resource><directory>../phi-site-templating-kit/src/main/resources</directory></resource>
-                                <resource><directory>../../phi-js/phi-js-jquery/src/main/resources</directory></resource>
+                                <!-- resource><directory>../../phi-js/phi-js-jquery/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-core/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-dom/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-form/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-graph/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-media/src/main/resources</directory></resource>
                                 <resource><directory>../../phi-js/phi-js-slider/src/main/resources</directory></resource>
-                                <resource><directory>../../phi-js/phi-js-dialog/src/main/resources</directory></resource>
+                                <resource><directory>../../phi-js/phi-js-dialog/src/main/resources</directory></resource -->
                             </webResources>
                         </configuration>
                     </plugin>

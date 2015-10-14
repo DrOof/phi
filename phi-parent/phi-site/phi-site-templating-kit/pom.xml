@@ -34,7 +34,25 @@
         
         <dependency>
             <groupId>guru.phi</groupId>
-            <artifactId>phi-js-media</artifactId>
+            <artifactId>phi-js-core</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-date</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-dialog</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-dom</artifactId>
             <version>${phi.version}</version>
         </dependency>
         
@@ -47,6 +65,36 @@
         <dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-graph</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-grid</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-jquery</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-media</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-slider</artifactId>
+            <version>${phi.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>guru.phi</groupId>
+            <artifactId>phi-js-ui</artifactId>
             <version>${phi.version}</version>
         </dependency>
         
