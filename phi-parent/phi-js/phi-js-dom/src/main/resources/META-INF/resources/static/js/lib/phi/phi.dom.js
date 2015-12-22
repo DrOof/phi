@@ -27,10 +27,10 @@
  *
  */
 
-(function( phi, dom ) {
+(function( phi ) {
 
     // TODO : remove dependency on jQuery.
-    phi.dom = dom;
+    var dom = phi.dom = {};
 
     /**
      *
@@ -709,4 +709,4 @@
 
     });
 
-})(phi, jQuery);
+})( phi );

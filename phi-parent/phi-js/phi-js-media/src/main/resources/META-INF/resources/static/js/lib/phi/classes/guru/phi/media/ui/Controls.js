@@ -27,7 +27,7 @@
  *
  */
 
-( function( dom ) {
+( function() {
     
     phi.media.ui = phi.media.ui || {};
     
@@ -77,7 +77,8 @@
         },
         
         createControls: function() {
-            var controls = this.controls = dom( HTML )[0];
+            var div = document.createElement( 'div' ); div.innerHTML = HTML;
+            var controls = this.controls = div.childNodes[0];
             return controls;
         },
         
@@ -107,32 +108,34 @@
             
             if ( !this.volume.isDragging() ) {
                 
-                dom( this.controls ).find( '.player-volume-fill' ).css( { width : parseFloat( ( volume ) * 100 ) + '%' } );
-                dom( this.controls ).find( '.player-volume-handle' ).css( { left : parseFloat( ( volume ) * 100 ) + '%' } );
+                this.controls.querySelector( '.player-volume-fill' ).style.width = parseFloat( ( volume ) * 100 ) + '%';
+                this.controls.querySelector( '.player-volume-handle' ).style.left = parseFloat( ( volume ) * 100 ) + '%';
                 
-                this.volume.valueX( parseFloat( ( volume ) * 100 ) );    
+                this.volume.valueX( parseFloat( ( volume ) * 100 ) );
             }
             
         },
         
         updateCurrentTime: function( currentTime ) {
-            dom( this.controls ).find( '.player-controls-current-time' ).html( this.secondsToHms( currentTime ) );
+            this.controls.querySelector( '.player-controls-current-time' ).innerHTML = this.secondsToHms( currentTime );
         },
         
         updateRemainingTime: function( remainingTime ) {
-            dom( this.controls ).find( '.player-controls-remaining-time' ).html( this.secondsToHms( remainingTime ) );
+            this.controls.querySelector( '.player-controls-remaining-time' ).innerHTML = this.secondsToHms( remainingTime );
         },
         
         updateDuration: function( duration ) {
-            dom( this.controls ).find( '.player-controls-duration' ).html( this.secondsToHms( duration ) ).css( { width : parseInt( duration ) + '%' } );
+            this.controls.querySelector( '.player-controls-duration' ).innerHTML = this.secondsToHms( duration ); 
+            this.controls.querySelector( '.player-controls-duration' ).style.width = parseInt( duration ) + '%';
         },
         
         updateProgress: function( currentTime, duration ) {
             
             if ( !this.progress.isDragging() ) {
                 
-                dom( this.controls ).find( '.player-progress-fill' ).css( { width : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
-                dom( this.controls ).find( '.player-progress-handle' ).css( { left : parseFloat( ( currentTime / duration ) * 100 ) + '%' } );
+                this.controls.querySelector( '.player-progress-fill' ).style.width = parseFloat( ( currentTime / duration ) * 100 ) + '%';
+                this.controls.querySelector( '.player-progress-handle' ).style.left = parseFloat( ( currentTime / duration ) * 100 ) + '%';
+
                 this.progress.valueX( parseFloat( ( currentTime / duration ) ) * 100 );
                 
             }
@@ -196,7 +199,7 @@
 
         __init__: function( node, draggable, options ) {
 
-            this.__node__ = dom( node || document );
+            this.__node__ = document.querySelectorAll( node )[0] || document;
             this.draggable = draggable;
 
             var options = options || {};
@@ -205,10 +208,10 @@
             this.allowX     = ( options.allowX === false ) ? false : true;
             this.allowY     = ( options.allowY === false ) ? false : true;
 
-            this.__node__.bind( 'mousedown', this.handleMouseDown.bind( this ) );
-            this.__node__.bind( 'touchstart', this.handleTouchStart.bind( this ));
-            this.__node__.bind( 'touchmove', this.handleTouchMove.bind( this ));
-            this.__node__.bind( 'touchend', this.handleTouchEnd.bind( this ));
+            this.__node__.addEventListener( 'mousedown', this.handleMouseDown.bind( this ) );
+            this.__node__.addEventListener( 'touchstart', this.handleTouchStart.bind( this ));
+            this.__node__.addEventListener( 'touchmove', this.handleTouchMove.bind( this ));
+            this.__node__.addEventListener( 'touchend', this.handleTouchEnd.bind( this ));
 
         },
 
@@ -218,8 +221,8 @@
 
         grab: function( target ) {
 
-            this.dragging = dom( target ).closest( this.draggable, this.__node__ );
-            this.dragging.addClass( 'dragging' );
+            this.dragging = this.closest( target, this.draggable );
+            this.dragging.className = this.dragging.className + ' dragging';
 
             this.dispatchEvent( { type : 'dragstart', target : this }  );
 
@@ -229,7 +232,7 @@
 
             this.dispatchEvent( { type : 'dragend', target : this }  );
 
-            this.dragging.removeClass( 'dragging' );
+            this.dragging.className = this.dragging.className.replace( 'dragging', '' );
             this.dragging = null;
 
         },
@@ -248,7 +251,7 @@
 
             var left = 0;
             if ( this.isDragging() ) {
-                left = parseInt( this.dragging.css( 'left' ) );
+                left = parseInt( this.dragging.style.left );
             }
 
             return left;
@@ -264,7 +267,7 @@
 
             var top = 0;
             if ( this.isDragging() ) {
-                 top = parseInt( this.dragging.css( 'top' ) );
+                 top = parseInt( this.dragging.style.top );
             }
 
             return top;
@@ -275,8 +278,8 @@
 
             var x, y, w, h, left, top;
 
-            x = e.pageX - this.__node__.offset().left;
-            y = e.pageY - this.__node__.offset().top;
+            x = e.pageX - this.__node__.style.left;
+            y = e.pageY - this.__node__.style.top;
 
             w = this.__node__.outerWidth();
             h = this.__node__.outerHeight();
@@ -291,8 +294,8 @@
 
 
 
-            w = this.__node__.outerWidth();
-            h = this.__node__.outerHeight();
+            w = this.__node__.offsetWidth;
+            h = this.__node__.offsetHeight;
 
             if ( this.constrain ) {
                 x = (x > w) ? w : ((x < 0) ? 0 : x);
@@ -315,11 +318,29 @@
 
         },
 
+        closest: function( node, selector ) {
+
+            var parent = node.parentNode;
+            var result;
+            
+            if ( parent ) {
+                result = parent.querySelector( selector );
+                if ( !result ) {
+                    this.closest( parent, selector );
+                }
+            }
+
+            return result;
+
+        },
+
         handleMouseDown: function( e ) { e.preventDefault();
 
-            if ( !dom( e.target ).closest( 'a' ).length && dom( e.target ).closest( this.draggable ).length ) {
-                dom( document ).bind( 'mouseup.dragger mouseleave.dragger', this.handleMouseUp.bind( this ) );
-                dom( document ).bind( 'mousemove.dragger', this.handleMouseMove.bind( this ) );
+            // fix closest
+            if ( !this.closest( e.target, 'a' ) && this.closest( e.target, this.draggable ) ) {
+                document.addEventListener( 'mouseup', this.handleMouseUp.bind( this ) );
+                document.addEventListener( 'mouseleave', this.handleMouseUp.bind( this ) );
+                document.addEventListener( 'mousemove', this.handleMouseMove.bind( this ) );
                 this.grab( e.target );
                 this.drag( e );
             }
@@ -331,7 +352,9 @@
         },
 
         handleMouseUp: function( e ) { e.preventDefault();
-            dom( document ).unbind( 'mousemove.dragger mouseup.dragger mouseleave.dragger' );
+            document.removeEventListener( 'mousemove' );
+            document.removeEventListener( 'mouseup' );
+            document.removeEventListener( 'mouseleave' );
             this.release( e.target );
         },
 
@@ -339,7 +362,7 @@
 
             var e = e.originalEvent.touches[0];
 
-            if ( !dom( e.target ).closest( 'a' ).length && dom( e.target ).closest( this.draggable ).length ) {
+            if ( !this.closest( e.target, 'a' ) && this.closest( e.target, this.draggable ) ) {
                 this.grab( e );
             }
 
@@ -372,15 +395,30 @@
 
         __extends__: Dragger,
 
+        offset: function( node, result ) {
+
+            result = result || { top : 0, left : 0 };
+
+            result.top += node.offsetTop ? node.offsetTop : 0;
+            result.left += node.offsetLeft ? node.offsetLeft : 0;
+
+            if ( node.parentNode ) {
+                result = this.offset( node.parentNode, result );
+            }
+
+            return result;
+            
+        },
+
         drag: function( e ) {
 
             var x, y, w, h, l, t, left, top;
 
-            x = e.pageX - this.__node__.offset().left;
-            y = e.pageY - this.__node__.offset().top;
+            x = e.pageX - this.offset( this.__node__ ).left;
+            y = e.pageY - this.offset( this.__node__ ).top;
 
-            w = this.__node__.outerWidth();
-            h = this.__node__.outerHeight();
+            w = this.__node__.clientWidth;
+            h = this.__node__.clientHeight;
 
             x = parseFloat( 100 * x / w );
             y = parseFloat( 100 * y / h );
@@ -400,15 +438,17 @@
 
             var css = {};
             if ( this.allowX ) {
-                css['left'] = x + '%';
+                css[ 'left' ] = x + '%';
             }
 
             if ( this.allowY ) {
-                css['top'] = y + '%';
+                css[ 'top' ] = y + '%';
             }
 
             if ( this.isDragging() ) {
-                this.dragging.css( css );    
+                for ( var property in css ) {
+                    this.dragging.style[ property ] = css[ property ];
+                }
             }
 
 
@@ -419,7 +459,7 @@
             if ( x !== undefined ) {
                 this.move( x, 0 );
             } else {
-                return parseFloat( this.dragging.css( 'left' ) ) / this.__node__.outerWidth() * 100;
+                return parseFloat( this.dragging.style.left ) / this.__node__.clientWidth * 100;
             }
 
         },
@@ -429,11 +469,11 @@
             if ( y !== undefined ) {
                 this.move( 0, y );
             } else {
-                return  parseFloat( this.dragging.css( 'top' ) ) / this.__node__.height() * 100;
+                return  parseFloat( this.dragging.style.top ) / this.__node__.clientHeight * 100;
             }
 
         }
 
     });
     
-} )( phi.dom );
+} )();

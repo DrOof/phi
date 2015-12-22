@@ -27,7 +27,7 @@
  *
  */
 
-( function( dom ) {
+( function() {
     
     phi.media.ui = phi.media.ui || {};
     
@@ -38,8 +38,9 @@
         },
         
         createAspectRatio: function() {
-            
-            var ratio = this.ratio = dom( HTML )[0];
+
+            var div = document.createElement( 'div' ); div.innerHTML = HTML;
+            var ratio = this.ratio = div.childNodes[0];
             return ratio;
             
         }
@@ -50,4 +51,4 @@
                     '<img src="/author/static/png/aspect-ratio-720p.png" alt="Aspect Ratio 720p" />' +
                 '</div>';
     
-} )( phi.dom );
+} )();
