@@ -56,11 +56,11 @@
             <version>${phi.version}</version>
         </dependency>
         
-        <dependency>
+        <!-- dependency>
             <groupId>guru.phi</groupId>
             <artifactId>phi-js-form</artifactId>
             <version>${phi.version}</version>
-        </dependency>
+        </dependency -->
         
         <dependency>
             <groupId>guru.phi</groupId>

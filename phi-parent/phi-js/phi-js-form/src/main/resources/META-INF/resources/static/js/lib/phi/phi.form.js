@@ -27,7 +27,7 @@
  *
  */
 
-(function( phi, dom ) {
+(function( phi ) {
     
     phi.form = {};
 
@@ -46,7 +46,7 @@
         
         __init__: function( node ) {
             
-            this.__node__ = dom( node );
+            this.__node__ = node;
             
             /* disable native form validation */
             this.__node__.find( 'form' ).attr( 'novalidate', 'novalidate' );
@@ -56,12 +56,10 @@
         
         createEventListeners: function( node ) {
             
-            node = dom( node );
-            
             /* handle events */
-            node.bind( 'change', this.handleChange.bind( this ) );
-            node.bind( 'blur', this.handleBlur.bind( this ) );
-            node.bind( 'submit', this.handleSubmit.bind( this ) );
+            node.addEventListener( 'change', this.handleChange.bind( this ) );
+            node.addEventListener( 'blur', this.handleBlur.bind( this ) );
+            node.addEventListener( 'submit', this.handleSubmit.bind( this ) );
             
         },
         
@@ -100,7 +98,7 @@
          
         validateAll: function( dispatch ) {  
             
-            var nodes = dom( this.__node__ ).find( ':text, select, :checkbox, textarea, :file' );
+            var nodes = this.__node__.querySelectorAll( ':text, select, :checkbox, textarea, :file' );
             
             var nodesToValidate = [];
             var valid = [], node;
@@ -108,61 +106,47 @@
                 
                 node = nodes[i];
                 
-                // Only push in node if it has a max, min, required or pattern attribute
-                var dNode = dom(node);
-                
                 var isValidated = false;
                 
-                var min = dNode.attr('min');
-                if (typeof min !== 'undefined' && min !== false) {
+                var min = node.getAttribute('min');
+                if ( typeof min !== 'undefined' && min !== false ) {
                    isValidated = true;
                 }
                 
-                var max = dNode.attr('max');
+                var max = node.getAttribute('max');
                 if (typeof max !== 'undefined' && max !== false) {
                    isValidated = true;
                 }
                 
-                var required = dNode.attr('required');
+                var required = node.getAttribute('required');
                 if (typeof required !== 'undefined' && required !== false) {
                    isValidated = true;
                 }
                 
-                var pattern = dNode.attr('pattern');
+                var pattern = node.getAttribute('pattern');
                 if (typeof pattern !== 'undefined' && pattern !== false) {
                    isValidated = true;
                 }
                 
-                // console.log('NODE node=',node);
-                
                 if ( !node.disabled && isValidated) {
-                    
-                    // console.log('NODE 2B validated=',node);
-                    
-                    nodesToValidate.push(node)
-                    
-                    // valid.push( this.validate( node, dispatch ) );    
+                    nodesToValidate.push( node )
                 }
             };
             
             if(this.checkforFilledFields(nodesToValidate) === false){
-                
                 console.log('FORM::validateAll NO FIELDS FILLED');
                 return;
             }else{
-                
                 console.log('FORM::validateAll SOME FIELDS FILLED');
             }
             
             
             var len = nodesToValidate.length;
             
-            for(var i=0,j=nodesToValidate.length; i<j; i++){
-                
-                valid.push( this.validate( nodesToValidate[i], dispatch ) ); 
+            for( var i=0,j=nodesToValidate.length; i<j; i++ ){
+                valid.push( this.validate( nodesToValidate[i], dispatch ) );
             };
-            
-            
+
             return valid.every( function( a ) { return a; } );
             
         },
