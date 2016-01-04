@@ -1,0 +1,1 @@
+<a href="${damfn.getAssetForId( content.file ).link!}" class="download-link"> ${content.title!} </a>

@@ -1,0 +1,1 @@
+<a href="${content.link!}" class="external-link"> ${content.title} </a>
