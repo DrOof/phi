@@ -6,41 +6,97 @@
         
             body, html {
                 font-size: 18px;
-                font-family: Arial;
+                font-family: Helvetica Neue;
+                font-weight: 100;
             }
             
-            ul, li, p {
+            ul, li, dl, dd, dt {
                 margin: 0;
                 padding: 0;
                 list-style: none;
             }
+            
+            .phi-template {
+                border: 1px solid #f0f0f0;
+                padding: 20px;
+                display: none;
+            }
+
+            .phi-template.rendered {
+                display: block;
+            }
+            
+            h2 {
+                
+            }
+            
+            dl {
+                
+            }
+            
+            dl:after {
+                content : '';
+                clear: both;
+                display: block;
+                visibility: hidden;
+                height: 0;
+            }
+            
+            dl > dt {
+                width: 140px;
+                clear: left;
+                float: left;
+            }
+            
+            dl > dd {
+                float: left;
+            }
+            
         </style>
     </head>
     <body>
         
         <div class="grid">
-            <header>
-                <h1>DOM</h1>
-                <div id="phi-template-0">
-                    <p>titles : </p>
-                    <ol>
-                        {{list composite.titles}}
-                        <li>
-                            {{title}}
-                            {{subtitle}}
-                        </li>
-                        {{/list}}
-                        {{if show}}
-                        <li>
-                            {{hello}}
-                        </li>
-                        {{/if}}
-                    </ol>
-                    <p>hello : {{hello}}</p>
-                    <p>composite.hello : {{composite.hello}}</p>
-                    <p>bye : {{bye}}</p>
+            <h1>DOM</h1>
+            <div id="phi-template-0" class="phi-template">
+                <div class="grid">
+                    <div class="column three a">
+                        <h2>token</h2>
+                        <dl>
+                            <dt>hello</dt>
+                            <dd>{{hello}}</dd>
+                            <dt>composite.hello</dt>
+                            <dd>{{composite.hello}}</dd>
+                            <dt>bye</dt>
+                            <dd>{{bye}}</dd>
+                        </dl>
+                    </div>
+                    <div class="column three a">
+                        <h2>/list</h2>
+                        <ul>
+                            {{list books}}
+                            <li>
+                                <h4>{{title}}</h4>
+                                <small>{{subtitle}}</small>
+                            </li>
+                            {{/list}}
+                        </ul>
+                    </div>
+                    <div class="column three a">
+                        <h2>/if</h2>
+                        <dl>
+                            {{if hello}}
+                            <dt>show</dt>
+                            <dd>{{hello}}</dd>
+                            {{/if}}
+                            {{if nothello}}
+                            <dt>show</dt>
+                            <dd>{{nothello}}</dd>
+                            {{/if}}
+                        </dl>
+                    </div>
                 </div>
-            </header>
+            </div>
         </div>
         
         <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
@@ -55,24 +111,22 @@
               */
         
             var model = { 
-                titles : [ 
-                    { title : 'One', subtitle : 'The first title' }, 
-                    { title : 'Two', subtitle : 'The second title' } 
+                books : [ 
+                    { title : 'One', subtitle : 'The first title', chapters : [ { name : 1 }, { name : 2 } ] }, 
+                    { title : 'Two', subtitle : 'The second title', chapters : [ { name : 1 }, { name : 2 } ] } 
                 ], 
-                show: true, 
-                hello : 'Hello, World!', 
+                show : true, 
+                hide : false, 
                 composite : {
                     hello : 'Hello, World!',
-                    titles : [ 
-                        { title : 'One', subtitle : 'The first title' }, 
-                        { title : 'Two', subtitle : 'The second title' } 
-                    ], 
                 },
-                bye : 'Goodbye!' 
+                bye : 'Goodbye!',
+                hello : 'Hello, World!'
             }
         
             var node = document.getElementById( 'phi-template-0' );
                 node.innerHTML = new phi.dom.Template( node.innerHTML ).render( model );
+                node.className += ' rendered';
 
         </script>
         

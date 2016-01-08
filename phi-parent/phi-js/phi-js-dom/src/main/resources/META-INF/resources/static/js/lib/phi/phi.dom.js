@@ -372,8 +372,7 @@
 
         render: function( data, parent, html ) {
             
-            html = this.scrub( html || this.__html__ );
-            console.log( html );
+            html = this.__format_html__( html || this.__html__ );
             
             // look for {{something}} pattern
             var search = /{{\s?([^}]*)\s?}}/g;
@@ -389,7 +388,7 @@
                 expression = result[ 1 ];
                 keyword = expression.split( ' ' )[ 0 ];
 
-                if ( !Template.EXPRESSIONS[ keyword ] ) {
+                if ( !Template.EXPRESSION[ keyword ] ) {
                     html = html.replace( '{{' + expression + '}}', this.__find_data_by_composite_key__( data, keyword ) );
                 } else {
 
@@ -407,7 +406,7 @@
 
         },
         
-        scrub: function( html ) {
+        __format_html__: function( html ) {
             return html.replace( /(\n)/g, '' );
         },
         
@@ -424,24 +423,28 @@
 
         __render_list__: function( expression, start, html, data ) {
             
-            end = '{{/list}}';
+            var end = '{{/list}}';
 
             var parts = expression.split( ' ' );
             var key = parts[ 1 ];
-            
+
             var search = new RegExp( start + '.*?' + end, 'g' );
 
             var result = search.exec( html );
-
-            var complete = result[ 0];
-            var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
-
+            var complete = '';
             var collect = '';
-            data = this.__find_data_by_composite_key__( data, key );
-            for ( var n in data ) {
-                collect += template.render( data[ n ], html );
-            }
+            
+            if ( result ) {
+                
+                complete = result[ 0 ];
+                var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
 
+                data = this.__find_data_by_composite_key__( data, key );
+                for ( var n in data ) {
+                    collect += template.render( data[ n ], html );
+                }
+            }
+            
             return html.replace( complete, collect );
             
         },
@@ -454,7 +457,7 @@
         
         __render_if__: function( expression, start, html, data ) {
 
-            end = '{{/if}}';
+            var end = '{{/if}}';
 
             var parts = expression.split( ' ' );
             var key = parts[ 1 ];
@@ -497,7 +500,7 @@
         
     });
     
-    Template.EXPRESSIONS = {
+    Template.EXPRESSION = {
         'list'  : function( expression ) { console.log( 'parse expression', expression ) },
         '/list' : function( expression ) { console.log( 'parse expression', expression ) },
         'if'    : function( expression ) { console.log( 'parse expression', expression ) },
