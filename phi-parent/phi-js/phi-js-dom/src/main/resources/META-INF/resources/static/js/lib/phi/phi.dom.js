@@ -340,6 +340,8 @@
         // deprecated
         parse: function( data, parent, html ) {
             
+            console.log( '@deprecated: use render method instead' );
+            
             var html = html || this.get();
             var a = ( parent ) ? parent + '.' : '';
             var b = ( parent ) ? parent + '\\.' : '';
@@ -374,8 +376,7 @@
             
             html = this.__format_html__( html || this.__html__ );
             
-            // look for {{something}} pattern
-            var search = /{{\s?([^}]*)\s?}}/g;
+            var search = new RegExp( Template.SYNTAX_OPEN + '\\s?([^}]*)\\s?' + Template.SYNTAX_CLOSE, 'g' );
             var expression;
             var start;
             var end;
@@ -389,7 +390,7 @@
                 keyword = expression.split( ' ' )[ 0 ];
 
                 if ( !Template.EXPRESSION[ keyword ] ) {
-                    html = html.replace( '{{' + expression + '}}', this.__find_data_by_composite_key__( data, keyword ) );
+                    html = html.replace( Template.SYNTAX_OPEN + expression + Template.SYNTAX_CLOSE, this.__find_data_by_composite_key__( data, keyword ) );
                 } else {
 
                     if ( keyword === 'list' ) {
@@ -405,10 +406,22 @@
             return html;
 
         },
+
+        /**
+         *
+         * Format html
+         *
+         */
         
         __format_html__: function( html ) {
             return html.replace( /(\n)/g, '' );
         },
+        
+        /**
+         *
+         * Find data by composity key
+         *
+         */
         
         __find_data_by_composite_key__ : function( data, key ) {
             key.split( '.' ).map( function( k ) { data = data[ k ]; });
@@ -423,7 +436,7 @@
 
         __render_list__: function( expression, start, html, data ) {
             
-            var end = '{{/list}}';
+            var end = Template.SYNTAX_OPEN + '/list' + Template.SYNTAX_CLOSE;
 
             var parts = expression.split( ' ' );
             var key = parts[ 1 ];
@@ -457,7 +470,7 @@
         
         __render_if__: function( expression, start, html, data ) {
 
-            var end = '{{/if}}';
+            var end = Template.SYNTAX_OPEN + '/if' + Template.SYNTAX_CLOSE;
 
             var parts = expression.split( ' ' );
             var key = parts[ 1 ];
@@ -505,7 +518,10 @@
         '/list' : function( expression ) { console.log( 'parse expression', expression ) },
         'if'    : function( expression ) { console.log( 'parse expression', expression ) },
         '/if'   : function( expression ) { console.log( 'parse expression', expression ) }
-    }
+    };
+    
+    Template.SYNTAX_OPEN = '{{';
+    Template.SYNTAX_CLOSE = '}}';
     
     /**
      *
