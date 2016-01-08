@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/phi-js/static/css/lib/phi/grid.css" media="screen" />
+        <style>
+        
+            body, html {
+                font-size: 18px;
+                font-family: Arial;
+            }
+            
+            ul, li, p {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="grid">
+            <header>
+                <h1>DOM</h1>
+                <div id="phi-template-0">
+                </div>
+            </header>
+        </div>
+        
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dom.js"></script>
+        
+        <script type="application/javascript">
+             
+             /**
+              *
+              * Initialise players
+              *
+              */
+        
+            var html = new phi.dom.Template( '<ul>{{list titles}}<li>{{title}}</li>{{/list}}</ul><p>{{hello}}</p><p>{{bye}}</p>' ).render( { titles : [ { title : 'One' }, { title : 'Two' } ], hello : 'Hello, World', bye : 'Goodbye!' } );
+            document.getElementById( 'phi-template-0' ).innerHTML = html;
+            
+        </script>
+        
+    </body>
+</html>

@@ -337,6 +337,7 @@
          *
          */
 
+        // deprecated
         parse: function( data, parent, html ) {
             
             var html = html || this.get();
@@ -361,6 +362,67 @@
             
             return html;
             
+        },
+        
+        /**
+         *
+         * TODO : fix mess.
+         * 
+         */
+
+        render: function( data, parent, html ) {
+            
+            console.log( data );
+            
+            // look for {{something}} pattern
+            var property = new RegExp( '{{\s?([^}]*)\s?}}', 'g' );
+            var results = [];
+
+            var html = html || this.get();
+            var exp = {
+                'list' : function( exp ) { console.log( 'handle expression', exp ) },
+                '/list' : function( exp ) {},
+                'if' : function( exp ) { console.log( 'handle expression', exp ) },
+                '/if' : function() {}
+            };
+            
+            var expression;
+            var key;
+            
+            while ( result = property.exec( html ) ) {
+                
+                results.push( result );
+
+                var expression = result[ 1 ];
+                var key = expression.split( ' ' )[ 0 ];
+                
+
+                if ( !exp[ key ] ) {
+                    html = html.replace( '{{' + expression + '}}', data[ key ] );
+                } else {
+
+                    if ( key === 'list' ) {
+
+                        var parts = expression.split( ' ' );
+                        var inner = new RegExp( result[ 0 ] + '.*?' + '{{/list}}', 'g' );
+
+                        var res = inner.exec( html );
+                        var abc = '';
+                        var tpl = '';
+
+                        tpl = res[ 0 ].replace( result[ 0 ], '' ).replace( '{{/list}}', '' );
+                        for ( var n in data[ parts[ 1 ] ] ) {
+                            abc += this.render( data[ parts[ 1 ] ][ n ], '', tpl );
+                        }
+                        
+                        html = html.replace( res[0], abc );
+
+                    }
+                }                
+            }
+
+            return html;
+
         },
 
         /**

@@ -38,27 +38,27 @@
                     <webAppConfig>
                         <contextPath>/phi-js</contextPath>
                         <resourceBases>
-                            <baseResource>${project.basedir}/phi-js-jquery/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-jquery/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-jquery/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-core/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-core/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-core/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-dom/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-dom/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-dom/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-form/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-form/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-form/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-date/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-date/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-date/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-ui/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-ui/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-ui/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-graph/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-graph/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-graph/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-media/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-media/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-media/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-dialog/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-dialog/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-dialog/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-slider/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-slider/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-slider/src/test/resources</baseResource>
-                            <baseResource>${project.basedir}/phi-js-grid/src/main/resources</baseResource>
+                            <baseResource>${project.basedir}/phi-js-grid/src/main/resources/META-INF/resources</baseResource>
                             <baseResource>${project.basedir}/phi-js-grid/src/test/resources</baseResource>
                         </resourceBases>
                     </webAppConfig>
