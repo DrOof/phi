@@ -23,10 +23,21 @@
                 <h1>DOM</h1>
                 <div id="phi-template-0">
                     <p>titles : </p>
-                    <ul>
-                        {{list titles}}<li>{{title}} {{subtitle}}</li>{{/list}}
-                    </ul>
+                    <ol>
+                        {{list composite.titles}}
+                        <li>
+                            {{title}}
+                            {{subtitle}}
+                        </li>
+                        {{/list}}
+                        {{if show}}
+                        <li>
+                            {{hello}}
+                        </li>
+                        {{/if}}
+                    </ol>
                     <p>hello : {{hello}}</p>
+                    <p>composite.hello : {{composite.hello}}</p>
                     <p>bye : {{bye}}</p>
                 </div>
             </header>
@@ -48,13 +59,21 @@
                     { title : 'One', subtitle : 'The first title' }, 
                     { title : 'Two', subtitle : 'The second title' } 
                 ], 
-                hello : 'Hello, World', 
+                show: true, 
+                hello : 'Hello, World!', 
+                composite : {
+                    hello : 'Hello, World!',
+                    titles : [ 
+                        { title : 'One', subtitle : 'The first title' }, 
+                        { title : 'Two', subtitle : 'The second title' } 
+                    ], 
+                },
                 bye : 'Goodbye!' 
             }
         
             var node = document.getElementById( 'phi-template-0' );
                 node.innerHTML = new phi.dom.Template( node.innerHTML ).render( model );
-            
+
         </script>
         
     </body>

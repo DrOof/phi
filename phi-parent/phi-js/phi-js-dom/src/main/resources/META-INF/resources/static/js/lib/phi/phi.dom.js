@@ -372,7 +372,8 @@
 
         render: function( data, parent, html ) {
             
-            html = html || this.__html__;
+            html = this.scrub( html || this.__html__ );
+            console.log( html );
             
             // look for {{something}} pattern
             var search = /{{\s?([^}]*)\s?}}/g;
@@ -384,21 +385,20 @@
             while ( result = search.exec( html ) ) {
                 
                 start = result[ 0 ];
+                
                 expression = result[ 1 ];
                 keyword = expression.split( ' ' )[ 0 ];
 
                 if ( !Template.EXPRESSIONS[ keyword ] ) {
-                    html = html.replace( '{{' + expression + '}}', data[ keyword ] );
+                    html = html.replace( '{{' + expression + '}}', this.__find_data_by_composite_key__( data, keyword ) );
                 } else {
 
-                    // TODO : refactor.
                     if ( keyword === 'list' ) {
-                        html = this.renderList( expression, start, html, data );
+                        html = this.__render_list__( expression, start, html, data );
                     }
                     
-                    // TODO : refactor.
                     if ( keyword === 'if' ) {
-                        html = this.renderIf( expression, start, html, data );
+                        html = this.__render_if__( expression, start, html, data );
                     }
                 }                
             }
@@ -406,8 +406,23 @@
             return html;
 
         },
+        
+        scrub: function( html ) {
+            return html.replace( /(\n)/g, '' );
+        },
+        
+        __find_data_by_composite_key__ : function( data, key ) {
+            key.split( '.' ).map( function( k ) { data = data[ k ]; });
+            return data;
+        },
 
-        renderList: function( expression, start, html, data ) {
+        /**
+         *
+         * Render a list
+         *
+         */
+
+        __render_list__: function( expression, start, html, data ) {
             
             end = '{{/list}}';
 
@@ -421,33 +436,42 @@
             var complete = result[ 0];
             var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
 
-
             var collect = '';
-            for ( var n in data[ key ] ) {
-                collect += template.render( data[ key ][ n ], html );
-                console.log( template.__html__, data[ key ][ n ], collect );
+            data = this.__find_data_by_composite_key__( data, key );
+            for ( var n in data ) {
+                collect += template.render( data[ n ], html );
             }
 
             return html.replace( complete, collect );
             
         },
         
-        renderIf: function( expression, start, html, data ) {
+        /**
+         *
+         * Render an if
+         *
+         */
+        
+        __render_if__: function( expression, start, html, data ) {
 
             end = '{{/if}}';
 
             var parts = expression.split( ' ' );
+            var key = parts[ 1 ];
+            
             var search = new RegExp( start + '.*?' + end, 'g' );
 
             var result = search.exec( html );
-            var tpl = result[ 0 ].replace( start, '' ).replace( end, '' );
 
-            var abc = '';
-            for ( var n in data[ parts[ 1 ] ] ) {
-                abc += this.render( data[ parts[ 1 ] ][ n ], '', tpl );
+            var complete = result[ 0];
+            var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
+
+            var collect = '';
+            if ( this.__find_data_by_composite_key__( data, key ) ) {
+                collect = template.render( data, html );
             }
 
-            return html.replace( result[ 0 ], abc );
+            return html.replace( complete, collect );
             
         },
 
