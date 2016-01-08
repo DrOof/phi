@@ -372,57 +372,83 @@
 
         render: function( data, parent, html ) {
             
-            console.log( data );
+            html = html || this.__html__;
             
             // look for {{something}} pattern
-            var property = new RegExp( '{{\s?([^}]*)\s?}}', 'g' );
-            var results = [];
-
-            var html = html || this.get();
-            var exp = {
-                'list' : function( exp ) { console.log( 'handle expression', exp ) },
-                '/list' : function( exp ) {},
-                'if' : function( exp ) { console.log( 'handle expression', exp ) },
-                '/if' : function() {}
-            };
-            
+            var search = /{{\s?([^}]*)\s?}}/g;
             var expression;
-            var key;
+            var start;
+            var end;
+            var keyword;
             
-            while ( result = property.exec( html ) ) {
+            while ( result = search.exec( html ) ) {
                 
-                results.push( result );
+                start = result[ 0 ];
+                expression = result[ 1 ];
+                keyword = expression.split( ' ' )[ 0 ];
 
-                var expression = result[ 1 ];
-                var key = expression.split( ' ' )[ 0 ];
-                
-
-                if ( !exp[ key ] ) {
-                    html = html.replace( '{{' + expression + '}}', data[ key ] );
+                if ( !Template.EXPRESSIONS[ keyword ] ) {
+                    html = html.replace( '{{' + expression + '}}', data[ keyword ] );
                 } else {
 
-                    if ( key === 'list' ) {
-
-                        var parts = expression.split( ' ' );
-                        var inner = new RegExp( result[ 0 ] + '.*?' + '{{/list}}', 'g' );
-
-                        var res = inner.exec( html );
-                        var abc = '';
-                        var tpl = '';
-
-                        tpl = res[ 0 ].replace( result[ 0 ], '' ).replace( '{{/list}}', '' );
-                        for ( var n in data[ parts[ 1 ] ] ) {
-                            abc += this.render( data[ parts[ 1 ] ][ n ], '', tpl );
-                        }
-                        
-                        html = html.replace( res[0], abc );
-
+                    // TODO : refactor.
+                    if ( keyword === 'list' ) {
+                        html = this.renderList( expression, start, html, data );
+                    }
+                    
+                    // TODO : refactor.
+                    if ( keyword === 'if' ) {
+                        html = this.renderIf( expression, start, html, data );
                     }
                 }                
             }
 
             return html;
 
+        },
+
+        renderList: function( expression, start, html, data ) {
+            
+            end = '{{/list}}';
+
+            var parts = expression.split( ' ' );
+            var key = parts[ 1 ];
+            
+            var search = new RegExp( start + '.*?' + end, 'g' );
+
+            var result = search.exec( html );
+
+            var complete = result[ 0];
+            var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
+
+
+            var collect = '';
+            for ( var n in data[ key ] ) {
+                collect += template.render( data[ key ][ n ], html );
+                console.log( template.__html__, data[ key ][ n ], collect );
+            }
+
+            return html.replace( complete, collect );
+            
+        },
+        
+        renderIf: function( expression, start, html, data ) {
+
+            end = '{{/if}}';
+
+            var parts = expression.split( ' ' );
+            var search = new RegExp( start + '.*?' + end, 'g' );
+
+            var result = search.exec( html );
+            var tpl = result[ 0 ].replace( start, '' ).replace( end, '' );
+
+            var abc = '';
+            for ( var n in data[ parts[ 1 ] ] ) {
+                abc += this.render( data[ parts[ 1 ] ][ n ], '', tpl );
+            }
+
+            return html.replace( result[ 0 ], abc );
+            
         },
 
         /**
@@ -446,6 +472,13 @@
         }
         
     });
+    
+    Template.EXPRESSIONS = {
+        'list'  : function( expression ) { console.log( 'parse expression', expression ) },
+        '/list' : function( expression ) { console.log( 'parse expression', expression ) },
+        'if'    : function( expression ) { console.log( 'parse expression', expression ) },
+        '/if'   : function( expression ) { console.log( 'parse expression', expression ) }
+    }
     
     /**
      *

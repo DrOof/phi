@@ -22,6 +22,12 @@
             <header>
                 <h1>DOM</h1>
                 <div id="phi-template-0">
+                    <p>titles : </p>
+                    <ul>
+                        {{list titles}}<li>{{title}} {{subtitle}}</li>{{/list}}
+                    </ul>
+                    <p>hello : {{hello}}</p>
+                    <p>bye : {{bye}}</p>
                 </div>
             </header>
         </div>
@@ -37,8 +43,17 @@
               *
               */
         
-            var html = new phi.dom.Template( '<ul>{{list titles}}<li>{{title}}</li>{{/list}}</ul><p>{{hello}}</p><p>{{bye}}</p>' ).render( { titles : [ { title : 'One' }, { title : 'Two' } ], hello : 'Hello, World', bye : 'Goodbye!' } );
-            document.getElementById( 'phi-template-0' ).innerHTML = html;
+            var model = { 
+                titles : [ 
+                    { title : 'One', subtitle : 'The first title' }, 
+                    { title : 'Two', subtitle : 'The second title' } 
+                ], 
+                hello : 'Hello, World', 
+                bye : 'Goodbye!' 
+            }
+        
+            var node = document.getElementById( 'phi-template-0' );
+                node.innerHTML = new phi.dom.Template( node.innerHTML ).render( model );
             
         </script>
         
