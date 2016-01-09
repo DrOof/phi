@@ -332,88 +332,45 @@
         
         /**
          *
-         * Parse object through HTML
-         * TODO : Parse String instead of Object.
+         * @Deprecated
+         * Parse template with data.
          *
          */
 
-        // deprecated
         parse: function( data, parent, html ) {
-            
-            console.log( '@deprecated: use render method instead' );
-            
-            var html = html || this.get();
-            var a = ( parent ) ? parent + '.' : '';
-            var b = ( parent ) ? parent + '\\.' : '';
-            
-            for ( var name in data ) {
-                
-                if ( typeof name === 'string' ) {
-                    
-                    var property = new RegExp('\\{{' + b + name + '\\}}', 'g');
-                    
-                    if ( typeof data[ name ] === 'object' ) {
-                        html = this.parse( data[ name ], a + name, html );
-                    } 
-                    
-                    else {
-                        html = html.replace( property, data[ name ] );
-                    }
-                }
-            }
-            
-            return html;
-            
+            console.log( '@Deprecated: This method is deprecated. Please use Template.render instead.' );
+            return this.render( data, parent, html );
         },
         
         /**
          *
-         * TODO : fix mess.
+         * Render template with data.
          * 
          */
 
-        render: function( data, parent, html ) {
+        render: function( data, html ) {
             
             html = this.__format_html__( html || this.__html__ );
             
-            var search = new RegExp( Template.SYNTAX_OPEN + '\\s?([^}]*)\\s?' + Template.SYNTAX_CLOSE, 'g' );
-            var expression;
-            var start;
-            var end;
-            var keyword;
-            
+            var open = Template.SYNTAX_OPEN;
+            var close = Template.SYNTAX_CLOSE;
+            var search = new RegExp( open + '\\s?([^}]*)\\s?' + close, 'g' );
+
             while ( result = search.exec( html ) ) {
-                
-                start = result[ 0 ];
-                
-                expression = result[ 1 ];
-                keyword = expression.split( ' ' )[ 0 ];
-
-                if ( !Template.EXPRESSION[ keyword ] ) {
-                    html = html.replace( Template.SYNTAX_OPEN + expression + Template.SYNTAX_CLOSE, this.__find_data_by_composite_key__( data, keyword ) );
-                } else {
-
-                    if ( keyword === 'list' ) {
-                        html = this.__render_list__( expression, start, html, data );
-                    }
-                    
-                    if ( keyword === 'if' ) {
-                        html = this.__render_if__( expression, start, html, data );
-                    }
-                }                
+                html = this.__render_tag__( result, html, data );
             }
 
             return html;
 
         },
-
+        
         /**
          *
          * Format html
          *
          */
         
-        __format_html__: function( html ) {
+        __format_html__ : function( html ) {
             return html.replace( /(\n)/g, '' );
         },
         
@@ -427,67 +384,127 @@
             key.split( '.' ).map( function( k ) { data = data[ k ]; });
             return data;
         },
-
+        
         /**
          *
-         * Render a list
+         * Render result.
+         *
+         */
+        
+        __render_tag__ : function( result, html, data ) {
+            
+            var open = Template.SYNTAX_OPEN;
+            var close = Template.SYNTAX_CLOSE;
+            
+            var expression = result[ 1 ];
+            
+            var code = expression.split( ' ' );
+            var token = code.shift();
+            
+            var start = result[ 0 ];
+            var end = open + '/' + token + close;
+
+            switch ( token ) {
+                
+                case 'if' : {
+                    html = this.__render_complex_tag__( html, data, code.join( ' ' ), start, end, this.__render_if_complex_tag__.bind( this ) );
+                    break;
+                }
+                
+                case 'list' : {
+                    html = this.__render_complex_tag__( html, data, code.join( ' ' ), start, end, this.__render_list_complex_tag__.bind( this ) );
+                    break;
+                }
+
+                default : {
+                    html = this.__render_simple_tag__( html, data, token, start );
+                    break;
+                }
+                
+            }
+            
+            return html;
+            
+        },
+        
+        /**
+         *
+         * Render simple
+         *
+         */
+        
+        __render_simple_tag__ : function( html, data, token, start ) {
+            return html.replace( start, this.__find_data_by_composite_key__( data, token ) );
+        },
+        
+        /**
+         *
+         * Render inner
          *
          */
 
-        __render_list__: function( expression, start, html, data ) {
-            
-            var end = Template.SYNTAX_OPEN + '/list' + Template.SYNTAX_CLOSE;
+        __render_complex_tag__: function( html, data, token, start, end, collector ) {
 
-            var parts = expression.split( ' ' );
-            var key = parts[ 1 ];
-
-            var search = new RegExp( start + '.*?' + end, 'g' );
-
-            var result = search.exec( html );
+            var result = new RegExp( start + '.*?' + end, 'g' ).exec( html );
+            var template = '';
             var complete = '';
             var collect = '';
             
             if ( result ) {
                 
                 complete = result[ 0 ];
-                var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
+                template = this.__create_complex_tag_template__( complete, start, end );
+                collect = collector( html, data, token, template );
 
-                data = this.__find_data_by_composite_key__( data, key );
-                for ( var n in data ) {
-                    collect += template.render( data[ n ], html );
-                }
             }
-            
+
             return html.replace( complete, collect );
             
         },
         
         /**
          *
-         * Render an if
+         * Create complex tag template
          *
          */
         
-        __render_if__: function( expression, start, html, data ) {
-
-            var end = Template.SYNTAX_OPEN + '/if' + Template.SYNTAX_CLOSE;
-
-            var parts = expression.split( ' ' );
-            var key = parts[ 1 ];
+        __create_complex_tag_template__ : function( complete, start, end ) {
+            return new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) )
+        },
+        
+        /**
+         *
+         * Render inner list
+         *
+         */
+        
+        __render_list_complex_tag__ : function( html, data, token, template ) {
             
-            var search = new RegExp( start + '.*?' + end, 'g' );
-
-            var result = search.exec( html );
-
-            var complete = result[ 0];
-            var template = new phi.dom.Template( complete.replace( start, '' ).replace( end, '' ) );
-
-            var collect = '';
-            if ( this.__find_data_by_composite_key__( data, key ) ) {
-                collect = template.render( data, html );
+            data = this.__find_data_by_composite_key__( data, token );
+            
+            var collect = [];
+            for ( var n in data ) {
+                collect.push( template.render( data[ n ] ) );
             }
-
-            return html.replace( complete, collect );
+            
+            return collect.join( '' );
+            
+        },
+        
+        /**
+         *
+         * Render inner if
+         *
+         */
+        
+        __render_if_complex_tag__ : function( html, data, token, template ) {
+            
+            var collect = [];
+            if ( this.__find_data_by_composite_key__( data, token ) ) {
+                collect.push( template.render( data ) );
+            }
+            
+            return collect.join( '' );
             
         },
 
@@ -512,13 +529,6 @@
         }
         
     });
-    
-    Template.EXPRESSION = {
-        'list'  : function( expression ) { console.log( 'parse expression', expression ) },
-        '/list' : function( expression ) { console.log( 'parse expression', expression ) },
-        'if'    : function( expression ) { console.log( 'parse expression', expression ) },
-        '/if'   : function( expression ) { console.log( 'parse expression', expression ) }
-    };
     
     Template.SYNTAX_OPEN = '{{';
     Template.SYNTAX_CLOSE = '}}';

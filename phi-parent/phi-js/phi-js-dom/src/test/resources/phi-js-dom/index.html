@@ -19,11 +19,6 @@
             .phi-template {
                 border: 1px solid #f0f0f0;
                 padding: 20px;
-                display: none;
-            }
-
-            .phi-template.rendered {
-                display: block;
             }
             
             h2 {
@@ -127,7 +122,6 @@
         
             var node = document.getElementById( 'phi-template-0' );
                 node.innerHTML = new phi.dom.Template( node.innerHTML ).render( model );
-                node.className += ' rendered';
 
         </script>
         
