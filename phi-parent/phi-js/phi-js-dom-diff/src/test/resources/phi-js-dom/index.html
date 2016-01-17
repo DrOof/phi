@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/phi-js/static/css/lib/phi/grid.css" media="screen" />
+        <style>
+        
+            body, html {
+                font-size: 18px;
+                font-family: Helvetica Neue;
+                font-weight: 100;
+            }
+            
+            ul, li, dl, dd, dt {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            
+            .phi-template {
+                border: 1px solid #f0f0f0;
+                padding: 20px;
+            }
+            
+            h2 {
+                
+            }
+            
+            dl {
+                
+            }
+            
+            dl:after {
+                content : '';
+                clear: both;
+                display: block;
+                visibility: hidden;
+                height: 0;
+            }
+            
+            dl > dt {
+                width: 140px;
+                clear: left;
+                float: left;
+            }
+            
+            dl > dd {
+                float: left;
+            }
+            
+        </style>
+    </head>
+    <body>
+        
+        <div class="grid">
+            <h1>DOM</h1>
+            <div id="phi-template-0" class="phi-template">
+                <div class="grid">
+                    <div class="column three a">
+                        <h2>token</h2>
+                        <dl>
+                            <dt>hello</dt>
+                            <dd>{{hello}}</dd>
+                            <dt>composite.hello</dt>
+                            <dd>{{composite.hello}}</dd>
+                            <dt>bye</dt>
+                            <dd>{{bye}}</dd>
+                        </dl>
+                    </div>
+                    <div class="column three a">
+                        <h2>/list</h2>
+                        <ul>
+                            {{list books}}
+                            <li>
+                                <h4>{{title}}</h4>
+                                <small>{{subtitle}}</small>
+
+                            </li>
+                            {{/list}}
+                        </ul>
+                    </div>
+                    <div class="column three a">
+                        <h2>/if</h2>
+                        <dl>
+                            {{if hello}}
+                            <dt>show</dt>
+                            <dd>{{hello}}</dd>
+                            {{/if}}
+                            {{if nothello}}
+                            <dt>show</dt>
+                            <dd>{{nothello}}</dd>
+                            {{/if}}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.core.js"></script>
+        <script type="application/javascript" src="/phi-js/static/js/lib/phi/phi.dom.js"></script>
+        
+        <script type="application/javascript">
+             
+             /**
+              *
+              * Initialise players
+              *
+              */
+        
+            var model = { 
+                books : [ 
+                    { title : 'One', subtitle : 'The first title', chapters : [ { name : 1 }, { name : 2 } ] }, 
+                    { title : 'Two', subtitle : 'The second title', chapters : [ { name : 1 }, { name : 2 } ] } 
+                ], 
+                show : true, 
+                hide : false, 
+                composite : {
+                    hello : 'Hello, World!',
+                },
+                bye : 'Goodbye!',
+                hello : 'Hello, World!'
+            }
+        
+            var node = document.getElementById( 'phi-template-0' );
+                node.innerHTML = new phi.dom.Template( node.innerHTML ).render( model );
+
+        </script>
+        
+    </body>
+</html>
