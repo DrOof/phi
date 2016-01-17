@@ -30,7 +30,7 @@
 (function( phi ) {
 
     /**
-     * Dom manipulations are now being controlled by a virtual DOM
+     * Dom manipulations are now being controlled by a virtual DOM 
      */
     var domDiff = phi.dom._diff = {};
 
