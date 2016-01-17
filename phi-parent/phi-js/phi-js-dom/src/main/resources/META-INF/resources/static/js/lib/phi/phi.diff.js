@@ -29,6 +29,6 @@
 
 (function( phi ) {
 
-    var dom = phi.dom = {};
+    var domDiff = phi.dom._diff = {};
 
 })( phi );
